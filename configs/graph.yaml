@@ -1,0 +1,25 @@
+# Knowledge Graph & Subgraph settings
+backend: "networkx" # options: "networkx", "neo4j"
+neo4j:
+  uri: "bolt://localhost:7687"
+  user: "neo4j"
+  password: "password"
+subgraph:
+  max_hops: 4
+  node_types:
+    - "Compound"
+    - "Gene"
+    - "BiologicalProcess"
+    - "Pathway"
+    - "Disease"
+    - "Phenotype"
+    - "Anatomy"
+metaedges:
+  - "CbG"   # Compound binds Gene
+  - "CdG"   # Compound downregulates Gene
+  - "CuG"   # Compound upregulates Gene
+  - "GpBP"  # Gene participates in Biological Process
+  - "GpPW"  # Gene participates in Pathway
+  - "GaD"   # Gene associates with Disease
+  - "CtD"   # Compound treats Disease
+  - "CpD"   # Compound palliates Disease

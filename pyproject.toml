@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dapagliflozin-lbd"
+version = "0.1.0"
+description = "AI/NLP and Knowledge Graph-based Literature-Based Discovery for Drug Repurposing (Dapagliflozin)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Nguyen Nhat Liam", email = "lamnnk25416@st.uel.edu.vn"},
+    {name = "Nguyen Khang", email = "khangnk25416@st.uel.edu.vn"},
+    {name = "Dang Quang Huy", email = "huydqk25416@st.uel.edu.vn"},
+    {name = "Nguyen Cong Gia Phuoc", email = "phuocncgk25416@st.uel.edu.vn"}
+]
+dependencies = [
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+    "requests>=2.31.0",
+    "networkx>=3.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "jsonschema>=4.18.0",
+    "tqdm>=4.66.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "black>=23.7.0",
+    "ruff>=0.1.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

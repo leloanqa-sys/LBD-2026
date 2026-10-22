@@ -1,0 +1,30 @@
+# LBD Path Search and Candidate Ranking settings
+search:
+  min_length: 3
+  max_length: 5
+  max_candidates: 100
+  allowed_metapaths:
+    - ["Compound", "Gene", "BiologicalProcess", "Disease"]
+    - ["Compound", "Gene", "Pathway", "Disease"]
+    - ["Compound", "Gene", "BiologicalProcess", "BiologicalProcess", "Disease"]
+    - ["Compound", "Gene", "BiologicalProcess", "Phenotype", "Disease"]
+scoring:
+  tier_weights:
+    tier_1: 1.0  # Molecular mechanism, in vivo, human physiology
+    tier_2: 0.7  # Clinical outcome, class effect
+    tier_3: 0.4  # Epidemiological correlation, co-occurrence
+  study_weights:
+    meta_analysis: 1.0
+    rct: 0.9
+    in_vivo: 0.8
+    in_vitro: 0.6
+    observational: 0.4
+    review: 0.5
+  length_penalty_gamma: 1.5
+  hub_damping_w: 0.4
+  top_m_paths: 5
+  contradiction_penalty_lambda: 2.0
+  direction_fit_multiplier:
+    therapeutic: 1.5   # Net sign = -1
+    suggestive: 1.0    # Contains neutral 0
+    contradictory: 0.0 # Net sign = +1
