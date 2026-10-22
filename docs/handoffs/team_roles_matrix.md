@@ -5,6 +5,6 @@
 | **Thu thập PubMed & Contract A** | Accountable (A) | Consulted (C) | Informed (I) | Responsible (R) |
 | **PubTator NER & Groq RE (Contract B)** | Consulted (C) | Accountable (A) | Informed (I) | Responsible (R) |
 | **Chuẩn hóa ID & Contract C** | Accountable (A) | Responsible (R) | Informed (I) | Informed (I) |
-| **Hetionet Subgraph & Contract D** | Responsible (R) | Informed (I) | Accountable (A) | Informed (I) |
+| **Hetionet Subgraph & Contract D** | Accountable (A) | Informed (I) | Consulted (C) | Informed (I) |
 | **Metapath DFS & Scoring (Contract E)** | Informed (I) | Informed (I) | Accountable (A) | Responsible (R) |
 | **Ground Truth & Backtesting Eval** | Informed (I) | Informed (I) | Responsible (R) | Accountable (A) |

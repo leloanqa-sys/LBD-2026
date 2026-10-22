@@ -23,23 +23,26 @@ dapagliflozin-lbd/
 ├── contracts/
 │   ├── paper.schema.json         <-- Huy (Chủ quản Contract A)
 │   ├── relation.schema.json      <-- Khang (Chủ quản Contract B & C)
-│   ├── graph_edge.schema.json    <-- Huy & Liam (Chủ quản Contract D)
-│   └── candidate.schema.json     <-- Liam & Phước (Chủ quản Contract E)
+│   ├── graph_edge.schema.json    <-- Huy (Chủ quản Contract D: Huy -> Liam)
+│   └── candidate.schema.json     <-- Liam & Phước (Chủ quản Contract E: Liam -> UI)
 │
 ├── src/lbd/
 │   ├── common/                   <-- Toàn đội sử dụng chung
-│   ├── data/                     <-- ĐẶNG QUANG HUY SỞ HỮU
-│   ├── nlp/                      <-- NGUYỄN KHANG SỞ HỮU
-│   ├── graph/                    <-- NGUYỄN NHẬT LÂM SỞ HỮU
-│   ├── ranking/                  <-- NGUYỄN NHẬT LÂM SỞ HỮU
-│   └── evaluation/               <-- NGUYỄN CÔNG GIA PHƯỚC SỞ HỮU
+│   ├── data/                     <-- ĐẶNG QUANG HUY SỞ HỮU (ETL PubMed, Hetionet, Normalization)
+│   ├── nlp/                      <-- NGUYỄN KHANG SỞ HỮU (NER PubTator 3.0, Groq LLM RE)
+│   ├── graph/
+│   │   ├── build_graph.py        <-- ĐẶNG QUANG HUY SỞ HỮU (Hợp nhất Hetionet + NLP ra Contract D)
+│   │   ├── filter_subgraph.py    <-- NGUYỄN NHẬT LÂM SỞ HỮU (Cắt tỉa Ego Subgraph)
+│   │   └── path_search.py        <-- NGUYỄN NHẬT LÂM SỞ HỮU (Metapath DFS, Pruning T2D)
+│   ├── ranking/                  <-- NGUYỄN NHẬT LÂM SỞ HỮU (Features, Score Paths, Rank Candidates)
+│   └── evaluation/               <-- NGUYỄN CÔNG GIA PHƯỚC SỞ HỮU (Ground Truth, Metrics, Benchmark)
 │
 ├── notebooks/
 │   ├── 00_data_audit.ipynb       <-- Huy
 │   ├── 01_nlp_baseline.ipynb     <-- Khang
 │   ├── 02_relation_extraction.ipynb <-- Khang
-│   ├── 03_graph_build.ipynb      <-- Liam
-│   ├── 04_path_search.ipynb      <-- Liam
+│   ├── 03_graph_build.ipynb      <-- Huy (Ghép đồ thị tĩnh Hetionet và NLP)
+│   ├── 04_path_search.ipynb      <-- Liam (Duyệt Metapath và xếp hạng)
 │   └── 05_evaluation.ipynb       <-- Phước
 │
 └── tests/
@@ -55,33 +58,45 @@ dapagliflozin-lbd/
 
 ## 2. Nhiệm Vụ Chi Tiết & Đầu Việc Cần Triển Khai Tiếp Theo
 
-### A. Đặng Quang Huy (Data & ETL)
-- **Khu vực phụ trách**: `src/lbd/data/`, `configs/data.yaml`, `contracts/paper.schema.json`, `notebooks/00_data_audit.ipynb`.
+### A. Đặng Quang Huy (Data & ETL Engineer)
+- **Khu vực phụ trách**: `src/lbd/data/`, `src/lbd/graph/build_graph.py`, `configs/data.yaml`, `contracts/paper.schema.json`, `contracts/graph_edge.schema.json`, `notebooks/00_data_audit.ipynb`, `notebooks/03_graph_build.ipynb`.
 - **Nhiệm vụ cốt lõi**:
   1. **PubMed API Collector**: Triển khai hoàn chỉnh script tải 664 abstracts thực tế của Dapagliflozin qua Entrez E-utilities với câu truy vấn chuẩn.
   2. **Temporal Cutoff Guard**: Tuyệt đối đảm bảo trường `publication_date <= 2018-12-31`. Đánh dấu `temporal_filter_status = "passed"` hoặc `"rejected"`.
   3. **ID Crosswalk**: Hoàn thiện bảng ánh xạ `id_crosswalk.csv` đồng bộ giữa DrugBank (`DB06292`), Entrez Gene (`6524`), MeSH và Disease Ontology (DOID).
-  4. **Hetionet v1.0 Subgraph**: Tải và trích xuất mạng con bán kính $k$-hop quanh Dapagliflozin từ dữ liệu tĩnh Hetionet 2017.
-- **Sản phẩm bàn giao**: File `data/processed/papers_pre2018.jsonl` vượt qua validation của `contracts/paper.schema.json` (Contract A).
+  4. **Hetionet v1.0 Subgraph & Graph Integration (`build_graph.py`)**: 
+     - Tải và trích xuất mạng con Hetionet 2017 gốc từ Dapagliflozin.
+     - Tiếp nhận các quan hệ NLP đã trích xuất từ Khang, map sang ID chuẩn.
+     - Ghép toàn bộ cạnh NLP vào đồ thị tĩnh Hetionet; gắn cờ phân biệt nguồn `source_dataset` (`"hetionet_v1.0"` vs `"nlp_literature"`).
+     - Thiết lập nhãn dấu quan hệ sinh học ($s_i \in \{-1, +1, 0\}$) theo đúng quy chuẩn.
+- **Sản phẩm bàn giao**: 
+  - File `data/processed/papers_pre2018.jsonl` chuẩn Contract A (bàn giao cho Khang).
+  - File `data/processed/merged_graph.json` hoặc đồ thị hoàn chỉnh chuẩn **Contract D (bàn giao cho Liam)**.
 
-### B. Nguyễn Khang (Biomedical NLP & LLM)
-- **Khu vực phụ trách**: `src/lbd/nlp/`, `configs/nlp.yaml`, `contracts/relation.schema.json`, `notebooks/01_...`, `notebooks/02_...`.
+### B. Nguyễn Khang (Biomedical NLP & LLM Engineer)
+- **Khu vực phụ trách**: `src/lbd/nlp/`, `configs/nlp.yaml`, `contracts/relation.schema.json`, `notebooks/01_nlp_baseline.ipynb`, `notebooks/02_relation_extraction.ipynb`.
 - **Nhiệm vụ cốt lõi**:
   1. **PubTator 3.0 NER**: Gọi API PubTator 3.0 theo batch (50 PMIDs/lần), lưu cache cục bộ trong `data/cache/pubtator/` để tránh gọi lặp lại.
   2. **Groq LLM Relation Extraction**: Tích hợp Groq API với model `llama-3.1-70b-versatile` (fallback `llama-3.1-8b-instant`), thiết lập `temperature = 0.0`.
   3. **Verbatim Evidence Verification**: Kiểm tra câu bằng chứng (`evidence`) phải tồn tại nguyên văn trong abstract nguồn.
   4. **Manual Annotation Sample**: Lấy mẫu ngẫu nhiên 100 - 200 quan hệ ra `data/review_sample.csv` để cả nhóm chấm chéo độ chuẩn xác (Precision $\approx 80\%$).
-- **Sản phẩm bàn giao**: File `data/processed/relations_extracted.jsonl` đạt chuẩn Contract B & C.
+- **Sản phẩm bàn giao**: File `data/processed/relations_extracted.jsonl` đạt chuẩn Contract B & C (bàn giao lại cho Huy để merge đồ thị).
 
-### C. Nguyễn Nhật Lâm (Knowledge Graph & Ranking)
-- **Khu vực phụ trách**: `src/lbd/graph/`, `src/lbd/ranking/`, `configs/graph.yaml`, `configs/ranking.yaml`, `notebooks/03_...`, `notebooks/04_...`.
+### C. Nguyễn Nhật Lâm (Knowledge Graph & Ranking Engineer)
+- **Khu vực phụ trách**: `src/lbd/graph/filter_subgraph.py`, `src/lbd/graph/path_search.py`, `src/lbd/ranking/`, `configs/graph.yaml`, `configs/ranking.yaml`, `notebooks/04_path_search.ipynb`.
 - **Nhiệm vụ cốt lõi**:
-  1. **Knowledge Graph Merge**: Hợp nhất các cạnh tĩnh từ Hetionet v1.0 và các cạnh NLP mới; gắn trường `source_dataset` (`hetionet_v1.0` vs `nlp_literature`).
-  2. **Signed Rules Mapping**: Thiết lập bảng dấu sinh học:
-     - $INHIBITS (-1)$, $ACTIVATES (+1)$, $DECREASES (-1)$, $CAUSES (+1)$, $ASSOCIATED\_WITH (0)$.
-  3. **Metapath-Constrained DFS**: Dò tìm đường đi độ dài $L \in [3, 5]$ theo mẫu $Compound \to Gene \to [BP/PW] \to Disease$. **Bắt buộc cắt tỉa ngay nhánh đi qua `DOID:9352` (Type 2 Diabetes)**.
-  4. **Ranking Engine**: Tính điểm $PathScore(p)$ với hệ số khớp chiều $DirectionFit$ (1.5 cho -1, 1.0 cho 0, 0.0 cho +1) và khử siêu nút bằng hệ số $Penalty(p) = \gamma^{L-1} \prod deg(v)^w$. Tổng hợp Top 5 đường đi cốt lõi ra điểm $Score(d)$ và trừ phạt mâu thuẫn $\lambda \ln(1 + |U_{neg}|)$.
-- **Sản phẩm bàn giao**: File `artifacts/subgraph_dapa.json` và `artifacts/candidate_rankings.json` chuẩn Contract D & E.
+  1. **Nhận Contract D từ Huy**: Nạp đồ thị tri thức đã hợp nhất và kiểm tra tính toàn vẹn của các thuộc tính cạnh.
+  2. **Metapath-Constrained Pruned DFS (`path_search.py`)**: 
+     - Dò tìm đường đi sinh học độ dài $L \in [3, 5]$ theo khuôn mẫu $Compound \to Gene \to [BP/PW] \to Disease$.
+     - **Bắt buộc cắt tỉa ngay nhánh đi qua `DOID:9352` (Type 2 Diabetes)** để loại bỏ nhiễu lịch sử.
+  3. **Ranking Engine (`src/lbd/ranking/`)**:
+     - Tính trọng số cạnh $W(e)$ theo logarit bão hòa số lượng PMID độc lập.
+     - Tính độ bền toàn tuyến $EQ(p)$ bằng trung bình nhân (Geometric Mean).
+     - Áp dụng hệ số phạt siêu nút trung gian $Penalty(p) = \gamma^{L-1} \prod deg(v)^w$.
+     - Tính hệ số khớp chiều sinh học $DirectionFit(p)$ (1.5 cho -1, 1.0 cho 0, 0.0 cho +1).
+     - Tính điểm đường đi $PathScore(p) = \frac{EQ(p) \times DirectionFit(p)}{Penalty(p)}$.
+     - Tổng hợp Top $M=5$ đường đi cốt lõi ra điểm $Score(d)$ và trừ phạt mâu thuẫn $\lambda \ln(1 + |U_{neg}|)$.
+- **Sản phẩm bàn giao**: File `artifacts/candidate_rankings.json` chuẩn **Contract E** (bàn giao cho Phước và Web UI).
 
 ### D. Nguyễn Công Gia Phước (Evaluation & Application)
 - **Khu vực phụ trách**: `src/lbd/evaluation/`, `configs/evaluation.yaml`, `notebooks/05_evaluation.ipynb`, `scripts/run_smoke_test.py`.
