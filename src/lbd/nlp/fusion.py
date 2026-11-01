@@ -10,7 +10,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from nlp.v6_industrial.layer3_event_and_blinded_llm import (
+from .events import (
     BioEventFrame,
     ProjectedEdgeCandidate,
 )
@@ -96,7 +96,7 @@ class Layer5_BayesianBetaBinomialFuser:
                 if cand.section_weight <= 0.0:
                     continue
 
-                rel_id = f"REL_V6_{rel_counter:05d}"
+                rel_id = f"REL_{rel_counter:05d}"
                 rel_counter += 1
 
                 # Strictly compliant with dapagliflozin-lbd/contracts/relation.schema.json
@@ -230,7 +230,7 @@ class Layer5_BayesianBetaBinomialFuser:
                     partition = "REJECTED"
                     tier = 3
 
-                edge_id = f"EDGE_V6_{edge_counter:04d}"
+                edge_id = f"EDGE_{edge_counter:04d}"
                 edge_counter += 1
 
                 fused_edges.append(
@@ -280,10 +280,13 @@ class Layer5_BayesianBetaBinomialFuser:
     def to_contract_d_records(self, fused_edges: List[BayesianFusedEdge]) -> List[Dict[str, Any]]:
         """Converts admitted/active BayesianFusedEdges to strict Contract D JSON records
         compliant with `dapagliflozin-lbd/contracts/graph_edge.schema.json`.
+        Strict Industrial Gate: Only ADMITTED_KG, HISTORICAL_BASELINE_KG, and CONTRAINDICATED_LOCK
+        are allowed into the Knowledge Graph. PROVISIONAL_QUEUE and REJECTED are strictly excluded.
         """
+        ALLOWED_PARTITIONS = {"ADMITTED_KG", "HISTORICAL_BASELINE_KG", "CONTRAINDICATED_LOCK"}
         contract_d: List[Dict[str, Any]] = []
         for fe in fused_edges:
-            if fe.partition == "REJECTED":
+            if fe.partition not in ALLOWED_PARTITIONS:
                 continue
             record = {
                 "edge_id": fe.edge_id,
@@ -300,3 +303,7 @@ class Layer5_BayesianBetaBinomialFuser:
             }
             contract_d.append(record)
         return contract_d
+
+
+# Canonical names
+BayesianFusionEngine = Layer5_BayesianBetaBinomialFuser

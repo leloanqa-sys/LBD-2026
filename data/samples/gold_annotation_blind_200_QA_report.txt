@@ -1,0 +1,105 @@
+﻿QA REPORT — GOLD ANNOTATION BLIND 200 (NEW UPLOAD)
+========================================================================
+Input CSV: gold_annotation_blind_200(1).csv
+Input proposal PDF: ĐẲNG CẤP GIẢI PHÁP CHO AI (1).pdf
+Total records: 200
+Original columns: 13; annotated columns: 15
+Unique item_id: 200/200
+Unique PMID: 151
+
+1. ANNOTATION SUMMARY
+------------------------------------------------------------------------
+has_relation YES: 100
+has_relation NO: 100
+Within YES rows, direction_valid YES: 88
+Within YES rows, direction_valid NO: 12
+assertion_status among YES: ASSERTED=84, NEGATED=2, UNCERTAIN=14
+clinical_verb among YES: ASSOCIATED_WITH=5, CAUSES=1, DECREASES=15, IMPROVES=1, INCREASES=18, INCREASES_EXPOSURE=1, INCREASES_RISK=9, INHIBITS=23, NO_EFFECT_ON=1, PALLIATES=12, TREATS=14
+
+2. GRAPH EXPORT GATE
+------------------------------------------------------------------------
+HOLD_ASSERTION_STATUS: 14
+HOLD_DIRECTION: 12
+HOLD_ENTITY_OR_SEMANTICS: 11
+KG_READY_CONTENT_TEMPORAL_UNVERIFIED: 63
+NO_EDGE: 100
+Candidate edge rows (asserted + source→target valid + no semantic/ontology hold): 63
+Unique nodes in candidate edge registry: 14
+Aggregated unique (source, relation, target, sign) triples: 22
+Candidate edges are evidence-level rows; repeated source-target relations retain individual PMID evidence.
+
+3. ANNOTATION RULES
+------------------------------------------------------------------------
+• YES only when the supplied evidence sentence supports a relation between the declared source and target. Mere co-occurrence is not enough.
+• NO for study aims, trial design, title-only questions, search terms, eligibility criteria, group membership, and marker/entity mismatch.
+• UNCERTAIN is retained as a relation hypothesis but excluded from asserted-edge export.
+• NEGATED evidence is retained as counter-evidence (e.g., NO_EFFECT_ON) and excluded from positive asserted-edge export.
+• direction_valid=NO means the sentence contains a related fact but the declared source→target order or entity type is not suitable for that graph edge.
+• polarity_sign and assertion_status are independent: NEGATIVE means a decreasing/inhibitory effect, not a false statement.
+
+4. PROPOSAL SCHEMA ALIGNMENT
+------------------------------------------------------------------------
+Applied the supplied proposal's distinction among Compound→Gene inhibition/activation; Gene→Biological Process/Pathway; Process/State→Pressure/Volume; Gene/Biomarker→Disease association; and Compound/Mechanism→Disease treatment/palliation.
+Also kept edge relation type, polarity sign, and asserted/negated/uncertain status separate. ASSOCIATED_WITH (sign 0) is not treated as causal.
+Extended evidence labels used where the exact sentence requires finer semantics: INCREASES_RISK, NO_EFFECT_ON, INCREASES_EXPOSURE, IMPROVES, INCREASES and DECREASES. These should be declared in the project's relation-type enum/version before loading.
+
+5. ENTITY ID / ONTOLOGY NORMALIZATION
+------------------------------------------------------------------------
+• UTI corrected from DOID:13148 (acute cystitis) to DOID:0080784 (urinary tract infection).
+• DKA corrected from DOID:0050155 (sensory system disease) to DOID:1837 (diabetic ketoacidosis).
+• Broad Heart Failure normalized to MeSH:D006333; DOID:6000 specifically denotes congestive heart failure.
+• The proposal's own HF table lists DOID:9333; current Disease Ontology resolves DOID:9333 as an alternate ID for cleft lip (DOID:9296), so that code was not propagated. MeSH:D006333 is retained for broad Heart Failure.
+• Diabetes labels normalized while retaining DOID:9744 and DOID:9352.
+• NAFLD label updated to the current preferred DOID label with NAFLD retained as synonym.
+• GO mismatches (UGE, glucose reabsorption, BP, oxidative stress, plasma volume, natriuresis, urate excretion) are represented with explicit CUSTOM:* identifiers instead of attaching a false GO ID. These are project-local IDs, not standard ontology identifiers.
+See the separate entity_mapping_crosswalk.csv for each correction and rationale.
+
+6. TEMPORAL VALIDATION — NOT COMPLETE
+------------------------------------------------------------------------
+The proposal's historical graph has cutoff T=2018-12-31. The uploaded CSV contains PMID but no publication_date, retrieved_at or cutoff_date.
+All rows and exported edges therefore carry temporal_filter_status=UNVERIFIED_MISSING_PUBLICATION_DATE. Join PubMed publication dates, then filter pre-cutoff records before using this file for temporal backtesting. Do not silently mix post-cutoff validation evidence into the historical graph.
+
+7. HOLD-BACK ROWS
+------------------------------------------------------------------------
+GOLD_007 | PMID 27625142 | HOLD_ASSERTION_STATUS | Có nêu UTI nhưng tác giả nói pattern less clear; không kết luận tăng/giảm. Genital infection tăng không được gán nhầm sang UTI.
+GOLD_009 | PMID 24705156 | HOLD_DIRECTION | Sentence mô tả pharmacological blockade of SGLT2 làm giảm glucose reabsorption/tăng glucosuria; tác nhân là sự ức chế, không phải gene tự thân. Cặp Gene→process hiện tại không hợp chiều quan hệ trích xuất; HOLD_KG. CUSTOM_NODE: glucose reabsorption được giữ thành khái niệm riêng vì GO:0015758/GO:1904659 chỉ phản ánh D-glucose transmembrane transport, không phải exact term reabsorption.
+GOLD_017 | PMID 27802313 | HOLD_ASSERTION_STATUS | Câu đề xuất SGLT2 inhibitor như chiến lược promising để phòng/điều trị diabetic nephropathy; đây là đề xuất, không phải kết quả xác nhận. HOLD_KG: nephropathy là bệnh cụ thể hơn CKD, cần chuẩn hóa entity.
+GOLD_029 | PMID 28506912 | HOLD_ENTITY_OR_SEMANTICS | SGLT2 inhibitors alleviates diabetic pathological conditions, gồm nephropathy ở chuột T2D. HOLD_KG: diabetic nephropathy không đồng nhất hoàn toàn với node CKD; cần node/quan hệ phân cấp phù hợp.
+GOLD_038 | PMID 24105299 | HOLD_DIRECTION | Quan hệ có thật nhưng ngược chiều: câu cho biết UGE thấp hơn ở người khỏe mạnh so với người T2DM; tình trạng T2DM liên quan mức UGE cao hơn. Cạnh thực tế là T2D→UGE, không phải UGE→T2D. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+GOLD_042 | PMID 30019930 | HOLD_DIRECTION | Quan hệ có thật nhưng ngược chiều: renal impairment làm giảm glucose excretion; cạnh đúng là renal impairment/CKD→UGE (DECREASES), không phải UGE→CKD. HOLD_KG: renal impairment không đồng nghĩa hoàn toàn với CKD. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+GOLD_047 | PMID 27620988 | HOLD_DIRECTION | Câu nói SGLT2-specific inhibitors làm tăng glucose excretion; hiệu ứng được gán cho thuốc ức chế chứ không trực tiếp cho gene SLC5A2. HOLD_KG: không đưa cạnh Gene→UGE theo chiều SRC→TGT khi chưa chuẩn hóa chức năng đối nghịch. HOLD_KG: câu nêu protein SGLT2 xử lý tái hấp thu và inhibitors làm tăng UGE; cạnh gene→UGE là suy luận chức năng nghịch, cần tách node glucose reabsorption khỏi urinary glucose excretion. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+GOLD_050 | PMID 26484403 | HOLD_ASSERTION_STATUS | Dapagliflozin được nêu cùng liraglutide làm giảm blood glucose ở bệnh nhân T1D; đây là bằng chứng điều trị hỗ trợ, không phải chỉ mô tả quần thể. Pilot-study/adjunct context; interpret as preliminary glycemic-control evidence in T1D, not proof that dapagliflozin treats the underlying autoimmune disease.
+GOLD_054 | PMID 27867961 | HOLD_ASSERTION_STATUS | DKA được liệt kê là potential side effect/concern của SGLT2 inhibitors; giữ trạng thái UNCERTAIN, không biến thành quan hệ nhân quả chắc chắn.
+GOLD_058 | PMID 26549321 | HOLD_ASSERTION_STATUS | FDA warning nêu một số bệnh nhân dùng SGLT2 inhibitors phát triển DKA; ghi nhận adverse-event relation nhưng giữ UNCERTAIN vì câu không thiết lập nhân quả cho từng thuốc.
+GOLD_063 | PMID 26212528 | HOLD_ASSERTION_STATUS | Tần suất UTI tương tự placebo (10.1% so với 11.0%); đây là bằng chứng null/không thấy hiệu ứng của dapagliflozin lên UTI, cần lưu làm evidence mâu thuẫn chứ không tạo cạnh tăng nguy cơ.
+GOLD_067 | PMID 24400675 | HOLD_ASSERTION_STATUS | Câu nói rõ relationship giữa glucosuria và UTI còn uncertain; giữ cạnh liên kết trung tính/bất định, không gán nhân quả. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+GOLD_070 | PMID 24960177 | HOLD_ENTITY_OR_SEMANTICS | SGLT2 inhibitor dapagliflozin ameliorates diabetic nephropathy ở chuột db/db. HOLD_KG: nephropathy là subtype/phenotype, không được gộp mặc định với CKD. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+GOLD_076 | PMID 30270578 | HOLD_ENTITY_OR_SEMANTICS | SGLT2 inhibitors reverse hyperfiltration; trong ngữ cảnh này là làm giảm tình trạng lọc cầu thận quá mức. HOLD_KG: hyperfiltration là phenotype tăng lọc, không đồng nhất với toàn bộ glomerular filtration. HOLD_KG: marker hyperfiltration/eGFR/filtration measurement không hoàn toàn đồng nhất với GO glomerular filtration; cần tách process, function và clinical biomarker.
+GOLD_082 | PMID 24960177 | HOLD_ASSERTION_STATUS | Câu gợi ý dapagliflozin ameliorates diabetic nephropathy partly by inhibiting oxidative stress; cạnh Oxidative Stress→CKD là suy luận cơ chế trung gian, không phải mệnh đề trực tiếp nêu tác nhân và bệnh. Giữ UNCERTAIN, CUSTOM_NODE: oxidative stress không đồng nhất với GO:0006979 (response to oxidative stress); cần ontology crosswalk riêng. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+GOLD_088 | PMID 29349558 | HOLD_ASSERTION_STATUS | SGLT2 inhibitors có thể chuyển thành giảm tiến triển kidney disease; câu dùng may, nên giữ UNCERTAIN. HOLD_KG: marker kidney disease progression là outcome tiến triển, cần cân nhắc mapping sang CKD.
+GOLD_093 | PMID 26821720 | HOLD_ENTITY_OR_SEMANTICS | Câu khẳng định SGLT2 inhibitors có positive effects trên eGFR. Đây là cải thiện chỉ số thận; không diễn giải thành tăng GFR vô điều kiện ở mọi bối cảnh. HOLD_KG: marker hyperfiltration/eGFR/filtration measurement không hoàn toàn đồng nhất với GO glomerular filtration; cần tách process, function và clinical biomarker.
+GOLD_096 | PMID 29872475 | HOLD_DIRECTION | Câu nói SGLT2 inhibitors làm giảm glucose reabsorption; chủ thể thực tế là thuốc ức chế, không phải gene SLC5A2 tự nó. Quan hệ có thật nhưng source-target hiện tại không đúng chủ thể. HOLD_KG. CUSTOM_NODE: glucose reabsorption được giữ thành khái niệm riêng vì GO:0015758/GO:1904659 chỉ phản ánh D-glucose transmembrane transport, không phải exact term reabsorption.
+GOLD_110 | PMID 26372321 | HOLD_ASSERTION_STATUS | Tiêu đề bài báo nêu SGLT2 inhibitors và blood pressure decrease; chỉ có title, chưa có kết quả abstract trong câu evidence, giữ UNCERTAIN và không export. CUSTOM_NODE: BP là phenotype/measurement trong câu evidence; không dùng GO:0003073 (regulation of systemic arterial blood pressure) làm ID cho giá trị blood pressure.
+GOLD_122 | PMID 26484403 | HOLD_ASSERTION_STATUS | SGLT2 inhibitors được mô tả là show promise như adjunctive treatment cho T1D; giữ UNCERTAIN vì chưa phải kết luận hiệu quả chắc chắn.
+GOLD_124 | PMID 19243283 | HOLD_DIRECTION | Câu trực tiếp nói thuốc mới ức chế SGLT2 làm giảm glucose reabsorption; không trực tiếp khẳng định gene SLC5A2 làm tăng reabsorption trong đúng mệnh đề này. Source Gene không tương ứng tác nhân 'inhibition'; HOLD_KG. CUSTOM_NODE: glucose reabsorption được giữ thành khái niệm riêng vì GO:0015758/GO:1904659 chỉ phản ánh D-glucose transmembrane transport, không phải exact term reabsorption.
+GOLD_128 | PMID 24960177 | HOLD_ENTITY_OR_SEMANTICS | Dapagliflozin ameliorates diabetic nephropathy trong mô hình db/db. HOLD_KG: nephropathy là disease subtype, cần map cụ thể thay vì ép vào CKD tổng quát. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+GOLD_137 | PMID 29572114 | HOLD_ENTITY_OR_SEMANTICS | Dapagliflozin attenuates renal dysfunction và ameliorates renal injury. HOLD_KG: renal dysfunction không đồng nhất hoàn toàn với disease node CKD; cần chuẩn hóa target thành phenotype/CKD đúng. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+GOLD_142 | PMID 28116093 | HOLD_ENTITY_OR_SEMANTICS | Dapagliflozin ameliorates diabetic nephropathy bằng cách suppressing hyperglycemia-induced oxidative stress. HOLD_KG: nephropathy là subtype của bệnh thận, cần chuẩn hóa chính xác. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+GOLD_144 | PMID 23529570 | HOLD_DIRECTION | Dapagliflozin ức chế SGLT2 và làm tăng urinary glucose excretion; ở cạnh Gene→UGE, SLC5A2 bình thường góp phần tái hấp thu glucose nên làm giảm lượng glucose thải ra. HOLD_KG: evidence mô tả thuốc ức chế SLC5A2 làm tăng glucosuria; source entity là gene, không thể gán trực tiếp tác động của thuốc thành cạnh gene→UGE. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+GOLD_150 | PMID 27908315 | HOLD_ASSERTION_STATUS | Case report ghi nhận life-threatening ketoacidosis ở bệnh nhân được điều trị bằng SGLT2 inhibitor; đây là tín hiệu adverse event ở mức ca bệnh, không chứng minh nhân quả. DOID DKA đã được sửa sang DOID:1837.
+GOLD_151 | PMID 26741142 | HOLD_ENTITY_OR_SEMANTICS | CKD được mô tả là đặc trưng bởi single-nephron hyperfiltration và intraglomerular hypertension; đây là đặc điểm/association, không khẳng định filtration gây CKD. HOLD_KG: marker hyperfiltration cụ thể hơn GO:0003094 glomerular filtration. HOLD_KG: marker hyperfiltration/eGFR/filtration measurement không hoàn toàn đồng nhất với GO glomerular filtration; cần tách process, function và clinical biomarker.
+GOLD_152 | PMID 27802313 | HOLD_ENTITY_OR_SEMANTICS | Dapagliflozin cho thấy beneficial effects trên diabetic nephropathy ở OLETF rats. HOLD_KG: diabetic nephropathy cần node ontology riêng hoặc quan hệ is_a tới CKD. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+GOLD_156 | PMID 26741142 | HOLD_DIRECTION | Câu phủ định tác dụng renoprotective của SGLT2 inhibition trong mô hình non-diabetic CKD. Quan hệ thuốc ức chế→CKD được đánh giá nhưng source hiện là Gene SLC5A2, không phải DrugClass/Compound; direction_valid=NO để không tạo cạnh Gene→Disease sai.
+GOLD_158 | PMID 29141939 | HOLD_DIRECTION | Câu nói SGLT2 inhibition therapy attenuates diabetic nephropathy; relation thật là inhibitor therapy→nephropathy, không phải bản thân gene SLC5A2→CKD. direction_valid=NO. HOLD_KG: nephropathy cần chuẩn hóa riêng. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+GOLD_163 | PMID 30519189 | HOLD_ENTITY_OR_SEMANTICS | Reduced AMPK activity (PRKAA1) được liệt kê trong nhóm driver liên quan đến heart failure; theo schema Gene→Disease chỉ lưu ASSOCIATED_WITH, không suy rộng thành quan hệ nhân quả trực tiếp. HOLD_KG: marker 'AMPK activity' là hoạt tính phức hợp protein; không đồng nhất hoàn toàn với gene PRKAA1 (một tiểu đơn vị catalytic) nếu chưa xác minh mapping.
+GOLD_169 | PMID 21510836 | HOLD_DIRECTION | Câu mô tả inhibition of SGLT2 làm tăng renal glucose excretion; chức năng sinh lý bình thường của SLC5A2 là tái hấp thu glucose, do đó làm giảm glucose thải qua nước tiểu. HOLD_KG: evidence mô tả thuốc ức chế SLC5A2 làm tăng glucosuria; source entity là gene, không thể gán trực tiếp tác động của thuốc thành cạnh gene→UGE. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+GOLD_170 | PMID 29635129 | HOLD_ASSERTION_STATUS | Câu nêu renal protective effect của SGLT2 inhibitor dapagliflozin trong mô hình diabetic nephropathy. HOLD_KG: nephropathy cần chuẩn hóa thành disease node riêng. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping. Title-style evidence only; this is a study focus, not a result sentence. Do not use as a confirmed positive graph edge.
+GOLD_171 | PMID 23210765 | HOLD_DIRECTION | Quan hệ có thật nhưng ngược chiều: renal impairment làm tăng Cmax của dapagliflozin/D3OG; cạnh đúng là CKD/renal impairment→drug exposure, không phải Dapagliflozin→CKD. HOLD_KG: renal impairment không đồng nghĩa CKD.
+GOLD_179 | PMID 28116093 | HOLD_DIRECTION | Câu nói improvement in diabetic nephropathy by SGLT2 inhibitors có thể do tác động trực tiếp lên SGLT2 hoặc do cải thiện hyperglycemia; trạng thái UNCERTAIN. Source marker là SGLT2 (gene/target), nhưng tác nhân quan hệ thật là SGLT2 inhibitor therapy, nên không thể xuất cạnh Gene→Disease theo chiều đã khai báo. HOLD_KG: diabetic nephropathy cần node disease cụ thể, không gộp mặc định với CKD DOID:784.
+GOLD_188 | PMID 28536217 | HOLD_ASSERTION_STATUS | Sau khi ngừng dapagliflozin, bệnh nhân không còn episode UTI; tín hiệu dechallenge gợi ý adverse-event relation nhưng một case không chứng minh nhân quả.
+GOLD_194 | PMID 30089717 | HOLD_ENTITY_OR_SEMANTICS | Dapagliflozin limits podocyte damage trong proteinuric nondiabetic nephropathy. HOLD_KG: target nephropathy là phenotype/disease cụ thể, không đồng nhất với CKD nói chung. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+
+8. LIMITATIONS
+------------------------------------------------------------------------
+Annotation is grounded in the exact highlighted sentence supplied in the CSV and the relation framework in the supplied proposal. It is not a substitute for expert clinical adjudication or re-reading full abstracts/full text.
+Before treating this as a final Gold Standard, have a second biomedical annotator independently review the uncertain/held rows and report inter-annotator agreement.

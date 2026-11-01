@@ -16,6 +16,8 @@ data/raw/
 data/processed/
 data/cache/
 artifacts/cache/
+artifacts/*.json
+archive/
 *.parquet
 *.h5
 *.pt

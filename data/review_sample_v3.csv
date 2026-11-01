@@ -1,0 +1,5 @@
+﻿relation_id,pmid,source_entity,source_id,target_entity,target_id,relation_type,confidence_score,evidence,human_precision_label,human_polarity_label,reviewer_notes
+REL_00003,25516459,Dapagliflozin,DB06292,Type 2 Diabetes,DOID:9352,TREATS,0.4247,"By decreasing renal glucose absorption, these agents target hyperglycemia independent of insulin secretion or insulin sensitivity.",,,
+REL_00002,25516459,INS,3630,Type 2 Diabetes,DOID:9352,ASSOCIATED_WITH,0.5294,"By decreasing renal glucose absorption, these agents target hyperglycemia independent of insulin secretion or insulin sensitivity.",,,
+REL_00001,25516459,Dapagliflozin,DB06292,SLC5A2,6524,INHIBITS,0.617,Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors.,,,
+REL_00004,25516459,Dapagliflozin,DB06292,INS,3630,INHIBITS,0.4,"By decreasing renal glucose absorption, these agents target hyperglycemia independent of insulin secretion or insulin sensitivity.",,,

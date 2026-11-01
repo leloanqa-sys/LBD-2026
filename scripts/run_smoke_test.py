@@ -1,57 +1,119 @@
-"""End-to-end Smoke Test for Dapagliflozin LBD Pipeline."""
+#!/usr/bin/env python3
+"""End-to-End System Integration Smoke Test.
+
+Exercises the real pipeline across all components:
+1. Canonical Biomedical NLP extraction & evidence postprocessing
+2. Data Contract B and Contract D schema validation
+3. Entity & relation normalization
+4. Knowledge Graph construction
+5. Metapath search & biological sign consistency checking
+"""
 import sys
 from pathlib import Path
 
-# Add src to path
-sys.path.append(str(Path(__file__).resolve().parent.parent / "src"))
+# Add src to sys.path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT_DIR / "src"))
 
-from lbd.data.fetch_pubmed import create_document_record
+from lbd.common.logging import get_logger
+from lbd.common.validation import validate_contract
 from lbd.data.normalize import normalize_relation_record
-from lbd.data.load_hetionet import load_hetionet_subgraph
-from lbd.nlp.ner import annotate_abstract_pubtator
-from lbd.nlp.relation_extraction import extract_relations_from_text
-from lbd.nlp.postprocess import postprocess_relations
 from lbd.graph.build_graph import create_knowledge_graph
 from lbd.graph.path_search import search_metapaths
-from lbd.ranking.score_paths import score_individual_path
-from lbd.ranking.rank_candidates import score_disease_candidate
-from lbd.evaluation.run_experiment import evaluate_rankings
-from lbd.common.logging import get_logger
+from lbd.nlp.engine import NLPEngine
+from lbd.nlp.relation_extraction import extract_relations_from_text
+from lbd.ranking.score_paths import calculate_net_sign, get_direction_fit
 
 logger = get_logger("smoke_test")
 
-def run():
-    logger.info("=== Starting Smoke Test for Dapagliflozin LBD ===")
-    
-    # 1. Test Ingestion & Document Record
-    abstract = "Dapagliflozin inhibits SLC5A2 in kidney tubules. Natriuresis decreases plasma volume. Plasma volume causes heart failure burden."
-    doc = create_document_record("doc_test", "12345", "Test Title", abstract, "2018-01-01", "clinical_trial")
-    assert doc["temporal_filter_status"] == "passed"
-    logger.info("1. Document record temporal check passed.")
-    
-    # 2. Test NER & Relation Extraction
-    ents = annotate_abstract_pubtator("12345", abstract)
-    raw_rels = extract_relations_from_text("12345", abstract)
-    cleaned_rels = postprocess_relations(raw_rels, abstract)
-    normed_rels = [normalize_relation_record(r) for r in cleaned_rels]
-    logger.info(f"2. Extracted and normalized {len(normed_rels)} relations.")
-    
-    # 3. Test Graph Build & Metapath Search
-    hetio = load_hetionet_subgraph("DB06292")
-    G = create_knowledge_graph(hetio, normed_rels)
-    paths = search_metapaths(G, "DB06292", "DOID:9333", min_length=3, max_length=5)
-    logger.info(f"3. Found {len(paths)} metapaths to Heart Failure (DOID:9333).")
-    
-    # 4. Score Paths & Rank Candidate
-    scored_paths = [score_individual_path(p, hub_degrees=[10]) for p in paths]
-    candidate = score_disease_candidate("DOID:9333", "Heart Failure", scored_paths, contradicting_pmids=[])
-    logger.info(f"4. Candidate Heart Failure score: {candidate['ranking_score']}")
-    
-    # 5. Evaluate Rankings
-    eval_res = evaluate_rankings([candidate])
-    logger.info(f"5. Evaluation results: Recall@5={eval_res['recall@5']}, MRR={eval_res['mrr']}")
-    
-    logger.info("=== Smoke Test Completed Successfully! ===")
+
+def main() -> int:
+    logger.info("=== Starting LBD System Integration Smoke Test ===")
+
+    # Step 1: Real NLP Relation Extraction
+    sample_pmid = "29085817"
+    sample_title = "Dapagliflozin in patients with heart failure and type 2 diabetes"
+    sample_abstract = (
+        "Dapagliflozin reduces worsening heart failure and cardiovascular death in patients "
+        "with type 2 diabetes. Dapagliflozin inhibits SLC5A2, lowering blood glucose. "
+        "Inhibition of SLC5A2 attenuates chronic kidney disease progression."
+    )
+
+    logger.info("Step 1: Running canonical NLPEngine relation extraction...")
+    relations = extract_relations_from_text(
+        sample_pmid, sample_abstract, title=sample_title, strict_postprocess=True
+    )
+    logger.info(f"Extracted {len(relations)} relations from sample abstract.")
+    if not relations:
+        logger.error("FAIL: No relations extracted from sample abstract.")
+        return 1
+
+    # Step 2: Contract B Validation
+    logger.info("Step 2: Validating Contract B records against JSON Schema...")
+    for rel in relations:
+        is_valid, msg = validate_contract(rel, "relation.schema.json")
+        if not is_valid:
+            logger.error(f"FAIL: Contract B validation failed for {rel.get('relation_id')}: {msg}")
+            return 1
+    logger.info(f"PASS: All {len(relations)} relations conform strictly to Contract B.")
+
+    # Step 3: Normalization
+    logger.info("Step 3: Normalizing relations...")
+    normed_relations = [normalize_relation_record(r) for r in relations]
+    logger.info(f"PASS: Normalized {len(normed_relations)} relation records.")
+
+    # Step 4: Knowledge Graph Construction & Contract D Validation
+    logger.info("Step 4: Fusing into Knowledge Graph and validating Contract D edges...")
+    engine = NLPEngine()
+    doc = {"pmid": sample_pmid, "title": sample_title, "abstract": sample_abstract}
+    _, events, _ = engine.run_document(doc)
+    contract_b, fused, contract_d = engine.fuse_corpus(events)
+    if not contract_d:
+        logger.error("FAIL: No fused edges produced for Contract D.")
+        return 1
+
+    for edge in contract_d:
+        is_valid, msg = validate_contract(edge, "graph_edge.schema.json")
+        if not is_valid:
+            logger.error(f"FAIL: Contract D validation failed for {edge.get('edge_id')}: {msg}")
+            return 1
+    logger.info(f"PASS: Produced and validated {len(contract_d)} Contract D graph edges.")
+
+    # Step 5: Graph Building & Path Search
+    logger.info("Step 5: Testing Knowledge Graph traversal & metapath search...")
+    hetio_subgraph = {
+        "nodes": [
+            {"id": "DB06292", "canonical_name": "Dapagliflozin"},
+            {"id": "6524", "canonical_name": "SLC5A2"},
+            {"id": "DOID:6000", "canonical_name": "Heart Failure"},
+            {"id": "DOID:9352", "canonical_name": "Type 2 Diabetes Mellitus"},
+        ],
+        "edges": [
+            {"source": "DB06292", "target": "6524", "relation_type": "INHIBITS", "sign": -1},
+            {"source": "6524", "target": "DOID:6000", "relation_type": "CAUSES", "sign": 1},
+            {"source": "6524", "target": "DOID:9352", "relation_type": "TREATS", "sign": -1},
+        ],
+    }
+    graph = create_knowledge_graph(hetio_subgraph, contract_d)
+    paths = search_metapaths(graph, "DB06292", "DOID:6000", min_length=2, max_length=4)
+    logger.info(f"Found {len(paths)} metapath(s) connecting Dapagliflozin to Heart Failure.")
+    if not paths:
+        logger.error("FAIL: Expected at least one metapath to Heart Failure.")
+        return 1
+
+    # Step 6: Biological Sign Consistency
+    logger.info("Step 6: Testing biological sign algebra...")
+    golden_path_edges = [{"sign": -1}, {"sign": 1}]  # INHIBITS (-1) * CAUSES (+1) = -1 (Therapeutic)
+    net_sign = calculate_net_sign(golden_path_edges)
+    fit = get_direction_fit(net_sign)
+    if net_sign != -1 or fit != 1.5:
+        logger.error(f"FAIL: Expected net_sign=-1 and fit=1.5, got sign={net_sign}, fit={fit}")
+        return 1
+    logger.info("PASS: Biological sign algebra matches theoretical expectation.")
+
+    logger.info("=== ALL SMOKE TESTS PASSED CLEANLY (0 ERRORS) ===")
+    return 0
+
 
 if __name__ == "__main__":
-    run()
+    sys.exit(main())

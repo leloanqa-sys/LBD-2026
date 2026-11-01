@@ -8,6 +8,23 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Set, Tuple
 
+# Robust biomedical sentence splitter & PubTator hybrid annotator
+try:
+    from lbd.nlp.sentence_splitter import split_biomedical_sentences
+except ImportError:
+    try:
+        from nlp.sentence_splitter import split_biomedical_sentences
+    except ImportError:
+        split_biomedical_sentences = None
+
+try:
+    from lbd.nlp.ner_hybrid import annotate_abstract_hybrid
+except ImportError:
+    try:
+        from nlp.ner_hybrid import annotate_abstract_hybrid
+    except ImportError:
+        annotate_abstract_hybrid = None
+
 # -------------------------------------------------------------------------
 # 1. Multi-Ontology Registry with Intrinsic Biological Valence (V_entity)
 # -------------------------------------------------------------------------
@@ -81,50 +98,29 @@ ONTOLOGY_REGISTRY: List[Dict[str, Any]] = [
     # --- BIOLOGICAL PROCESSES & PHYSIOLOGICAL PHENOTYPES (CANONICAL HETIONET GO NODES) ---
     {
         "id": "GO:0006814",
-        "canonical_name": "Sodium Ion Transport & Natriuresis",
+        "canonical_name": "Sodium ion transport",
         "type": "BiologicalProcess",
-        "valence": -1,  # Increasing sodium excretion lowers blood pressure and cardiac preload
+        "valence": 0,  # Generic transport does not specify a clinical direction
         "patterns": [
-            r"\bnatriuresis\b",
-            r"\bosmotic\s+diuresis\b",
-            r"\burinary\s+sodium\s+excretion\b",
             r"\bsodium\s+ion\s+transport\b",
-            r"\btissue\s+sodium\s+content\b",
-        ],
-    },
-    {
-        "id": "GO:0060004",
-        "canonical_name": "Urinary Glucose Excretion (Glucosuria)",
-        "type": "BiologicalProcess",
-        "valence": -1,  # Beneficial glucuresis mechanism
-        "patterns": [
-            r"\burinary\s+glucose\s+excretion\b",
-            r"\bglucosuria\b",
-            r"\bglucuresis\b",
-            r"\bglycosuria\b",
+            r"\bsodium\s+transport\b",
         ],
     },
     {
         "id": "GO:0006006",
-        "canonical_name": "Glucose Metabolic Process & Renal Reabsorption",
+        "canonical_name": "Glucose metabolic process",
         "type": "BiologicalProcess",
-        "valence": 1,  # Inhibiting renal reabsorption lowers hyperglycemia
+        "valence": 0,
         "patterns": [
-            r"\brenal\s+glucose\s+reabsorption\b",
-            r"\bglucose\s+reabsorption\b",
             r"\bglucose\s+metabolic\s+process\b",
-            r"\brenal\s+glucose\s+absorption\b",
         ],
     },
     {
         "id": "GO:0006954",
-        "canonical_name": "Inflammatory Response & Fibrosis",
+        "canonical_name": "Inflammatory response",
         "type": "BiologicalProcess",
         "valence": 1,  # Pathological tissue inflammation
         "patterns": [
-            r"\bcardiac\s+fibrosis\b",
-            r"\brenal\s+fibrosis\b",
-            r"\bmyocardial\s+fibrosis\b",
             r"\binflammatory\s+response\b",
             r"\bvascular\s+inflammation\b",
         ],
@@ -132,7 +128,7 @@ ONTOLOGY_REGISTRY: List[Dict[str, Any]] = [
     {
         "id": "HP:0012592",
         "canonical_name": "Albuminuria & Proteinuria",
-        "type": "BiologicalProcess",
+        "type": "Phenotype",
         "valence": 1,  # Pathological urinary protein loss
         "patterns": [
             r"\balbuminuria\b",
@@ -145,7 +141,7 @@ ONTOLOGY_REGISTRY: List[Dict[str, Any]] = [
     {
         "id": "HP:0012213",
         "canonical_name": "Glomerular Filtration Rate",
-        "type": "BiologicalProcess",
+        "type": "Phenotype",
         "valence": -1,  # Healthy organ function
         "patterns": [
             r"\begfr\b",
@@ -380,16 +376,19 @@ class Layer12_ZoningAndGroundingEngine:
             return zoned_sents
 
         offset = (len(title.strip()) + 1) if title and title.strip() else 0
-        raw_parts: List[Tuple[int, int, str]] = []
-        last = 0
-        for m in _SENT_SPLIT_RX.finditer(abstract):
-            seg = abstract[last:m.start()]
-            if seg.strip():
-                raw_parts.append((offset + last, offset + m.start(), seg.strip()))
-            last = m.end()
-        tail = abstract[last:]
-        if tail.strip():
-            raw_parts.append((offset + last, offset + len(abstract), tail.strip()))
+        if split_biomedical_sentences is not None:
+            raw_parts = split_biomedical_sentences(abstract, start_offset=offset)
+        else:
+            raw_parts: List[Tuple[int, int, str]] = []
+            last = 0
+            for m in _SENT_SPLIT_RX.finditer(abstract):
+                seg = abstract[last:m.start()]
+                if seg.strip():
+                    raw_parts.append((offset + last, offset + m.start(), seg.strip()))
+                last = m.end()
+            tail = abstract[last:]
+            if tail.strip():
+                raw_parts.append((offset + last, offset + len(abstract), tail.strip()))
 
         current_zone = "BACKGROUND"
         n_parts = max(1, len(raw_parts))
@@ -445,7 +444,7 @@ class Layer12_ZoningAndGroundingEngine:
 
         return zoned_sents
 
-    def ground_and_resolve_coref(self, title: str, abstract: str) -> Dict[str, Any]:
+    def ground_and_resolve_coref(self, title: str, abstract: str, pmid: str = "", external_entities: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
         """Extracts ontology-grounded spans per sentence and applies Layer 2 Cross-Sentence
 
         Coreference Resolution so 'the drug', 'SGLT2i', 'SGLT2 inhibition' in a Dapagliflozin
@@ -468,8 +467,64 @@ class Layer12_ZoningAndGroundingEngine:
             re.IGNORECASE,
         )
 
+        # Generalized Anaphoric Patterns for Layer 2 Coreference Resolution
+        coref_drug_general_rx = re.compile(
+            r"\b(?:the\s+drug|this\s+drug|the\s+compound|this\s+compound|the\s+agent|this\s+agent|"
+            r"the\s+treatment|this\s+treatment|the\s+medication|this\s+medication|the\s+inhibitor|this\s+inhibitor)\b",
+            re.IGNORECASE,
+        )
+        coref_disease_general_rx = re.compile(
+            r"\b(?:the\s+disease|this\s+disease|the\s+disorder|this\s+disorder|"
+            r"the\s+condition|this\s+condition|the\s+syndrome|this\s+syndrome)\b",
+            re.IGNORECASE,
+        )
+
+        # Hybrid biomedical ontology enhancement
+        hybrid_entities = list(external_entities or [])
+        if external_entities is None and annotate_abstract_hybrid is not None and str(pmid).isdigit():
+            try:
+                hybrid_entities = annotate_abstract_hybrid(str(pmid), full_text)
+            except Exception:
+                hybrid_entities = []
+
+        # Pass 1: Extract all explicit entity mentions for each sentence
+        sentence_explicit_entities: List[Dict[str, Dict[str, Any]]] = []
+        doc_compounds_by_id: Dict[str, Dict[str, Any]] = {}
+        doc_diseases_by_id: Dict[str, Dict[str, Any]] = {}
+        title_compounds: List[Dict[str, Any]] = []
+        title_diseases: List[Dict[str, Any]] = []
+
         for sent in sentences:
             found_by_id: Dict[str, Dict[str, Any]] = {}
+            # Integrate hybrid entities matched in this sentence span
+            sent_l = sent.text.lower()
+            for he in hybrid_entities:
+                term = he.get("text", "").lower()
+                start_abs, end_abs = he.get("start"), he.get("end")
+                if start_abs is not None and end_abs is not None:
+                    start_abs, end_abs = int(start_abs), int(end_abs)
+                    rel_start, rel_end = start_abs - sent.char_start, end_abs - sent.char_start
+                    span_ok = 0 <= rel_start < rel_end <= len(sent.text) and sent.text[rel_start:rel_end].casefold() == term.casefold()
+                else:
+                    rel_start = sent_l.find(term)
+                    rel_end = rel_start + len(term) if rel_start >= 0 else -1
+                    span_ok = rel_start >= 0
+                if term and span_ok and he.get("type") not in ("GO_OTHER", "GO_UNRESOLVED_ASPECT"):
+                    eid = he["id"]
+                    if eid not in found_by_id:
+                        found_by_id[eid] = {
+                            "id": eid,
+                            "canonical_name": he.get("canonical_name", he.get("text")),
+                            "type": he.get("type", "Concept"),
+                            "valence": 1 if he.get("type") == "Disease" else (-1 if he.get("type") == "BiologicalProcess" else 0),
+                            "is_historical_baseline": (eid == "DOID:9352"),
+                            "matched_text": he.get("text"),
+                            "span_start": rel_start,
+                            "span_end": rel_end,
+                            "is_coref_resolved": False,
+                            "annotation_source": he.get("source", "external_annotator"),
+                        }
+
             for entry in ONTOLOGY_REGISTRY:
                 for rx in entry["compiled_rx"]:
                     m = rx.search(sent.text)
@@ -489,9 +544,25 @@ class Layer12_ZoningAndGroundingEngine:
                             }
                         break
 
-            # Layer 2: Cross-Sentence Coreference & Pharmacological Class Metonymy Resolution
-            # If the document is about Dapagliflozin and the sentence mentions 'SGLT2i' / 'SGLT2 inhibition'
-            # or 'the drug', resolve Dapagliflozin (DB06292) into the sentence entities AND keep SLC5A2 (6524)!
+            sentence_explicit_entities.append(found_by_id)
+            for eid, ent in found_by_id.items():
+                if ent.get("type") in ("Compound", "Chemical"):
+                    doc_compounds_by_id[eid] = ent
+                    if sent.section_zone == "TITLE":
+                        title_compounds.append(ent)
+                elif ent.get("type") == "Disease":
+                    doc_diseases_by_id[eid] = ent
+                    if sent.section_zone == "TITLE":
+                        title_diseases.append(ent)
+
+        # Pass 2: Apply Layer 2 Cross-Sentence Coreference & Pharmacological Class Metonymy Resolution
+        recent_compounds: List[Dict[str, Any]] = []
+        recent_diseases: List[Dict[str, Any]] = []
+
+        for idx, sent in enumerate(sentences):
+            found_by_id = sentence_explicit_entities[idx]
+
+            # 2a. Dapagliflozin-specific coreference
             if doc_has_dapagliflozin and "DB06292" not in found_by_id:
                 cm = coref_drug_rx.search(sent.text)
                 if cm:
@@ -506,7 +577,68 @@ class Layer12_ZoningAndGroundingEngine:
                         "span_start": cm.start(),
                         "span_end": cm.end(),
                         "is_coref_resolved": True,
+                        "annotation_source": "l2_coreference",
                     }
+            # 2b. General Drug/Compound coreference when sentence has no compound
+            elif not any(e.get("type") in ("Compound", "Chemical") for e in found_by_id.values()):
+                cm = coref_drug_general_rx.search(sent.text)
+                if cm:
+                    antecedent = None
+                    if title_compounds:
+                        antecedent = title_compounds[0]
+                    elif recent_compounds:
+                        antecedent = recent_compounds[-1]
+                    elif len(doc_compounds_by_id) == 1:
+                        antecedent = next(iter(doc_compounds_by_id.values()))
+
+                    if antecedent and antecedent["id"] not in found_by_id:
+                        sent.has_coref_drug = True
+                        found_by_id[antecedent["id"]] = {
+                            "id": antecedent["id"],
+                            "canonical_name": antecedent.get("canonical_name", antecedent.get("matched_text")),
+                            "type": "Compound",
+                            "valence": antecedent.get("valence", 0),
+                            "is_historical_baseline": antecedent.get("is_historical_baseline", False),
+                            "matched_text": sent.text[cm.start():cm.end()],
+                            "span_start": cm.start(),
+                            "span_end": cm.end(),
+                            "is_coref_resolved": True,
+                            "annotation_source": "l2_coreference",
+                        }
+
+            # 2c. General Disease coreference when sentence has no disease
+            if not any(e.get("type") == "Disease" for e in found_by_id.values()):
+                dm = coref_disease_general_rx.search(sent.text)
+                if dm:
+                    antecedent = None
+                    if title_diseases:
+                        antecedent = title_diseases[0]
+                    elif recent_diseases:
+                        antecedent = recent_diseases[-1]
+                    elif len(doc_diseases_by_id) == 1:
+                        antecedent = next(iter(doc_diseases_by_id.values()))
+
+                    if antecedent and antecedent["id"] not in found_by_id:
+                        found_by_id[antecedent["id"]] = {
+                            "id": antecedent["id"],
+                            "canonical_name": antecedent.get("canonical_name", antecedent.get("matched_text")),
+                            "type": "Disease",
+                            "valence": antecedent.get("valence", 1),
+                            "is_historical_baseline": antecedent.get("is_historical_baseline", False),
+                            "matched_text": sent.text[dm.start():dm.end()],
+                            "span_start": dm.start(),
+                            "span_end": dm.end(),
+                            "is_coref_resolved": True,
+                            "annotation_source": "l2_coreference",
+                        }
+
+            # Update recent antecedents with explicit entities from current sentence
+            cur_compounds = [e for e in found_by_id.values() if not e.get("is_coref_resolved", False) and e.get("type") in ("Compound", "Chemical")]
+            cur_diseases = [e for e in found_by_id.values() if not e.get("is_coref_resolved", False) and e.get("type") == "Disease"]
+            if cur_compounds:
+                recent_compounds = cur_compounds
+            if cur_diseases:
+                recent_diseases = cur_diseases
 
             sent.entities = list(found_by_id.values())
 
@@ -514,5 +646,10 @@ class Layer12_ZoningAndGroundingEngine:
             "doc_has_dapagliflozin": doc_has_dapagliflozin,
             "study_design": study_design,
             "study_weight": study_weight,
+            "external_entities": hybrid_entities,
             "sentences": sentences,
         }
+
+
+# Canonical names
+ZoningEngine = Layer12_ZoningAndGroundingEngine

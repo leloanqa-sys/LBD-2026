@@ -32,11 +32,16 @@ def search_metapaths(
                 edge_dict = G.get_edge_data(current, neighbor)
                 for key, edge_data in edge_dict.items():
                     edge_record = {
+                        "edge_id": edge_data.get("edge_id", ""),
                         "source": current,
                         "target": neighbor,
+                        "metaedge": edge_data.get("metaedge", ""),
                         "relation_type": edge_data.get("relation_type", "ASSOCIATED_WITH"),
+                        "source_dataset": edge_data.get("source_dataset", ""),
                         "sign": edge_data.get("sign", 0),
+                        "evidence_ids": edge_data.get("evidence_ids", []),
                         "pmids": edge_data.get("pmids", []),
+                        "evidence_sentences": edge_data.get("evidence_sentences", []),
                         "tier": edge_data.get("tier", 1)
                     }
                     dfs(neighbor, path + [neighbor], edges_accum + [edge_record])

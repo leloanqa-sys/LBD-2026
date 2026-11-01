@@ -1,0 +1,122 @@
+=== 1. DIRECTION_VALID == NO BUT HAS_RELATION == YES (12 cases) ===
+[GOLD_009] Declared: SLC5A2 [6524] -> Glucose Reabsorption [CUSTOM:GLUCOSE_REABSORPTION]
+       Verb: INCREASES | Notes: Sentence mô tả pharmacological blockade of SGLT2 làm giảm glucose reabsorption/tăng glucosuria; tác nhân là sự ức chế, không phải gene tự thân. Cặp Gene→process hiện tại không hợp chiều quan hệ trích xuất; HOLD_KG. CUSTOM_NODE: glucose reabsorption được giữ thành khái niệm riêng vì GO:0015758/GO:1904659 chỉ phản ánh D-glucose transmembrane transport, không phải exact term reabsorption.
+
+[GOLD_038] Declared: Urinary Glucose Excretion [CUSTOM:UGE] -> Type 2 Diabetes Mellitus [DOID:9352]
+       Verb: INCREASES | Notes: Quan hệ có thật nhưng ngược chiều: câu cho biết UGE thấp hơn ở người khỏe mạnh so với người T2DM; tình trạng T2DM liên quan mức UGE cao hơn. Cạnh thực tế là T2D→UGE, không phải UGE→T2D. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+
+[GOLD_042] Declared: Urinary Glucose Excretion [CUSTOM:UGE] -> Chronic Kidney Disease [DOID:784]
+       Verb: DECREASES | Notes: Quan hệ có thật nhưng ngược chiều: renal impairment làm giảm glucose excretion; cạnh đúng là renal impairment/CKD→UGE (DECREASES), không phải UGE→CKD. HOLD_KG: renal impairment không đồng nghĩa hoàn toàn với CKD. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+
+[GOLD_047] Declared: SLC5A2 [6524] -> Urinary Glucose Excretion [CUSTOM:UGE]
+       Verb: DECREASES | Notes: Câu nói SGLT2-specific inhibitors làm tăng glucose excretion; hiệu ứng được gán cho thuốc ức chế chứ không trực tiếp cho gene SLC5A2. HOLD_KG: không đưa cạnh Gene→UGE theo chiều SRC→TGT khi chưa chuẩn hóa chức năng đối nghịch. HOLD_KG: câu nêu protein SGLT2 xử lý tái hấp thu và inhibitors làm tăng UGE; cạnh gene→UGE là suy luận chức năng nghịch, cần tách node glucose reabsorption khỏi urinary glucose excretion. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+
+[GOLD_096] Declared: SLC5A2 [6524] -> Glucose Reabsorption [CUSTOM:GLUCOSE_REABSORPTION]
+       Verb: DECREASES | Notes: Câu nói SGLT2 inhibitors làm giảm glucose reabsorption; chủ thể thực tế là thuốc ức chế, không phải gene SLC5A2 tự nó. Quan hệ có thật nhưng source-target hiện tại không đúng chủ thể. HOLD_KG. CUSTOM_NODE: glucose reabsorption được giữ thành khái niệm riêng vì GO:0015758/GO:1904659 chỉ phản ánh D-glucose transmembrane transport, không phải exact term reabsorption.
+
+[GOLD_124] Declared: SLC5A2 [6524] -> Glucose Reabsorption [CUSTOM:GLUCOSE_REABSORPTION]
+       Verb: INCREASES | Notes: Câu trực tiếp nói thuốc mới ức chế SGLT2 làm giảm glucose reabsorption; không trực tiếp khẳng định gene SLC5A2 làm tăng reabsorption trong đúng mệnh đề này. Source Gene không tương ứng tác nhân 'inhibition'; HOLD_KG. CUSTOM_NODE: glucose reabsorption được giữ thành khái niệm riêng vì GO:0015758/GO:1904659 chỉ phản ánh D-glucose transmembrane transport, không phải exact term reabsorption.
+
+[GOLD_144] Declared: SLC5A2 [6524] -> Urinary Glucose Excretion [CUSTOM:UGE]
+       Verb: DECREASES | Notes: Dapagliflozin ức chế SGLT2 và làm tăng urinary glucose excretion; ở cạnh Gene→UGE, SLC5A2 bình thường góp phần tái hấp thu glucose nên làm giảm lượng glucose thải ra. HOLD_KG: evidence mô tả thuốc ức chế SLC5A2 làm tăng glucosuria; source entity là gene, không thể gán trực tiếp tác động của thuốc thành cạnh gene→UGE. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+
+[GOLD_156] Declared: SLC5A2 [6524] -> Chronic Kidney Disease [DOID:784]
+       Verb: TREATS | Notes: Câu phủ định tác dụng renoprotective của SGLT2 inhibition trong mô hình non-diabetic CKD. Quan hệ thuốc ức chế→CKD được đánh giá nhưng source hiện là Gene SLC5A2, không phải DrugClass/Compound; direction_valid=NO để không tạo cạnh Gene→Disease sai.
+
+[GOLD_158] Declared: SLC5A2 [6524] -> Chronic Kidney Disease [DOID:784]
+       Verb: PALLIATES | Notes: Câu nói SGLT2 inhibition therapy attenuates diabetic nephropathy; relation thật là inhibitor therapy→nephropathy, không phải bản thân gene SLC5A2→CKD. direction_valid=NO. HOLD_KG: nephropathy cần chuẩn hóa riêng. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+
+[GOLD_169] Declared: SLC5A2 [6524] -> Urinary Glucose Excretion [CUSTOM:UGE]
+       Verb: DECREASES | Notes: Câu mô tả inhibition of SGLT2 làm tăng renal glucose excretion; chức năng sinh lý bình thường của SLC5A2 là tái hấp thu glucose, do đó làm giảm glucose thải qua nước tiểu. HOLD_KG: evidence mô tả thuốc ức chế SLC5A2 làm tăng glucosuria; source entity là gene, không thể gán trực tiếp tác động của thuốc thành cạnh gene→UGE. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+
+[GOLD_171] Declared: Dapagliflozin [DB06292] -> Chronic Kidney Disease [DOID:784]
+       Verb: INCREASES_EXPOSURE | Notes: Quan hệ có thật nhưng ngược chiều: renal impairment làm tăng Cmax của dapagliflozin/D3OG; cạnh đúng là CKD/renal impairment→drug exposure, không phải Dapagliflozin→CKD. HOLD_KG: renal impairment không đồng nghĩa CKD.
+
+[GOLD_179] Declared: SLC5A2 [6524] -> Chronic Kidney Disease [DOID:784]
+       Verb: TREATS | Notes: Câu nói improvement in diabetic nephropathy by SGLT2 inhibitors có thể do tác động trực tiếp lên SGLT2 hoặc do cải thiện hyperglycemia; trạng thái UNCERTAIN. Source marker là SGLT2 (gene/target), nhưng tác nhân quan hệ thật là SGLT2 inhibitor therapy, nên không thể xuất cạnh Gene→Disease theo chiều đã khai báo. HOLD_KG: diabetic nephropathy cần node disease cụ thể, không gộp mặc định với CKD DOID:784.
+
+
+=== 2. ASSERTION_STATUS != ASSERTED BUT HAS_RELATION == YES (16 cases) ===
+[GOLD_007] Status: UNCERTAIN | Verb: ASSOCIATED_WITH | Declared: Dapagliflozin [DB06292] -> Urinary Tract Infection [DOID:0080784]
+       Notes: Có nêu UTI nhưng tác giả nói pattern less clear; không kết luận tăng/giảm. Genital infection tăng không được gán nhầm sang UTI.
+
+[GOLD_017] Status: UNCERTAIN | Verb: TREATS | Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Chronic Kidney Disease [DOID:784]
+       Notes: Câu đề xuất SGLT2 inhibitor như chiến lược promising để phòng/điều trị diabetic nephropathy; đây là đề xuất, không phải kết quả xác nhận. HOLD_KG: nephropathy là bệnh cụ thể hơn CKD, cần chuẩn hóa entity.
+
+[GOLD_050] Status: UNCERTAIN | Verb: TREATS | Declared: Dapagliflozin [DB06292] -> Type 1 Diabetes Mellitus [DOID:9744]
+       Notes: Dapagliflozin được nêu cùng liraglutide làm giảm blood glucose ở bệnh nhân T1D; đây là bằng chứng điều trị hỗ trợ, không phải chỉ mô tả quần thể. Pilot-study/adjunct context; interpret as preliminary glycemic-control evidence in T1D, not proof that dapagliflozin treats the underlying autoimmune disease.
+
+[GOLD_054] Status: UNCERTAIN | Verb: INCREASES_RISK | Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Diabetic Ketoacidosis [DOID:1837]
+       Notes: DKA được liệt kê là potential side effect/concern của SGLT2 inhibitors; giữ trạng thái UNCERTAIN, không biến thành quan hệ nhân quả chắc chắn.
+
+[GOLD_058] Status: UNCERTAIN | Verb: INCREASES_RISK | Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Diabetic Ketoacidosis [DOID:1837]
+       Notes: FDA warning nêu một số bệnh nhân dùng SGLT2 inhibitors phát triển DKA; ghi nhận adverse-event relation nhưng giữ UNCERTAIN vì câu không thiết lập nhân quả cho từng thuốc.
+
+[GOLD_063] Status: NEGATED | Verb: NO_EFFECT_ON | Declared: Dapagliflozin [DB06292] -> Urinary Tract Infection [DOID:0080784]
+       Notes: Tần suất UTI tương tự placebo (10.1% so với 11.0%); đây là bằng chứng null/không thấy hiệu ứng của dapagliflozin lên UTI, cần lưu làm evidence mâu thuẫn chứ không tạo cạnh tăng nguy cơ.
+
+[GOLD_067] Status: UNCERTAIN | Verb: ASSOCIATED_WITH | Declared: Urinary Glucose Excretion [CUSTOM:UGE] -> Urinary Tract Infection [DOID:0080784]
+       Notes: Câu nói rõ relationship giữa glucosuria và UTI còn uncertain; giữ cạnh liên kết trung tính/bất định, không gán nhân quả. CUSTOM_NODE: UGE chưa có standard ontology ID đã xác minh; dùng CUSTOM:UGE, có thể đưa vào KG nội bộ nhưng không trình bày như GO ID.
+
+[GOLD_082] Status: UNCERTAIN | Verb: CAUSES | Declared: Oxidative Stress [CUSTOM:OXIDATIVE_STRESS] -> Chronic Kidney Disease [DOID:784]
+       Notes: Câu gợi ý dapagliflozin ameliorates diabetic nephropathy partly by inhibiting oxidative stress; cạnh Oxidative Stress→CKD là suy luận cơ chế trung gian, không phải mệnh đề trực tiếp nêu tác nhân và bệnh. Giữ UNCERTAIN, CUSTOM_NODE: oxidative stress không đồng nhất với GO:0006979 (response to oxidative stress); cần ontology crosswalk riêng. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+
+[GOLD_088] Status: UNCERTAIN | Verb: PALLIATES | Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Chronic Kidney Disease [DOID:784]
+       Notes: SGLT2 inhibitors có thể chuyển thành giảm tiến triển kidney disease; câu dùng may, nên giữ UNCERTAIN. HOLD_KG: marker kidney disease progression là outcome tiến triển, cần cân nhắc mapping sang CKD.
+
+[GOLD_110] Status: UNCERTAIN | Verb: DECREASES | Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Blood Pressure [CUSTOM:BP]
+       Notes: Tiêu đề bài báo nêu SGLT2 inhibitors và blood pressure decrease; chỉ có title, chưa có kết quả abstract trong câu evidence, giữ UNCERTAIN và không export. CUSTOM_NODE: BP là phenotype/measurement trong câu evidence; không dùng GO:0003073 (regulation of systemic arterial blood pressure) làm ID cho giá trị blood pressure.
+
+[GOLD_122] Status: UNCERTAIN | Verb: TREATS | Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Type 1 Diabetes Mellitus [DOID:9744]
+       Notes: SGLT2 inhibitors được mô tả là show promise như adjunctive treatment cho T1D; giữ UNCERTAIN vì chưa phải kết luận hiệu quả chắc chắn.
+
+[GOLD_150] Status: UNCERTAIN | Verb: INCREASES_RISK | Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Diabetic Ketoacidosis [DOID:1837]
+       Notes: Case report ghi nhận life-threatening ketoacidosis ở bệnh nhân được điều trị bằng SGLT2 inhibitor; đây là tín hiệu adverse event ở mức ca bệnh, không chứng minh nhân quả. DOID DKA đã được sửa sang DOID:1837.
+
+[GOLD_156] Status: NEGATED | Verb: TREATS | Declared: SLC5A2 [6524] -> Chronic Kidney Disease [DOID:784]
+       Notes: Câu phủ định tác dụng renoprotective của SGLT2 inhibition trong mô hình non-diabetic CKD. Quan hệ thuốc ức chế→CKD được đánh giá nhưng source hiện là Gene SLC5A2, không phải DrugClass/Compound; direction_valid=NO để không tạo cạnh Gene→Disease sai.
+
+[GOLD_170] Status: UNCERTAIN | Verb: TREATS | Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Chronic Kidney Disease [DOID:784]
+       Notes: Câu nêu renal protective effect của SGLT2 inhibitor dapagliflozin trong mô hình diabetic nephropathy. HOLD_KG: nephropathy cần chuẩn hóa thành disease node riêng. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping. Title-style evidence only; this is a study focus, not a result sentence. Do not use as a confirmed positive graph edge.
+
+[GOLD_179] Status: UNCERTAIN | Verb: TREATS | Declared: SLC5A2 [6524] -> Chronic Kidney Disease [DOID:784]
+       Notes: Câu nói improvement in diabetic nephropathy by SGLT2 inhibitors có thể do tác động trực tiếp lên SGLT2 hoặc do cải thiện hyperglycemia; trạng thái UNCERTAIN. Source marker là SGLT2 (gene/target), nhưng tác nhân quan hệ thật là SGLT2 inhibitor therapy, nên không thể xuất cạnh Gene→Disease theo chiều đã khai báo. HOLD_KG: diabetic nephropathy cần node disease cụ thể, không gộp mặc định với CKD DOID:784.
+
+[GOLD_188] Status: UNCERTAIN | Verb: INCREASES_RISK | Declared: Dapagliflozin [DB06292] -> Urinary Tract Infection [DOID:0080784]
+       Notes: Sau khi ngừng dapagliflozin, bệnh nhân không còn episode UTI; tín hiệu dechallenge gợi ý adverse-event relation nhưng một case không chứng minh nhân quả.
+
+
+=== 3. HOLD_ENTITY_OR_SEMANTICS (11 cases) ===
+[GOLD_029] Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Chronic Kidney Disease [DOID:784]
+       Notes: SGLT2 inhibitors alleviates diabetic pathological conditions, gồm nephropathy ở chuột T2D. HOLD_KG: diabetic nephropathy không đồng nhất hoàn toàn với node CKD; cần node/quan hệ phân cấp phù hợp.
+
+[GOLD_070] Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Chronic Kidney Disease [DOID:784]
+       Notes: SGLT2 inhibitor dapagliflozin ameliorates diabetic nephropathy ở chuột db/db. HOLD_KG: nephropathy là subtype/phenotype, không được gộp mặc định với CKD. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+
+[GOLD_076] Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Glomerular Filtration [GO:0003094]
+       Notes: SGLT2 inhibitors reverse hyperfiltration; trong ngữ cảnh này là làm giảm tình trạng lọc cầu thận quá mức. HOLD_KG: hyperfiltration là phenotype tăng lọc, không đồng nhất với toàn bộ glomerular filtration. HOLD_KG: marker hyperfiltration/eGFR/filtration measurement không hoàn toàn đồng nhất với GO glomerular filtration; cần tách process, function và clinical biomarker.
+
+[GOLD_093] Declared: SGLT2 Inhibitors (Drug Class) [CLASS:SGLT2i] -> Glomerular Filtration [GO:0003094]
+       Notes: Câu khẳng định SGLT2 inhibitors có positive effects trên eGFR. Đây là cải thiện chỉ số thận; không diễn giải thành tăng GFR vô điều kiện ở mọi bối cảnh. HOLD_KG: marker hyperfiltration/eGFR/filtration measurement không hoàn toàn đồng nhất với GO glomerular filtration; cần tách process, function và clinical biomarker.
+
+[GOLD_128] Declared: Dapagliflozin [DB06292] -> Chronic Kidney Disease [DOID:784]
+       Notes: Dapagliflozin ameliorates diabetic nephropathy trong mô hình db/db. HOLD_KG: nephropathy là disease subtype, cần map cụ thể thay vì ép vào CKD tổng quát. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+
+[GOLD_137] Declared: Dapagliflozin [DB06292] -> Chronic Kidney Disease [DOID:784]
+       Notes: Dapagliflozin attenuates renal dysfunction và ameliorates renal injury. HOLD_KG: renal dysfunction không đồng nhất hoàn toàn với disease node CKD; cần chuẩn hóa target thành phenotype/CKD đúng. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+
+[GOLD_142] Declared: Dapagliflozin [DB06292] -> Chronic Kidney Disease [DOID:784]
+       Notes: Dapagliflozin ameliorates diabetic nephropathy bằng cách suppressing hyperglycemia-induced oxidative stress. HOLD_KG: nephropathy là subtype của bệnh thận, cần chuẩn hóa chính xác. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+
+[GOLD_151] Declared: Glomerular Filtration [GO:0003094] -> Chronic Kidney Disease [DOID:784]
+       Notes: CKD được mô tả là đặc trưng bởi single-nephron hyperfiltration và intraglomerular hypertension; đây là đặc điểm/association, không khẳng định filtration gây CKD. HOLD_KG: marker hyperfiltration cụ thể hơn GO:0003094 glomerular filtration. HOLD_KG: marker hyperfiltration/eGFR/filtration measurement không hoàn toàn đồng nhất với GO glomerular filtration; cần tách process, function và clinical biomarker.
+
+[GOLD_152] Declared: Dapagliflozin [DB06292] -> Chronic Kidney Disease [DOID:784]
+       Notes: Dapagliflozin cho thấy beneficial effects trên diabetic nephropathy ở OLETF rats. HOLD_KG: diabetic nephropathy cần node ontology riêng hoặc quan hệ is_a tới CKD. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+
+[GOLD_163] Declared: PRKAA1 [5562] -> Heart Failure [MESH:D006333]
+       Notes: Reduced AMPK activity (PRKAA1) được liệt kê trong nhóm driver liên quan đến heart failure; theo schema Gene→Disease chỉ lưu ASSOCIATED_WITH, không suy rộng thành quan hệ nhân quả trực tiếp. HOLD_KG: marker 'AMPK activity' là hoạt tính phức hợp protein; không đồng nhất hoàn toàn với gene PRKAA1 (một tiểu đơn vị catalytic) nếu chưa xác minh mapping.
+
+[GOLD_194] Declared: Dapagliflozin [DB06292] -> Chronic Kidney Disease [DOID:784]
+       Notes: Dapagliflozin limits podocyte damage trong proteinuric nondiabetic nephropathy. HOLD_KG: target nephropathy là phenotype/disease cụ thể, không đồng nhất với CKD nói chung. HOLD_KG: marker nephropathy/renal dysfunction không đồng nhất mặc định với CKD tổng quát DOID:784; cần node disease/phenotype riêng hoặc subtype mapping.
+

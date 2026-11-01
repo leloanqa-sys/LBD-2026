@@ -575,3 +575,7 @@ class Layer4_PolarityAndGradeReasoner:
             local_clause=local_clause,
             rationale="General biological association.",
         )
+
+
+# Canonical names
+PolarityEngine = Layer4_PolarityAndGradeReasoner

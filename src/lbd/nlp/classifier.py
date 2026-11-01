@@ -29,8 +29,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Set, Tuple, Any, Optional
 
-if "bio_re_engine_v3" not in sys.modules:
-    sys.modules["bio_re_engine_v3"] = sys.modules[__name__]
+sys.modules["bio_re_engine_v3"] = sys.modules[__name__]
+sys.modules["lbd.nlp.bio_re_engine_v3"] = sys.modules[__name__]
 
 
 import numpy as np
@@ -758,3 +758,8 @@ def load_v3_engine(checkpoint_path: Optional[Path] = None) -> ZonedPoolingMultiC
     engine._ckpt_path = str(checkpoint_path)
     _GLOBAL_V3_ENGINE = engine
     return engine
+
+
+# Canonical names
+BiomedicalRelationClassifier = ZonedPoolingMultiClassBioREEngineV3
+load_relation_classifier = load_v3_engine

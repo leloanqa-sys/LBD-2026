@@ -1,0 +1,14 @@
+﻿original_entity_string,normalized_entity_string,mapping_status,mapping_rationale
+Urinary Tract Infection [DOID:13148],Urinary Tract Infection [DOID:0080784],CORRECTED_STANDARD_ID,DOID:13148 is acute cystitis; DOID:0080784 is urinary tract infection.
+Diabetic Ketoacidosis [DOID:0050155],Diabetic Ketoacidosis [DOID:1837],CORRECTED_STANDARD_ID,DOID:0050155 is sensory system disease; DOID:1837 is diabetic ketoacidosis.
+Heart Failure [DOID:6000],Heart Failure [MESH:D006333],CORRECTED_BROADER_CONCEPT,DOID:6000 is congestive heart failure; MeSH D006333 is the broader Heart Failure descriptor.
+Type 1 Diabetes [DOID:9744],Type 1 Diabetes Mellitus [DOID:9744],LABEL_NORMALIZED,Preserved ID; canonical disease wording normalized.
+Type 2 Diabetes [DOID:9352],Type 2 Diabetes Mellitus [DOID:9352],LABEL_NORMALIZED,Preserved ID; canonical disease wording normalized.
+NAFLD [DOID:0080208],Metabolic Dysfunction-Associated Steatotic Liver Disease (NAFLD) [DOID:0080208],CANONICAL_LABEL_UPDATED,Current DOID preferred name; NAFLD remains a synonym.
+Urinary Glucose Excretion [GO:1904659],Urinary Glucose Excretion [CUSTOM:UGE],CUSTOM_NODE_UNMAPPED,"GO:1904659 is D-glucose transmembrane transport, not urinary glucose excretion."
+Glucose Transmembrane Transport [GO:0015758],Glucose Reabsorption [CUSTOM:GLUCOSE_REABSORPTION],CUSTOM_NODE_UNMAPPED,GO:0015758 is an alternate ID for GO:1904659 D-glucose transmembrane transport; the highlighted concept is glucose reabsorption.
+Blood Pressure Regulation [GO:0003073],Blood Pressure [CUSTOM:BP],CUSTOM_NODE_UNMAPPED,GO:0003073 is regulation of systemic arterial blood pressure; highlighted sentences mention blood-pressure measurement/phenotype.
+Oxidative Stress [GO:0006979],Oxidative Stress [CUSTOM:OXIDATIVE_STRESS],CUSTOM_NODE_UNMAPPED,"GO:0006979 is response to oxidative stress, not the state oxidative stress itself."
+Plasma Volume [GO:0003091],Plasma Volume [CUSTOM:PLASMA_VOLUME],CUSTOM_NODE_UNMAPPED,"GO:0003091 is renal water homeostasis, not plasma volume."
+Natriuresis [GO:0003095],Natriuresis [CUSTOM:NATRIURESIS],CUSTOM_NODE_UNMAPPED,"GO:0003095 is pressure natriuresis, narrower than generic natriuresis."
+Urate Excretion [GO:0072488],Urate Excretion [CUSTOM:URATE_EXCRETION],CUSTOM_NODE_UNMAPPED,"GO:0072488 is ammonium transmembrane transport, not urate excretion."
