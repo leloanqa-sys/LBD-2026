@@ -371,6 +371,11 @@ class Layer3_BioEventAndBlindedLLMEngine:
             }
             self.cache[cache_key] = result
             return result
+        except urllib.error.HTTPError as e:
+            if e.code in (401, 403):
+                logger.warning(f"Groq API key returned HTTP {e.code} (Unauthorized/Forbidden). Fast-disabling live LLM for this run.")
+                self.api_key = None
+            self.symbolic_decisions += 1
         except Exception as e:
             self.symbolic_decisions += 1
             return {

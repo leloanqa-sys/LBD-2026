@@ -136,14 +136,20 @@ def evaluate(
         pred_conf = 0.0
         pred_cand = None
 
+        clean_src_id = src_id.split(":")[-1]
+        clean_tgt_id = tgt_id.split(":")[-1]
+
         # Look for matching edge candidate in events
         for ev in events:
             for cand in ev.projected_edges:
+                cand_src_clean = cand.source_id.split(":")[-1]
+                cand_tgt_clean = cand.target_id.split(":")[-1]
+
                 # Check id match or name match in either direction
-                match_fwd = (cand.source_id == src_id or cand.source_name.lower() == src_name.lower()) and \
-                            (cand.target_id == tgt_id or cand.target_name.lower() == tgt_name.lower())
-                match_rev = (cand.source_id == tgt_id or cand.source_name.lower() == tgt_name.lower()) and \
-                            (cand.target_id == src_id or cand.target_name.lower() == src_name.lower())
+                match_fwd = (cand.source_id == src_id or cand_src_clean == clean_src_id or cand.source_name.lower() == src_name.lower()) and \
+                            (cand.target_id == tgt_id or cand_tgt_clean == clean_tgt_id or cand.target_name.lower() == tgt_name.lower())
+                match_rev = (cand.source_id == tgt_id or cand_src_clean == clean_tgt_id or cand.source_name.lower() == tgt_name.lower()) and \
+                            (cand.target_id == src_id or cand_tgt_clean == clean_src_id or cand.target_name.lower() == src_name.lower())
                 if match_fwd or match_rev:
                     if cand.canonical_relation not in ("NO_RELATION", "NONE"):
                         pred_rel = cand.canonical_relation
@@ -156,7 +162,8 @@ def evaluate(
 
         # Also check statistical classifier scores if candidate wasn't picked up by event parser
         cand_pair_key = tuple(sorted((src_id, tgt_id)))
-        stat_score = scores.get(cand_pair_key, {})
+        cand_pair_key_clean = tuple(sorted((clean_src_id, clean_tgt_id)))
+        stat_score = scores.get(cand_pair_key) or scores.get(cand_pair_key_clean, {})
         prob_has_rel = stat_score.get("prob_has_relation", 0.0)
 
         # Final predicted decision: relation detected if event frame found with valid relation OR stat score >= threshold
@@ -177,9 +184,9 @@ def evaluate(
             tn += 1
             by_type_pair[pair_type_label]["tn"] += 1
 
-        # KG Ready Subset (63 edges marked KG_READY vs 100 NO_EDGE)
-        is_kg_ready = kg_status == "KG_READY_CONTENT_TEMPORAL_UNVERIFIED"
-        is_no_edge = kg_status == "NO_EDGE"
+        # KG Ready Subset
+        is_kg_ready = kg_status in ("KG_READY_CONTENT_TEMPORAL_UNVERIFIED", "YES")
+        is_no_edge = kg_status in ("NO_EDGE", "NO")
         if is_kg_ready:
             if system_has_rel:
                 kg_tp += 1
@@ -240,7 +247,7 @@ def evaluate(
             "specificity": round(specificity, 4),
         },
         "kg_ready_subset": {
-            "gold_edges_evaluated": 63,
+            "gold_edges_evaluated": kg_tp + kg_fn,
             "confusion_matrix": {"TP": kg_tp, "FP": kg_fp, "FN": kg_fn, "TN": kg_tn},
             "precision": round(kg_precision, 4),
             "recall": round(kg_recall, 4),
@@ -268,11 +275,11 @@ if __name__ == "__main__":
         gt_file = ROOT_DIR / "data" / "samples" / "gold_annotation_blind_200_annotated_for_kg.csv"
     res = evaluate(gt_file, enable_live_llm=not args.no_llm, max_live_llm_calls=args.max_llm_calls)
 
-    out_file = ROOT_DIR / "data" / "samples" / "evaluation_report_gold_200.json"
+    out_file = ROOT_DIR / "data" / "samples" / f"evaluation_report_{gt_file.stem}.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
 
-    print("\n================ EVALUATION RESULTS (GOLD 200) ================")
+    print(f"\n================ EVALUATION RESULTS ({gt_file.name}) ================")
     print(f"Total Evaluated: {res['total_records']}")
     print(f"Confusion Matrix: TP={res['confusion_matrix_all_200']['TP']}, FP={res['confusion_matrix_all_200']['FP']}, FN={res['confusion_matrix_all_200']['FN']}, TN={res['confusion_matrix_all_200']['TN']}")
     print(f"Precision:   {res['metrics_all_200']['precision'] * 100:.2f}%")
@@ -281,7 +288,7 @@ if __name__ == "__main__":
     print(f"Accuracy:    {res['metrics_all_200']['accuracy'] * 100:.2f}%")
     print(f"Specificity: {res['metrics_all_200']['specificity'] * 100:.2f}%")
     print("---------------------------------------------------------------")
-    print(f"KG-Ready Subset (63 Clean Asserted Edges):")
+    print(f"KG-Ready Subset ({res['kg_ready_subset']['gold_edges_evaluated']} Clean Asserted Edges):")
     print(f"  Precision: {res['kg_ready_subset']['precision'] * 100:.2f}%")
     print(f"  Recall:    {res['kg_ready_subset']['recall'] * 100:.2f}%")
     print(f"  F1-Score:  {res['kg_ready_subset']['f1'] * 100:.2f}%")
