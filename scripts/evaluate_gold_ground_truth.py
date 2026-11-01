@@ -87,20 +87,31 @@ def evaluate(
     print(f"Running end-to-end NLP pipeline on all {len(gold_rows)} items (Live LLM: {enable_live_llm})...")
 
     for idx, r in enumerate(gold_rows, 1):
-        item_id = r["item_id"]
-        pmid = r["pmid"]
-        gold_has_rel = r["has_relation"].strip().upper() == "YES"
-        gold_verb = r.get("clinical_verb", "NONE").strip().upper()
-        gold_polarity = r.get("polarity_sign", "NONE").strip().upper()
-        gold_assertion = r.get("assertion_status", "NOT_APPLICABLE").strip().upper()
-        kg_status = r.get("kg_export_status", "NO_EDGE").strip()
+        item_id = r.get("sample_id") or r.get("item_id", f"ITEM_{idx:03d}")
+        pmid = r.get("pmid", "")
+        gold_rel_val = r.get("human_has_relation") or r.get("has_relation", "")
+        gold_has_rel = str(gold_rel_val).strip().upper() in ("1", "YES", "TRUE")
+        gold_verb = (r.get("human_relation_type") or r.get("clinical_verb") or "NONE").strip().upper()
+        gold_polarity = (r.get("human_polarity_sign") or r.get("polarity_sign") or "NONE").strip().upper()
+        gold_assertion = (r.get("human_assertion_status") or r.get("assertion_status") or "NOT_APPLICABLE").strip().upper()
+        kg_status = (r.get("human_kg_viable") or r.get("kg_export_status") or "NO_EDGE").strip().upper()
 
-        src_name, src_id = parse_entity_string(r["source_entity"])
-        tgt_name, tgt_id = parse_entity_string(r["target_entity"])
+        if "source_entity" in r and "[" in r["source_entity"]:
+            src_name, src_id = parse_entity_string(r["source_entity"])
+        else:
+            src_name = r.get("source_name", "").strip()
+            src_id = r.get("source_id", "").strip()
+
+        if "target_entity" in r and "[" in r["target_entity"]:
+            tgt_name, tgt_id = parse_entity_string(r["target_entity"])
+        else:
+            tgt_name = r.get("target_name", "").strip()
+            tgt_id = r.get("target_id", "").strip()
+
         src_type = r.get("source_type", "Entity").strip()
         tgt_type = r.get("target_type", "Entity").strip()
 
-        raw_sentence = r["highlighted_sentence"]
+        raw_sentence = r.get("sentence_highlighted") or r.get("highlighted_sentence", "")
         clean_text, s_txt, s_s, s_e, t_txt, t_s, t_e = strip_markup(raw_sentence)
 
         # Prepare external entities
@@ -243,12 +254,18 @@ def evaluate(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Evaluate on Gold 200 ground truth")
+    parser = argparse.ArgumentParser(description="Evaluate on Gold ground truth benchmark")
+    parser.add_argument("--data", type=str, default="", help="Path to ground truth CSV file")
     parser.add_argument("--no-llm", action="store_true", help="Disable live LLM calls")
     parser.add_argument("--max-llm-calls", type=int, default=120, help="Maximum live LLM calls")
     args = parser.parse_args()
 
-    gt_file = ROOT_DIR / "data" / "samples" / "gold_annotation_blind_200_annotated_for_kg.csv"
+    if args.data:
+        gt_file = Path(args.data)
+        if not gt_file.is_absolute():
+            gt_file = ROOT_DIR / gt_file
+    else:
+        gt_file = ROOT_DIR / "data" / "samples" / "gold_annotation_blind_200_annotated_for_kg.csv"
     res = evaluate(gt_file, enable_live_llm=not args.no_llm, max_live_llm_calls=args.max_llm_calls)
 
     out_file = ROOT_DIR / "data" / "samples" / "evaluation_report_gold_200.json"
