@@ -1,688 +1,622 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LBD · Nền Tảng Tái Định Vị Thuốc & Thẩm Định Chuyên Gia (Human-in-the-Loop)</title>
-<style>
-:root {
-  --primary: #15574c;
-  --primary-light: #238b79;
-  --primary-bg: #eef6f4;
-  --bg: #f3f6f4;
-  --card: #ffffff;
-  --border: #d4ded9;
-  --text: #1a2e2b;
-  --text-muted: #59736d;
-  --green: #2e7d32;
-  --green-bg: #e8f5e9;
-  --red: #c62828;
-  --red-bg: #ffebee;
-  --orange: #e65100;
-  --orange-bg: #fff3e0;
-  --blue: #1565c0;
-  --blue-bg: #e3f2fd;
-  --purple: #6a1b9a;
-  --purple-bg: #f3e5f5;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, sans-serif; }
-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 28px; }
-.header-wrap { max-width: 1300px; margin: auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-.header-title h1 { margin: 0; font-size: 20px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
-.header-title p { margin: 2px 0 0; font-size: 13px; color: var(--text-muted); }
-.badges { display: flex; gap: 8px; flex-wrap: wrap; }
-.badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-.badge-green { background: var(--green-bg); color: var(--green); border: 1px solid #c8e6c9; }
-.badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid #bbdefb; }
-.badge-orange { background: var(--orange-bg); color: var(--orange); border: 1px solid #ffe0b2; }
+  <meta charset="UTF-8">
+  <title>Hệ Thống Tái Định Vị Thuốc Trên Đồ Thị Có Dấu (Signed LBD)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --green: #16a34a;
+      --green-bg: #dcfce7;
+      --green-border: #86efac;
+      --red: #dc2626;
+      --red-bg: #fee2e2;
+      --red-border: #fca5a5;
+      --neutral: #475569;
+      --neutral-bg: #f1f5f9;
+      --pill-bg: #e0f2fe;
+      --pill-text: #0369a1;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
 
-main { max-width: 1300px; margin: 18px auto; padding: 0 20px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 16px 24px;
+    }
 
-/* Control Panel */
-.control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
-@media (max-width: 900px) { .control-grid { grid-template-columns: 1fr; } }
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-.card-title { font-size: 14px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand h1 { font-size: 20px; font-weight: 700; color: #0284c7; display: flex; align-items: center; gap: 8px; }
+    .brand p { font-size: 13px; color: var(--text-muted); }
 
-form.run-form { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
-.form-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px; }
-.form-group label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
-input, select, button { font: inherit; padding: 8px 12px; border: 1px solid #bcc9c4; border-radius: 6px; }
-input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(21,87,76,0.15); }
-button.btn-primary { background: var(--primary); color: white; border: none; cursor: pointer; font-weight: 600; padding: 8px 16px; }
-button.btn-primary:hover { background: var(--primary-light); }
-button.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-button.btn-secondary { background: white; color: var(--primary); border: 1px solid var(--primary); cursor: pointer; font-weight: 600; }
-button.btn-secondary:hover { background: var(--primary-bg); }
+    .top-bar {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-/* Human-in-the-Loop Knobs */
-.knobs-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; align-items: flex-end; }
-.slider-wrap { display: flex; align-items: center; gap: 8px; }
-.slider-val { font-size: 13px; font-weight: 700; color: var(--primary); min-width: 32px; }
+    .query-form {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 200px;
+    }
+    label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+    input, select {
+      height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0 10px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--text);
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    button {
+      height: 38px;
+      padding: 0 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
 
-/* Main Split View */
-.split-view { display: grid; grid-template-columns: 340px 1fr; gap: 18px; margin-top: 16px; }
-@media (max-width: 900px) { .split-view { grid-template-columns: 1fr; } }
+    /* TABS */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 4px;
+    }
+    .tab-btn {
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 6px 6px 0 0;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover { background: var(--neutral-bg); color: var(--text); }
+    .tab-btn.active-pos {
+      background: var(--green-bg);
+      color: var(--green);
+      border-color: var(--green-border);
+      border-bottom-color: var(--card-bg);
+    }
+    .tab-btn.active-neg {
+      background: var(--red-bg);
+      color: var(--red);
+      border-color: var(--red-border);
+      border-bottom-color: var(--card-bg);
+    }
+    .tab-btn.active-base {
+      background: var(--neutral-bg);
+      color: var(--neutral);
+      border-color: var(--border);
+      border-bottom-color: var(--card-bg);
+    }
+    .tab-badge {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+    .tab-badge-pos { background: #bbf7d0; color: #15803d; }
+    .tab-badge-neg { background: #fecaca; color: #b91c1c; }
+    .tab-badge-base { background: #e2e8f0; color: #334155; }
 
-/* Candidate List */
-.candidates-aside { display: flex; flex-direction: column; height: calc(100vh - 280px); min-height: 550px; }
-.candidate-search { margin-bottom: 10px; }
-.candidate-search input { width: 100%; font-size: 13px; }
-.candidate-items { overflow-y: auto; flex: 1; border: 1px solid var(--border); border-radius: 8px; background: white; }
-.cand-item { padding: 10px 12px; border-bottom: 1px solid #eef2f0; cursor: pointer; transition: all 0.15s; }
-.cand-item:hover { background: #f8faf9; }
-.cand-item.active { background: var(--primary-bg); border-left: 4px solid var(--primary); font-weight: 600; }
-.cand-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-.cand-rank { font-size: 11px; font-weight: 700; color: var(--primary); background: #e3ebe8; padding: 2px 6px; border-radius: 4px; }
-.cand-score { font-size: 12px; font-weight: 700; color: var(--text); }
-.cand-name { font-size: 14px; margin-bottom: 4px; word-break: break-word; }
-.cand-badges { display: flex; gap: 4px; flex-wrap: wrap; }
-.pill-sm { font-size: 11px; padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+    /* LAYOUT */
+    .split-view {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .candidate-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: calc(100vh - 280px);
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .cand-item {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      cursor: pointer;
+      background: #fff;
+      transition: all 0.15s;
+    }
+    .cand-item:hover { border-color: var(--primary); background: #f0f9ff; }
+    .cand-item.active { border-color: var(--primary); background: #e0f2fe; border-width: 2px; }
+    
+    .cand-head { display: flex; justify-content: space-between; align-items: center; }
+    .cand-rank { font-weight: 700; font-size: 13px; color: var(--text-muted); }
+    .cand-score { font-family: var(--font-mono); font-weight: 700; font-size: 14px; color: var(--primary); }
+    .cand-name { font-size: 14px; font-weight: 600; margin: 4px 0; text-transform: capitalize; }
+    .cand-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .pill-sm {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
 
-/* Candidate Detail */
-.cand-detail { display: flex; flex-direction: column; gap: 16px; }
-.detail-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid #e5ebe8; padding-bottom: 14px; }
-.detail-title h2 { margin: 0; font-size: 24px; color: var(--primary); }
-.detail-title .doid { font-size: 12px; color: var(--text-muted); font-family: monospace; }
+    /* RIGHT DETAIL */
+    .cand-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .detail-title h2 { font-size: 20px; font-weight: 700; text-transform: capitalize; }
+    .doid { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
 
-/* Stat Grid */
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
-.stat-box { background: #f8faf9; border: 1px solid #e0eae5; border-radius: 8px; padding: 10px 12px; text-align: center; }
-.stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
-.stat-num { font-size: 18px; font-weight: 700; margin-top: 2px; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .stat-box {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      background: #fafafa;
+    }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+    .stat-num { font-size: 16px; font-weight: 700; font-family: var(--font-mono); margin: 2px 0; }
 
-/* Human Review Console */
-.review-console { background: #fafbfc; border: 1px solid #d0dcd6; border-radius: 8px; padding: 14px; }
-.review-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
-.btn-status { border: 1px solid #ccd8d2; background: white; cursor: pointer; padding: 6px 14px; border-radius: 6px; font-weight: 600; font-size: 13px; }
-.btn-status.selected-appr { background: var(--green-bg); color: var(--green); border-color: var(--green); }
-.btn-status.selected-rej { background: var(--red-bg); color: var(--red); border-color: var(--red); }
-.btn-status.selected-trial { background: var(--orange-bg); color: var(--orange); border-color: var(--orange); }
-.review-notes textarea { width: 100%; border: 1px solid #bcc9c4; border-radius: 6px; padding: 8px; font-size: 13px; resize: vertical; height: 60px; }
-.review-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+    .path-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .path-str { font-weight: 600; margin-bottom: 2px; }
 
-/* Path Tabs */
-.path-filter-tabs { display: flex; gap: 6px; margin: 12px 0 8px; flex-wrap: wrap; }
-.tab-btn { background: #e9f0ec; border: none; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
-.tab-btn.active { background: var(--primary); color: white; }
-
-/* SVG Graph */
-.svg-container { border: 1px solid #d5dfda; border-radius: 8px; background: #fafcfb; overflow-x: auto; margin: 10px 0; }
-svg { display: block; width: 100%; min-width: 600px; }
-
-/* Evidence Quotes */
-.quote-item { padding: 8px 10px; border-bottom: 1px solid #eef2f0; font-size: 13px; display: flex; gap: 8px; align-items: flex-start; }
-.quote-item input { margin-top: 3px; }
-.quote-text { flex: 1; }
-.quote-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-.pmid-link { color: var(--primary); text-decoration: none; font-weight: 600; }
-.pmid-link:hover { text-decoration: underline; }
-
-/* LLM Answer Box */
-.llm-box { background: #fdfefe; border: 1px solid #d6e2dd; border-radius: 8px; padding: 14px; white-space: pre-wrap; font-size: 14px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
-</style>
+    .empty-state {
+      padding: 30px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="header-wrap">
-    <div class="header-title">
-      <h1>🧬 LBD · Nền Tảng Tái Định Vị Thuốc & Thẩm Định Chuyên Gia</h1>
-      <p>Cơ chế Dòng Chảy Sinh Học Dấu (Signed Graph NTR) · Khử Thiên Kiến Bậc (β=0.6) · Human-in-the-Loop</p>
+  <header>
+    <div class="brand">
+      <h1>🧬 Hệ Thống Tái Định Vị Thuốc (Signed LBD Graph Engine)</h1>
+      <p>Mô hình M2 DWPC + Biểu Hiện Đảo Ngược Sinh Học (Signed Graph NTR) + Phiên Y Văn Tạm Hetionet</p>
     </div>
-    <div class="badges">
-      <span class="badge badge-green">✓ MRR +69.3% Verified</span>
-      <span class="badge badge-blue">✓ Recall@10 51.3%</span>
-      <span class="badge badge-orange">Hetionet v1.0 + L1000 CMap</span>
-    </div>
-  </div>
-</header>
+  </header>
 
-<main>
-  <!-- TOP CONTROL SECTION -->
-  <div class="control-grid">
-    <!-- Pipeline Run Form -->
+  <!-- TOP QUERY BAR -->
+  <div class="top-bar">
     <div class="card">
-      <div class="card-title">🔍 Thu thập Y văn & Chạy Pipeline</div>
-      <form id="run-form" class="run-form">
-        <div class="form-group">
+      <div class="card-title">🔍 Nhập Thuốc Cần Tái Định Vị</div>
+      <form id="run-form" class="query-form" onsubmit="event.preventDefault(); runPipeline();">
+        <div class="form-group" style="flex: 2;">
           <label>Tên Thuốc hoặc DrugBank ID</label>
-          <input id="drug-input" required value="Dapagliflozin" placeholder="Ví dụ: Dapagliflozin, Metformin, Sildenafil...">
+          <input id="drug-input" required value="Dapagliflozin" placeholder="Ví dụ: Dapagliflozin, Colchicine, Ketamine...">
         </div>
-        <div class="form-group" style="max-width: 100px;">
+        <div class="form-group" style="max-width: 120px;">
           <label>Số bài PubMed</label>
           <input type="number" id="limit-input" min="1" max="200" value="20">
         </div>
-        <button type="submit" id="btn-run" class="btn-primary">Chạy Pipeline LBD</button>
+        <button type="submit" id="btn-run" class="btn-primary">⚡ Phân Tích & Xếp Hạng</button>
       </form>
       <div id="run-status" style="margin-top: 8px; font-size: 13px; color: var(--text-muted);"></div>
     </div>
+  </div>
 
-    <!-- Human-in-the-Loop Real-Time Re-Ranker -->
-    <div class="card">
-      <div class="card-title">⚙️ Tinh chỉnh Thuật toán & Tái Xếp Hạng Tức Thì (Human Control)</div>
-      <div class="knobs-form">
-        <div class="form-group">
-          <label>Chế độ Mô hình</label>
-          <select id="model-mode">
-            <option value="signed_flux" selected>⭐ Signed Graph + NTR Flux (Tối ưu)</option>
-            <option value="debiased_m2">⚖️ Debiased M2 (Khử thiên kiến β=0.6)</option>
-            <option value="raw_m2">🏛️ Raw M2 (Hetionet Gốc)</option>
-          </select>
+  <!-- MAIN TABBED VIEW -->
+  <div id="main-view" hidden>
+    <!-- TAB BUTTONS: POSITIVE (+), NEGATIVE (-), BASELINE -->
+    <div class="tab-bar">
+      <button id="tab-pos" class="tab-btn active-pos" onclick="switchTab('pos')">
+        🟢 Tab 1: Chỉ Định Triển Vọng / Đảo Ngược Bệnh Sinh (Dấu +)
+        <span id="badge-pos" class="tab-badge tab-badge-pos">0</span>
+      </button>
+      <button id="tab-neg" class="tab-btn" onclick="switchTab('neg')">
+        🔴 Tab 2: Cảnh Báo Nguy Cơ / Cùng Chiều Bệnh Sinh (Dấu -)
+        <span id="badge-neg" class="tab-badge tab-badge-neg">0</span>
+      </button>
+      <button id="tab-base" class="tab-btn" onclick="switchTab('base')">
+        📋 Chỉ Định Gốc Đã Duyệt (FDA Baseline)
+        <span id="badge-base" class="tab-badge tab-badge-base">0</span>
+      </button>
+    </div>
+
+    <!-- SPLIT CONTENT -->
+    <div class="split-view">
+      <!-- LEFT: CANDIDATES IN CURRENT TAB -->
+      <div class="card" style="padding: 12px;">
+        <div class="card-title">
+          <span id="tab-list-title">Danh Sách Bệnh Ứng Viên</span>
+          <span id="tab-cand-count" class="tab-badge tab-badge-pos">0</span>
         </div>
-        <div class="form-group">
-          <label>Trọng số NTR (λ_ntr)</label>
-          <div class="slider-wrap">
-            <input type="range" id="ntr-slider" min="0" max="1" step="0.05" value="0.35">
-            <span id="ntr-val" class="slider-val">0.35</span>
+        <input id="search-cand" type="text" placeholder="Lọc theo tên bệnh..." style="width: 100%; margin-bottom: 10px;" oninput="renderTabList();">
+        <div id="cand-list" class="candidate-items"></div>
+      </div>
+
+      <!-- RIGHT: DETAIL OF SELECTED CANDIDATE -->
+      <div class="cand-detail">
+        <div class="card">
+          <div class="detail-header">
+            <div class="detail-title">
+              <h2 id="cand-name">Chọn một bệnh để xem phân tích</h2>
+              <div class="doid" id="cand-doid">DOID:------</div>
+            </div>
+            <div>
+              <span id="cand-tag" class="pill-sm" style="font-size: 12px; padding: 4px 8px;">CHƯA CHỌN</span>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-box">
+              <div class="stat-label">Điểm Tái Định Vị</div>
+              <div id="stat-score" class="stat-num" style="color: var(--primary);">0.000</div>
+              <div id="stat-base-score" style="font-size: 11px; color: var(--text-muted);">M2 gốc: 0.000</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Đảo Ngược (Φ_rev)</div>
+              <div id="stat-rev" class="stat-num" style="color: var(--green);">0.00</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Khắc phục bệnh</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Cùng Chiều (Φ_cong)</div>
+              <div id="stat-cong" class="stat-num" style="color: var(--red);">0.00</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Nguy cơ bất lợi</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Dấu Ròng (NTR)</div>
+              <div id="stat-ntr" class="stat-num">0.00</div>
+              <div id="stat-ntr-desc" style="font-size: 11px; color: var(--text-muted);">Độ khớp sinh học</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Δ Y Văn Nạp Thêm</div>
+              <div id="stat-lit" class="stat-num" style="color: #0284c7;">+0.00</div>
+              <div id="stat-lit-desc" style="font-size: 11px; color: var(--text-muted);">0 bằng chứng</div>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label>Khử Thiên Kiến (β)</label>
-          <div class="slider-wrap">
-            <input type="range" id="beta-slider" min="0" max="1" step="0.05" value="0.60">
-            <span id="beta-val" class="slider-val">0.60</span>
+
+        <!-- PATHWAYS -->
+        <div class="card">
+          <div class="card-title">🧬 Con Đường Sinh Học Điển Hình (Top Pathways)</div>
+          <div id="path-list" style="max-height: 220px; overflow-y: auto;">
+            <div class="empty-state">Chọn ứng viên bệnh để xem đường đi.</div>
           </div>
         </div>
-        <button type="button" id="btn-rerank" class="btn-secondary" style="height: 38px;">⚡ Tái Xếp Hạng</button>
+
+        <!-- EVIDENCE -->
+        <div class="card">
+          <div class="card-title">📄 Bằng Chứng Y Văn (PubMed Extractions)</div>
+          <div id="evidence-list" style="max-height: 200px; overflow-y: auto;">
+            <div class="empty-state">Chưa có trích đoạn.</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MAIN SPLIT VIEW -->
-  <div id="main-view" class="split-view" hidden>
-    <!-- LEFT: Candidate List -->
-    <div class="candidates-aside card" style="padding: 12px;">
-      <div class="card-title" style="margin-bottom: 8px;">
-        <span>Ứng viên Bệnh Đích</span>
-        <span id="total-cand-count" class="badge badge-blue" style="font-size: 11px;">10</span>
-      </div>
-      <div class="candidate-search">
-        <input id="search-cand" type="text" placeholder="Tìm tên bệnh...">
-      </div>
-      <div id="cand-list" class="candidate-items"></div>
-      <div id="session-summary" style="margin-top: 8px; font-size: 11px; color: var(--text-muted);"></div>
-    </div>
+  <script>
+    let runData = null;
+    let currentTab = 'pos'; // 'pos', 'neg', 'base'
+    let currentCand = null;
 
-    <!-- RIGHT: Candidate Details & Human-in-the-Loop Console -->
-    <div class="cand-detail">
-      <!-- HEADER & DIAGNOSTICS -->
-      <div class="card">
-        <div class="detail-header">
-          <div class="detail-title">
-            <h2 id="cand-name">Chọn một bệnh</h2>
-            <div class="doid" id="cand-doid">DOID:------</div>
-          </div>
-          <div style="text-align: right;">
-            <div id="cand-status-badge" class="badge badge-blue">NOVEL CANDIDATE</div>
-            <div id="cand-rank-disp" style="font-size: 13px; font-weight: 700; color: var(--primary); margin-top: 4px;">Hạng #1</div>
-          </div>
-        </div>
+    const el = id => document.getElementById(id);
 
-        <!-- 4 Pharmacological Stat Cards -->
-        <div class="stat-grid">
-          <div class="stat-box">
-            <div class="stat-label">Điểm Tổng Hợp</div>
-            <div id="stat-final-score" class="stat-num" style="color: var(--primary);">0.000</div>
-            <div id="stat-base-score" style="font-size: 11px; color: var(--text-muted);">M2 gốc: 0.000</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">Dòng Chảy Trị Liệu (Φ_rev)</div>
-            <div id="stat-rev-flux" class="stat-num" style="color: var(--green);">+0.00</div>
-            <div style="font-size: 11px; color: var(--text-muted);">Đảo ngược bệnh lý</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">Dòng Chảy Độc Tính (Φ_cong)</div>
-            <div id="stat-cong-flux" class="stat-num" style="color: var(--red);">0.00</div>
-            <div style="font-size: 11px; color: var(--text-muted);">Cùng hướng biểu hiện</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">Chữ Ký L1000 Cosine</div>
-            <div id="stat-sig-rev" class="stat-num" style="color: var(--purple);">0.00</div>
-            <div id="stat-ntr-score" style="font-size: 11px; color: var(--text-muted);">NTR Net: 0.00</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">Δ Y Văn Mới</div>
-            <div id="stat-lit-delta" class="stat-num" style="color: var(--orange);">+0.00</div>
-            <div id="stat-lit-status" style="font-size: 11px; color: var(--text-muted);">Phiên làm việc</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- HUMAN-IN-THE-LOOP VALIDATION CONSOLE -->
-      <div class="card review-console">
-        <div class="card-title">👨‍⚕️ Bảng Thẩm Định Của Chuyên Gia (Human-in-the-Loop Review)</div>
-        <div class="review-actions">
-          <button type="button" id="btn-approve" class="btn-status">✅ Đồng thuận / Triển vọng (Approved)</button>
-          <button type="button" id="btn-reject" class="btn-status">❌ Bác bỏ / Dương tính giả (Rejected)</button>
-          <button type="button" id="btn-trial" class="btn-status">❓ Cần thêm thử nghiệm (Needs Trial)</button>
-        </div>
-        <div class="review-notes">
-          <textarea id="review-notes" placeholder="Nhập biện giải y khoa hoặc ghi chú chuyên gia cho chỉ định này..."></textarea>
-        </div>
-        <div class="review-footer">
-          <div id="review-msg" style="font-size: 12px; font-weight: 600; color: var(--text-muted);">Chưa lưu thẩm định cho bệnh này.</div>
-          <div style="display: flex; gap: 8px;">
-            <button type="button" id="btn-save-review" class="btn-primary" style="padding: 6px 14px; font-size: 13px;">💾 Lưu Thẩm Định</button>
-            <button type="button" id="btn-export-review" class="btn-secondary" style="padding: 6px 14px; font-size: 13px;">📥 Xuất Báo Cáo JSON</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- BIOLOGICAL SUBGRAPH & SIGNED PATH EXPLORER -->
-      <div class="card">
-        <div class="card-title" style="margin-bottom: 4px;">🕸️ Đồ Thị Đường Dẫn Cơ Chế Sinh Học (Micro-DFS Subgraph)</div>
-        <div class="path-filter-tabs">
-          <button class="tab-btn active" data-filter="all">Tất cả đường dẫn</button>
-          <button class="tab-btn" data-filter="therapeutic">🟢 Chỉ đường Trị liệu (Net Sign = -1)</button>
-          <button class="tab-btn" data-filter="pathogenic">🔴 Cảnh báo Độc tính (Net Sign = +1)</button>
-          <button class="tab-btn" data-filter="lit">⚡ Cầu nối Y văn mới</button>
-        </div>
-        <div class="svg-container">
-          <svg id="graph-svg" height="240"></svg>
-        </div>
-        <div id="path-checkboxes" style="margin-top: 10px; max-height: 180px; overflow-y: auto;"></div>
-      </div>
-
-      <!-- EVIDENCE QUOTES & LLM EXPLAINER -->
-      <div class="card">
-        <div class="card-title">📄 Bằng Chứng Y Văn Trích Dẫn Từ PubMed & Cảnh Báo An Toàn</div>
-        <div id="warnings-box" style="font-size: 13px; color: var(--orange); margin-bottom: 8px; font-weight: 600;"></div>
-        <div id="evidence-quotes" style="max-height: 200px; overflow-y: auto; margin-bottom: 14px; border: 1px solid #eef2f0; border-radius: 6px;"></div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <div class="card-title" style="margin: 0;">🤖 Diễn Giải Báo Cáo Y Khoa (Groq LLM)</div>
-          <button type="button" id="btn-explain" class="btn-primary" style="font-size: 13px; padding: 6px 14px;">Tạo Diễn Giải Chuyên Sâu</button>
-        </div>
-        <div id="llm-answer" class="llm-box">Nhấn 'Tạo Diễn Giải Chuyên Sâu' để gửi lựa chọn đường dẫn, trích dẫn, và đánh giá chuyên gia lên mô hình LLM.</div>
-      </div>
-    </div>
-  </div>
-</main>
-
-<script>
-const el = id => document.getElementById(id);
-let runData = null, currentCand = null, currentReviews = {}, activePathFilter = 'all';
-
-// Real-time slider labels
-el('ntr-slider').oninput = e => el('ntr-val').textContent = (+e.target.value).toFixed(2);
-el('beta-slider').oninput = e => el('beta-val').textContent = (+e.target.value).toFixed(2);
-
-async function api(path, data) {
-  const opt = data ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) } : {};
-  const res = await fetch(path, opt);
-  const json = await res.json();
-  if (!res.ok || json.error) throw new Error(json.error || res.statusText);
-  return json;
-}
-
-// Render Candidate List
-function renderCandidateList() {
-  const list = el('cand-list'), q = el('search-cand').value.toLowerCase().trim();
-  list.innerHTML = '';
-  if (!runData || !runData.candidates) return;
-
-  const filtered = runData.candidates.filter(c => !q || c.disease_name.toLowerCase().includes(q));
-  el('total-cand-count').textContent = filtered.length;
-
-  filtered.forEach(c => {
-    const item = document.createElement('div');
-    item.className = 'cand-item' + (currentCand && currentCand.disease_id === c.disease_id ? ' active' : '');
-    
-    // Status pills
-    const ntr = c.signed_mechanism ? c.signed_mechanism.ntr_score : 0;
-    const ntrPill = ntr > 0.15 
-      ? `<span class="pill-sm" style="background:var(--green-bg);color:var(--green);">🟢 NTR +${ntr.toFixed(2)}</span>`
-      : (ntr < -0.15 
-        ? `<span class="pill-sm" style="background:var(--red-bg);color:var(--red);">🔴 Độc tính</span>` 
-        : `<span class="pill-sm" style="background:#f0f0f0;color:#666;">⚪ Trung tính</span>`);
-
-    const rev = currentReviews[c.disease_id];
-    let revPill = '';
-    if (rev) {
-      if (rev.status === 'APPROVED') revPill = `<span class="pill-sm" style="background:var(--green-bg);color:var(--green);">✅ Đã duyệt</span>`;
-      else if (rev.status === 'REJECTED') revPill = `<span class="pill-sm" style="background:var(--red-bg);color:var(--red);">❌ Bác bỏ</span>`;
-      else if (rev.status === 'NEEDS_TRIAL') revPill = `<span class="pill-sm" style="background:var(--orange-bg);color:var(--orange);">❓ Cần test</span>`;
+    async function api(path, data) {
+      const res = await fetch(path, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return res.json();
     }
 
-    const evCount = (c.evidence_edges || []).reduce((s, e) => s + (e.quotes || []).length, 0);
-    const evPill = evCount ? `<span class="pill-sm" style="background:var(--blue-bg);color:var(--blue);">📄 ${evCount}</span>` : '';
+    async function runPipeline() {
+      const drug = el('drug-input').value.trim();
+      const limit = Number(el('limit-input').value);
+      if (!drug) return;
 
-    item.innerHTML = `
-      <div class="cand-head">
-        <span class="cand-rank">#${c.rank}</span>
-        <span class="cand-score">${c.ranking_score.toFixed(4)}</span>
-      </div>
-      <div class="cand-name">${c.disease_name}</div>
-      <div class="cand-badges">${ntrPill}${revPill}${evPill}</div>
-    `;
-    item.onclick = () => selectCandidate(c);
-    list.appendChild(item);
-  });
-}
+      el('btn-run').disabled = true;
+      el('run-status').textContent = 'Đang phân tích y văn và tính toán ma trận xếp hạng...';
 
-el('search-cand').oninput = renderCandidateList;
+      try {
+        const resp = await api('/api/run', { drug, limit });
+        if (resp.error) {
+          el('run-status').textContent = 'Lỗi: ' + resp.error;
+          el('btn-run').disabled = false;
+          return;
+        }
 
-// Select a Candidate and Populate Detail View
-function selectCandidate(c) {
-  currentCand = c;
-  renderCandidateList();
-
-  el('cand-name').textContent = c.disease_name;
-  el('cand-doid').textContent = c.disease_id;
-  el('cand-rank-disp').textContent = `Hạng #${c.rank}`;
-  el('cand-status-badge').textContent = c.status || 'NOVEL_CANDIDATE';
-
-  // Stats
-  el('stat-final-score').textContent = c.ranking_score.toFixed(4);
-  el('stat-base-score').textContent = `M2 gốc: ${(c.base_score || c.ranking_score).toFixed(4)}`;
-  
-  const m = c.signed_mechanism || {};
-  el('stat-rev-flux').textContent = (m.therapeutic_flux !== undefined ? (m.therapeutic_flux >= 0 ? '+' : '') + m.therapeutic_flux.toFixed(2) : '0.00');
-  el('stat-cong-flux').textContent = (m.pathogenic_flux !== undefined ? m.pathogenic_flux.toFixed(2) : '0.00');
-  el('stat-sig-rev').textContent = (m.signature_reversal !== undefined ? m.signature_reversal.toFixed(2) : '0.00');
-  el('stat-ntr-score').textContent = `NTR Net: ${(m.ntr_score || 0).toFixed(2)}`;
-
-  const litDelta = c.literature_delta || 0;
-  el('stat-lit-delta').textContent = (litDelta >= 0 ? '+' : '') + litDelta.toFixed(4);
-  el('stat-lit-status').textContent = c.session_status === 'augmented' ? `🟢 Y văn nạp: ${c.session_evidence_count || 0}` : '⚪ Chưa có y văn';
-
-  // Warnings
-  const w = c.warnings || [];
-  el('warnings-box').textContent = w.length ? '⚠️ Cảnh báo NLP: ' + w.map(x => x.text).join(' | ') : '';
-
-  // Human Review Console
-  loadReviewForCurrent();
-
-  // Render Paths & Graph
-  renderPaths();
-
-  // Render Evidence Quotes
-  renderQuotes();
-
-  el('llm-answer').textContent = c.ai_explanation || "Nhấn 'Tạo Diễn Giải Chuyên Sâu' để phân tích chi tiết.";
-}
-
-// Human Review Logic
-let currentStatus = null;
-function setReviewStatus(st) {
-  currentStatus = st;
-  el('btn-approve').className = 'btn-status' + (st === 'APPROVED' ? ' selected-appr' : '');
-  el('btn-reject').className = 'btn-status' + (st === 'REJECTED' ? ' selected-rej' : '');
-  el('btn-trial').className = 'btn-status' + (st === 'NEEDS_TRIAL' ? ' selected-trial' : '');
-}
-
-el('btn-approve').onclick = () => setReviewStatus('APPROVED');
-el('btn-reject').onclick = () => setReviewStatus('REJECTED');
-el('btn-trial').onclick = () => setReviewStatus('NEEDS_TRIAL');
-
-function loadReviewForCurrent() {
-  if (!currentCand) return;
-  const rev = currentReviews[currentCand.disease_id];
-  if (rev) {
-    setReviewStatus(rev.status);
-    el('review-notes').value = rev.notes || '';
-    el('review-msg').textContent = `✓ Đã lưu bởi ${rev.reviewer || 'Chuyên gia'} vào ${rev.timestamp || ''}`;
-    el('review-msg').style.color = 'var(--green)';
-  } else {
-    setReviewStatus(null);
-    el('review-notes').value = '';
-    el('review-msg').textContent = 'Chưa lưu thẩm định cho bệnh này.';
-    el('review-msg').style.color = 'var(--text-muted)';
-  }
-}
-
-el('btn-save-review').onclick = async () => {
-  if (!currentCand || !runData) return;
-  if (!currentStatus) { alert('Vui lòng chọn trạng thái thẩm định (Đồng thuận / Bác bỏ / Cần thử nghiệm).'); return; }
-
-  const selPaths = [...el('path-checkboxes').querySelectorAll(':checked')].map(b => Number(b.value));
-  try {
-    const res = await api('/api/review', {
-      run_id: runData.run_id,
-      disease_id: currentCand.disease_id,
-      disease_name: currentCand.disease_name,
-      status: currentStatus,
-      notes: el('review-notes').value,
-      selected_paths: selPaths
-    });
-    currentReviews = res.reviews || {};
-    loadReviewForCurrent();
-    renderCandidateList();
-  } catch (e) {
-    alert('Lỗi lưu thẩm định: ' + e.message);
-  }
-};
-
-el('btn-export-review').onclick = () => {
-  if (!runData) return;
-  const exportPayload = {
-    run_id: runData.run_id,
-    drug: runData.drug,
-    export_date: new Date().toISOString(),
-    human_reviews: currentReviews,
-    top_candidates: runData.candidates.slice(0, 10).map(c => ({
-      rank: c.rank,
-      disease_id: c.disease_id,
-      disease_name: c.disease_name,
-      score: c.ranking_score,
-      signed_mechanism: c.signed_mechanism,
-      review: currentReviews[c.disease_id] || null
-    }))
-  };
-  const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `audit_review_${runData.drug}_${runData.run_id.slice(0,8)}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-};
-
-// Filter Path Tabs
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activePathFilter = btn.dataset.filter;
-    renderPaths();
-  };
-});
-
-// Render Paths & SVG Graph
-function renderPaths() {
-  const container = el('path-checkboxes'), svg = el('graph-svg');
-  container.innerHTML = '';
-  svg.replaceChildren();
-
-  if (!currentCand || !currentCand.structural_paths) return;
-
-  const allPaths = currentCand.structural_paths;
-  const filtered = allPaths.filter(p => {
-    if (activePathFilter === 'therapeutic') return p.net_sign === -1;
-    if (activePathFilter === 'pathogenic') return p.net_sign === 1;
-    if (activePathFilter === 'lit') return p.is_literature_augmented;
-    return true;
-  });
-
-  if (!filtered.length) {
-    container.innerHTML = '<div style="font-size:13px;color:var(--text-muted);padding:8px;">Không có đường dẫn nào trong nhóm lọc này.</div>';
-    return;
-  }
-
-  // Draw SVG
-  const rowH = 65, totalH = Math.max(60, filtered.length * rowH);
-  svg.setAttribute('viewBox', `0 0 750 ${totalH}`);
-
-  function createShape(tag, attrs, text) {
-    const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
-    for (const k in attrs) n.setAttribute(k, attrs[k]);
-    if (text) n.textContent = text;
-    svg.appendChild(n);
-  }
-
-  filtered.forEach((p, idx) => {
-    const y = 30 + idx * rowH;
-    const isLit = p.is_literature_augmented;
-    const netSign = p.net_sign;
-    const lineColor = isLit ? '#e65100' : (netSign === -1 ? '#2e7d32' : (netSign === 1 ? '#c62828' : '#78909c'));
-    const nodeColor = isLit ? '#ff9800' : (netSign === -1 ? '#388e3c' : (netSign === 1 ? '#d32f2f' : '#546e7a'));
-
-    p.nodes.forEach((id, i) => {
-      const x = 70 + i * (610 / (p.nodes.length - 1));
-      if (i > 0) {
-        const prevX = 70 + (i - 1) * (610 / (p.nodes.length - 1));
-        createShape('line', {
-          x1: prevX + 10, y1: y, x2: x - 10, y2: y,
-          stroke: lineColor, 'stroke-width': isLit ? '2.5' : '1.8',
-          'stroke-dasharray': netSign === -1 ? 'none' : (netSign === 1 ? '4 2' : 'none')
-        });
+        const jobId = resp.job_id;
+        const poll = setInterval(async () => {
+          const res = await fetch(`/api/poll/${jobId}`).then(r => r.json());
+          if (res.run_id) {
+            clearInterval(poll);
+            el('run-status').textContent = 'Hoàn tất phân tích!';
+            el('btn-run').disabled = false;
+            loadResult(res.run_id);
+          } else if (res.error) {
+            clearInterval(poll);
+            el('run-status').textContent = 'Lỗi tiến trình: ' + res.error;
+            el('btn-run').disabled = false;
+          } else if (res.stage) {
+            el('run-status').textContent = 'Tiến độ: ' + res.stage + '...';
+          }
+        }, 800);
+      } catch (err) {
+        el('run-status').textContent = 'Lỗi gọi API: ' + err.message;
+        el('btn-run').disabled = false;
       }
-      createShape('circle', { cx: x, cy: y, r: 8, fill: nodeColor });
-      createShape('text', { x, y: y + 20, 'font-size': '10', 'text-anchor': 'middle', fill: '#1a2e2b' }, id.split('::').pop());
-    });
-
-    // Checkbox list
-    const label = document.createElement('label');
-    label.style.display = 'block';
-    label.style.padding = '4px 0';
-    label.style.fontSize = '12px';
-    label.style.cursor = 'pointer';
-
-    const box = document.createElement('input');
-    box.type = 'checkbox';
-    box.value = allPaths.indexOf(p);
-    box.checked = true;
-
-    label.appendChild(box);
-    label.appendChild(document.createTextNode(' ' + p.path_str));
-    container.appendChild(label);
-  });
-}
-
-// Render Evidence Quotes
-function renderQuotes() {
-  const container = el('evidence-quotes');
-  container.innerHTML = '';
-  if (!currentCand || !currentCand.evidence_edges) return;
-
-  let count = 0;
-  for (const edge of currentCand.evidence_edges) {
-    for (const q of (edge.quotes || [])) {
-      count++;
-      const div = document.createElement('div');
-      div.className = 'quote-item';
-      div.innerHTML = `
-        <input type="checkbox" checked value="${count-1}">
-        <div class="quote-text">
-          <div>${edge.source_name || edge.source} <b>${edge.relation_type}</b> ${edge.target_name || edge.target}</div>
-          <div style="color:#2c3e50;margin-top:2px;">"${q.text}"</div>
-          <div class="quote-meta">
-            Nguồn: <a class="pmid-link" href="https://pubmed.ncbi.nlm.nih.gov/${q.pmid}/" target="_blank" rel="noopener">PMID ${q.pmid}</a>
-          </div>
-        </div>
-      `;
-      container.appendChild(div);
     }
-  }
-  if (!count) container.innerHTML = '<div style="font-size:13px;color:var(--text-muted);padding:8px;">Chưa có trích dẫn câu văn nguồn cho ứng viên này.</div>';
-}
 
-// Interactive Re-Rank Handler
-el('btn-rerank').onclick = async () => {
-  if (!runData) return;
-  const btn = el('btn-rerank');
-  btn.disabled = true;
-  btn.textContent = 'Đang tính...';
-  try {
-    const res = await api('/api/rerank', {
-      run_id: runData.run_id,
-      model_mode: el('model-mode').value,
-      ntr_weight: +el('ntr-slider').value,
-      debiasing_beta: +el('beta-slider').value,
-      top_n: 20
-    });
-    runData.candidates = res.candidates;
-    renderCandidateList();
-    if (res.candidates.length) selectCandidate(res.candidates[0]);
-  } catch (e) {
-    alert('Lỗi tái xếp hạng: ' + e.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '⚡ Tái Xếp Hạng';
-  }
-};
+    async function loadResult(runId) {
+      const data = await fetch(`/api/result/${runId}`).then(r => r.json());
+      runData = data;
+      el('main-view').hidden = false;
+      categorizeData();
+      switchTab('pos');
+    }
 
-// LLM Explainer Handler
-el('btn-explain').onclick = async () => {
-  if (!currentCand || !runData) return;
-  const btn = el('btn-explain');
-  btn.disabled = true;
-  el('llm-answer').textContent = 'Đang gửi dữ liệu đến LLM (Groq) để phân tích cơ chế...';
+    let posList = [];
+    let negList = [];
+    let baseList = [];
 
-  const selPaths = [...el('path-checkboxes').querySelectorAll(':checked')].map(b => Number(b.value));
-  const selQuotes = [...el('evidence-quotes').querySelectorAll(':checked')].map(b => Number(b.value));
+    function categorizeData() {
+      if (!runData) return;
+      posList = [];
+      negList = [];
+      baseList = runData.known_indications || [];
 
-  try {
-    const res = await api('/api/explain', {
-      run_id: runData.run_id,
-      disease: currentCand.disease_id,
-      paths: selPaths,
-      quotes: selQuotes
-    });
-    el('llm-answer').textContent = res.text;
-  } catch (e) {
-    el('llm-answer').textContent = 'Lỗi tạo diễn giải: ' + e.message;
-  } finally {
-    btn.disabled = false;
-  }
-};
+      (runData.candidates || []).forEach(c => {
+        const ntr = (c.signed_mechanism && c.signed_mechanism.ntr_score) || 0;
+        const litDelta = c.literature_delta || 0;
+        
+        // Tab 1 (Dấu +): Có cơ chế đảo ngược bệnh sinh (ntr >= 0 hoặc delta y văn > 0, hoặc liên kết topo triển vọng)
+        if (ntr >= 0 || litDelta > 0) {
+          posList.push(c);
+        } else {
+          // Tab 2 (Dấu -): Cùng chiều bệnh sinh / cảnh báo nguy cơ độc tính (ntr < 0)
+          negList.push(c);
+        }
+      });
 
-// Form Pipeline Run Handler
-el('run-form').onsubmit = async e => {
-  e.preventDefault();
-  const btn = el('btn-run');
-  btn.disabled = true;
-  el('run-status').textContent = 'Đang khởi chạy pipeline...';
+      el('badge-pos').textContent = posList.length;
+      el('badge-neg').textContent = negList.length;
+      el('badge-base').textContent = baseList.length;
+    }
 
-  try {
-    const j = await api('/api/run', {
-      drug: el('drug-input').value.trim(),
-      limit: +el('limit-input').value
-    });
+    function switchTab(tab) {
+      currentTab = tab;
+      el('tab-pos').className = 'tab-btn' + (tab === 'pos' ? ' active-pos' : '');
+      el('tab-neg').className = 'tab-btn' + (tab === 'neg' ? ' active-neg' : '');
+      el('tab-base').className = 'tab-btn' + (tab === 'base' ? ' active-base' : '');
 
-    while (true) {
-      const job = await api('/api/jobs/' + j.job);
-      if (job.run_id) {
-        const fullRun = await api('/api/runs/' + job.run_id);
-        loadRunData(fullRun);
-        el('run-status').textContent = `Hoàn tất · Run ID: ${job.run_id}`;
-        break;
+      if (tab === 'pos') {
+        el('tab-list-title').textContent = '🟢 Chỉ Định Triển Vọng / Đảo Ngược Cơ Chế (+)';
+        el('tab-cand-count').className = 'tab-badge tab-badge-pos';
+      } else if (tab === 'neg') {
+        el('tab-list-title').textContent = '🔴 Cảnh Báo Nguy Cơ / Cùng Chiều Bệnh Sinh (-)';
+        el('tab-cand-count').className = 'tab-badge tab-badge-neg';
+      } else {
+        el('tab-list-title').textContent = '📋 Chỉ Định Gốc Đã Được Phê Duyệt (FDA)';
+        el('tab-cand-count').className = 'tab-badge tab-badge-base';
       }
-      if (job.error) throw new Error(job.error);
-      el('run-status').textContent = `Giai đoạn: ${job.stage || 'Đang xử lý'}`;
-      await new Promise(r => setTimeout(r, 1000));
+
+      renderTabList();
+      const currentList = tab === 'pos' ? posList : (tab === 'neg' ? negList : baseList);
+      if (currentList.length > 0) {
+        selectCandidate(currentList[0]);
+      } else {
+        clearDetail();
+      }
     }
-  } catch (err) {
-    el('run-status').textContent = 'Lỗi: ' + err.message;
-  } finally {
-    btn.disabled = false;
-  }
-};
 
-function loadRunData(r) {
-  if (!r || !r.run_id) return;
-  runData = r;
-  currentReviews = r.human_reviews || {};
-  el('main-view').hidden = false;
-  el('session-summary').textContent = `${r.drug} · ${r.papers} bài báo · ${r.admitted_edges} cạnh NLP · ${r.session_edges_count || 0} cạnh nạp phiên`;
-  renderCandidateList();
-  if (r.candidates && r.candidates.length) selectCandidate(r.candidates[0]);
-}
+    function renderTabList() {
+      const list = el('cand-list');
+      const q = el('search-cand').value.toLowerCase().trim();
+      list.innerHTML = '';
 
-// Initial fetch latest run
-api('/api/latest').then(loadRunData).catch(e => el('run-status').textContent = e.message);
-</script>
+      const currentList = currentTab === 'pos' ? posList : (currentTab === 'neg' ? negList : baseList);
+      const filtered = currentList.filter(c => !q || c.disease_name.toLowerCase().includes(q));
+      el('tab-cand-count').textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="empty-state">Không có ứng viên nào trong nhóm này.</div>';
+        return;
+      }
+
+      filtered.forEach((c, idx) => {
+        const item = document.createElement('div');
+        item.className = 'cand-item' + (currentCand && currentCand.disease_id === c.disease_id ? ' active' : '');
+        
+        const ntr = (c.signed_mechanism && c.signed_mechanism.ntr_score) || 0;
+        let badge = '';
+        if (currentTab === 'base') {
+          badge = `<span class="pill-sm" style="background:#e2e8f0;color:#334155;">Chỉ định gốc</span>`;
+        } else if (ntr > 0.05) {
+          badge = `<span class="pill-sm" style="background:var(--green-bg);color:var(--green);">🟢 Đảo ngược (+${ntr.toFixed(2)})</span>`;
+        } else if (ntr < -0.05) {
+          badge = `<span class="pill-sm" style="background:var(--red-bg);color:var(--red);">🔴 Nguy cơ (${ntr.toFixed(2)})</span>`;
+        } else {
+          badge = `<span class="pill-sm" style="background:var(--neutral-bg);color:var(--neutral);">⚪ Trung tính (0.00)</span>`;
+        }
+
+        const evCount = (c.evidence_edges || []).reduce((s, e) => s + (e.quotes || []).length, 0);
+        const evPill = evCount ? `<span class="pill-sm" style="background:var(--pill-bg);color:var(--pill-text);">📄 ${evCount}</span>` : '';
+
+        item.innerHTML = `
+          <div class="cand-head">
+            <span class="cand-rank">#${c.rank || (idx + 1)}</span>
+            <span class="cand-score">${(c.ranking_score || c.score || 0).toFixed(4)}</span>
+          </div>
+          <div class="cand-name">${c.disease_name}</div>
+          <div class="cand-badges">${badge}${evPill}</div>
+        `;
+        item.onclick = () => selectCandidate(c);
+        list.appendChild(item);
+      });
+    }
+
+    function selectCandidate(c) {
+      currentCand = c;
+      renderTabList();
+
+      el('cand-name').textContent = c.disease_name;
+      el('cand-doid').textContent = c.disease_id;
+
+      const ntr = (c.signed_mechanism && c.signed_mechanism.ntr_score) || 0;
+      if (currentTab === 'base') {
+        el('cand-tag').textContent = 'CHỈ ĐỊNH ĐÃ DUYỆT';
+        el('cand-tag').style.background = '#e2e8f0';
+        el('cand-tag').style.color = '#334155';
+      } else if (ntr > 0.05) {
+        el('cand-tag').textContent = 'TRIỂN VỌNG ĐIỀU TRỊ (+)';
+        el('cand-tag').style.background = 'var(--green-bg)';
+        el('cand-tag').style.color = 'var(--green)';
+      } else if (ntr < -0.05) {
+        el('cand-tag').textContent = 'CẢNH BÁO NGUY CƠ (-)';
+        el('cand-tag').style.background = 'var(--red-bg)';
+        el('cand-tag').style.color = 'var(--red)';
+      } else {
+        el('cand-tag').textContent = 'LIÊN KẾT MẠNG LƯỚI (0)';
+        el('cand-tag').style.background = 'var(--neutral-bg)';
+        el('cand-tag').style.color = 'var(--neutral)';
+      }
+
+      const score = c.ranking_score || c.score || 0;
+      const baseScore = c.base_score || score;
+      el('stat-score').textContent = score.toFixed(4);
+      el('stat-base-score').textContent = `M2 gốc: ${baseScore.toFixed(4)}`;
+
+      const m = c.signed_mechanism || {};
+      el('stat-rev').textContent = (m.therapeutic_flux || 0).toFixed(2);
+      el('stat-cong').textContent = (m.pathogenic_flux || 0).toFixed(2);
+      el('stat-ntr').textContent = (m.ntr_score !== undefined ? (m.ntr_score >= 0 ? '+' : '') + m.ntr_score.toFixed(2) : '0.00');
+      el('stat-ntr').style.color = m.ntr_score > 0.05 ? 'var(--green)' : (m.ntr_score < -0.05 ? 'var(--red)' : 'var(--text)');
+
+      const delta = c.literature_delta || 0;
+      el('stat-lit').textContent = (delta >= 0 ? '+' : '') + delta.toFixed(4);
+      el('stat-lit-desc').textContent = `${c.session_evidence_count || 0} bằng chứng nạp`;
+
+      // Render pathways
+      const pList = el('path-list');
+      const paths = c.structural_paths || c.paths || [];
+      if (!paths.length) {
+        pList.innerHTML = '<div class="empty-state">Không có đường dẫn vi mô được trích xuất.</div>';
+      } else {
+        pList.innerHTML = paths.slice(0, 5).map(p => `
+          <div class="path-box">
+            <div class="path-str">${p.path_str || (p.nodes ? p.nodes.join(' ➔ ') : 'Đường dẫn sinh học')}</div>
+            <div style="color:var(--text-muted);font-size:11px;">
+              Cơ chế: <b>${p.mechanism_type || 'neutral'}</b> | Đóng góp log-odds: <b>${(p.contrib || p.path_score || 0).toFixed(4)}</b>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Render evidence
+      const eList = el('evidence-list');
+      const edges = c.evidence_edges || [];
+      const quotes = [];
+      edges.forEach(e => (e.quotes || []).forEach(q => quotes.push({ ...q, rel: e.relation_type })));
+
+      if (!quotes.length) {
+        eList.innerHTML = '<div class="empty-state">Chưa có trích đoạn y văn từ đợt chạy này.</div>';
+      } else {
+        eList.innerHTML = quotes.map(q => `
+          <div class="path-box">
+            <div style="font-weight:600;color:var(--primary);margin-bottom:2px;">[PMID: ${q.pmid || 'PubMed'}] ${q.rel || 'Quan hệ'}</div>
+            <div style="font-style:italic;">"${q.text}"</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function clearDetail() {
+      currentCand = null;
+      el('cand-name').textContent = 'Không có bệnh nào được chọn';
+      el('cand-doid').textContent = 'DOID:------';
+      el('cand-tag').textContent = 'TRỐNG';
+      el('stat-score').textContent = '0.000';
+      el('stat-base-score').textContent = 'M2 gốc: 0.000';
+      el('stat-rev').textContent = '0.00';
+      el('stat-cong').textContent = '0.00';
+      el('stat-ntr').textContent = '0.00';
+      el('stat-lit').textContent = '+0.00';
+      el('path-list').innerHTML = '<div class="empty-state">Chọn ứng viên bệnh để xem đường đi.</div>';
+      el('evidence-list').innerHTML = '<div class="empty-state">Chưa có trích đoạn.</div>';
+    }
+  </script>
 </body>
 </html>

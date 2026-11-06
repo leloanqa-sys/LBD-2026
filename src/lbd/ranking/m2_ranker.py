@@ -155,6 +155,19 @@ class M2RepurposingRanker:
         if load_graph_for_dfs:
             self._load_hetionet_edges()
 
+        # Canonical baseline approved indications (pre-2018 knowledge)
+        # Prevents primary approved disease indications from leaking into "novel" candidate lists
+        self.canonical_baseline_indications: Dict[str, Set[str]] = {
+            "Compound::DB06292": {"Disease::DOID:9352"},  # Dapagliflozin -> Type 2 Diabetes
+            "Compound::DB08907": {"Disease::DOID:9352"},  # Canagliflozin -> Type 2 Diabetes
+            "Compound::DB09038": {"Disease::DOID:9352"},  # Empagliflozin -> Type 2 Diabetes
+            "Compound::DB01394": {"Disease::DOID:13189"}, # Colchicine -> Gout
+            "Compound::DB00331": {"Disease::DOID:9352"},  # Metformin -> Type 2 Diabetes
+            "Compound::DB00203": {"Disease::DOID:10763"}, # Sildenafil -> Erectile/PAH
+            "Compound::DB06655": {"Disease::DOID:9352"},  # Liraglutide -> Type 2 Diabetes
+            "Compound::DB00104": {"Disease::DOID:10534"}, # Octreotide -> Acromegaly
+        }
+
     def _load_hetionet_edges(self) -> None:
         edges_gz = self.raw_dir / "hetionet-v1.0-edges.sif.gz"
         if not edges_gz.exists():
@@ -441,8 +454,9 @@ class M2RepurposingRanker:
         base_probs = 1.0 / (1.0 + np.exp(-base_logits))
 
         # 2. Signed Graph NTR Flux computation
-        flux_rev = np.sum(xx[:, self.rev_cols], axis=1) if self.rev_cols else np.zeros(self.num_diseases)
-        flux_cong = np.sum(xx[:, self.cong_cols], axis=1) if self.cong_cols else np.zeros(self.num_diseases)
+        # Compute directional biological flux from actual topological features (avoiding Z-score zero-inflation)
+        raw_rev = np.sum(X_drug[:, self.rev_cols], axis=1) if self.rev_cols else np.zeros(self.num_diseases)
+        raw_cong = np.sum(X_drug[:, self.cong_cols], axis=1) if self.cong_cols else np.zeros(self.num_diseases)
 
         if self.sig_reversal_col is not None and self.sig_avail_col is not None:
             sig_rev = self.X[row_start : row_end, self.sig_reversal_col]
@@ -451,9 +465,15 @@ class M2RepurposingRanker:
         else:
             sig_term = np.zeros(self.num_diseases)
 
-        raw_ntr = (flux_rev - 0.5 * flux_cong) + 0.8 * sig_term
-        ntr_std = float(np.std(raw_ntr))
-        norm_ntr = (raw_ntr - np.mean(raw_ntr)) / (ntr_std + 1e-9) if ntr_std > 1e-6 else np.zeros_like(raw_ntr)
+        # Net Therapeutic Ratio in raw scale [-1.0, +1.0]:
+        # Positive (> 0): Net therapeutic reversal of disease state
+        # Negative (< 0): Pathogenic exacerbation or congruent adverse risk
+        # Zero (= 0): Neutral or uncharacterized transcriptional direction
+        denom = raw_rev + raw_cong
+        safe_denom = np.where(denom > 1e-6, denom, 1.0)
+        raw_ntr = np.where(denom > 1e-6, (raw_rev - raw_cong) / safe_denom, 0.0) + 0.5 * sig_term
+        raw_ntr = np.clip(raw_ntr, -1.0, 1.0)
+        norm_ntr = raw_ntr
 
         if use_signed_graph and ntr_weight > 0.0:
             final_logits = base_logits + ntr_weight * norm_ntr
@@ -466,16 +486,19 @@ class M2RepurposingRanker:
         known_indications: List[Dict[str, Any]] = []
         novel_candidates: List[Dict[str, Any]] = []
 
+        baseline_dis_set = self.canonical_baseline_indications.get(drug_id, set())
+
         for rank_raw, idx in enumerate(order, 1):
             dis_id = self.diseases[idx]
             dis_name = self.names.get(dis_id, dis_id)
             score_val = float(scores[idx])
-            is_treat = (drug_id, dis_id) in self.ctd
+            is_treat = (drug_id, dis_id) in self.ctd or dis_id in baseline_dis_set
             is_pall = (drug_id, dis_id) in self.cpd
 
+            ntr_val = float(raw_ntr[idx])
             mech_class = (
-                "therapeutic_reversal" if raw_ntr[idx] > 0.15
-                else ("pathogenic_risk" if raw_ntr[idx] < -0.15 else "neutral")
+                "therapeutic_reversal" if ntr_val > 0.05
+                else ("pathogenic_risk" if ntr_val < -0.05 else "neutral")
             )
 
             item: Dict[str, Any] = {
@@ -485,11 +508,11 @@ class M2RepurposingRanker:
                 "score": round(score_val, 4),
                 "base_score": round(float(base_probs[idx]), 4),
                 "signed_mechanism": {
-                    "therapeutic_flux": round(float(flux_rev[idx]), 4),
-                    "pathogenic_flux": round(float(flux_cong[idx]), 4),
-                    "net_flux": round(float(flux_rev[idx] - 0.5 * flux_cong[idx]), 4),
+                    "therapeutic_flux": round(float(raw_rev[idx]), 4),
+                    "pathogenic_flux": round(float(raw_cong[idx]), 4),
+                    "net_flux": round(float(raw_rev[idx] - raw_cong[idx]), 4),
                     "signature_reversal": round(float(sig_term[idx]), 4),
-                    "ntr_score": round(float(raw_ntr[idx]), 4),
+                    "ntr_score": round(ntr_val, 4),
                     "normalized_ntr": round(float(norm_ntr[idx]), 4),
                     "mechanism_classification": mech_class,
                 },

@@ -221,7 +221,16 @@ def run(drug, limit=20, source=None, progress=print):
                 session_edges.append(dict(r, quotes=[{"pmid": r.get("pmid", ""), "text": r.get("evidence", "")}]))
         session_edges_count = session_ranker.augment_session_edges(session_edges)
 
-        result = session_ranker.rank_drug_with_session(drug_id, top_n_novel=10, dfs_top_k=3)
+        result = session_ranker.rank_drug_with_session(drug_id, top_n_novel=25, dfs_top_k=3)
+        known_indications_list = []
+        for k in result.get("known_indications", []):
+            known_indications_list.append({
+                "disease_id": k["disease_id"],
+                "disease_name": k["disease_name"],
+                "score": k["score"],
+                "status": k.get("status", "KNOWN_TREATS")
+            })
+
         for c in result["top_novel_candidates"]:
             target=c["disease_id"];paths=c.get("top_paths",[])
             selected={drug_id,target}|{n for path in paths for n in path["nodes"]}
@@ -327,7 +336,9 @@ def run(drug, limit=20, source=None, progress=print):
         del session_ranker
 
     output=dict(run_id=folder.name,drug=term,drug_id=drug_id,papers=len(papers),filter_counts=audit["relation_decisions"],
-        admitted_edges=len(graph["edges"]),session_edges_count=session_edges_count,candidates=ranking,
+        admitted_edges=len(graph["edges"]),session_edges_count=session_edges_count,
+        known_indications=known_indications_list if drug_id else [],
+        candidates=ranking,
         rank_status="ranked" if drug_id else "outside_model",
         source_csv_sha256=digest(Path(source)),policy_sha256=digest(ROOT/"configs/kg_filter.json"),
         model_sha256=digest(assets/"M2_model.pkl") if drug_id else None)
