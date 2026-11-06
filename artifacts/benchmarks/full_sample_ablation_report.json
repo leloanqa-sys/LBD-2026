@@ -1,0 +1,343 @@
+{
+  "signed_graph_ablation_across_suites": {
+    "suite_a_post2018": {
+      "C1: Raw M2 (Unsigned Baseline, beta=1.0)": {
+        "mrr": 0.1061,
+        "hit@1": 0.0,
+        "hit@5": 0.3,
+        "avg_rank": 53.6
+      },
+      "C2: Debiased M2 (Unsigned, beta=0.6)": {
+        "mrr": 0.1017,
+        "hit@1": 0.0,
+        "hit@5": 0.3,
+        "avg_rank": 52.5
+      },
+      "C3: Original M3 (Signed Graph Raw)": {
+        "mrr": 0.1722,
+        "hit@1": 0.1,
+        "hit@5": 0.3,
+        "avg_rank": 53.8
+      },
+      "C4: Debiased M2 + Signed NTR Flux": {
+        "mrr": 0.1633,
+        "hit@1": 0.1,
+        "hit@5": 0.3,
+        "avg_rank": 54.0
+      }
+    },
+    "suite_b_rare_diseases": {
+      "C1: Raw M2 (Unsigned Baseline, beta=1.0)": {
+        "mrr": 0.0147,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "avg_rank": 103.5
+      },
+      "C2: Debiased M2 (Unsigned, beta=0.6)": {
+        "mrr": 0.0188,
+        "hit@5": 0.0,
+        "hit@10": 0.0909,
+        "avg_rank": 98.6
+      },
+      "C3: Original M3 (Signed Graph Raw)": {
+        "mrr": 0.0152,
+        "hit@5": 0.0,
+        "hit@10": 0.0,
+        "avg_rank": 103.4
+      },
+      "C4: Debiased M2 + Signed NTR Flux": {
+        "mrr": 0.0184,
+        "hit@5": 0.0,
+        "hit@10": 0.0909,
+        "avg_rank": 101.5
+      }
+    },
+    "suite_c_repodb_636": {
+      "C1: Raw M2 (Unsigned Baseline, beta=1.0)": {
+        "mrr": 0.2835,
+        "p@10": 0.0504,
+        "r@10": 0.4694,
+        "ndcg@10": 0.306
+      },
+      "C2: Debiased M2 (Unsigned, beta=0.6)": {
+        "mrr": 0.2869,
+        "p@10": 0.0488,
+        "r@10": 0.4536,
+        "ndcg@10": 0.305
+      },
+      "C3: Original M3 (Signed Graph Raw)": {
+        "mrr": 0.2771,
+        "p@10": 0.0504,
+        "r@10": 0.4624,
+        "ndcg@10": 0.3006
+      },
+      "C4: Debiased M2 + Signed NTR Flux": {
+        "mrr": 0.2756,
+        "p@10": 0.0551,
+        "r@10": 0.5127,
+        "ndcg@10": 0.3142
+      }
+    },
+    "suite_d_landmark_4_classes": {
+      "C1: Raw M2 (Unsigned Baseline, beta=1.0)": {
+        "mrr": 0.0916,
+        "recall@5": 0.1429,
+        "recall@10": 0.4286,
+        "avg_rank": 29.7
+      },
+      "C2: Debiased M2 (Unsigned, beta=0.6)": {
+        "mrr": 0.105,
+        "recall@5": 0.1429,
+        "recall@10": 0.5714,
+        "avg_rank": 28.7
+      },
+      "C3: Original M3 (Signed Graph Raw)": {
+        "mrr": 0.0968,
+        "recall@5": 0.1429,
+        "recall@10": 0.4286,
+        "avg_rank": 27.0
+      },
+      "C4: Debiased M2 + Signed NTR Flux": {
+        "mrr": 0.0984,
+        "recall@5": 0.1429,
+        "recall@10": 0.4286,
+        "avg_rank": 31.9
+      }
+    }
+  },
+  "bayesian_literature_volume_ablation": {
+    "volume_scaling": {
+      "Volume_N_10_papers": {
+        "abstracts_sampled": 10,
+        "total_raw_evidence_events": 15,
+        "fused_candidate_edges": 3,
+        "admitted_to_kg": 2,
+        "provisional_queue": 1,
+        "rejected_edges": 0,
+        "avg_posterior_mean": 0.8453,
+        "avg_posterior_std": 0.1621,
+        "avg_lcb_90": 0.6376,
+        "lcb_gating_selectivity_pct": 66.67,
+        "key_consensus_edge_stats": {
+          "SLC5A2": {
+            "alpha": 7.29,
+            "beta": 0.45,
+            "mean": 0.9419,
+            "std": 0.0792,
+            "lcb_90": 0.8404,
+            "pmids_count": 7,
+            "partition": "ADMITTED_KG"
+          },
+          "chronic kidney failure": {
+            "alpha": 5.4017,
+            "beta": 0.45,
+            "mean": 0.9231,
+            "std": 0.1018,
+            "lcb_90": 0.7927,
+            "pmids_count": 7,
+            "partition": "ADMITTED_KG"
+          },
+          "breast cancer": {
+            "alpha": 0.9175,
+            "beta": 0.45,
+            "mean": 0.6709,
+            "std": 0.3054,
+            "lcb_90": 0.2796,
+            "pmids_count": 1,
+            "partition": "PROVISIONAL_QUEUE"
+          }
+        }
+      },
+      "Volume_N_50_papers": {
+        "abstracts_sampled": 50,
+        "total_raw_evidence_events": 72,
+        "fused_candidate_edges": 3,
+        "admitted_to_kg": 2,
+        "provisional_queue": 1,
+        "rejected_edges": 0,
+        "avg_posterior_mean": 0.8931,
+        "avg_posterior_std": 0.1104,
+        "avg_lcb_90": 0.7516,
+        "lcb_gating_selectivity_pct": 66.67,
+        "key_consensus_edge_stats": {
+          "SLC5A2": {
+            "alpha": 35.81,
+            "beta": 0.45,
+            "mean": 0.9876,
+            "std": 0.0181,
+            "lcb_90": 0.9643,
+            "pmids_count": 38,
+            "partition": "ADMITTED_KG"
+          },
+          "chronic kidney failure": {
+            "alpha": 20.3575,
+            "beta": 0.45,
+            "mean": 0.9784,
+            "std": 0.0311,
+            "lcb_90": 0.9385,
+            "pmids_count": 30,
+            "partition": "ADMITTED_KG"
+          },
+          "breast cancer": {
+            "alpha": 1.12,
+            "beta": 0.45,
+            "mean": 0.7134,
+            "std": 0.2821,
+            "lcb_90": 0.3519,
+            "pmids_count": 4,
+            "partition": "PROVISIONAL_QUEUE"
+          }
+        }
+      },
+      "Volume_N_100_papers": {
+        "abstracts_sampled": 100,
+        "total_raw_evidence_events": 131,
+        "fused_candidate_edges": 3,
+        "admitted_to_kg": 2,
+        "provisional_queue": 1,
+        "rejected_edges": 0,
+        "avg_posterior_mean": 0.9089,
+        "avg_posterior_std": 0.0966,
+        "avg_lcb_90": 0.7852,
+        "lcb_gating_selectivity_pct": 66.67,
+        "key_consensus_edge_stats": {
+          "SLC5A2": {
+            "alpha": 66.17,
+            "beta": 0.45,
+            "mean": 0.9932,
+            "std": 0.01,
+            "lcb_90": 0.9805,
+            "pmids_count": 71,
+            "partition": "ADMITTED_KG"
+          },
+          "chronic kidney failure": {
+            "alpha": 35.3133,
+            "beta": 0.45,
+            "mean": 0.9874,
+            "std": 0.0184,
+            "lcb_90": 0.9639,
+            "pmids_count": 53,
+            "partition": "ADMITTED_KG"
+          },
+          "breast cancer": {
+            "alpha": 1.3225,
+            "beta": 0.45,
+            "mean": 0.7461,
+            "std": 0.2614,
+            "lcb_90": 0.4111,
+            "pmids_count": 7,
+            "partition": "PROVISIONAL_QUEUE"
+          }
+        }
+      },
+      "Volume_N_200_papers": {
+        "abstracts_sampled": 200,
+        "total_raw_evidence_events": 254,
+        "fused_candidate_edges": 3,
+        "admitted_to_kg": 2,
+        "provisional_queue": 1,
+        "rejected_edges": 0,
+        "avg_posterior_mean": 0.9296,
+        "avg_posterior_std": 0.0793,
+        "avg_lcb_90": 0.8277,
+        "lcb_gating_selectivity_pct": 66.67,
+        "key_consensus_edge_stats": {
+          "SLC5A2": {
+            "alpha": 137.93,
+            "beta": 0.45,
+            "mean": 0.9967,
+            "std": 0.0048,
+            "lcb_90": 0.99,
+            "pmids_count": 149,
+            "partition": "ADMITTED_KG"
+          },
+          "chronic kidney failure": {
+            "alpha": 60.0228,
+            "beta": 0.45,
+            "mean": 0.9926,
+            "std": 0.011,
+            "lcb_90": 0.9785,
+            "pmids_count": 91,
+            "partition": "ADMITTED_KG"
+          },
+          "breast cancer": {
+            "alpha": 1.795,
+            "beta": 0.45,
+            "mean": 0.7996,
+            "std": 0.2222,
+            "lcb_90": 0.5147,
+            "pmids_count": 14,
+            "partition": "PROVISIONAL_QUEUE"
+          }
+        }
+      },
+      "Volume_N_664_papers": {
+        "abstracts_sampled": 664,
+        "total_raw_evidence_events": 828,
+        "fused_candidate_edges": 3,
+        "admitted_to_kg": 2,
+        "provisional_queue": 1,
+        "rejected_edges": 0,
+        "avg_posterior_mean": 0.9643,
+        "avg_posterior_std": 0.0457,
+        "avg_lcb_90": 0.9024,
+        "lcb_gating_selectivity_pct": 66.67,
+        "key_consensus_edge_stats": {
+          "SLC5A2": {
+            "alpha": 452.57,
+            "beta": 0.45,
+            "mean": 0.999,
+            "std": 0.0015,
+            "lcb_90": 0.99,
+            "pmids_count": 491,
+            "partition": "ADMITTED_KG"
+          },
+          "chronic kidney failure": {
+            "alpha": 190.723,
+            "beta": 0.45,
+            "mean": 0.9976,
+            "std": 0.0035,
+            "lcb_90": 0.99,
+            "pmids_count": 292,
+            "partition": "ADMITTED_KG"
+          },
+          "breast cancer": {
+            "alpha": 3.8875,
+            "beta": 0.45,
+            "mean": 0.8963,
+            "std": 0.132,
+            "lcb_90": 0.7271,
+            "pmids_count": 45,
+            "partition": "PROVISIONAL_QUEUE"
+          }
+        }
+      }
+    },
+    "fusion_scheme_comparison": {
+      "1. Full Hierarchical Bayesian Beta-Binomial (Calibrated LCB-90)": {
+        "admitted_kg": 2,
+        "provisional": 1,
+        "avg_lcb_90": 0.9024,
+        "false_positive_control": "Optimal (LCB-90 >= 0.45 rejects noise)"
+      },
+      "2. Ablation w/o LCB-90 (Naive Frequency / Point Estimate)": {
+        "admitted_kg": 3,
+        "provisional": 0,
+        "avg_lcb_90": 0.0,
+        "false_positive_control": "Poor (Admits low-power noise with high variance)"
+      },
+      "3. Ablation w/o Conflict Discounting (Cancels multi-paper signal)": {
+        "admitted_kg": 1,
+        "provisional": 2,
+        "avg_lcb_90": 0.8224,
+        "false_positive_control": "Sub-optimal (Single contrary paper erases consensus)"
+      },
+      "4. Ablation Flat Prior Beta(1,1) (Uninformative)": {
+        "admitted_kg": 1,
+        "provisional": 2,
+        "avg_lcb_90": 0.8524,
+        "false_positive_control": "Slow convergence under small N"
+      }
+    }
+  }
+}

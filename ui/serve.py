@@ -226,6 +226,25 @@ def explain(data):
     reviews = get_reviews(data["run_id"])
     rev_info = reviews.get(data["disease"])
 
+    compact_paths = []
+    for p in paths[:3]:
+        compact_paths.append({
+            "path_str": p.get("path_str") or " -- ".join(p.get("nodes", [])),
+            "metapath": p.get("metapath"),
+            "mechanism_type": p.get("mechanism_type"),
+            "net_sign": p.get("net_sign"),
+            "dwpc_weight": p.get("dwpc_weight"),
+            "top_pmids": (p.get("supporting_pmids") or [])[:5]
+        })
+
+    compact_quotes = []
+    for q in evidence[:5]:
+        compact_quotes.append({
+            "pmid": q.get("pmid"),
+            "predicate": q.get("predicate"),
+            "text": (q.get("text") or q.get("evidence") or "")[:250]
+        })
+
     payload = dict(
         drug=result["drug"],
         disease=candidate["disease_name"],
@@ -235,9 +254,8 @@ def explain(data):
         literature_delta=candidate.get("literature_delta"),
         human_review=rev_info,
         warnings=candidate.get("warnings", []),
-        features=candidate["features"],
-        selected_paths=paths,
-        selected_quotes=evidence
+        selected_paths=compact_paths,
+        selected_quotes=compact_quotes
     )
     prompt = (
         "Bạn là chuyên gia dược lý học tính toán và tái định vị thuốc. "
@@ -333,7 +351,7 @@ class Handler(BaseHTTPRequestHandler):
 
             drug = data["drug"].strip()
             limit = int(data.get("limit", 20))
-            if not re.fullmatch(r"[\w ()/-]{1,90}", drug) or not 1 <= limit <= 200:
+            if not re.fullmatch(r"[\w ()/-]{1,90}", drug) or not 1 <= limit <= 1000:
                 raise ValueError("Thông số không hợp lệ")
             if not slot.acquire(blocking=False):
                 return self.send(409, {"error": "Đang có một lượt chạy"})

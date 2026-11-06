@@ -130,7 +130,7 @@ def write_bundle(folder, papers, nodes, drug_id=None, drug_term=None):
 
 def run(drug, limit=20, source=None, progress=print):
     drug = drug.strip()
-    if not re.fullmatch(r"[\w ()/-]{1,90}",drug) or not 1 <= limit <= 200:
+    if not re.fullmatch(r"[\w ()/-]{1,90}",drug) or not 1 <= limit <= 1000:
         raise ValueError("Tên thuốc hoặc giới hạn bài không hợp lệ")
     raw = ROOT/"data/raw"
     assets = ROOT/"artifacts/ranking_m2"
