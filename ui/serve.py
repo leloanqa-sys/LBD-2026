@@ -293,12 +293,13 @@ class Handler(BaseHTTPRequestHandler):
                 for c in res.get("candidates", []):
                     c["human_review"] = revs.get(c["disease_id"])
                 return self.send(200, res)
-            if self.path.startswith("/api/jobs/"):
-                return self.send(200, jobs[self.path.split("/")[-1]])
+            if self.path.startswith("/api/jobs/") or self.path.startswith("/api/poll/"):
+                job_id = self.path.split("/")[-1]
+                return self.send(200, jobs.get(job_id, {"error": "Job không tồn tại"}))
             if self.path.startswith("/api/reviews/"):
                 run_id = self.path.split("/")[-1]
                 return self.send(200, get_reviews(run_id))
-            if self.path.startswith("/api/runs/"):
+            if self.path.startswith("/api/runs/") or self.path.startswith("/api/result/"):
                 run_id = self.path.split("/")[-1]
                 res = result_for(run_id)
                 revs = get_reviews(run_id)
@@ -339,7 +340,7 @@ class Handler(BaseHTTPRequestHandler):
             job = uuid.uuid4().hex
             jobs[job] = {"stage": "Chuẩn bị"}
             threading.Thread(target=execute, args=(job, drug, limit), daemon=True).start()
-            self.send(202, {"job": job})
+            self.send(202, {"job": job, "job_id": job})
         except Exception as exc:
             self.send(400, {"error": str(exc)})
 
