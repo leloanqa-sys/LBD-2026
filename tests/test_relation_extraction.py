@@ -40,7 +40,7 @@ def test_nlp_engine_end_to_end():
     doc = {
         "pmid": "99999999",
         "title": "Dapagliflozin in Chronic Kidney Disease",
-        "abstract": "Dapagliflozin attenuates chronic kidney disease progression and inhibits SLC5A2.",
+        "abstract": "RESULTS: Dapagliflozin attenuates chronic kidney disease progression and inhibits SLC5A2.",
     }
     grounded, events, _ = engine.run_document(doc)
     assert len(events) >= 1

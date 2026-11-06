@@ -1,4 +1,8 @@
-# Python
+# =============================================================================
+# Git Ignore Configuration — Drug Repurposing LBD & Signed Graph Engine
+# =============================================================================
+
+# 1. Python Bytecode, Virtual Environments & Build Artifacts
 __pycache__/
 *.py[cod]
 *$py.class
@@ -10,26 +14,47 @@ venv/
 build/
 dist/
 *.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
 
-# Data & Models (ignore large local files)
-data/raw/
-data/processed/
+# 2. Ephemeral Experimental & Sandbox Runs (Ignored)
+runs/explorer/*
+!runs/explorer/.gitkeep
+data/raw/temp_*.csv
 data/cache/
+data/processed/
 artifacts/cache/
-artifacts/*.json
+artifacts/tmp_*
 archive/
-*.parquet
-*.h5
-*.pt
-*.bin
-*.pkl
+scratch/
 
-# Secrets
+# 3. Large External Raw Files (Ignored by default, except curated Landmark corpus)
+data/raw/*
+!data/raw/landmark_curated_abstracts.csv
+!data/raw/dapagliflozin_abstracts.csv
+
+# 4. Tracked Ground Truth, Benchmarks & Packaged Models (Explicitly Kept for Team)
+!data/ground_truth/
+!data/ground_truth/*.json
+!data/ground_truth/*.csv
+!data/ground_truth/*.md
+!src/lbd/nlp/model_v3_biored_multiclass.pkl
+!src/lbd/nlp/crosswalk_mesh_doid.json
+!artifacts/ranking_m2/*.pkl
+!artifacts/ranking_m2/*.npz
+!artifacts/ranking_m2/*.json
+!artifacts/ranking_m2/*.csv
+!artifacts/benchmarks/*.json
+
+# 5. Secrets & Local Environment Keys (Strictly Ignored)
 .env
+.env.*
+!.env.example
 *.pem
 credentials.json
 
-# IDE & OS
+# 6. IDE & OS Metadata
 .idea/
 .vscode/
 *.swp

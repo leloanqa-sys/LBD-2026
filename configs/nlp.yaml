@@ -1,3 +1,4 @@
+# LEGACY CONFIG: canonical verifier currently uses its own defaults; see docs/REMEDIATION.md.
 # NLP & Relation Extraction configuration
 ner:
   engine: "pubtator_v3"

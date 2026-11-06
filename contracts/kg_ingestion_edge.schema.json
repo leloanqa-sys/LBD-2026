@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract D - GraphRecord & Evidence",
+  "description": "Knowledge graph edge with biological signs and evidence references",
+  "type": "object",
+  "required": [
+    "assertion_status",
+    "edge_id",
+    "evidence_ids",
+    "metaedge",
+    "partition",
+    "pmids",
+    "relation_type",
+    "sign",
+    "source",
+    "source_dataset",
+    "target"
+  ],
+  "properties": {
+    "edge_id": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "metaedge": {
+      "type": "string"
+    },
+    "relation_type": {
+      "type": "string"
+    },
+    "assertion_status": {
+      "const": "asserted"
+    },
+    "sign": {
+      "type": "integer",
+      "enum": [
+        -1,
+        0,
+        1
+      ]
+    },
+    "evidence_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "pmids": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 2
+    },
+    "source_dataset": {
+      "type": "string",
+      "enum": [
+        "hetionet_v1.0",
+        "nlp_literature",
+        "hybrid"
+      ]
+    },
+    "tier": {
+      "type": "integer",
+      "enum": [
+        1,
+        2,
+        3
+      ]
+    },
+    "partition": {
+      "const": "ADMITTED_KG"
+    }
+  }
+}

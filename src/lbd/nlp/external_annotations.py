@@ -14,6 +14,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import os
 from pathlib import Path
 from typing import Any
 
@@ -30,6 +31,16 @@ MESH_TO_V6 = {
     "D006333": ("DOID:6000", "Heart Failure", "Disease"),
     "D051436": ("DOID:784", "Chronic Kidney Disease", "Disease"),
 }
+
+# P2 Cross-Ontology Dictionary (MeSH <-> DOID <-> UMLS CUI)
+_CROSSWALK_FILE = Path(__file__).resolve().parent / "crosswalk_mesh_doid.json"
+if _CROSSWALK_FILE.exists():
+    try:
+        _cw = json.loads(_CROSSWALK_FILE.read_text(encoding="utf-8"))
+        for _k, _v in _cw.items():
+            MESH_TO_V6[_k] = (_v["id"], _v["name"], _v["type"])
+    except Exception:
+        pass
 GO_ID_RX = re.compile(r"(?:GO[:_])([0-9]{7})", re.I)
 
 
@@ -47,13 +58,34 @@ def _write_json(path: Path, value: Any) -> None:
     temp.replace(path)
 
 
+_last_request_time = 0.0
+
+def _respect_rate_limit(min_interval: float = 0.2) -> None:
+    global _last_request_time
+    now = time.monotonic()
+    elapsed = now - _last_request_time
+    if elapsed < min_interval:
+        time.sleep(min_interval - elapsed)
+
 def _request_json(url: str, timeout: int = 40, accept: str = "application/json") -> Any:
-    request = urllib.request.Request(
-        url,
-        headers={"User-Agent": "dapagliflozin-lbd-v6/1.0 (research NLP)", "Accept": accept},
-    )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        return json.loads(response.read().decode("utf-8"))
+    global _last_request_time
+    _respect_rate_limit(0.2)
+    api_key = os.environ.get("NCBI_API_KEY", "").strip()
+    email = os.environ.get("NCBI_EMAIL", "").strip()
+    user_agent = f"LBD-Explorer/1.0 (mailto:{email or 'research@uel.edu.vn'})"
+    headers = {"User-Agent": user_agent, "Accept": accept}
+    if api_key and "ncbi.nlm.nih.gov" in url:
+        headers["api-key"] = api_key
+        if "api_key" not in url:
+            sep = "&" if "?" in url else "?"
+            url = f"{url}{sep}api_key={api_key}"
+    request = urllib.request.Request(url, headers=headers)
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            _last_request_time = time.monotonic()
+            return json.loads(response.read().decode("utf-8"))
+    finally:
+        _last_request_time = time.monotonic()
 
 
 def _request_json_with_retry(url: str, *, timeout: int = 40, accept: str = "application/json", attempts: int = 3) -> Any:

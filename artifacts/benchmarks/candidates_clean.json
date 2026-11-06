@@ -1,0 +1,628 @@
+{
+  "Compound::DB01394": {
+    "display_name": "Colchicine",
+    "note": "Gout / Chß╗æng vi├¬m vi ß╗æng Tubulin",
+    "known_indications": [
+      {
+        "rank_raw": 10,
+        "disease_id": "Disease::DOID:12236",
+        "disease_name": "primary biliary cirrhosis",
+        "score": 0.8851698040962219,
+        "status": "KNOWN_TREATS"
+      },
+      {
+        "rank_raw": 59,
+        "disease_id": "Disease::DOID:418",
+        "disease_name": "systemic scleroderma",
+        "score": 0.501299262046814,
+        "status": "KNOWN_PALLIATES"
+      },
+      {
+        "rank_raw": 100,
+        "disease_id": "Disease::DOID:13189",
+        "disease_name": "gout",
+        "score": 0.25520893931388855,
+        "status": "KNOWN_TREATS"
+      }
+    ],
+    "top_novel": [
+      {
+        "rank_raw": 1,
+        "disease_id": "Disease::DOID:10283",
+        "disease_name": "prostate cancer",
+        "score": 0.9749763607978821,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 1,
+        "total_dfs_paths": 180872,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.005354,
+            "beta": 0.4757,
+            "contrib": 0.002547,
+            "path_str": "Colchicine --[CbG]--> SLC22A3 <--[DaG]-- prostate cancer"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.00213,
+            "beta": 0.4757,
+            "contrib": 0.001013,
+            "path_str": "Colchicine --[CbG]--> CYP2E1 <--[DaG]-- prostate cancer"
+          }
+        ]
+      },
+      {
+        "rank_raw": 2,
+        "disease_id": "Disease::DOID:10763",
+        "disease_name": "hypertension",
+        "score": 0.9737439155578613,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 2,
+        "total_dfs_paths": 188100,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.005245,
+            "beta": 0.4757,
+            "contrib": 0.002495,
+            "path_str": "Colchicine --[CbG]--> ABCC1 <--[DaG]-- hypertension"
+          },
+          {
+            "metapath": "dwpc:CuG|direct|DaG",
+            "dwpc_weight": 0.00533,
+            "beta": 0.0814,
+            "contrib": 0.000434,
+            "path_str": "Colchicine --[CuG]--> TPM1 <--[DaG]-- hypertension"
+          }
+        ]
+      },
+      {
+        "rank_raw": 3,
+        "disease_id": "Disease::DOID:1612",
+        "disease_name": "breast cancer",
+        "score": 0.971041738986969,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 3,
+        "total_dfs_paths": 292742,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.00507,
+            "beta": 0.4757,
+            "contrib": 0.002412,
+            "path_str": "Colchicine --[CbG]--> ABCC1 <--[DaG]-- breast cancer"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.001336,
+            "beta": 0.4757,
+            "contrib": 0.000636,
+            "path_str": "Colchicine --[CbG]--> CYP3A4 <--[DaG]-- breast cancer"
+          }
+        ]
+      },
+      {
+        "rank_raw": 4,
+        "disease_id": "Disease::DOID:9970",
+        "disease_name": "obesity",
+        "score": 0.9511107802391052,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 4,
+        "total_dfs_paths": 145097,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.00246,
+            "beta": 0.4757,
+            "contrib": 0.00117,
+            "path_str": "Colchicine --[CbG]--> CYP2E1 <--[DaG]-- obesity"
+          },
+          {
+            "metapath": "dwpc:CdG|direct|DdG",
+            "dwpc_weight": 0.016252,
+            "beta": 0.0533,
+            "contrib": 0.000865,
+            "path_str": "Colchicine --[CdG]--> RNASE4 <--[DdG]-- obesity"
+          }
+        ]
+      },
+      {
+        "rank_raw": 5,
+        "disease_id": "Disease::DOID:8577",
+        "disease_name": "ulcerative colitis",
+        "score": 0.9289072155952454,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 5,
+        "total_dfs_paths": 132987,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CuG|direct|DaG",
+            "dwpc_weight": 0.014543,
+            "beta": 0.0814,
+            "contrib": 0.001184,
+            "path_str": "Colchicine --[CuG]--> CDH3 <--[DaG]-- ulcerative colitis"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.002023,
+            "beta": 0.4757,
+            "contrib": 0.000963,
+            "path_str": "Colchicine --[CbG]--> ABCB1 <--[DaG]-- ulcerative colitis"
+          }
+        ]
+      },
+      {
+        "rank_raw": 6,
+        "disease_id": "Disease::DOID:1909",
+        "disease_name": "melanoma",
+        "score": 0.9221041202545166,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 6,
+        "total_dfs_paths": 202309,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CuG|direct|DaG",
+            "dwpc_weight": 0.008555,
+            "beta": 0.0814,
+            "contrib": 0.000696,
+            "path_str": "Colchicine --[CuG]--> DRAP1 <--[DaG]-- melanoma"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.001335,
+            "beta": 0.4757,
+            "contrib": 0.000635,
+            "path_str": "Colchicine --[CbG]--> ABCB1 <--[DaG]-- melanoma"
+          }
+        ]
+      },
+      {
+        "rank_raw": 7,
+        "disease_id": "Disease::DOID:2531",
+        "disease_name": "hematologic cancer",
+        "score": 0.9178814888000488,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 7,
+        "total_dfs_paths": 299357,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.001104,
+            "beta": 0.4757,
+            "contrib": 0.000525,
+            "path_str": "Colchicine --[CbG]--> ABCB1 <--[DaG]-- hematologic cancer"
+          },
+          {
+            "metapath": "dwpc:CdG|direct|DdG",
+            "dwpc_weight": 0.008185,
+            "beta": 0.0533,
+            "contrib": 0.000436,
+            "path_str": "Colchicine --[CdG]--> RNASE4 <--[DdG]-- hematologic cancer"
+          }
+        ]
+      }
+    ]
+  },
+  "Compound::DB00945": {
+    "display_name": "Aspirin (Acetylsalicylic acid)",
+    "note": "Giß║úm ─æau, hß║í sß╗æt, chß╗æng vi├¬m NSAID / ß╗¿c chß║┐ COX-1, COX-2",
+    "known_indications": [
+      {
+        "rank_raw": 15,
+        "disease_id": "Disease::DOID:8398",
+        "disease_name": "osteoarthritis",
+        "score": 0.8748412728309631,
+        "status": "KNOWN_PALLIATES"
+      },
+      {
+        "rank_raw": 22,
+        "disease_id": "Disease::DOID:7148",
+        "disease_name": "rheumatoid arthritis",
+        "score": 0.8568815588951111,
+        "status": "KNOWN_PALLIATES"
+      },
+      {
+        "rank_raw": 34,
+        "disease_id": "Disease::DOID:6364",
+        "disease_name": "migraine",
+        "score": 0.8066537976264954,
+        "status": "KNOWN_PALLIATES"
+      },
+      {
+        "rank_raw": 45,
+        "disease_id": "Disease::DOID:3393",
+        "disease_name": "coronary artery disease",
+        "score": 0.769767701625824,
+        "status": "KNOWN_TREATS"
+      },
+      {
+        "rank_raw": 56,
+        "disease_id": "Disease::DOID:9074",
+        "disease_name": "systemic lupus erythematosus",
+        "score": 0.7349022626876831,
+        "status": "KNOWN_PALLIATES"
+      },
+      {
+        "rank_raw": 87,
+        "disease_id": "Disease::DOID:13189",
+        "disease_name": "gout",
+        "score": 0.3502904772758484,
+        "status": "KNOWN_PALLIATES"
+      },
+      {
+        "rank_raw": 107,
+        "disease_id": "Disease::DOID:13378",
+        "disease_name": "Kawasaki disease",
+        "score": 0.1952388435602188,
+        "status": "KNOWN_TREATS"
+      }
+    ],
+    "top_novel": [
+      {
+        "rank_raw": 1,
+        "disease_id": "Disease::DOID:8893",
+        "disease_name": "psoriasis",
+        "score": 0.9740274548530579,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 1,
+        "total_dfs_paths": 39523,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.026398,
+            "beta": 0.4757,
+            "contrib": 0.012559,
+            "path_str": "Acetylsalicylic acid --[CbG]--> NFKBIA <--[DaG]-- psoriasis"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.011688,
+            "beta": 0.4757,
+            "contrib": 0.00556,
+            "path_str": "Acetylsalicylic acid --[CbG]--> TP53 <--[DaG]-- psoriasis"
+          }
+        ]
+      },
+      {
+        "rank_raw": 2,
+        "disease_id": "Disease::DOID:1909",
+        "disease_name": "melanoma",
+        "score": 0.9605592489242554,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 2,
+        "total_dfs_paths": 72732,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.016794,
+            "beta": 0.4757,
+            "contrib": 0.00799,
+            "path_str": "Acetylsalicylic acid --[CbG]--> HSPA5 <--[DaG]-- melanoma"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.006913,
+            "beta": 0.4757,
+            "contrib": 0.003289,
+            "path_str": "Acetylsalicylic acid --[CbG]--> TP53 <--[DaG]-- melanoma"
+          }
+        ]
+      },
+      {
+        "rank_raw": 3,
+        "disease_id": "Disease::DOID:2531",
+        "disease_name": "hematologic cancer",
+        "score": 0.9571440815925598,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 3,
+        "total_dfs_paths": 107605,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.013887,
+            "beta": 0.4757,
+            "contrib": 0.006607,
+            "path_str": "Acetylsalicylic acid --[CbG]--> HSPA5 <--[DaG]-- hematologic cancer"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.012911,
+            "beta": 0.4757,
+            "contrib": 0.006142,
+            "path_str": "Acetylsalicylic acid --[CbG]--> NFKBIA <--[DaG]-- hematologic cancer"
+          }
+        ]
+      },
+      {
+        "rank_raw": 4,
+        "disease_id": "Disease::DOID:2394",
+        "disease_name": "ovarian cancer",
+        "score": 0.9497789144515991,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 4,
+        "total_dfs_paths": 29610,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.009638,
+            "beta": 0.4757,
+            "contrib": 0.004585,
+            "path_str": "Acetylsalicylic acid --[CbG]--> TP53 <--[DaG]-- ovarian cancer"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.001603,
+            "beta": 0.4757,
+            "contrib": 0.000762,
+            "path_str": "Acetylsalicylic acid --[CbG]--> ABCB1 <--[DaG]-- ovarian cancer"
+          }
+        ]
+      },
+      {
+        "rank_raw": 5,
+        "disease_id": "Disease::DOID:1612",
+        "disease_name": "breast cancer",
+        "score": 0.9491596221923828,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 5,
+        "total_dfs_paths": 102122,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.013006,
+            "beta": 0.4757,
+            "contrib": 0.006187,
+            "path_str": "Acetylsalicylic acid --[CbG]--> NFKBIA <--[DaG]-- breast cancer"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.005758,
+            "beta": 0.4757,
+            "contrib": 0.002739,
+            "path_str": "Acetylsalicylic acid --[CbG]--> TP53 <--[DaG]-- breast cancer"
+          }
+        ]
+      },
+      {
+        "rank_raw": 6,
+        "disease_id": "Disease::DOID:1324",
+        "disease_name": "lung cancer",
+        "score": 0.9292677640914917,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 6,
+        "total_dfs_paths": 56351,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.015,
+            "beta": 0.4757,
+            "contrib": 0.007136,
+            "path_str": "Acetylsalicylic acid --[CbG]--> AKR1C1 <--[DaG]-- lung cancer"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.007811,
+            "beta": 0.4757,
+            "contrib": 0.003716,
+            "path_str": "Acetylsalicylic acid --[CbG]--> TP53 <--[DaG]-- lung cancer"
+          }
+        ]
+      },
+      {
+        "rank_raw": 7,
+        "disease_id": "Disease::DOID:10763",
+        "disease_name": "hypertension",
+        "score": 0.9280304908752441,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 7,
+        "total_dfs_paths": 81667,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.013455,
+            "beta": 0.4757,
+            "contrib": 0.006401,
+            "path_str": "Acetylsalicylic acid --[CbG]--> IKBKB <--[DaG]-- hypertension"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.006571,
+            "beta": 0.4757,
+            "contrib": 0.003126,
+            "path_str": "Acetylsalicylic acid --[CbG]--> EDNRA <--[DaG]-- hypertension"
+          }
+        ]
+      }
+    ]
+  },
+  "Compound::DB08877": {
+    "display_name": "Ruxolitinib (─Éß║íi diß╗çn cho Baricitinib)",
+    "note": "ß╗¿c chß║┐ chß╗ìn lß╗ìc JAK1 / JAK2 (c├╣ng c╞í chß║┐ vß╗¢i Baricitinib)",
+    "known_indications": [
+      {
+        "rank_raw": 9,
+        "disease_id": "Disease::DOID:2531",
+        "disease_name": "hematologic cancer",
+        "score": 0.9499691128730774,
+        "status": "KNOWN_TREATS"
+      }
+    ],
+    "top_novel": [
+      {
+        "rank_raw": 1,
+        "disease_id": "Disease::DOID:10763",
+        "disease_name": "hypertension",
+        "score": 0.9885806441307068,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 1,
+        "total_dfs_paths": 343150,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.011956,
+            "beta": 0.4757,
+            "contrib": 0.005688,
+            "path_str": "Ruxolitinib --[CbG]--> PRKCE <--[DaG]-- hypertension"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.010656,
+            "beta": 0.4757,
+            "contrib": 0.005069,
+            "path_str": "Ruxolitinib --[CbG]--> BMPR2 <--[DaG]-- hypertension"
+          }
+        ]
+      },
+      {
+        "rank_raw": 2,
+        "disease_id": "Disease::DOID:10283",
+        "disease_name": "prostate cancer",
+        "score": 0.9877206683158875,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 2,
+        "total_dfs_paths": 321964,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.007835,
+            "beta": 0.4757,
+            "contrib": 0.003727,
+            "path_str": "Ruxolitinib --[CbG]--> MAP3K7 <--[DaG]-- prostate cancer"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.005049,
+            "beta": 0.4757,
+            "contrib": 0.002402,
+            "path_str": "Ruxolitinib --[CbG]--> JAK2 <--[DaG]-- prostate cancer"
+          }
+        ]
+      },
+      {
+        "rank_raw": 3,
+        "disease_id": "Disease::DOID:3393",
+        "disease_name": "coronary artery disease",
+        "score": 0.9843570590019226,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 3,
+        "total_dfs_paths": 318702,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.012134,
+            "beta": 0.4757,
+            "contrib": 0.005772,
+            "path_str": "Ruxolitinib --[CbG]--> PRKCE <--[DaG]-- coronary artery disease"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.005281,
+            "beta": 0.4757,
+            "contrib": 0.002513,
+            "path_str": "Ruxolitinib --[CbG]--> JAK2 <--[DaG]-- coronary artery disease"
+          }
+        ]
+      },
+      {
+        "rank_raw": 4,
+        "disease_id": "Disease::DOID:8778",
+        "disease_name": "Crohn's disease",
+        "score": 0.9805147647857666,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 4,
+        "total_dfs_paths": 236490,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.012113,
+            "beta": 0.4757,
+            "contrib": 0.005763,
+            "path_str": "Ruxolitinib --[CbG]--> LRRK2 <--[DaG]-- Crohn's disease"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.00918,
+            "beta": 0.4757,
+            "contrib": 0.004367,
+            "path_str": "Ruxolitinib --[CbG]--> TYK2 <--[DaG]-- Crohn's disease"
+          }
+        ]
+      },
+      {
+        "rank_raw": 5,
+        "disease_id": "Disease::DOID:9074",
+        "disease_name": "systemic lupus erythematosus",
+        "score": 0.9760549068450928,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 5,
+        "total_dfs_paths": 99982,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.022391,
+            "beta": 0.4757,
+            "contrib": 0.010652,
+            "path_str": "Ruxolitinib --[CbG]--> JAK1 <--[DaG]-- systemic lupus erythematosus"
+          },
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.01286,
+            "beta": 0.4757,
+            "contrib": 0.006118,
+            "path_str": "Ruxolitinib --[CbG]--> LTK <--[DaG]-- systemic lupus erythematosus"
+          }
+        ]
+      },
+      {
+        "rank_raw": 6,
+        "disease_id": "Disease::DOID:3070",
+        "disease_name": "malignant glioma",
+        "score": 0.9651804566383362,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 6,
+        "total_dfs_paths": 158387,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.027768,
+            "beta": 0.4757,
+            "contrib": 0.01321,
+            "path_str": "Ruxolitinib --[CbG]--> PLK1 <--[DaG]-- malignant glioma"
+          },
+          {
+            "metapath": "dwpc:CbG|GpPW|DaG",
+            "dwpc_weight": 0.001079,
+            "beta": 0.6443,
+            "contrib": 0.000695,
+            "path_str": "Ruxolitinib --[CbG]--> PLK3 --[GpPW]--> Polo-like kinase signaling events in the cell cycle <--[GpPW]-- PLK1 <--[DaG]-- malignant glioma"
+          }
+        ]
+      },
+      {
+        "rank_raw": 7,
+        "disease_id": "Disease::DOID:3571",
+        "disease_name": "liver cancer",
+        "score": 0.9542950987815857,
+        "status": "NOVEL_CANDIDATE",
+        "rank_novel": 7,
+        "total_dfs_paths": 121928,
+        "top_paths": [
+          {
+            "metapath": "dwpc:CbG|direct|DaG",
+            "dwpc_weight": 0.017973,
+            "beta": 0.4757,
+            "contrib": 0.00855,
+            "path_str": "Ruxolitinib --[CbG]--> PRKCE <--[DaG]-- liver cancer"
+          },
+          {
+            "metapath": "dwpc:CbG|GpPW|DaG",
+            "dwpc_weight": 0.000215,
+            "beta": 0.6443,
+            "contrib": 0.000139,
+            "path_str": "Ruxolitinib --[CbG]--> CAMK2G --[GpPW]--> HSF1-dependent transactivation <--[GpPW]-- DNAJB1 <--[DaG]-- liver cancer"
+          }
+        ]
+      }
+    ]
+  }
+}

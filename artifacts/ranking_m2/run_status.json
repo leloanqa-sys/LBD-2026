@@ -1,0 +1,9 @@
+{
+  "completed": true,
+  "runtime_seconds": 323.58778524398804,
+  "features": [
+    212624,
+    67
+  ],
+  "sklearn_version": "1.9.1"
+}

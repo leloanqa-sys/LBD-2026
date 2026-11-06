@@ -1,0 +1,79 @@
+[
+  {
+    "pair_id": "RARE_001",
+    "drug_id": "Compound::DB00290",
+    "disease_id": "Disease::DOID:11615",
+    "disease_degree": 29.000003814697266,
+    "label": 1
+  },
+  {
+    "pair_id": "RARE_002",
+    "drug_id": "Compound::DB00422",
+    "disease_id": "Disease::DOID:12995",
+    "disease_degree": 29.999996185302734,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_003",
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_004",
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:1964",
+    "disease_degree": 29.000003814697266,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_005",
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_006",
+    "drug_id": "Compound::DB00563",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_007",
+    "drug_id": "Compound::DB00570",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_008",
+    "drug_id": "Compound::DB00958",
+    "disease_id": "Disease::DOID:1964",
+    "disease_degree": 29.000003814697266,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_009",
+    "drug_id": "Compound::DB00997",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_010",
+    "drug_id": "Compound::DB00997",
+    "disease_id": "Disease::DOID:1964",
+    "disease_degree": 29.000003814697266,
+    "label": 0
+  },
+  {
+    "pair_id": "RARE_011",
+    "drug_id": "Compound::DB01229",
+    "disease_id": "Disease::DOID:1964",
+    "disease_degree": 29.000003814697266,
+    "label": 0
+  }
+]

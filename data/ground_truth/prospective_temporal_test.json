@@ -1,0 +1,112 @@
+[
+  {
+    "pair_id": "POST2018_01",
+    "drug_name": "Sildenafil",
+    "drug_id": "Compound::DB00203",
+    "disease_id": "Disease::DOID:10763",
+    "disease_name": "hypertension (PAH)",
+    "temporal_approval_year": 2019,
+    "study_phase": "Phase 3 / Approved",
+    "label": 1,
+    "category": "cardiovascular"
+  },
+  {
+    "pair_id": "POST2018_02",
+    "drug_name": "Metformin",
+    "drug_id": "Compound::DB00331",
+    "disease_id": "Disease::DOID:10283",
+    "disease_name": "prostate cancer",
+    "temporal_approval_year": 2021,
+    "study_phase": "Phase 3 Cohort",
+    "label": 1,
+    "category": "oncology_repurposing"
+  },
+  {
+    "pair_id": "POST2018_03",
+    "drug_name": "Duloxetine",
+    "drug_id": "Compound::DB00471",
+    "disease_id": "Disease::DOID:8398",
+    "disease_name": "osteoarthritis",
+    "temporal_approval_year": 2020,
+    "study_phase": "Approved (Chronic Musculoskeletal Pain)",
+    "label": 1,
+    "category": "musculoskeletal"
+  },
+  {
+    "pair_id": "POST2018_04",
+    "drug_name": "Thalidomide",
+    "drug_id": "Compound::DB01041",
+    "disease_id": "Disease::DOID:8778",
+    "disease_name": "Crohn's disease",
+    "temporal_approval_year": 2019,
+    "study_phase": "Phase 3 Clinical Trial",
+    "label": 1,
+    "category": "autoimmune_gi"
+  },
+  {
+    "pair_id": "POST2018_05",
+    "drug_name": "Celecoxib",
+    "drug_id": "Compound::DB00482",
+    "disease_id": "Disease::DOID:219",
+    "disease_name": "colon cancer",
+    "temporal_approval_year": 2019,
+    "study_phase": "Phase 3 Prevention (FAP / Adenoma)",
+    "label": 1,
+    "category": "oncology_chemoprevention"
+  },
+  {
+    "pair_id": "POST2018_06",
+    "drug_name": "Disulfiram",
+    "drug_id": "Compound::DB00822",
+    "disease_id": "Disease::DOID:3070",
+    "disease_name": "malignant glioma",
+    "temporal_approval_year": 2021,
+    "study_phase": "Phase 2b / In Vivo",
+    "label": 1,
+    "category": "cns_oncology"
+  },
+  {
+    "pair_id": "POST2018_07",
+    "drug_name": "Ketamine",
+    "drug_id": "Compound::DB01221",
+    "disease_id": "Disease::DOID:1595",
+    "disease_name": "endogenous depression",
+    "temporal_approval_year": 2019,
+    "study_phase": "FDA Approved (Esketamine / TRD)",
+    "label": 1,
+    "category": "psychiatric"
+  },
+  {
+    "pair_id": "POST2018_08",
+    "drug_name": "Dapagliflozin",
+    "drug_id": "Compound::DB06292",
+    "disease_id": "Disease::DOID:12930",
+    "disease_name": "dilated cardiomyopath",
+    "temporal_approval_year": 2020,
+    "study_phase": "FDA Approved (DAPA-HF)",
+    "label": 1,
+    "category": "cardiorenal"
+  },
+  {
+    "pair_id": "POST2018_09",
+    "drug_name": "Spironolactone",
+    "drug_id": "Compound::DB00421",
+    "disease_id": "Disease::DOID:12930",
+    "disease_name": "dilated cardiomyopath",
+    "temporal_approval_year": 2019,
+    "study_phase": "Phase 3 Guideline",
+    "label": 1,
+    "category": "cardiorenal"
+  },
+  {
+    "pair_id": "POST2018_10",
+    "drug_name": "Losartan",
+    "drug_id": "Compound::DB00678",
+    "disease_id": "Disease::DOID:10652",
+    "disease_name": "Alzheimer's disease",
+    "temporal_approval_year": 2021,
+    "study_phase": "Phase 2 / In Vivo",
+    "label": 1,
+    "category": "neurodegenerative"
+  }
+]

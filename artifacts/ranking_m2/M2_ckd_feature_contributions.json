@@ -1,0 +1,269 @@
+{
+  "drug": "Compound::DB06292",
+  "disease": "Disease::DOID:784",
+  "intercept": -1.4120407104492188,
+  "logit": 1.3869926929473877,
+  "scope": "Statistical feature contributions; not causal mechanism",
+  "features": [
+    {
+      "feature": "dwpc:CbG|GpPW|DaG",
+      "contribution": 1.740875482559204
+    },
+    {
+      "feature": "dwpc:CbG|direct|DaG",
+      "contribution": 1.134979486465454
+    },
+    {
+      "feature": "dwpc:CdG|GpBP|DaG",
+      "contribution": -0.44328707456588745
+    },
+    {
+      "feature": "log_drug_degree",
+      "contribution": 0.41576555371284485
+    },
+    {
+      "feature": "dwpc:CbG|GpCC|DaG",
+      "contribution": -0.4034389555454254
+    },
+    {
+      "feature": "dwpc:CdG|GpBP|DuG",
+      "contribution": -0.34895843267440796
+    },
+    {
+      "feature": "dwpc:CbG|GpMF|DaG",
+      "contribution": -0.33993104100227356
+    },
+    {
+      "feature": "dwpc:CdG|GpMF|DuG",
+      "contribution": 0.33714231848716736
+    },
+    {
+      "feature": "dwpc:CbG|GpCC|DdG",
+      "contribution": 0.26264581084251404
+    },
+    {
+      "feature": "dwpc:CdG|GpCC|DaG",
+      "contribution": 0.24879112839698792
+    },
+    {
+      "feature": "log_disease_degree",
+      "contribution": 0.2282535284757614
+    },
+    {
+      "feature": "dwpc:CuG|GpCC|DaG",
+      "contribution": 0.20540976524353027
+    },
+    {
+      "feature": "dwpc:CbG|GpMF|DuG",
+      "contribution": -0.1944347769021988
+    },
+    {
+      "feature": "dwpc:CuG|GpMF|DaG",
+      "contribution": 0.16730119287967682
+    },
+    {
+      "feature": "dwpc:CdG|GpPW|DaG",
+      "contribution": 0.15924648940563202
+    },
+    {
+      "feature": "dwpc:CdG|GpBP|DdG",
+      "contribution": 0.1566026657819748
+    },
+    {
+      "feature": "dwpc:CbG|GpBP|DuG",
+      "contribution": 0.1092446967959404
+    },
+    {
+      "feature": "dwpc:CuG|GpCC|DdG",
+      "contribution": -0.10752487927675247
+    },
+    {
+      "feature": "dwpc:CuG|GpBP|DdG",
+      "contribution": 0.10095154494047165
+    },
+    {
+      "feature": "dwpc:CuG|GpPW|DaG",
+      "contribution": -0.09997085481882095
+    },
+    {
+      "feature": "dwpc:CbG|GpMF|DdG",
+      "contribution": -0.08982117474079132
+    },
+    {
+      "feature": "dwpc:CdG|GpMF|DaG",
+      "contribution": -0.0888761579990387
+    },
+    {
+      "feature": "dwpc:CuG|GpMF|DuG",
+      "contribution": -0.08245182782411575
+    },
+    {
+      "feature": "dwpc:CbG|GpPW|DdG",
+      "contribution": -0.0812019631266594
+    },
+    {
+      "feature": "dwpc:CuG|GpBP|DaG",
+      "contribution": -0.07982689887285233
+    },
+    {
+      "feature": "dwpc:CdG|GpCC|DuG",
+      "contribution": 0.0774591863155365
+    },
+    {
+      "feature": "dwpc:CdG|GpMF|DdG",
+      "contribution": -0.0728311762213707
+    },
+    {
+      "feature": "dwpc:CbG|GpBP|DdG",
+      "contribution": 0.07075203955173492
+    },
+    {
+      "feature": "dwpc:CdG|GpCC|DdG",
+      "contribution": 0.06835120171308517
+    },
+    {
+      "feature": "dwpc:CuG|GpMF|DdG",
+      "contribution": -0.06805896759033203
+    },
+    {
+      "feature": "dwpc:CdG|GpPW|DdG",
+      "contribution": -0.06564243137836456
+    },
+    {
+      "feature": "dwpc:CuG|GiG|DaG",
+      "contribution": -0.06514159590005875
+    },
+    {
+      "feature": "dwpc:CuG|GpPW|DuG",
+      "contribution": 0.06293414533138275
+    },
+    {
+      "feature": "dwpc:CbG|GiG|DaG",
+      "contribution": 0.06193772330880165
+    },
+    {
+      "feature": "dwpc:CuG|GpBP|DuG",
+      "contribution": -0.06012380123138428
+    },
+    {
+      "feature": "dwpc:CbG|GpCC|DuG",
+      "contribution": -0.055609360337257385
+    },
+    {
+      "feature": "dwpc:CbG|GpBP|DaG",
+      "contribution": -0.055418044328689575
+    },
+    {
+      "feature": "dwpc:CbG|GiG|DuG",
+      "contribution": -0.050212275236845016
+    },
+    {
+      "feature": "dwpc:CuG|GpCC|DuG",
+      "contribution": 0.04062996059656143
+    },
+    {
+      "feature": "dwpc:CuG|GiG|DdG",
+      "contribution": -0.039217039942741394
+    },
+    {
+      "feature": "dwpc:CbG|GpPW|DuG",
+      "contribution": 0.03206593915820122
+    },
+    {
+      "feature": "dwpc:CbG|GiG|DdG",
+      "contribution": 0.02983131818473339
+    },
+    {
+      "feature": "dwpc:CbG|GcG|DdG",
+      "contribution": 0.028973519802093506
+    },
+    {
+      "feature": "dwpc:CuG|GpPW|DdG",
+      "contribution": 0.027362894266843796
+    },
+    {
+      "feature": "dwpc:CuG|GiG|DuG",
+      "contribution": -0.024313030764460564
+    },
+    {
+      "feature": "dwpc:CdG|GiG|DaG",
+      "contribution": -0.02301705628633499
+    },
+    {
+      "feature": "dwpc:CuG|direct|DaG",
+      "contribution": -0.020642587915062904
+    },
+    {
+      "feature": "dwpc:CdG|GpPW|DuG",
+      "contribution": -0.01573917083442211
+    },
+    {
+      "feature": "dwpc:CbG|direct|DdG",
+      "contribution": 0.01400498766452074
+    },
+    {
+      "feature": "dwpc:CdG|GiG|DdG",
+      "contribution": -0.013706479221582413
+    },
+    {
+      "feature": "dwpc:CdG|direct|DuG",
+      "contribution": 0.011030146852135658
+    },
+    {
+      "feature": "dwpc:CuG|direct|DdG",
+      "contribution": 0.009803162887692451
+    },
+    {
+      "feature": "dwpc:CdG|direct|DaG",
+      "contribution": -0.009151832200586796
+    },
+    {
+      "feature": "dwpc:CdG|direct|DdG",
+      "contribution": -0.008266736753284931
+    },
+    {
+      "feature": "dwpc:CdG|GiG|DuG",
+      "contribution": -0.0066469390876591206
+    },
+    {
+      "feature": "dwpc:CuG|direct|DuG",
+      "contribution": 0.006573033984750509
+    },
+    {
+      "feature": "dwpc:CuG|GcG|DuG",
+      "contribution": 0.006491847336292267
+    },
+    {
+      "feature": "dwpc:CuG|GcG|DaG",
+      "contribution": -0.005716149695217609
+    },
+    {
+      "feature": "dwpc:CbG|GcG|DuG",
+      "contribution": 0.005512439180165529
+    },
+    {
+      "feature": "dwpc:CdG|GcG|DdG",
+      "contribution": -0.004942817613482475
+    },
+    {
+      "feature": "dwpc:CbG|GcG|DaG",
+      "contribution": -0.004053554031997919
+    },
+    {
+      "feature": "dwpc:CdG|GcG|DuG",
+      "contribution": 0.0029741961043328047
+    },
+    {
+      "feature": "dwpc:CbG|direct|DuG",
+      "contribution": 0.0017246202332898974
+    },
+    {
+      "feature": "dwpc:CdG|GcG|DaG",
+      "contribution": 0.001293144654482603
+    },
+    {
+      "feature": "dwpc:CuG|GcG|DdG",
+      "contribution": 0.0002929886686615646
+    }
+  ]
+}

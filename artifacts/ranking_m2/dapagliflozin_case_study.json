@@ -1,0 +1,221 @@
+{
+  "M0": {
+    "top10": [
+      {
+        "rank": 1,
+        "disease_id": "Disease::DOID:1612",
+        "disease_name": "breast cancer",
+        "score": 0.7656583786010742
+      },
+      {
+        "rank": 2,
+        "disease_id": "Disease::DOID:2531",
+        "disease_name": "hematologic cancer",
+        "score": 0.7610334753990173
+      },
+      {
+        "rank": 3,
+        "disease_id": "Disease::DOID:2986",
+        "disease_name": "IgA glomerulonephritis",
+        "score": 0.7469093203544617
+      },
+      {
+        "rank": 4,
+        "disease_id": "Disease::DOID:1909",
+        "disease_name": "melanoma",
+        "score": 0.7427919507026672
+      },
+      {
+        "rank": 5,
+        "disease_id": "Disease::DOID:7148",
+        "disease_name": "rheumatoid arthritis",
+        "score": 0.7333409786224365
+      },
+      {
+        "rank": 6,
+        "disease_id": "Disease::DOID:5419",
+        "disease_name": "schizophrenia",
+        "score": 0.7230592370033264
+      },
+      {
+        "rank": 7,
+        "disease_id": "Disease::DOID:263",
+        "disease_name": "kidney cancer",
+        "score": 0.716652512550354
+      },
+      {
+        "rank": 8,
+        "disease_id": "Disease::DOID:14330",
+        "disease_name": "Parkinson's disease",
+        "score": 0.7143617272377014
+      },
+      {
+        "rank": 9,
+        "disease_id": "Disease::DOID:10652",
+        "disease_name": "Alzheimer's disease",
+        "score": 0.7135868668556213
+      },
+      {
+        "rank": 10,
+        "disease_id": "Disease::DOID:11612",
+        "disease_name": "polycystic ovary syndrome",
+        "score": 0.7084072828292847
+      }
+    ],
+    "ckd": [
+      {
+        "rank": 53,
+        "disease_id": "Disease::DOID:784",
+        "disease_name": "chronic kidney failure",
+        "score": 0.48948773741722107
+      }
+    ],
+    "heart_failure_present": false
+  },
+  "M2": {
+    "top10": [
+      {
+        "rank": 1,
+        "disease_id": "Disease::DOID:10763",
+        "disease_name": "hypertension",
+        "score": 0.9602126479148865
+      },
+      {
+        "rank": 2,
+        "disease_id": "Disease::DOID:9352",
+        "disease_name": "type 2 diabetes mellitus",
+        "score": 0.9583672881126404
+      },
+      {
+        "rank": 3,
+        "disease_id": "Disease::DOID:1324",
+        "disease_name": "lung cancer",
+        "score": 0.9203671216964722
+      },
+      {
+        "rank": 4,
+        "disease_id": "Disease::DOID:1612",
+        "disease_name": "breast cancer",
+        "score": 0.8883700966835022
+      },
+      {
+        "rank": 5,
+        "disease_id": "Disease::DOID:14330",
+        "disease_name": "Parkinson's disease",
+        "score": 0.8768066167831421
+      },
+      {
+        "rank": 6,
+        "disease_id": "Disease::DOID:10283",
+        "disease_name": "prostate cancer",
+        "score": 0.8555307984352112
+      },
+      {
+        "rank": 7,
+        "disease_id": "Disease::DOID:3083",
+        "disease_name": "chronic obstructive pulmonary disease",
+        "score": 0.8474431037902832
+      },
+      {
+        "rank": 8,
+        "disease_id": "Disease::DOID:11054",
+        "disease_name": "urinary bladder cancer",
+        "score": 0.8434273600578308
+      },
+      {
+        "rank": 9,
+        "disease_id": "Disease::DOID:784",
+        "disease_name": "chronic kidney failure",
+        "score": 0.800111711025238
+      },
+      {
+        "rank": 10,
+        "disease_id": "Disease::DOID:5041",
+        "disease_name": "esophageal cancer",
+        "score": 0.7884101271629333
+      }
+    ],
+    "ckd": [
+      {
+        "rank": 9,
+        "disease_id": "Disease::DOID:784",
+        "disease_name": "chronic kidney failure",
+        "score": 0.800111711025238
+      }
+    ],
+    "heart_failure_present": false
+  },
+  "M3": {
+    "top10": [
+      {
+        "rank": 1,
+        "disease_id": "Disease::DOID:9352",
+        "disease_name": "type 2 diabetes mellitus",
+        "score": 0.9498104453086853
+      },
+      {
+        "rank": 2,
+        "disease_id": "Disease::DOID:10763",
+        "disease_name": "hypertension",
+        "score": 0.9488993287086487
+      },
+      {
+        "rank": 3,
+        "disease_id": "Disease::DOID:1324",
+        "disease_name": "lung cancer",
+        "score": 0.9009524583816528
+      },
+      {
+        "rank": 4,
+        "disease_id": "Disease::DOID:1612",
+        "disease_name": "breast cancer",
+        "score": 0.8633424043655396
+      },
+      {
+        "rank": 5,
+        "disease_id": "Disease::DOID:14330",
+        "disease_name": "Parkinson's disease",
+        "score": 0.8493988513946533
+      },
+      {
+        "rank": 6,
+        "disease_id": "Disease::DOID:11054",
+        "disease_name": "urinary bladder cancer",
+        "score": 0.8263636231422424
+      },
+      {
+        "rank": 7,
+        "disease_id": "Disease::DOID:10283",
+        "disease_name": "prostate cancer",
+        "score": 0.824775755405426
+      },
+      {
+        "rank": 8,
+        "disease_id": "Disease::DOID:3083",
+        "disease_name": "chronic obstructive pulmonary disease",
+        "score": 0.8216539025306702
+      },
+      {
+        "rank": 9,
+        "disease_id": "Disease::DOID:784",
+        "disease_name": "chronic kidney failure",
+        "score": 0.7823264598846436
+      },
+      {
+        "rank": 10,
+        "disease_id": "Disease::DOID:5041",
+        "disease_name": "esophageal cancer",
+        "score": 0.7635498642921448
+      }
+    ],
+    "ckd": [
+      {
+        "rank": 9,
+        "disease_id": "Disease::DOID:784",
+        "disease_name": "chronic kidney failure",
+        "score": 0.7823264598846436
+      }
+    ],
+    "heart_failure_present": false
+  }
+}

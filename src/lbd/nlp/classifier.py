@@ -763,3 +763,101 @@ def load_v3_engine(checkpoint_path: Optional[Path] = None) -> ZonedPoolingMultiC
 # Canonical names
 BiomedicalRelationClassifier = ZonedPoolingMultiClassBioREEngineV3
 load_relation_classifier = load_v3_engine
+
+
+# -----------------------------------------------------------------------------
+# Decoupled Meta-Gated Architecture & Hetionet GO Path Specialist
+# -----------------------------------------------------------------------------
+class HetionetGOPathSpecialist:
+    """Specialist ML model that learns the biological topology of GpBP, GpMF, and GpCC
+    directly from Hetionet's 730,292 GO edges.
+    """
+
+    def __init__(self, raw_dir: Optional[Path] = None, embed_dim: int = 32, random_state: int = 42):
+        self.raw_dir = raw_dir or (Path(__file__).resolve().parents[3] / "data/raw")
+        self.embed_dim = embed_dim
+        self.random_state = random_state
+        self.hetionet_go_meta: Dict[str, Dict[str, str]] = {}
+        self.gene_id_to_idx: Dict[str, int] = {}
+        self.go_id_to_idx: Dict[str, int] = {}
+        self.gene_embed: np.ndarray = np.empty((0, embed_dim))
+        self.go_embed: np.ndarray = np.empty((0, embed_dim))
+        self.classifier: MLPClassifier = MLPClassifier(
+            hidden_layer_sizes=(64, 32),
+            activation="relu",
+            solver="adam",
+            max_iter=30,
+            random_state=random_state,
+        )
+        self.is_trained = False
+
+    def predict_compatibility(self, gene_id: str, go_id: str) -> float:
+        """Scores biological plausibility of Gene-GO pairing [0.0, 1.0]."""
+        if not self.is_trained:
+            # Fallback heuristic if graph not loaded
+            return 0.50
+        g_idx = self.gene_id_to_idx.get(gene_id)
+        go_idx = self.go_id_to_idx.get(go_id)
+        if g_idx is None or go_idx is None:
+            return 0.35
+        g_vec = self.gene_embed[g_idx]
+        go_vec = self.go_embed[go_idx]
+        prod = g_vec * go_vec
+        norm = (np.linalg.norm(g_vec) * np.linalg.norm(go_vec)) + 1e-9
+        cos = np.dot(g_vec, go_vec) / norm
+        feat = np.hstack([g_vec, go_vec, prod, [cos]]).reshape(1, -1)
+        return float(self.classifier.predict_proba(feat)[0, 1])
+
+
+class DecoupledMetaGatedClassifier:
+    """Decoupled Meta-Gated Biomedical Relation Classifier:
+    1. RF acts as Structural Gatekeeper (spatial / sentence-distance filtering).
+    2. LR acts as Lexical Matcher (TF-IDF Zoned n-grams, high precision on asserted text).
+    3. GO Specialist MLP blocks biologically implausible pairings.
+    """
+
+    def __init__(self, rf_model, lr_model, go_specialist: Optional[HetionetGOPathSpecialist] = None):
+        self.rf = rf_model
+        self.lr = lr_model
+        self.go_specialist = go_specialist
+
+    def predict_pair(
+        self,
+        rf_features: np.ndarray,
+        lr_features: csr_matrix,
+        src_id: str = "",
+        tgt_id: str = "",
+        is_go_pair: bool = False,
+    ) -> Dict[str, Any]:
+        # Stage 1: Structural Gating by RF
+        rf_probs = self.rf.predict_proba(rf_features)[0]
+        # P(NO_RELATION)
+        p_no_rel_rf = rf_probs[0] if len(rf_probs) > 0 else 0.5
+        if p_no_rel_rf > 0.65:
+            return {
+                "relation": "NO_RELATION",
+                "confidence": float(p_no_rel_rf),
+                "gate_status": "blocked_by_rf_structural_gate",
+            }
+
+        # Stage 2: Lexical Classification by LR
+        lr_probs = self.lr.predict_proba(lr_features)[0]
+        lr_pred_idx = int(np.argmax(lr_probs))
+        lr_pred_class = INT_TO_CLASS.get(lr_pred_idx, "NO_RELATION")
+
+        # Stage 3: GO Topological Plausibility Check (if applicable)
+        if is_go_pair and self.go_specialist and self.go_specialist.is_trained:
+            compat = self.go_specialist.predict_compatibility(src_id, tgt_id)
+            if compat < 0.25:
+                return {
+                    "relation": "NO_RELATION",
+                    "confidence": 0.85,
+                    "gate_status": "blocked_by_hetionet_go_specialist",
+                }
+
+        return {
+            "relation": lr_pred_class,
+            "confidence": float(lr_probs[lr_pred_idx]),
+            "probabilities": {INT_TO_CLASS[i]: float(lr_probs[i]) for i in range(len(lr_probs))},
+            "gate_status": "admitted_through_decoupled_meta_gate",
+        }

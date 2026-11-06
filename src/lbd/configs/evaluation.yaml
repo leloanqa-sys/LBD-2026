@@ -1,0 +1,32 @@
+# Evaluation & Benchmark setup
+temporal_cutoff: "2018-12-31"
+ground_truth:
+  historical_baseline:
+    - id: "DOID:9352"
+      name: "Type 2 Diabetes Mellitus"
+      approval_year: 2014
+      action: "filter_out"
+  hard_positives:
+    - id: "DOID:9333"
+      mesh_id: "D006333"
+      name: "Heart Failure"
+      approval_year: 2020
+      trial: "DAPA-HF"
+    - id: "DOID:784"
+      mesh_id: "D051436"
+      name: "Chronic Kidney Disease"
+      approval_year: 2021
+      trial: "DAPA-CKD"
+  soft_positives:
+    - id: "DOID:0080358"
+      name: "Non-Alcoholic Fatty Liver Disease (NAFLD/NASH)"
+      status: "Phase 2/3 completed"
+  true_negatives:
+    - id: "CLINICAL_TRIAL_TRAP_01"
+      name: "Terminated Trial Condition"
+      reason: "Lack of efficacy or adverse events"
+metrics:
+  k_values: [5, 10]
+  eval_recall: true
+  eval_mrr: true
+  eval_precision_nlp: true

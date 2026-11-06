@@ -1,36 +1,18 @@
-"""Configuration loader."""
-import os
-import json
+"""Load nested configuration without lossy parser fallbacks."""
 from pathlib import Path
-from typing import Any, Dict
+import yaml
+
 
 def get_project_root() -> Path:
-    return Path(__file__).resolve().parent.parent.parent.parent
+    return Path(__file__).resolve().parents[3]
 
-def load_config(config_name: str) -> Dict[str, Any]:
-    root = get_project_root()
-    # Try json first or parse basic key-value / yaml
-    cfg_path = root / "configs" / config_name
-    if not cfg_path.exists():
-        raise FileNotFoundError(f"Config file not found: {cfg_path}")
-    
-    # Try importing yaml, else basic parser
-    try:
-        import yaml
-        with open(cfg_path, "r", encoding="utf-8") as f:
-            return yaml.safe_load(f)
-    except ImportError:
-        # Fallback simple reader for basic types
-        result = {}
-        with open(cfg_path, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-        for line in lines:
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
-            if ":" in line:
-                k, v = line.split(":", 1)
-                k = k.strip()
-                v = v.strip().strip('"')
-                result[k] = v
-        return result
+
+def load_config(config_name: str) -> dict:
+    path = get_project_root() / "configs" / config_name
+    if not path.is_file():
+        path = Path(__file__).resolve().parents[1] / "configs" / config_name
+    with path.open(encoding="utf-8") as stream:
+        value = yaml.safe_load(stream)
+    if not isinstance(value, dict):
+        raise ValueError(f"Configuration must be a mapping: {path}")
+    return value

@@ -1,0 +1,19 @@
+{
+  "sha256": {
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\artifacts\\ranking_m2\\M2_model.pkl": "57d4d6d95454fd05fddf2d99c010b68de5e8e0626f38a499b4b67fd20d218ad6",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\artifacts\\ranking_m2\\M0_model.pkl": "4ad4767a1eff890630a0e2e59d3b53819324d08077d079ac6137c4f078094e6c",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\artifacts\\ranking_m2\\features.npz": "c5f4abeba00c7d1e8eac2067b51a11b9a272d1e4a2dbf6f5039ecb24b2d1ab72",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\artifacts\\ranking_m2\\data_manifest.json": "080e7c29bd36dc9a13a8e4ed7c75f6a847f9f29e6333759c0b1c4400325a83a0",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\artifacts\\ranking_m2\\split_indices.npz": "b1582d4b59a9a9248856c55cb5fedfc305feb011642e2e944aba5ca4fc2da55e",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\benchmarks\\repodb\\runs\\20261103T074345Z\\gold_pairs.json": "58b50a04cffc741b2d8999741b6145beb78d26830127f5492b7df2dbf2516597",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\benchmarks\\repodb\\runs\\20261103T074345Z\\manifest.json": "d390e862502e38c331892f06491e4cf841456d278f07e57a10e9bd6666aa2397",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\data\\raw\\hetionet-v1.0-nodes.tsv": "3ad9eb86c031df8bc7d5efefa6edc93562182eb9a6a71e5129d3f18b9d42c50e",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\data\\raw\\hetionet-v1.0-edges.sif.gz": "611f0411ac666be4e0270e54bbca67407e14720bfc3099311f0f5eec25c5a947",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\benchmarks\\repodb\\evaluate_original_checkpoint.py": "193d76deef32e33957609011f9f42e10738abb2ec44f64e60e88169a6160d173",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\benchmarks\\repodb\\run_benchmark.py": "f118a2ecc4352182406c941e968dfb164e55a6e4ef1c735db9101505463427f8",
+    "C:\\Users\\Admin\\Downloads\\tái định vị thuốc\\dapagliflozin-lbd\\src\\lbd\\ranking\\m2_ranker.py": "809d8bfdbbcbfdb77e60e2a1902abb615f98d02987fe38cd3ffe5c6e57b9ee79"
+  },
+  "fit_called": false,
+  "source_model_modified": false,
+  "created_utc": "2026-11-04T02:00:40.774937+00:00"
+}

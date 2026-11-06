@@ -1,0 +1,93 @@
+{
+  "metrics": {
+    "mrr_base": 0.0627,
+    "mrr_augmented": 0.1303,
+    "mrr_improvement_pct": 108.02,
+    "hit5_base": 0.0,
+    "hit5_augmented": 0.3333,
+    "hit10_base": 0.3333,
+    "hit10_augmented": 0.5,
+    "avg_rank_base": 35.0,
+    "avg_rank_augmented": 16.0
+  },
+  "cases": [
+    {
+      "case_id": "CASE_1",
+      "drug": "Ketamine",
+      "drug_id": "Compound::DB01221",
+      "disease": "Major Depressive Disorder (Trầm cảm kháng trị)",
+      "target_id": "Disease::DOID:1595",
+      "base_rank": 50,
+      "augmented_rank": 19,
+      "reciprocal_rank": 0.0526,
+      "base_score": 0.1813,
+      "augmented_score": 0.8845,
+      "mechanism": "NMDA receptor antagonist (GRIN1/GRIN2A) -> BDNF synaptogenesis."
+    },
+    {
+      "case_id": "CASE_2A",
+      "drug": "Colchicine",
+      "drug_id": "Compound::DB01394",
+      "disease": "Coronary Artery Disease (Bệnh mạch vành)",
+      "target_id": "Disease::DOID:3393",
+      "base_rank": 12,
+      "augmented_rank": 5,
+      "reciprocal_rank": 0.2,
+      "base_score": 0.8672,
+      "augmented_score": 0.9412,
+      "mechanism": "NLRP3 inflammasome & IL-1beta inhibition reduces vascular inflammation."
+    },
+    {
+      "case_id": "CASE_2B",
+      "drug": "Colchicine",
+      "drug_id": "Compound::DB01394",
+      "disease": "Atherosclerosis (Xơ vữa động mạch)",
+      "target_id": "Disease::DOID:1936",
+      "base_rank": 39,
+      "augmented_rank": 39,
+      "reciprocal_rank": 0.0256,
+      "base_score": 0.6438,
+      "augmented_score": 0.6438,
+      "mechanism": "Microtubule assembly inhibition stabilizes arterial plaques."
+    },
+    {
+      "case_id": "CASE_3A",
+      "drug": "Dapagliflozin",
+      "drug_id": "Compound::DB06292",
+      "disease": "Heart Failure / DCM (Suy tim / Cơ tim giãn)",
+      "target_id": "Disease::DOID:12930",
+      "base_rank": 92,
+      "augmented_rank": 22,
+      "reciprocal_rank": 0.0455,
+      "base_score": 0.2196,
+      "augmented_score": 0.8654,
+      "mechanism": "SLC5A2 inhibition -> Hemodynamic preload reduction, myocardial energetics."
+    },
+    {
+      "case_id": "CASE_3B",
+      "drug": "Dapagliflozin",
+      "drug_id": "Compound::DB06292",
+      "disease": "Chronic Kidney Disease (Bệnh thận mạn)",
+      "target_id": "Disease::DOID:784",
+      "base_rank": 9,
+      "augmented_rank": 3,
+      "reciprocal_rank": 0.3333,
+      "base_score": 0.7851,
+      "augmented_score": 0.968,
+      "mechanism": "Reduction of intraglomerular pressure & tubular hypoxia protection."
+    },
+    {
+      "case_id": "CASE_4",
+      "drug": "Octreotide",
+      "drug_id": "Compound::DB00104",
+      "disease": "Obesity (Béo phì / Trục thụ thể peptide vùng dưới đồi)",
+      "target_id": "Disease::DOID:9970",
+      "base_rank": 8,
+      "augmented_rank": 8,
+      "reciprocal_rank": 0.125,
+      "base_score": 0.8447,
+      "augmented_score": 0.8447,
+      "mechanism": "Central hypothalamic peptide receptor signaling controls appetite and satiety."
+    }
+  ]
+}

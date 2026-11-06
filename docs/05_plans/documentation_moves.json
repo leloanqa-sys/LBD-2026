@@ -1,0 +1,67 @@
+{
+  "scope": "documentation only; runtime paths preserved",
+  "moved": [
+    {
+      "from": "docs/architecture.md",
+      "to": "docs/01_overview/architecture.md"
+    },
+    {
+      "from": "docs/timeline_and_core_system.md",
+      "to": "docs/01_overview/timeline_and_core_system.md"
+    },
+    {
+      "from": "docs/data_dictionary.md",
+      "to": "docs/02_data_and_evaluation/data_dictionary.md"
+    },
+    {
+      "from": "docs/biological_rules.md",
+      "to": "docs/02_data_and_evaluation/biological_rules.md"
+    },
+    {
+      "from": "docs/experiment_protocol.md",
+      "to": "docs/02_data_and_evaluation/experiment_protocol.md"
+    },
+    {
+      "from": "docs/team_design_guide.md",
+      "to": "docs/03_guides/team_design_guide.md"
+    },
+    {
+      "from": "docs/HUONG_DAN_TICH_HOP_NLP_CHO_KHANG.md",
+      "to": "docs/03_guides/HUONG_DAN_TICH_HOP_NLP_CHO_KHANG.md"
+    },
+    {
+      "from": "docs/BAO_VE_WALKTHROUGH.md",
+      "to": "docs/03_guides/BAO_VE_WALKTHROUGH.md"
+    },
+    {
+      "from": "docs/HUONG_DAN_THUYET_TRINH_BAO_VE.md",
+      "to": "docs/03_guides/HUONG_DAN_THUYET_TRINH_BAO_VE.md"
+    },
+    {
+      "from": "docs/AUDIT_MATURITY_20261103.md",
+      "to": "docs/04_audits/AUDIT_MATURITY_20261103.md"
+    },
+    {
+      "from": "docs/REMEDIATION.md",
+      "to": "docs/04_audits/REMEDIATION.md"
+    },
+    {
+      "from": "docs/REORGANIZATION_PLAN.md",
+      "to": "docs/05_plans/REORGANIZATION_PLAN.md"
+    },
+    {
+      "from": "docs/ADR_001_P1_REMEDIATION_AND_MULTIDRUG_SCALING.md",
+      "to": "docs/05_plans/ADR_001_P1_REMEDIATION_AND_MULTIDRUG_SCALING.md"
+    },
+    {
+      "from": "docs/V7_HYBRID_PIPELINE.md",
+      "to": "docs/06_history/V7_HYBRID_PIPELINE.md"
+    },
+    {
+      "from": "docs/ĐẲNG CẤP GIẢI PHÁP CHO AI.pdf",
+      "to": "docs/07_references/ĐẲNG CẤP GIẢI PHÁP CHO AI.pdf"
+    }
+  ],
+  "protected_files_verified": 228,
+  "protected_files_changed": []
+}

@@ -1,9 +1,4 @@
-pydantic==2.8.2
-pyyaml==6.0.2
-requests==2.32.3
-networkx==3.3
-pandas==2.2.2
-numpy==1.26.4
-jsonschema==4.23.0
-tqdm==4.66.5
-pytest==8.3.2
+# Historical pins were incomplete and incompatible with newer Python.
+# This compatibility file is NOT a reproducible lock.
+-r requirements.txt
+# TODO: generate platform/Python-specific locks in CI.

@@ -5,6 +5,9 @@ from biomedical abstracts using the canonical NLPEngine.
 """
 from __future__ import annotations
 
+import copy
+import warnings
+
 from typing import Any, Dict, List, Optional
 
 from .engine import NLPEngine
@@ -19,7 +22,8 @@ def get_default_engine() -> NLPEngine:
     if _DEFAULT_ENGINE is None:
         try:
             _DEFAULT_ENGINE = NLPEngine.load_default(dataset_mode="biored")
-        except Exception:
+        except (OSError, ImportError, AttributeError, ValueError) as exc:
+            warnings.warn(f"Classifier unavailable; using rule-only engine: {exc}", RuntimeWarning)
             # Fallback to rule-based engine if checkpoints are not available
             _DEFAULT_ENGINE = NLPEngine()
     return _DEFAULT_ENGINE
@@ -59,6 +63,7 @@ def extract_relations_from_text(
     else:
         nlp_engine = get_default_engine()
         if threshold is not None:
+            nlp_engine = copy.copy(nlp_engine)
             nlp_engine.relation_threshold = float(threshold)
 
     doc = {

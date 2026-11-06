@@ -1,0 +1,97 @@
+{
+  "post2018_10_drugs": {
+    "1. Baseline Raw M2 Graph (Degree-Biased, No NLP)": {
+      "mrr": 0.1061,
+      "precision@1": 0.0,
+      "precision@3": 0.2,
+      "precision@5": 0.3,
+      "avg_rank": 53.6
+    },
+    "2. M2 + Old NLP (V3 Soft-Voting, Noisy)": {
+      "mrr": 0.2482,
+      "precision@1": 0.2,
+      "precision@3": 0.3,
+      "precision@5": 0.3,
+      "avg_rank": 50.7
+    },
+    "3. Debiased M2 Graph Only (beta=0.6, No NLP)": {
+      "mrr": 0.1017,
+      "precision@1": 0.0,
+      "precision@3": 0.2,
+      "precision@5": 0.3,
+      "avg_rank": 52.5
+    },
+    "4. Debiased M2 + Standalone Lexical LR (No RF Gate)": {
+      "mrr": 0.267,
+      "precision@1": 0.2,
+      "precision@3": 0.3,
+      "precision@5": 0.3,
+      "avg_rank": 47.4
+    },
+    "5. Debiased M2 + Decoupled NLP (RF Gate + LR Lexical)": {
+      "mrr": 0.3178,
+      "precision@1": 0.3,
+      "precision@3": 0.3,
+      "precision@5": 0.3,
+      "avg_rank": 46.1
+    },
+    "6. Debiased M2 + Decoupled + Hetionet GO Specialist": {
+      "mrr": 0.3178,
+      "precision@1": 0.3,
+      "precision@3": 0.3,
+      "precision@5": 0.3,
+      "avg_rank": 46.1
+    },
+    "7. Full Pipeline: Debiased M2 + Decoupled NLP + GO + Bayes": {
+      "mrr": 0.3178,
+      "precision@1": 0.3,
+      "precision@3": 0.3,
+      "precision@5": 0.3,
+      "avg_rank": 46.1
+    }
+  },
+  "repodb_636_pairs": {
+    "1. Baseline Raw M2 Graph (Degree-Biased, No NLP)": {
+      "mrr": 0.2835,
+      "recall@5": 0.3749,
+      "recall@10": 0.4694,
+      "ndcg@10": 0.306
+    },
+    "2. M2 + Old NLP (V3 Soft-Voting, Noisy)": {
+      "mrr": 0.2953,
+      "recall@5": 0.3828,
+      "recall@10": 0.4458,
+      "ndcg@10": 0.3067
+    },
+    "3. Debiased M2 Graph Only (beta=0.6, No NLP)": {
+      "mrr": 0.2869,
+      "recall@5": 0.367,
+      "recall@10": 0.4536,
+      "ndcg@10": 0.305
+    },
+    "4. Debiased M2 + Standalone Lexical LR (No RF Gate)": {
+      "mrr": 0.3444,
+      "recall@5": 0.4103,
+      "recall@10": 0.5166,
+      "ndcg@10": 0.3614
+    },
+    "5. Debiased M2 + Decoupled NLP (RF Gate + LR Lexical)": {
+      "mrr": 0.3612,
+      "recall@5": 0.4261,
+      "recall@10": 0.5324,
+      "ndcg@10": 0.3781
+    },
+    "6. Debiased M2 + Decoupled + Hetionet GO Specialist": {
+      "mrr": 0.377,
+      "recall@5": 0.4339,
+      "recall@10": 0.5166,
+      "ndcg@10": 0.3851
+    },
+    "7. Full Pipeline: Debiased M2 + Decoupled NLP + GO + Bayes": {
+      "mrr": 0.3777,
+      "recall@5": 0.4261,
+      "recall@10": 0.5166,
+      "ndcg@10": 0.3871
+    }
+  }
+}

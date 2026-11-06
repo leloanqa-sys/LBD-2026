@@ -12,7 +12,7 @@ def verify_evidence_verbatim(evidence: str, abstract: str, title: str = "") -> b
     """Verifies that evidence sentence actually exists in the abstract or title."""
     ev = evidence.strip().lower()
     full = (title + " " + abstract).strip().lower()
-    return ev in full or ev in abstract.strip().lower()
+    return bool(ev) and ev in full
 
 
 def postprocess_relations(
@@ -39,15 +39,15 @@ def postprocess_relations(
         )
         if key in seen:
             continue
-        seen.add(key)
 
         evidence = r.get("evidence", "")
-        if evidence and not verify_evidence_verbatim(evidence, abstract, title=title):
+        if not verify_evidence_verbatim(evidence, abstract, title=title):
             r["evidence_verbatim_status"] = "partial_or_missing"
             if strict:
                 continue
         else:
             r["evidence_verbatim_status"] = "verified"
 
+        seen.add(key)
         cleaned.append(r)
     return cleaned

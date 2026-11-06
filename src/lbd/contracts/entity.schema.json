@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Entity Record",
+  "description": "Biomedical entity with canonical ID and type",
+  "type": "object",
+  "required": [
+    "id",
+    "canonical_name",
+    "type"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "canonical_name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Compound",
+        "Gene",
+        "BiologicalProcess",
+        "Pathway",
+        "Disease",
+        "Phenotype",
+        "Anatomy"
+      ]
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_vocabulary": {
+      "type": "string"
+    }
+  }
+}

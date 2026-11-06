@@ -1,0 +1,24 @@
+{
+  "seed": 42,
+  "w": 0.4,
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "C_grid": [
+    0.1,
+    1
+  ],
+  "l1_ratio": 0.5,
+  "selection": "macro Recall@10",
+  "label_policy": "CtD positive; CpD excluded; remainder closed-world unlabeled=0",
+  "protocol_deviations": [
+    "fixed w=.4 and l1_ratio=.5 for first execution",
+    "CrC connected-component clusters, not ATC curated clusters",
+    "no independent private-label account; logically held-out evaluation only",
+    "release-level temporal audit only",
+    "M1/M4 deferred; no original score proxy inserted"
+  ],
+  "development_pairs": 192947,
+  "test_pairs": 19013,
+  "development_positives": 669,
+  "test_positives": 86
+}

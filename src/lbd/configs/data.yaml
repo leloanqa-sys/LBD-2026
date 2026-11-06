@@ -1,0 +1,27 @@
+# Data ingest & cutoff settings
+temporal_cutoff: "2018-12-31"
+drug:
+  name: "Dapagliflozin"
+  preferred_term: "Dapagliflozin"
+  hetionet_id: "DB06292"
+  synonyms:
+    - "dapagliflozin"
+    - "forxiga"
+    - "farxiga"
+    - "bms-512148"
+    - "dapa"
+target:
+  gene_symbol: "SLC5A2"
+  gene_id: "6524"
+  preferred_term: "SGLT2"
+  synonyms:
+    - "sglt2"
+    - "sglt-2"
+    - "sodium-glucose cotransporter 2"
+    - "slc5a2"
+pubmed:
+  query: "(Dapagliflozin OR Farxiga OR Forxiga OR BMS-512148) AND (\"1900/01/01\"[Date - Publication] : \"2018/12/31\"[Date - Publication])"
+  max_results: 1500
+hetionet:
+  version: "v1.0"
+  release_date: "2017-09-22"

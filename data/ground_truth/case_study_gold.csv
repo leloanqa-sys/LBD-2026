@@ -1,0 +1,18 @@
+pair_id,drug_id,drug_name,disease_id,disease_name,gold_tier,outcome_date,outcome_source,knowledge_available_at_cutoff,reviewer_a,reviewer_b,adjudication_status
+LANDMARK_01,Compound::DB01221,Ketamine,Disease::DOID:1595,endogenous depression (MDD),FDA_APPROVED_2019,2019-03-05,FDA_Spravato_Esketamine_TRD,True_Pre2018_Biology_Only,Phuoc_Eval,Lam_Algo,ADJUDICATED_GOLD
+LANDMARK_02A,Compound::DB01394,Colchicine,Disease::DOID:3393,coronary artery disease,FDA_APPROVED_2023,2023-06-20,FDA_Lodoco_LoDoCo2_COLCOT,True_Pre2018_Biology_Only,Phuoc_Eval,Lam_Algo,ADJUDICATED_GOLD
+LANDMARK_02B,Compound::DB01394,Colchicine,Disease::DOID:1936,atherosclerosis,FDA_APPROVED_2023,2023-06-20,FDA_Lodoco_LoDoCo2_COLCOT,True_Pre2018_Biology_Only,Phuoc_Eval,Lam_Algo,ADJUDICATED_GOLD
+LANDMARK_03A,Compound::DB06292,Dapagliflozin,Disease::DOID:12930,dilated cardiomyopathy (Heart Failure),FDA_APPROVED_2020,2020-05-05,FDA_Farxiga_DAPA_HF,True_Pre2018_Biology_Only,Phuoc_Eval,Lam_Algo,ADJUDICATED_GOLD
+LANDMARK_03B,Compound::DB06292,Dapagliflozin,Disease::DOID:784,chronic kidney failure (CKD),FDA_APPROVED_2021,2021-04-30,FDA_Farxiga_DAPA_CKD,True_Pre2018_Biology_Only,Phuoc_Eval,Lam_Algo,ADJUDICATED_GOLD
+LANDMARK_03C,Compound::DB08907,Canagliflozin,Disease::DOID:784,chronic kidney failure (CKD),FDA_APPROVED_2019,2019-09-30,FDA_Invokana_CREDENCE,True_Pre2018_Biology_Only,Phuoc_Eval,Lam_Algo,ADJUDICATED_GOLD
+LANDMARK_04,Compound::DB00104,Octreotide (Peptide GPCR proxy / GLP-1 axis),Disease::DOID:9970,obesity,CLINICAL_PROXY_2021,2021-06-04,STEP1_Hypothalamic_GPCR_Axis,True_Pre2018_Biology_Only,Phuoc_Eval,Lam_Algo,ADJUDICATED_GOLD
+POST2018_01,Compound::DB00203,Sildenafil,Disease::DOID:10763,hypertension (PAH),PROSPECTIVE_POST2018,2019,Phase 3 / Approved,True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_02,Compound::DB00331,Metformin,Disease::DOID:10283,prostate cancer,PROSPECTIVE_POST2018,2021,Phase 3 Cohort,True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_03,Compound::DB00471,Duloxetine,Disease::DOID:8398,osteoarthritis,PROSPECTIVE_POST2018,2020,Approved (Chronic Musculoskeletal Pain),True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_04,Compound::DB01041,Thalidomide,Disease::DOID:8778,Crohn's disease,PROSPECTIVE_POST2018,2019,Phase 3 Clinical Trial,True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_05,Compound::DB00482,Celecoxib,Disease::DOID:219,colon cancer,PROSPECTIVE_POST2018,2019,Phase 3 Prevention (FAP / Adenoma),True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_06,Compound::DB00822,Disulfiram,Disease::DOID:3070,malignant glioma,PROSPECTIVE_POST2018,2021,Phase 2b / In Vivo,True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_07,Compound::DB01221,Ketamine,Disease::DOID:1595,endogenous depression,PROSPECTIVE_POST2018,2019,FDA Approved (Esketamine / TRD),True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_08,Compound::DB06292,Dapagliflozin,Disease::DOID:12930,dilated cardiomyopath,PROSPECTIVE_POST2018,2020,FDA Approved (DAPA-HF),True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_09,Compound::DB00421,Spironolactone,Disease::DOID:12930,dilated cardiomyopath,PROSPECTIVE_POST2018,2019,Phase 3 Guideline,True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD
+POST2018_10,Compound::DB00678,Losartan,Disease::DOID:10652,Alzheimer's disease,PROSPECTIVE_POST2018,2021,Phase 2 / In Vivo,True_Pre2018_Biology_Only,Phuoc_Eval,Huy_Data,ADJUDICATED_GOLD

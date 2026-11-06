@@ -1,0 +1,928 @@
+{
+  "experimental_stage": "v0.2.0-beta-pre-recall",
+  "drug_id": "DB06292",
+  "graph_summary": {
+    "nodes": 727,
+    "edges": 2938,
+    "papers_ingested": 664,
+    "nlp_relations_extracted": 2104
+  },
+  "full_model": {
+    "experimental_stage": "v0.2.0-beta-pre-recall",
+    "recall@3": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "mrr": 1.0,
+    "map": 1.0,
+    "ndcg@5": 1.0,
+    "ndcg@10": 1.0,
+    "soft_positive_recall@10": 0.6667,
+    "historical_leakage_rate": 0.0,
+    "true_negatives_in_top5": 0,
+    "total_ranked": 116,
+    "hard_positives_evaluated": [
+      "DOID:6000",
+      "DOID:784"
+    ],
+    "target_breakdown": {
+      "HISTORICAL_BASELINE": {
+        "DOID:9352": {
+          "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+          "rank": null,
+          "score": 0.0
+        }
+      },
+      "HARD_POSITIVES": {
+        "DOID:6000": {
+          "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+          "rank": 2,
+          "score": 0.3544
+        },
+        "DOID:784": {
+          "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+          "rank": 1,
+          "score": 0.3893
+        }
+      },
+      "SOFT_POSITIVES": {
+        "DOID:0080208": {
+          "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+          "rank": 4,
+          "score": 0.2065
+        },
+        "DOID:10763": {
+          "name": "Hypertension (Secondary Hemodynamic Benefit)",
+          "rank": 3,
+          "score": 0.3453
+        },
+        "DOID:13189": {
+          "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+          "rank": 34,
+          "score": 0.0286
+        }
+      },
+      "TRUE_NEGATIVES": {
+        "DOID:9744": {
+          "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+          "rank": 115,
+          "score": 0.0
+        },
+        "DOID:13148": {
+          "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+          "rank": 116,
+          "score": 0.0
+        },
+        "DOID:263": {
+          "name": "Kidney Cancer (Anatomical Neighbor Control)",
+          "rank": 9,
+          "score": 0.089
+        }
+      }
+    }
+  },
+  "top_10_candidates": [
+    {
+      "rank": 1,
+      "disease_id": "DOID:784",
+      "disease_name": "chronic kidney failure",
+      "ranking_score": 0.3893,
+      "tier": "HARD_POSITIVES",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate chronic kidney failure supported by 5 top biological path(s) (Primary mechanism [therapeutic (-1)]: Dapagliflozin --[DECREASES]--> glomerular filtration --[CAUSES]--> chronic kidney failure; Evidence: PMID:29573529, PMID:28295959, PMID:29998370, PMID:21940401, PMID:28811292, PMID:26137213). Net score: 0.3893."
+    },
+    {
+      "rank": 2,
+      "disease_id": "DOID:6000",
+      "disease_name": "Heart Failure",
+      "ranking_score": 0.3544,
+      "tier": "HARD_POSITIVES",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate Heart Failure supported by 5 top biological path(s) (Primary mechanism [suggestive (0)]: Dapagliflozin --[ACTIVATES]--> PRKAA1 --[ASSOCIATED_WITH]--> Heart Failure; Evidence: PMID:27391020, PMID:30367338, PMID:28499695, PMID:27381369, PMID:30519189, PMID:29588466). Net score: 0.3544."
+    },
+    {
+      "rank": 3,
+      "disease_id": "DOID:10763",
+      "disease_name": "hypertension",
+      "ranking_score": 0.3453,
+      "tier": "SOFT_POSITIVES",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate hypertension supported by 5 top biological path(s) (Primary mechanism [therapeutic (-1)]: Dapagliflozin --[DECREASES]--> regulation of systemic arterial blood pressure --[CAUSES]--> hypertension; Evidence: PMID:25516459, PMID:26571022, PMID:25997813, PMID:25525338, PMID:24705156, PMID:22262072). Net score: 0.3453."
+    },
+    {
+      "rank": 4,
+      "disease_id": "DOID:0080208",
+      "disease_name": "Non-alcoholic fatty liver disease",
+      "ranking_score": 0.2065,
+      "tier": "SOFT_POSITIVES",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate Non-alcoholic fatty liver disease supported by 5 top biological path(s) (Primary mechanism [therapeutic (-1)]: Dapagliflozin --[DECREASES]--> glomerular filtration --[CAUSES]--> Non-alcoholic fatty liver disease; Evidence: PMID:29573529, PMID:28295959, PMID:29998370, PMID:21940401, PMID:28811292, PMID:26137213). Net score: 0.2065."
+    },
+    {
+      "rank": 5,
+      "disease_id": "DOID:9970",
+      "disease_name": "obesity",
+      "ranking_score": 0.1998,
+      "tier": "UNKNOWN",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate obesity supported by 5 top biological path(s) (Primary mechanism [suggestive (0)]: Dapagliflozin --[INHIBITS]--> SLC9A3 --[ASSOCIATED_WITH]--> obesity; Evidence: PMID:29197997, PMID:25516459, PMID:26824365, PMID:24105299, PMID:26571022, PMID:24148209). Net score: 0.1998."
+    },
+    {
+      "rank": 6,
+      "disease_id": "DOID:1936",
+      "disease_name": "atherosclerosis",
+      "ranking_score": 0.1942,
+      "tier": "UNKNOWN",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate atherosclerosis supported by 5 top biological path(s) (Primary mechanism [suggestive (0)]: Dapagliflozin --[INHIBITS]--> NLRP3 --[ASSOCIATED_WITH]--> atherosclerosis; Evidence: PMID:28104929, PMID:28447181, PMID:29508169, PMID:25516459, PMID:26824365, PMID:24105299). Net score: 0.1942."
+    },
+    {
+      "rank": 7,
+      "disease_id": "DOID:1793",
+      "disease_name": "pancreatic cancer",
+      "ranking_score": 0.158,
+      "tier": "UNKNOWN",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate pancreatic cancer supported by 5 top biological path(s) (Primary mechanism [therapeutic (-1)]: Dapagliflozin --[INHIBITS]--> SLC5A1 --[INCREASES]--> pancreatic cancer; Evidence: PMID:30367338, PMID:19943222, PMID:27620988, PMID:28132924, PMID:24097127, PMID:26698317). Net score: 0.158."
+    },
+    {
+      "rank": 8,
+      "disease_id": "DOID:8893",
+      "disease_name": "psoriasis",
+      "ranking_score": 0.1415,
+      "tier": "UNKNOWN",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate psoriasis supported by 5 top biological path(s) (Primary mechanism [therapeutic (-1)]: Dapagliflozin --[INHIBITS]--> SLC5A1 --[INCREASES]--> psoriasis; Evidence: PMID:30367338, PMID:19943222, PMID:27620988, PMID:28132924, PMID:24097127, PMID:26698317). Net score: 0.1415."
+    },
+    {
+      "rank": 9,
+      "disease_id": "DOID:263",
+      "disease_name": "kidney cancer",
+      "ranking_score": 0.089,
+      "tier": "TRUE_NEGATIVES",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate kidney cancer supported by 5 top biological path(s) (Primary mechanism [suggestive (0)]: Dapagliflozin --[INHIBITS]--> SLC5A2 --[ASSOCIATED_WITH]--> kidney cancer; Evidence: PMID:25516459, PMID:26824365, PMID:24105299, PMID:26571022, PMID:24148209, PMID:21105857). Net score: 0.089."
+    },
+    {
+      "rank": 10,
+      "disease_id": "DOID:5419",
+      "disease_name": "schizophrenia",
+      "ranking_score": 0.0592,
+      "tier": "UNKNOWN",
+      "paths_count": 5,
+      "contradiction_pmids_count": 0,
+      "ai_explanation": "Candidate schizophrenia supported by 5 top biological path(s) (Primary mechanism [suggestive (0)]: Dapagliflozin --[INHIBITS]--> SLC5A1 --[ASSOCIATED_WITH]--> PAWR --[ASSOCIATED_WITH]--> schizophrenia; Evidence: PMID:30367338, PMID:19943222, PMID:27620988, PMID:28132924, PMID:24097127, PMID:26698317). Net score: 0.0592."
+    }
+  ],
+  "baselines": {
+    "baseline_1_pubmed_cooccurrence": {
+      "experimental_stage": "v0.2.0-beta-pre-recall",
+      "recall@3": 0.5,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 0.5,
+      "map": 0.5,
+      "ndcg@5": 0.6509,
+      "ndcg@10": 0.6509,
+      "soft_positive_recall@10": 0.6667,
+      "historical_leakage_rate": 0.0,
+      "true_negatives_in_top5": 2,
+      "total_ranked": 11,
+      "hard_positives_evaluated": [
+        "DOID:6000",
+        "DOID:784"
+      ],
+      "target_breakdown": {
+        "HISTORICAL_BASELINE": {
+          "DOID:9352": {
+            "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "HARD_POSITIVES": {
+          "DOID:6000": {
+            "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+            "rank": 4,
+            "score": 47.0
+          },
+          "DOID:784": {
+            "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+            "rank": 2,
+            "score": 66.0
+          }
+        },
+        "SOFT_POSITIVES": {
+          "DOID:0080208": {
+            "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+            "rank": 8,
+            "score": 9.0
+          },
+          "DOID:10763": {
+            "name": "Hypertension (Secondary Hemodynamic Benefit)",
+            "rank": 6,
+            "score": 22.0
+          },
+          "DOID:13189": {
+            "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+            "rank": 11,
+            "score": 1.0
+          }
+        },
+        "TRUE_NEGATIVES": {
+          "DOID:9744": {
+            "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+            "rank": 3,
+            "score": 61.0
+          },
+          "DOID:13148": {
+            "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+            "rank": 1,
+            "score": 93.0
+          },
+          "DOID:263": {
+            "name": "Kidney Cancer (Anatomical Neighbor Control)",
+            "rank": 10,
+            "score": 1.0
+          }
+        }
+      }
+    },
+    "baseline_2_unweighted_shortest_path": {
+      "experimental_stage": "v0.2.0-beta-pre-recall",
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "recall@10": 0.5,
+      "mrr": 0.125,
+      "map": 0.0911,
+      "ndcg@5": 0.0,
+      "ndcg@10": 0.1934,
+      "soft_positive_recall@10": 0.3333,
+      "historical_leakage_rate": 0.0,
+      "true_negatives_in_top5": 0,
+      "total_ranked": 116,
+      "hard_positives_evaluated": [
+        "DOID:6000",
+        "DOID:784"
+      ],
+      "target_breakdown": {
+        "HISTORICAL_BASELINE": {
+          "DOID:9352": {
+            "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "HARD_POSITIVES": {
+          "DOID:6000": {
+            "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+            "rank": 35,
+            "score": 1.91
+          },
+          "DOID:784": {
+            "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+            "rank": 8,
+            "score": 4.6
+          }
+        },
+        "SOFT_POSITIVES": {
+          "DOID:0080208": {
+            "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+            "rank": 56,
+            "score": 1.07
+          },
+          "DOID:10763": {
+            "name": "Hypertension (Secondary Hemodynamic Benefit)",
+            "rank": 1,
+            "score": 9.91
+          },
+          "DOID:13189": {
+            "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+            "rank": 53,
+            "score": 1.12
+          }
+        },
+        "TRUE_NEGATIVES": {
+          "DOID:9744": {
+            "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+            "rank": 42,
+            "score": 1.7
+          },
+          "DOID:13148": {
+            "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+            "rank": 59,
+            "score": 1.0
+          },
+          "DOID:263": {
+            "name": "Kidney Cancer (Anatomical Neighbor Control)",
+            "rank": 7,
+            "score": 4.84
+          }
+        }
+      }
+    },
+    "baseline_3_unsigned_dwpc": {
+      "experimental_stage": "v0.2.0-beta-pre-recall",
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0,
+      "map": 1.0,
+      "ndcg@5": 1.0,
+      "ndcg@10": 1.0,
+      "soft_positive_recall@10": 0.6667,
+      "historical_leakage_rate": 0.0,
+      "true_negatives_in_top5": 0,
+      "total_ranked": 116,
+      "hard_positives_evaluated": [
+        "DOID:6000",
+        "DOID:784"
+      ],
+      "target_breakdown": {
+        "HISTORICAL_BASELINE": {
+          "DOID:9352": {
+            "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "HARD_POSITIVES": {
+          "DOID:6000": {
+            "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+            "rank": 1,
+            "score": 0.3041
+          },
+          "DOID:784": {
+            "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+            "rank": 2,
+            "score": 0.2705
+          }
+        },
+        "SOFT_POSITIVES": {
+          "DOID:0080208": {
+            "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+            "rank": 8,
+            "score": 0.153
+          },
+          "DOID:10763": {
+            "name": "Hypertension (Secondary Hemodynamic Benefit)",
+            "rank": 3,
+            "score": 0.2675
+          },
+          "DOID:13189": {
+            "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+            "rank": 36,
+            "score": 0.0286
+          }
+        },
+        "TRUE_NEGATIVES": {
+          "DOID:9744": {
+            "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+            "rank": 7,
+            "score": 0.1779
+          },
+          "DOID:13148": {
+            "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+            "rank": 6,
+            "score": 0.1847
+          },
+          "DOID:263": {
+            "name": "Kidney Cancer (Anatomical Neighbor Control)",
+            "rank": 11,
+            "score": 0.089
+          }
+        }
+      }
+    }
+  },
+  "ablation_studies": {
+    "ablation_1_no_direction_fit": {
+      "experimental_stage": "v0.2.0-beta-pre-recall",
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0,
+      "map": 1.0,
+      "ndcg@5": 1.0,
+      "ndcg@10": 1.0,
+      "soft_positive_recall@10": 0.6667,
+      "historical_leakage_rate": 0.0,
+      "true_negatives_in_top5": 0,
+      "total_ranked": 116,
+      "hard_positives_evaluated": [
+        "DOID:6000",
+        "DOID:784"
+      ],
+      "target_breakdown": {
+        "HISTORICAL_BASELINE": {
+          "DOID:9352": {
+            "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "HARD_POSITIVES": {
+          "DOID:6000": {
+            "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+            "rank": 1,
+            "score": 0.3041
+          },
+          "DOID:784": {
+            "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+            "rank": 2,
+            "score": 0.2705
+          }
+        },
+        "SOFT_POSITIVES": {
+          "DOID:0080208": {
+            "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+            "rank": 6,
+            "score": 0.153
+          },
+          "DOID:10763": {
+            "name": "Hypertension (Secondary Hemodynamic Benefit)",
+            "rank": 3,
+            "score": 0.2675
+          },
+          "DOID:13189": {
+            "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+            "rank": 34,
+            "score": 0.0286
+          }
+        },
+        "TRUE_NEGATIVES": {
+          "DOID:9744": {
+            "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+            "rank": 115,
+            "score": 0.0
+          },
+          "DOID:13148": {
+            "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+            "rank": 116,
+            "score": 0.0
+          },
+          "DOID:263": {
+            "name": "Kidney Cancer (Anatomical Neighbor Control)",
+            "rank": 9,
+            "score": 0.089
+          }
+        }
+      }
+    },
+    "ablation_2_no_contradiction_penalty": {
+      "experimental_stage": "v0.2.0-beta-pre-recall",
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0,
+      "map": 1.0,
+      "ndcg@5": 1.0,
+      "ndcg@10": 1.0,
+      "soft_positive_recall@10": 0.6667,
+      "historical_leakage_rate": 0.0,
+      "true_negatives_in_top5": 2,
+      "total_ranked": 116,
+      "hard_positives_evaluated": [
+        "DOID:6000",
+        "DOID:784"
+      ],
+      "target_breakdown": {
+        "HISTORICAL_BASELINE": {
+          "DOID:9352": {
+            "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "HARD_POSITIVES": {
+          "DOID:6000": {
+            "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+            "rank": 2,
+            "score": 0.3544
+          },
+          "DOID:784": {
+            "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+            "rank": 1,
+            "score": 0.3893
+          }
+        },
+        "SOFT_POSITIVES": {
+          "DOID:0080208": {
+            "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+            "rank": 6,
+            "score": 0.2065
+          },
+          "DOID:10763": {
+            "name": "Hypertension (Secondary Hemodynamic Benefit)",
+            "rank": 3,
+            "score": 0.3453
+          },
+          "DOID:13189": {
+            "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+            "rank": 36,
+            "score": 0.0286
+          }
+        },
+        "TRUE_NEGATIVES": {
+          "DOID:9744": {
+            "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+            "rank": 5,
+            "score": 0.2446
+          },
+          "DOID:13148": {
+            "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+            "rank": 4,
+            "score": 0.2742
+          },
+          "DOID:263": {
+            "name": "Kidney Cancer (Anatomical Neighbor Control)",
+            "rank": 11,
+            "score": 0.089
+          }
+        }
+      }
+    },
+    "ablation_3_shortest_path_only": {
+      "experimental_stage": "v0.2.0-beta-pre-recall",
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0,
+      "map": 1.0,
+      "ndcg@5": 1.0,
+      "ndcg@10": 1.0,
+      "soft_positive_recall@10": 0.6667,
+      "historical_leakage_rate": 0.0,
+      "true_negatives_in_top5": 0,
+      "total_ranked": 116,
+      "hard_positives_evaluated": [
+        "DOID:6000",
+        "DOID:784"
+      ],
+      "target_breakdown": {
+        "HISTORICAL_BASELINE": {
+          "DOID:9352": {
+            "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "HARD_POSITIVES": {
+          "DOID:6000": {
+            "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+            "rank": 2,
+            "score": 0.3544
+          },
+          "DOID:784": {
+            "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+            "rank": 1,
+            "score": 0.3893
+          }
+        },
+        "SOFT_POSITIVES": {
+          "DOID:0080208": {
+            "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+            "rank": 5,
+            "score": 0.1851
+          },
+          "DOID:10763": {
+            "name": "Hypertension (Secondary Hemodynamic Benefit)",
+            "rank": 3,
+            "score": 0.3386
+          },
+          "DOID:13189": {
+            "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+            "rank": 22,
+            "score": 0.0286
+          }
+        },
+        "TRUE_NEGATIVES": {
+          "DOID:9744": {
+            "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+            "rank": 115,
+            "score": 0.0
+          },
+          "DOID:13148": {
+            "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+            "rank": 116,
+            "score": 0.0
+          },
+          "DOID:263": {
+            "name": "Kidney Cancer (Anatomical Neighbor Control)",
+            "rank": 9,
+            "score": 0.0703
+          }
+        }
+      }
+    },
+    "ablation_4a_nlp_only_no_hetionet": {
+      "experimental_stage": "v0.2.0-beta-pre-recall",
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0,
+      "map": 1.0,
+      "ndcg@5": 1.0,
+      "ndcg@10": 1.0,
+      "soft_positive_recall@10": 0.6667,
+      "historical_leakage_rate": 0.0,
+      "true_negatives_in_top5": 0,
+      "total_ranked": 9,
+      "hard_positives_evaluated": [
+        "DOID:6000",
+        "DOID:784"
+      ],
+      "target_breakdown": {
+        "HISTORICAL_BASELINE": {
+          "DOID:9352": {
+            "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "HARD_POSITIVES": {
+          "DOID:6000": {
+            "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+            "rank": 2,
+            "score": 0.474
+          },
+          "DOID:784": {
+            "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+            "rank": 1,
+            "score": 0.5787
+          }
+        },
+        "SOFT_POSITIVES": {
+          "DOID:0080208": {
+            "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+            "rank": 4,
+            "score": 0.2582
+          },
+          "DOID:10763": {
+            "name": "Hypertension (Secondary Hemodynamic Benefit)",
+            "rank": 3,
+            "score": 0.4345
+          },
+          "DOID:13189": {
+            "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "TRUE_NEGATIVES": {
+          "DOID:9744": {
+            "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+            "rank": 9,
+            "score": 0.0
+          },
+          "DOID:13148": {
+            "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+            "rank": 8,
+            "score": 0.0
+          },
+          "DOID:263": {
+            "name": "Kidney Cancer (Anatomical Neighbor Control)",
+            "rank": 7,
+            "score": 0.0914
+          }
+        }
+      }
+    },
+    "ablation_4b_hetionet_only_no_nlp": {
+      "experimental_stage": "v0.2.0-beta-pre-recall",
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0139,
+      "map": 0.0069,
+      "ndcg@5": 0.0,
+      "ndcg@10": 0.0,
+      "soft_positive_recall@10": 0.3333,
+      "historical_leakage_rate": 0.0,
+      "true_negatives_in_top5": 0,
+      "total_ranked": 113,
+      "hard_positives_evaluated": [
+        "DOID:6000",
+        "DOID:784"
+      ],
+      "target_breakdown": {
+        "HISTORICAL_BASELINE": {
+          "DOID:9352": {
+            "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+            "rank": null,
+            "score": 0.0
+          }
+        },
+        "HARD_POSITIVES": {
+          "DOID:6000": {
+            "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+            "rank": null,
+            "score": 0.0
+          },
+          "DOID:784": {
+            "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+            "rank": 72,
+            "score": 0.0204
+          }
+        },
+        "SOFT_POSITIVES": {
+          "DOID:0080208": {
+            "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+            "rank": null,
+            "score": 0.0
+          },
+          "DOID:10763": {
+            "name": "Hypertension (Secondary Hemodynamic Benefit)",
+            "rank": 1,
+            "score": 0.12
+          },
+          "DOID:13189": {
+            "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+            "rank": 28,
+            "score": 0.0291
+          }
+        },
+        "TRUE_NEGATIVES": {
+          "DOID:9744": {
+            "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+            "rank": 46,
+            "score": 0.0269
+          },
+          "DOID:13148": {
+            "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+            "rank": null,
+            "score": 0.0
+          },
+          "DOID:263": {
+            "name": "Kidney Cancer (Anatomical Neighbor Control)",
+            "rank": 14,
+            "score": 0.0336
+          }
+        }
+      }
+    }
+  },
+  "temporal_sensitivity": {
+    "cutoff_2018_12_31": {
+      "papers_count": 664,
+      "relations_count": 2104,
+      "metrics": {
+        "experimental_stage": "v0.2.0-beta-pre-recall",
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr": 1.0,
+        "map": 1.0,
+        "ndcg@5": 1.0,
+        "ndcg@10": 1.0,
+        "soft_positive_recall@10": 0.6667,
+        "historical_leakage_rate": 0.0,
+        "true_negatives_in_top5": 0,
+        "total_ranked": 116,
+        "hard_positives_evaluated": [
+          "DOID:6000",
+          "DOID:784"
+        ],
+        "target_breakdown": {
+          "HISTORICAL_BASELINE": {
+            "DOID:9352": {
+              "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+              "rank": null,
+              "score": 0.0
+            }
+          },
+          "HARD_POSITIVES": {
+            "DOID:6000": {
+              "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+              "rank": 2,
+              "score": 0.3544
+            },
+            "DOID:784": {
+              "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+              "rank": 1,
+              "score": 0.3893
+            }
+          },
+          "SOFT_POSITIVES": {
+            "DOID:0080208": {
+              "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+              "rank": 4,
+              "score": 0.2065
+            },
+            "DOID:10763": {
+              "name": "Hypertension (Secondary Hemodynamic Benefit)",
+              "rank": 3,
+              "score": 0.3453
+            },
+            "DOID:13189": {
+              "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+              "rank": 34,
+              "score": 0.0286
+            }
+          },
+          "TRUE_NEGATIVES": {
+            "DOID:9744": {
+              "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+              "rank": 115,
+              "score": 0.0
+            },
+            "DOID:13148": {
+              "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+              "rank": 116,
+              "score": 0.0
+            },
+            "DOID:263": {
+              "name": "Kidney Cancer (Anatomical Neighbor Control)",
+              "rank": 9,
+              "score": 0.089
+            }
+          }
+        }
+      }
+    },
+    "cutoff_2014_12_31_pre_empareg": {
+      "relations_count": 666,
+      "metrics": {
+        "experimental_stage": "v0.2.0-beta-pre-recall",
+        "recall@3": 0.5,
+        "recall@5": 0.5,
+        "recall@10": 0.5,
+        "mrr": 1.0,
+        "map": 0.5,
+        "ndcg@5": 0.6131,
+        "ndcg@10": 0.6131,
+        "soft_positive_recall@10": 0.3333,
+        "historical_leakage_rate": 0.0,
+        "true_negatives_in_top5": 0,
+        "total_ranked": 114,
+        "hard_positives_evaluated": [
+          "DOID:6000",
+          "DOID:784"
+        ],
+        "target_breakdown": {
+          "HISTORICAL_BASELINE": {
+            "DOID:9352": {
+              "name": "Type 2 Diabetes Mellitus (FDA 2014 - Filter Out)",
+              "rank": null,
+              "score": 0.0
+            }
+          },
+          "HARD_POSITIVES": {
+            "DOID:6000": {
+              "name": "Heart Failure (FDA 05/2020 - DAPA-HF)",
+              "rank": null,
+              "score": 0.0
+            },
+            "DOID:784": {
+              "name": "Chronic Kidney Disease (FDA 04/2021 - DAPA-CKD)",
+              "rank": 1,
+              "score": 0.2293
+            }
+          },
+          "SOFT_POSITIVES": {
+            "DOID:0080208": {
+              "name": "Non-alcoholic fatty liver disease / MASLD (Phase 2/3 Trials)",
+              "rank": null,
+              "score": 0.0
+            },
+            "DOID:10763": {
+              "name": "Hypertension (Secondary Hemodynamic Benefit)",
+              "rank": 2,
+              "score": 0.1798
+            },
+            "DOID:13189": {
+              "name": "Gout / Hyperuricemia (Uricosuric Benefit)",
+              "rank": 31,
+              "score": 0.029
+            }
+          },
+          "TRUE_NEGATIVES": {
+            "DOID:9744": {
+              "name": "Type 1 Diabetes Mellitus (FDA Rejected 2019 due to DKA risk)",
+              "rank": 50,
+              "score": 0.0264
+            },
+            "DOID:13148": {
+              "name": "Urinary Tract Infection (Adverse Drug Reaction / Contradiction Trap)",
+              "rank": 114,
+              "score": 0.0
+            },
+            "DOID:263": {
+              "name": "Kidney Cancer (Anatomical Neighbor Control)",
+              "rank": 16,
+              "score": 0.0333
+            }
+          }
+        }
+      }
+    }
+  }
+}

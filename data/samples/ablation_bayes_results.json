@@ -1,0 +1,52 @@
+{
+  "1_Full_Bayesian_Beta_Binomial": {
+    "total_fused_edges": 45,
+    "admitted_kg": 8,
+    "provisional_queue": 26,
+    "rejected": 2,
+    "contraindicated_lock": 0,
+    "avg_posterior_mean": 0.7578,
+    "avg_lcb_90": 0.4616,
+    "admittance_rate_pct": 17.78
+  },
+  "2_Ablation_wo_LCB90_LinearGate": {
+    "total_fused_edges": 45,
+    "admitted_kg": 41,
+    "provisional_queue": 3,
+    "rejected": 1,
+    "contraindicated_lock": 0,
+    "avg_posterior_mean": 0.7578,
+    "avg_lcb_90": 0.4616,
+    "admittance_rate_pct": 91.11
+  },
+  "3_Ablation_wo_Conflict_Discounting": {
+    "total_fused_edges": 45,
+    "admitted_kg": 10,
+    "provisional_queue": 25,
+    "rejected": 1,
+    "contraindicated_lock": 0,
+    "avg_posterior_mean": 0.7804,
+    "avg_lcb_90": 0.4877,
+    "admittance_rate_pct": 22.22
+  },
+  "4_Ablation_Flat_Prior_Beta11": {
+    "total_fused_edges": 45,
+    "admitted_kg": 4,
+    "provisional_queue": 29,
+    "rejected": 3,
+    "contraindicated_lock": 0,
+    "avg_posterior_mean": 0.6297,
+    "avg_lcb_90": 0.3298,
+    "admittance_rate_pct": 8.89
+  },
+  "5_Ablation_wo_Section_Study_Weights": {
+    "total_fused_edges": 45,
+    "admitted_kg": 25,
+    "provisional_queue": 9,
+    "rejected": 2,
+    "contraindicated_lock": 0,
+    "avg_posterior_mean": 0.7923,
+    "avg_lcb_90": 0.5381,
+    "admittance_rate_pct": 55.56
+  }
+}

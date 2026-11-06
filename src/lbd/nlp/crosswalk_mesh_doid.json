@@ -1,0 +1,649 @@
+{
+  "D000544": {
+    "id": "DOID:10652",
+    "name": "Alzheimer's disease",
+    "type": "Disease",
+    "cui": "C0002395"
+  },
+  "D010300": {
+    "id": "DOID:14330",
+    "name": "Parkinson's disease",
+    "type": "Disease",
+    "cui": "C0030567"
+  },
+  "D000690": {
+    "id": "DOID:332",
+    "name": "amyotrophic lateral sclerosis",
+    "type": "Disease",
+    "cui": "C0002736"
+  },
+  "D009103": {
+    "id": "DOID:2377",
+    "name": "multiple sclerosis",
+    "type": "Disease",
+    "cui": "C0026769"
+  },
+  "D004827": {
+    "id": "DOID:1826",
+    "name": "epilepsy syndrome",
+    "type": "Disease",
+    "cui": "C0014544"
+  },
+  "D008881": {
+    "id": "DOID:6364",
+    "name": "migraine",
+    "type": "Disease",
+    "cui": "C0149931"
+  },
+  "D009290": {
+    "id": "DOID:8986",
+    "name": "narcolepsy",
+    "type": "Disease",
+    "cui": "C0027404"
+  },
+  "D020188": {
+    "id": "DOID:0050425",
+    "name": "restless legs syndrome",
+    "type": "Disease",
+    "cui": "C0085631"
+  },
+  "D003423": {
+    "id": "DOID:11949",
+    "name": "Creutzfeldt-Jakob disease",
+    "type": "Disease",
+    "cui": "C0020166"
+  },
+  "D014110": {
+    "id": "DOID:11119",
+    "name": "Gilles de la Tourette syndrome",
+    "type": "Disease",
+    "cui": "C0040485"
+  },
+  "D001714": {
+    "id": "DOID:3312",
+    "name": "bipolar disorder",
+    "type": "Disease",
+    "cui": "C0005586"
+  },
+  "D003866": {
+    "id": "DOID:1595",
+    "name": "endogenous depression",
+    "type": "Disease",
+    "cui": "C0011581"
+  },
+  "D003865": {
+    "id": "DOID:1595",
+    "name": "endogenous depression",
+    "type": "Disease",
+    "cui": "C0011570"
+  },
+  "D012559": {
+    "id": "DOID:5419",
+    "name": "schizophrenia",
+    "type": "Disease",
+    "cui": "C0036341"
+  },
+  "D001289": {
+    "id": "DOID:1094",
+    "name": "attention deficit hyperactivity disorder",
+    "type": "Disease",
+    "cui": "C1263846"
+  },
+  "D001321": {
+    "id": "DOID:12849",
+    "name": "autistic disorder",
+    "type": "Disease",
+    "cui": "C0004352"
+  },
+  "D016584": {
+    "id": "DOID:594",
+    "name": "panic disorder",
+    "type": "Disease",
+    "cui": "C0030330"
+  },
+  "D019973": {
+    "id": "DOID:0050741",
+    "name": "alcohol dependence",
+    "type": "Disease",
+    "cui": "C0001973"
+  },
+  "D000437": {
+    "id": "DOID:0050741",
+    "name": "alcohol dependence",
+    "type": "Disease",
+    "cui": "C0001973"
+  },
+  "D014029": {
+    "id": "DOID:0050742",
+    "name": "nicotine dependence",
+    "type": "Disease",
+    "cui": "C0040336"
+  },
+  "D019958": {
+    "id": "DOID:12995",
+    "name": "conduct disorder",
+    "type": "Disease",
+    "cui": "C0009689"
+  },
+  "D011471": {
+    "id": "DOID:10283",
+    "name": "prostate cancer",
+    "type": "Disease",
+    "cui": "C0033578"
+  },
+  "D001943": {
+    "id": "DOID:1612",
+    "name": "breast cancer",
+    "type": "Disease",
+    "cui": "C0006142"
+  },
+  "D003110": {
+    "id": "DOID:219",
+    "name": "colon cancer",
+    "type": "Disease",
+    "cui": "C0009402"
+  },
+  "D015179": {
+    "id": "DOID:219",
+    "name": "colon cancer",
+    "type": "Disease",
+    "cui": "C0346629"
+  },
+  "D012004": {
+    "id": "DOID:1993",
+    "name": "rectum cancer",
+    "type": "Disease",
+    "cui": "C0034884"
+  },
+  "D008175": {
+    "id": "DOID:1324",
+    "name": "lung cancer",
+    "type": "Disease",
+    "cui": "C0024109"
+  },
+  "D013274": {
+    "id": "DOID:10534",
+    "name": "stomach cancer",
+    "type": "Disease",
+    "cui": "C0024623"
+  },
+  "D010190": {
+    "id": "DOID:1793",
+    "name": "pancreatic cancer",
+    "type": "Disease",
+    "cui": "C0030297"
+  },
+  "D008113": {
+    "id": "DOID:3571",
+    "name": "liver cancer",
+    "type": "Disease",
+    "cui": "C0023903"
+  },
+  "D006528": {
+    "id": "DOID:4481",
+    "name": "allergic rhinitis",
+    "type": "Disease",
+    "cui": "C0035455"
+  },
+  "D009369": {
+    "id": "DOID:2531",
+    "name": "hematologic cancer",
+    "type": "Disease",
+    "cui": "C0027651"
+  },
+  "D019337": {
+    "id": "DOID:2531",
+    "name": "hematologic cancer",
+    "type": "Disease",
+    "cui": "C0376544"
+  },
+  "D009101": {
+    "id": "DOID:2531",
+    "name": "hematologic cancer",
+    "type": "Disease",
+    "cui": "C0026764"
+  },
+  "D007938": {
+    "id": "DOID:2531",
+    "name": "hematologic cancer",
+    "type": "Disease",
+    "cui": "C0023418"
+  },
+  "D008223": {
+    "id": "DOID:0060073",
+    "name": "lymphatic system cancer",
+    "type": "Disease",
+    "cui": "C0024299"
+  },
+  "D005909": {
+    "id": "DOID:3070",
+    "name": "malignant glioma",
+    "type": "Disease",
+    "cui": "C0017638"
+  },
+  "D005910": {
+    "id": "DOID:3070",
+    "name": "malignant glioma",
+    "type": "Disease",
+    "cui": "C0017638"
+  },
+  "D001932": {
+    "id": "DOID:1319",
+    "name": "brain cancer",
+    "type": "Disease",
+    "cui": "C0006118"
+  },
+  "D010051": {
+    "id": "DOID:2394",
+    "name": "ovarian cancer",
+    "type": "Disease",
+    "cui": "C0029925"
+  },
+  "D001859": {
+    "id": "DOID:184",
+    "name": "bone cancer",
+    "type": "Disease",
+    "cui": "C0005940"
+  },
+  "D002583": {
+    "id": "DOID:4362",
+    "name": "cervical cancer",
+    "type": "Disease",
+    "cui": "C0007847"
+  },
+  "D014594": {
+    "id": "DOID:363",
+    "name": "uterine cancer",
+    "type": "Disease",
+    "cui": "C0042138"
+  },
+  "D001749": {
+    "id": "DOID:11054",
+    "name": "urinary bladder cancer",
+    "type": "Disease",
+    "cui": "C0005684"
+  },
+  "D007680": {
+    "id": "DOID:263",
+    "name": "kidney cancer",
+    "type": "Disease",
+    "cui": "C0022665"
+  },
+  "D004938": {
+    "id": "DOID:5041",
+    "name": "esophageal cancer",
+    "type": "Disease",
+    "cui": "C0014859"
+  },
+  "D013964": {
+    "id": "DOID:1781",
+    "name": "thyroid cancer",
+    "type": "Disease",
+    "cui": "C0007115"
+  },
+  "D009062": {
+    "id": "DOID:11934",
+    "name": "head and neck cancer",
+    "type": "Disease",
+    "cui": "C0018670"
+  },
+  "D008545": {
+    "id": "DOID:1909",
+    "name": "melanoma",
+    "type": "Disease",
+    "cui": "C0025202"
+  },
+  "D012509": {
+    "id": "DOID:1115",
+    "name": "sarcoma",
+    "type": "Disease",
+    "cui": "C0036224"
+  },
+  "D008654": {
+    "id": "DOID:1790",
+    "name": "malignant mesothelioma",
+    "type": "Disease",
+    "cui": "C0025500"
+  },
+  "D008579": {
+    "id": "DOID:3565",
+    "name": "meningioma",
+    "type": "Disease",
+    "cui": "C0025286"
+  },
+  "D013724": {
+    "id": "DOID:2998",
+    "name": "testicular cancer",
+    "type": "Disease",
+    "cui": "C0039590"
+  },
+  "D003924": {
+    "id": "DOID:9352",
+    "name": "type 2 diabetes mellitus",
+    "type": "Disease",
+    "cui": "C0011860"
+  },
+  "D003922": {
+    "id": "DOID:9744",
+    "name": "type 1 diabetes mellitus",
+    "type": "Disease",
+    "cui": "C0011854"
+  },
+  "D016640": {
+    "id": "DOID:11714",
+    "name": "gestational diabetes",
+    "type": "Disease",
+    "cui": "C0085207"
+  },
+  "D009765": {
+    "id": "DOID:9970",
+    "name": "obesity",
+    "type": "Disease",
+    "cui": "C0028754"
+  },
+  "D024821": {
+    "id": "DOID:14221",
+    "name": "metabolic syndrome X",
+    "type": "Disease",
+    "cui": "C0524620"
+  },
+  "D007037": {
+    "id": "DOID:1459",
+    "name": "hypothyroidism",
+    "type": "Disease",
+    "cui": "C0020676"
+  },
+  "D006042": {
+    "id": "DOID:12361",
+    "name": "Graves' disease",
+    "type": "Disease",
+    "cui": "C0018213"
+  },
+  "D051436": {
+    "id": "DOID:784",
+    "name": "chronic kidney failure",
+    "type": "Disease",
+    "cui": "C0022661"
+  },
+  "D007676": {
+    "id": "DOID:784",
+    "name": "chronic kidney failure",
+    "type": "Disease",
+    "cui": "C0022661"
+  },
+  "D006099": {
+    "id": "DOID:2986",
+    "name": "IgA glomerulonephritis",
+    "type": "Disease",
+    "cui": "C0017661"
+  },
+  "D005922": {
+    "id": "DOID:10976",
+    "name": "membranous glomerulonephritis",
+    "type": "Disease",
+    "cui": "C0017668"
+  },
+  "D005923": {
+    "id": "DOID:1312",
+    "name": "focal segmental glomerulosclerosis",
+    "type": "Disease",
+    "cui": "C0017669"
+  },
+  "D007669": {
+    "id": "DOID:585",
+    "name": "nephrolithiasis",
+    "type": "Disease",
+    "cui": "C0022650"
+  },
+  "D011085": {
+    "id": "DOID:11612",
+    "name": "polycystic ovary syndrome",
+    "type": "Disease",
+    "cui": "C0032460"
+  },
+  "D006973": {
+    "id": "DOID:10763",
+    "name": "hypertension",
+    "type": "Disease",
+    "cui": "C0020538"
+  },
+  "D006333": {
+    "id": "DOID:6000",
+    "name": "heart failure",
+    "type": "Disease",
+    "cui": "C0018801"
+  },
+  "D003324": {
+    "id": "DOID:3393",
+    "name": "coronary artery disease",
+    "type": "Disease",
+    "cui": "C0010068"
+  },
+  "D003327": {
+    "id": "DOID:3393",
+    "name": "coronary artery disease",
+    "type": "Disease",
+    "cui": "C0010068"
+  },
+  "D050197": {
+    "id": "DOID:1936",
+    "name": "atherosclerosis",
+    "type": "Disease",
+    "cui": "C0004153"
+  },
+  "D002311": {
+    "id": "DOID:12930",
+    "name": "dilated cardiomyopathy",
+    "type": "Disease",
+    "cui": "C0007194"
+  },
+  "D001014": {
+    "id": "DOID:7693",
+    "name": "abdominal aortic aneurysm",
+    "type": "Disease",
+    "cui": "C0003486"
+  },
+  "D017545": {
+    "id": "DOID:14004",
+    "name": "thoracic aortic aneurysm",
+    "type": "Disease",
+    "cui": "C0162870"
+  },
+  "D002318": {
+    "id": "DOID:1936",
+    "name": "atherosclerosis",
+    "type": "Disease",
+    "cui": "C0007222"
+  },
+  "D002545": {
+    "id": "DOID:10941",
+    "name": "intracranial aneurysm",
+    "type": "Disease",
+    "cui": "C0007780"
+  },
+  "D010003": {
+    "id": "DOID:8398",
+    "name": "osteoarthritis",
+    "type": "Disease",
+    "cui": "C0029408"
+  },
+  "D001172": {
+    "id": "DOID:7148",
+    "name": "rheumatoid arthritis",
+    "type": "Disease",
+    "cui": "C0003873"
+  },
+  "D011565": {
+    "id": "DOID:8893",
+    "name": "psoriasis",
+    "type": "Disease",
+    "cui": "C0033860"
+  },
+  "D015535": {
+    "id": "DOID:9008",
+    "name": "psoriatic arthritis",
+    "type": "Disease",
+    "cui": "C0003872"
+  },
+  "D003424": {
+    "id": "DOID:8778",
+    "name": "Crohn's disease",
+    "type": "Disease",
+    "cui": "C0010346"
+  },
+  "D003093": {
+    "id": "DOID:8577",
+    "name": "ulcerative colitis",
+    "type": "Disease",
+    "cui": "C0009324"
+  },
+  "D008180": {
+    "id": "DOID:9074",
+    "name": "systemic lupus erythematosus",
+    "type": "Disease",
+    "cui": "C0024141"
+  },
+  "D013167": {
+    "id": "DOID:7147",
+    "name": "ankylosing spondylitis",
+    "type": "Disease",
+    "cui": "C0038013"
+  },
+  "D012595": {
+    "id": "DOID:418",
+    "name": "systemic scleroderma",
+    "type": "Disease",
+    "cui": "C0036421"
+  },
+  "D010024": {
+    "id": "DOID:11476",
+    "name": "osteoporosis",
+    "type": "Disease",
+    "cui": "C0029456"
+  },
+  "D006073": {
+    "id": "DOID:13189",
+    "name": "gout",
+    "type": "Disease",
+    "cui": "C0018099"
+  },
+  "D002446": {
+    "id": "DOID:10608",
+    "name": "celiac disease",
+    "type": "Disease",
+    "cui": "C0007570"
+  },
+  "D001505": {
+    "id": "DOID:13241",
+    "name": "Behcet's disease",
+    "type": "Disease",
+    "cui": "C0004943"
+  },
+  "D009080": {
+    "id": "DOID:13378",
+    "name": "Kawasaki disease",
+    "type": "Disease",
+    "cui": "C0026691"
+  },
+  "D000505": {
+    "id": "DOID:986",
+    "name": "alopecia areata",
+    "type": "Disease",
+    "cui": "C0002170"
+  },
+  "D014820": {
+    "id": "DOID:12306",
+    "name": "vitiligo",
+    "type": "Disease",
+    "cui": "C0042900"
+  },
+  "D003876": {
+    "id": "DOID:3310",
+    "name": "atopic dermatitis",
+    "type": "Disease",
+    "cui": "C0011615"
+  },
+  "D001249": {
+    "id": "DOID:2841",
+    "name": "asthma",
+    "type": "Disease",
+    "cui": "C0004096"
+  },
+  "D029424": {
+    "id": "DOID:3083",
+    "name": "chronic obstructive pulmonary disease",
+    "type": "Disease",
+    "cui": "C0024117"
+  },
+  "D054990": {
+    "id": "DOID:0050156",
+    "name": "idiopathic pulmonary fibrosis",
+    "type": "Disease",
+    "cui": "C0034069"
+  },
+  "C529054": {
+    "id": "DB06292",
+    "name": "Dapagliflozin",
+    "type": "Compound"
+  },
+  "D000069348": {
+    "id": "DB06292",
+    "name": "Dapagliflozin",
+    "type": "Compound"
+  },
+  "D008687": {
+    "id": "DB00331",
+    "name": "Metformin",
+    "type": "Compound"
+  },
+  "D000068598": {
+    "id": "DB00203",
+    "name": "Sildenafil",
+    "type": "Compound"
+  },
+  "D000068599": {
+    "id": "DB00476",
+    "name": "Duloxetine",
+    "type": "Compound"
+  },
+  "D013792": {
+    "id": "DB01041",
+    "name": "Thalidomide",
+    "type": "Compound"
+  },
+  "D000068579": {
+    "id": "DB00482",
+    "name": "Celecoxib",
+    "type": "Compound"
+  },
+  "D004229": {
+    "id": "DB00822",
+    "name": "Disulfiram",
+    "type": "Compound"
+  },
+  "D007649": {
+    "id": "DB01221",
+    "name": "Ketamine",
+    "type": "Compound"
+  },
+  "D013152": {
+    "id": "DB00421",
+    "name": "Spironolactone",
+    "type": "Compound"
+  },
+  "D019808": {
+    "id": "DB00678",
+    "name": "Losartan",
+    "type": "Compound"
+  },
+  "D001241": {
+    "id": "DB00945",
+    "name": "Aspirin",
+    "type": "Compound"
+  },
+  "D008727": {
+    "id": "DB00563",
+    "name": "Methotrexate",
+    "type": "Compound"
+  }
+}

@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Run NLP Extraction (backward compatibility wrapper for run_nlp_extraction.py)."""
+"""Run NLP Extraction (backward compatibility wrapper for run_nlp_extraction.py).
+
+Owner: Nguyễn Khang (Biomedical NLP & BioRED Engine)
+"""
 import sys
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR / "src"))
+sys.path.insert(0, str(ROOT_DIR / "scripts"))
 
 from run_nlp_extraction import run
 

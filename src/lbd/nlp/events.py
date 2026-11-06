@@ -3,6 +3,10 @@
 LAYER 3: N-ary Contextual Bio-Event Extraction & Counterfactual Entity-Blinded LLM Verifier.
 Location: nlp/v6_industrial/layer3_event_and_blinded_llm.py
 """
+import logging
+
+logger = logging.getLogger(__name__)
+
 import hashlib
 import json
 import os
@@ -321,7 +325,7 @@ class Layer3_BioEventAndBlindedLLMEngine:
                 headers={
                     "Authorization": f"Bearer {self.api_key}",
                     "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
                 },
                 method="POST",
             )
@@ -376,6 +380,13 @@ class Layer3_BioEventAndBlindedLLMEngine:
                 logger.warning(f"Groq API key returned HTTP {e.code} (Unauthorized/Forbidden). Fast-disabling live LLM for this run.")
                 self.api_key = None
             self.symbolic_decisions += 1
+            return {
+                "relation": symbolic_res.canonical_relation,
+                "assertion_status": symbolic_res.assertion_status,
+                "confidence": 0.88 if symbolic_res.verb_delta != 0 else 0.72,
+                "llm_verified": False, "llm_mode": "symbolic_fallback_http",
+                "rationale": symbolic_res.rationale,
+            }
         except Exception as e:
             self.symbolic_decisions += 1
             return {

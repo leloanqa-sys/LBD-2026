@@ -12,11 +12,14 @@ def parse_date(date_str: str) -> datetime:
             return datetime.strptime(date_str, fmt)
         except ValueError:
             continue
-    return datetime(1970, 1, 1)
+    raise ValueError(f"Invalid publication date: {date_str!r}")
 
 def filter_by_cutoff(record: Dict[str, Any], cutoff: str = DEFAULT_CUTOFF) -> bool:
-    pub_date = parse_date(record.get("publication_date", ""))
     cutoff_dt = parse_date(cutoff)
+    try:
+        pub_date = parse_date(record.get("publication_date", ""))
+    except ValueError:
+        return False
     return pub_date <= cutoff_dt
 
 def create_document_record(

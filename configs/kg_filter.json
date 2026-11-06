@@ -1,0 +1,26 @@
+{
+  "policy_version": "conservative_rules_v1",
+  "profile": "LBD pilot v1; reconstructed, not original thresholds",
+  "min_unique_pmids": 2,
+  "min_extraction_score": 0.6,
+  "publication_cutoff": "2018-12-31",
+  "allowed_sections": [
+    "RESULTS",
+    "CONCLUSIONS"
+  ],
+  "allowed_study_designs": [
+    "RCT_CLINICAL_TRIAL",
+    "REAL_WORLD_COHORT"
+  ],
+  "held_study_designs": [
+    "REVIEW_ARTICLE",
+    "PRECLINICAL_IN_VIVO",
+    "IN_VITRO_CELLULAR"
+  ],
+  "drug_aliases": {},
+  "metaedges": {
+    "Compound|Disease|TREATS": "CtD",
+    "Compound|Gene|INHIBITS": "CiG",
+    "Compound|Gene|ACTIVATES": "CaG"
+  }
+}

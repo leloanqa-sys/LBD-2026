@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """End-to-End System Integration Smoke Test.
 
-Exercises the real pipeline across all components:
+Exercises pipeline code with synthetic fixtures (not biomedical validation):
 1. Canonical Biomedical NLP extraction & evidence postprocessing
 2. Data Contract B and Contract D schema validation
 3. Entity & relation normalization
@@ -30,7 +30,9 @@ logger = get_logger("smoke_test")
 def main() -> int:
     logger.info("=== Starting LBD System Integration Smoke Test ===")
 
-    # Step 1: Real NLP Relation Extraction
+    # Synthetic fixture only: validates integration, never scientific accuracy.
+    logger.info("FIXTURE MODE: synthetic sentences and graph; not corpus validation.")
+    # Step 1: NLP Relation Extraction
     sample_pmid = "29085817"
     sample_title = "Dapagliflozin in patients with heart failure and type 2 diabetes"
     sample_abstract = (
@@ -94,6 +96,9 @@ def main() -> int:
             {"source": "6524", "target": "DOID:9352", "relation_type": "TREATS", "sign": -1},
         ],
     }
+    nlp_only = create_knowledge_graph({"nodes": [], "edges": []}, contract_d)
+    if nlp_only.number_of_edges() != len(contract_d):
+        raise AssertionError("Contract D edges were lost before seeded fixture traversal")
     graph = create_knowledge_graph(hetio_subgraph, contract_d)
     paths = search_metapaths(graph, "DB06292", "DOID:6000", min_length=2, max_length=4)
     logger.info(f"Found {len(paths)} metapath(s) connecting Dapagliflozin to Heart Failure.")

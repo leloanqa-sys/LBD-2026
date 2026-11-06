@@ -1,0 +1,468 @@
+{
+  "summary": {
+    "C1: Raw M2 (Hetionet Baseline, beta=1.0)": {
+      "mrr": 0.0916,
+      "recall@5": 0.1429,
+      "recall@10": 0.4286,
+      "recall@20": 0.5714,
+      "avg_rank": 29.71
+    },
+    "C2: Debiased M2 (Degree-Debiasing, beta=0.6)": {
+      "mrr": 0.105,
+      "recall@5": 0.1429,
+      "recall@10": 0.5714,
+      "recall@20": 0.5714,
+      "avg_rank": 28.71
+    },
+    "C3: Original M3 (Signed Graph Raw)": {
+      "mrr": 0.0968,
+      "recall@5": 0.1429,
+      "recall@10": 0.4286,
+      "recall@20": 0.7143,
+      "avg_rank": 27.0
+    },
+    "C4: Debiased M3 (Signed Graph + beta=0.6)": {
+      "mrr": 0.1055,
+      "recall@5": 0.1429,
+      "recall@10": 0.4286,
+      "recall@20": 0.7143,
+      "avg_rank": 26.86
+    },
+    "C5: Debiased M2 + NTR Signed Flux Layer": {
+      "mrr": 0.0984,
+      "recall@5": 0.1429,
+      "recall@10": 0.4286,
+      "recall@20": 0.5714,
+      "avg_rank": 31.86
+    },
+    "C6: Full Graph RAG (Debiased M2 + NTR + Lit Bridge)": {
+      "mrr": 0.1616,
+      "recall@5": 0.4286,
+      "recall@10": 0.5714,
+      "recall@20": 0.7143,
+      "avg_rank": 12.0
+    }
+  },
+  "cases": {
+    "C1: Raw M2 (Hetionet Baseline, beta=1.0)": {
+      "CASE_1": {
+        "case_name": "1. Ketamine -> Major Depressive Disorder",
+        "rank": 56,
+        "rr": 0.0179,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_2A": {
+        "case_name": "2A. Colchicine -> Coronary Artery Disease (CAD)",
+        "rank": 11,
+        "rr": 0.0909,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 1
+      },
+      "CASE_2B": {
+        "case_name": "2B. Colchicine -> Atherosclerosis",
+        "rank": 28,
+        "rr": 0.0357,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3A": {
+        "case_name": "3A. Dapagliflozin -> Heart Failure (Cardiomyopathy)",
+        "rank": 92,
+        "rr": 0.0109,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3B": {
+        "case_name": "3B. Dapagliflozin -> Chronic Kidney Failure (CKD)",
+        "rank": 9,
+        "rr": 0.1111,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_3C": {
+        "case_name": "3C. Canagliflozin (SGLT2 Class) -> Chronic Kidney Failure",
+        "rank": 4,
+        "rr": 0.25,
+        "hit@5": 1,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_4": {
+        "case_name": "4. GLP-1 Multi-Tissue (GLP1R) -> Obesity",
+        "rank": 8,
+        "rr": 0.125,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      }
+    },
+    "C2: Debiased M2 (Degree-Debiasing, beta=0.6)": {
+      "CASE_1": {
+        "case_name": "1. Ketamine -> Major Depressive Disorder",
+        "rank": 50,
+        "rr": 0.02,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_2A": {
+        "case_name": "2A. Colchicine -> Coronary Artery Disease (CAD)",
+        "rank": 10,
+        "rr": 0.1,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_2B": {
+        "case_name": "2B. Colchicine -> Atherosclerosis",
+        "rank": 29,
+        "rr": 0.0345,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3A": {
+        "case_name": "3A. Dapagliflozin -> Heart Failure (Cardiomyopathy)",
+        "rank": 92,
+        "rr": 0.0109,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3B": {
+        "case_name": "3B. Dapagliflozin -> Chronic Kidney Failure (CKD)",
+        "rank": 9,
+        "rr": 0.1111,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_3C": {
+        "case_name": "3C. Canagliflozin (SGLT2 Class) -> Chronic Kidney Failure",
+        "rank": 3,
+        "rr": 0.3333,
+        "hit@5": 1,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_4": {
+        "case_name": "4. GLP-1 Multi-Tissue (GLP1R) -> Obesity",
+        "rank": 8,
+        "rr": 0.125,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      }
+    },
+    "C3: Original M3 (Signed Graph Raw)": {
+      "CASE_1": {
+        "case_name": "1. Ketamine -> Major Depressive Disorder",
+        "rank": 54,
+        "rr": 0.0185,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_2A": {
+        "case_name": "2A. Colchicine -> Coronary Artery Disease (CAD)",
+        "rank": 13,
+        "rr": 0.0769,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 1
+      },
+      "CASE_2B": {
+        "case_name": "2B. Colchicine -> Atherosclerosis",
+        "rank": 15,
+        "rr": 0.0667,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 1
+      },
+      "CASE_3A": {
+        "case_name": "3A. Dapagliflozin -> Heart Failure (Cardiomyopathy)",
+        "rank": 87,
+        "rr": 0.0115,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3B": {
+        "case_name": "3B. Dapagliflozin -> Chronic Kidney Failure (CKD)",
+        "rank": 9,
+        "rr": 0.1111,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_3C": {
+        "case_name": "3C. Canagliflozin (SGLT2 Class) -> Chronic Kidney Failure",
+        "rank": 4,
+        "rr": 0.25,
+        "hit@5": 1,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_4": {
+        "case_name": "4. GLP-1 Multi-Tissue (GLP1R) -> Obesity",
+        "rank": 7,
+        "rr": 0.1429,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      }
+    },
+    "C4: Debiased M3 (Signed Graph + beta=0.6)": {
+      "CASE_1": {
+        "case_name": "1. Ketamine -> Major Depressive Disorder",
+        "rank": 52,
+        "rr": 0.0192,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_2A": {
+        "case_name": "2A. Colchicine -> Coronary Artery Disease (CAD)",
+        "rank": 14,
+        "rr": 0.0714,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 1
+      },
+      "CASE_2B": {
+        "case_name": "2B. Colchicine -> Atherosclerosis",
+        "rank": 15,
+        "rr": 0.0667,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 1
+      },
+      "CASE_3A": {
+        "case_name": "3A. Dapagliflozin -> Heart Failure (Cardiomyopathy)",
+        "rank": 87,
+        "rr": 0.0115,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3B": {
+        "case_name": "3B. Dapagliflozin -> Chronic Kidney Failure (CKD)",
+        "rank": 9,
+        "rr": 0.1111,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_3C": {
+        "case_name": "3C. Canagliflozin (SGLT2 Class) -> Chronic Kidney Failure",
+        "rank": 3,
+        "rr": 0.3333,
+        "hit@5": 1,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_4": {
+        "case_name": "4. GLP-1 Multi-Tissue (GLP1R) -> Obesity",
+        "rank": 8,
+        "rr": 0.125,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      }
+    },
+    "C5: Debiased M2 + NTR Signed Flux Layer": {
+      "CASE_1": {
+        "case_name": "1. Ketamine -> Major Depressive Disorder",
+        "rank": 50,
+        "rr": 0.02,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_2A": {
+        "case_name": "2A. Colchicine -> Coronary Artery Disease (CAD)",
+        "rank": 15,
+        "rr": 0.0667,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 1
+      },
+      "CASE_2B": {
+        "case_name": "2B. Colchicine -> Atherosclerosis",
+        "rank": 46,
+        "rr": 0.0217,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3A": {
+        "case_name": "3A. Dapagliflozin -> Heart Failure (Cardiomyopathy)",
+        "rank": 92,
+        "rr": 0.0109,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3B": {
+        "case_name": "3B. Dapagliflozin -> Chronic Kidney Failure (CKD)",
+        "rank": 9,
+        "rr": 0.1111,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_3C": {
+        "case_name": "3C. Canagliflozin (SGLT2 Class) -> Chronic Kidney Failure",
+        "rank": 3,
+        "rr": 0.3333,
+        "hit@5": 1,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_4": {
+        "case_name": "4. GLP-1 Multi-Tissue (GLP1R) -> Obesity",
+        "rank": 8,
+        "rr": 0.125,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      }
+    },
+    "C6: Full Graph RAG (Debiased M2 + NTR + Lit Bridge)": {
+      "CASE_1": {
+        "case_name": "1. Ketamine -> Major Depressive Disorder",
+        "rank": 19,
+        "rr": 0.0526,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 1
+      },
+      "CASE_2A": {
+        "case_name": "2A. Colchicine -> Coronary Artery Disease (CAD)",
+        "rank": 5,
+        "rr": 0.2,
+        "hit@5": 1,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_2B": {
+        "case_name": "2B. Colchicine -> Atherosclerosis",
+        "rank": 24,
+        "rr": 0.0417,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3A": {
+        "case_name": "3A. Dapagliflozin -> Heart Failure (Cardiomyopathy)",
+        "rank": 22,
+        "rr": 0.0455,
+        "hit@5": 0,
+        "hit@10": 0,
+        "hit@20": 0
+      },
+      "CASE_3B": {
+        "case_name": "3B. Dapagliflozin -> Chronic Kidney Failure (CKD)",
+        "rank": 3,
+        "rr": 0.3333,
+        "hit@5": 1,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_3C": {
+        "case_name": "3C. Canagliflozin (SGLT2 Class) -> Chronic Kidney Failure",
+        "rank": 3,
+        "rr": 0.3333,
+        "hit@5": 1,
+        "hit@10": 1,
+        "hit@20": 1
+      },
+      "CASE_4": {
+        "case_name": "4. GLP-1 Multi-Tissue (GLP1R) -> Obesity",
+        "rank": 8,
+        "rr": 0.125,
+        "hit@5": 0,
+        "hit@10": 1,
+        "hit@20": 1
+      }
+    }
+  },
+  "landmark_cases": [
+    {
+      "id": "CASE_1",
+      "name": "1. Ketamine -> Major Depressive Disorder",
+      "drug_id": "Compound::DB01221",
+      "drug_name": "Ketamine",
+      "target_id": "Disease::DOID:1595",
+      "target_name": "endogenous depression",
+      "year": 2019,
+      "biological_mechanism": "NMDA receptor antagonist (GRIN1/GRIN2A) -> BDNF synaptogenesis bypasses classical serotonin transporter (SLC6A4)."
+    },
+    {
+      "id": "CASE_2A",
+      "name": "2A. Colchicine -> Coronary Artery Disease (CAD)",
+      "drug_id": "Compound::DB01394",
+      "drug_name": "Colchicine",
+      "target_id": "Disease::DOID:3393",
+      "target_name": "coronary artery disease",
+      "year": 2023,
+      "biological_mechanism": "NLRP3 inflammasome & IL-1beta innate immunity inhibition bypasses classical lipid/cholesterol pathways."
+    },
+    {
+      "id": "CASE_2B",
+      "name": "2B. Colchicine -> Atherosclerosis",
+      "drug_id": "Compound::DB01394",
+      "drug_name": "Colchicine",
+      "target_id": "Disease::DOID:1936",
+      "target_name": "atherosclerosis",
+      "year": 2020,
+      "biological_mechanism": "Anti-inflammatory microtubule inhibition reduces vascular plaque inflammation."
+    },
+    {
+      "id": "CASE_3A",
+      "name": "3A. Dapagliflozin -> Heart Failure (Cardiomyopathy)",
+      "drug_id": "Compound::DB06292",
+      "drug_name": "Dapagliflozin",
+      "target_id": "Disease::DOID:12930",
+      "target_name": "dilated cardiomyopathy",
+      "year": 2020,
+      "biological_mechanism": "SLC5A2 inhibition -> Hemodynamic preload reduction, myocardial energetics improvement independent of glycemic control."
+    },
+    {
+      "id": "CASE_3B",
+      "name": "3B. Dapagliflozin -> Chronic Kidney Failure (CKD)",
+      "drug_id": "Compound::DB06292",
+      "drug_name": "Dapagliflozin",
+      "target_id": "Disease::DOID:784",
+      "target_name": "chronic kidney failure",
+      "year": 2021,
+      "biological_mechanism": "Glomerular hyperfiltration reduction & renal tubular hypoxia protection."
+    },
+    {
+      "id": "CASE_3C",
+      "name": "3C. Canagliflozin (SGLT2 Class) -> Chronic Kidney Failure",
+      "drug_id": "Compound::DB08907",
+      "drug_name": "Canagliflozin",
+      "target_id": "Disease::DOID:784",
+      "target_name": "chronic kidney failure",
+      "year": 2019,
+      "biological_mechanism": "CREDENCE trial validation: Renal protective class effect of SGLT2 inhibition."
+    },
+    {
+      "id": "CASE_4",
+      "name": "4. GLP-1 Multi-Tissue (GLP1R) -> Obesity",
+      "drug_id": "Compound::DB00104",
+      "drug_name": "GLP-1 Axis / Peptide Proxy",
+      "target_id": "Disease::DOID:9970",
+      "target_name": "obesity",
+      "year": 2021,
+      "biological_mechanism": "Hypothalamic GLP1R central appetite control & gastric emptying deceleration."
+    }
+  ]
+}

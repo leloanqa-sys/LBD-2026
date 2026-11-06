@@ -1,0 +1,79 @@
+[
+  {
+    "pair_id": "LANDMARK_01",
+    "drug_id": "Compound::DB01221",
+    "drug_name": "Ketamine",
+    "disease_id": "Disease::DOID:1595",
+    "disease_name": "endogenous depression (MDD)",
+    "gold_tier": "FDA_APPROVED_2019",
+    "outcome_date": "2019-03-05",
+    "outcome_source": "FDA_Spravato_Esketamine_TRD",
+    "mechanism": "NMDA_antagonist_GRIN1_GRIN2A_BDNF_synaptogenesis"
+  },
+  {
+    "pair_id": "LANDMARK_02A",
+    "drug_id": "Compound::DB01394",
+    "drug_name": "Colchicine",
+    "disease_id": "Disease::DOID:3393",
+    "disease_name": "coronary artery disease",
+    "gold_tier": "FDA_APPROVED_2023",
+    "outcome_date": "2023-06-20",
+    "outcome_source": "FDA_Lodoco_LoDoCo2_COLCOT",
+    "mechanism": "Tubulin_NLRP3_inflammasome_IL1B_suppression"
+  },
+  {
+    "pair_id": "LANDMARK_02B",
+    "drug_id": "Compound::DB01394",
+    "drug_name": "Colchicine",
+    "disease_id": "Disease::DOID:1936",
+    "disease_name": "atherosclerosis",
+    "gold_tier": "FDA_APPROVED_2023",
+    "outcome_date": "2023-06-20",
+    "outcome_source": "FDA_Lodoco_LoDoCo2_COLCOT",
+    "mechanism": "Tubulin_NLRP3_inflammasome_IL1B_suppression"
+  },
+  {
+    "pair_id": "LANDMARK_03A",
+    "drug_id": "Compound::DB06292",
+    "drug_name": "Dapagliflozin",
+    "disease_id": "Disease::DOID:12930",
+    "disease_name": "dilated cardiomyopathy (Heart Failure)",
+    "gold_tier": "FDA_APPROVED_2020",
+    "outcome_date": "2020-05-05",
+    "outcome_source": "FDA_Farxiga_DAPA_HF",
+    "mechanism": "SGLT2_SLC5A2_inhibition_cardiorenal_hemodynamics"
+  },
+  {
+    "pair_id": "LANDMARK_03B",
+    "drug_id": "Compound::DB06292",
+    "drug_name": "Dapagliflozin",
+    "disease_id": "Disease::DOID:784",
+    "disease_name": "chronic kidney failure (CKD)",
+    "gold_tier": "FDA_APPROVED_2021",
+    "outcome_date": "2021-04-30",
+    "outcome_source": "FDA_Farxiga_DAPA_CKD",
+    "mechanism": "SGLT2_SLC5A2_inhibition_tubuloglomerular_feedback"
+  },
+  {
+    "pair_id": "LANDMARK_03C",
+    "drug_id": "Compound::DB08907",
+    "drug_name": "Canagliflozin",
+    "disease_id": "Disease::DOID:784",
+    "disease_name": "chronic kidney failure (CKD)",
+    "gold_tier": "FDA_APPROVED_2019",
+    "outcome_date": "2019-09-30",
+    "outcome_source": "FDA_Invokana_CREDENCE",
+    "mechanism": "SGLT2_SLC5A2_inhibition_renal_protection"
+  },
+  {
+    "pair_id": "LANDMARK_04",
+    "drug_id": "Compound::DB00104",
+    "drug_name": "Octreotide (Peptide GPCR proxy / GLP-1 axis)",
+    "disease_id": "Disease::DOID:9970",
+    "disease_name": "obesity",
+    "gold_tier": "CLINICAL_PROXY_2021",
+    "outcome_date": "2021-06-04",
+    "outcome_source": "STEP1_Hypothalamic_GPCR_Axis",
+    "mechanism": "Multi_tissue_GPCR_GLP1R_hypothalamic_satiety"
+  }
+]

@@ -1,0 +1,9 @@
+# Paths configuration
+data_dir: "data"
+raw_data_dir: "data/raw"
+processed_data_dir: "data/processed"
+samples_dir: "data/samples"
+cache_dir: "data/cache"
+artifacts_dir: "artifacts"
+contracts_dir: "contracts"
+docs_dir: "docs"

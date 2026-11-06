@@ -1,123 +1,148 @@
-# Dapagliflozin Literature-Based Discovery (LBD)
+# Hệ thống Tái định vị Thuốc trên Đồ thị Tri thức Có dấu & Khai phá Y văn (LBD + Signed Graph Engine v3.0)
 
-Hệ thống Khám phá Tri thức Y văn & Tái định vị thuốc (Drug Repurposing) ứng dụng AI/NLP kết hợp Đồ thị Tri thức (Knowledge Graph) và Mô hình Hợp nhất Bằng chứng Bayesian, tập trung nghiên cứu trường hợp tái định vị **Dapagliflozin** sang **Suy tim (Heart Failure)** và **Bệnh thận mạn (Chronic Kidney Disease)** trước mốc thời gian $T \le 31/12/2018$.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Tests: 34 Passed](https://img.shields.io/badge/pytest-34%20passed-brightgreen.svg)]()
+[![Zero Disk Mutation](https://img.shields.io/badge/Hetionet%20v1.0-Zero%20Disk%20Mutation-orange.svg)]()
 
----
-
-## 1. Cấu trúc Module NLP Chuẩn hóa (Canonical Biomedical NLP Architecture)
-
-Toàn bộ các phiên bản phân mảnh trước đây (`v3`, `v6`, `v6_industrial`, `v7`, `v7_hybrid`, `ner_hybrid`) đã được **tinh gọn và quy chuẩn hóa 100%** vào thư mục chính thức: [`src/lbd/nlp/`](src/lbd/nlp/).
-
-```
-src/lbd/nlp/
-├── engine.py                 # NLPEngine: Điều phối toàn bộ pipeline trích xuất & hợp nhất
-├── zoning.py                 # Phân vùng diễn ngôn (Title/Methods/Results/Conclusion) & 2-Pass L2 Coreference
-├── events.py                 # Trích xuất Bio-Event frames & Counterfactual Blinded LLM Verifier (Qwen-27B)
-├── polarity.py               # Đại số phân cực hướng tác dụng (+1 / -1 / 0) & Chốt an toàn chống chỉ định
-├── classifier.py             # BiomedicalRelationClassifier: Mô hình thống kê 4-lớp hiệu chuẩn xác suất
-├── fusion.py                 # BayesianFusionEngine: Hợp nhất Beta-Binomial khử trùng lặp theo PMID xuất Contract D
-├── relation_extraction.py     # Adapter chính thức: extract_relations_from_text chuẩn Contract B
-├── ner.py                    # Giao diện nhận diện thực thể: PubTator 3.0 API & Local Lexicon fallback
-├── sentence_splitter.py      # Bộ tách câu y sinh bảo vệ từ viết tắt khoa học (p < 0.05, vs., et al.)
-├── external_annotations.py   # Client đồng bộ và lưu đệm dữ liệu PubTator 3.0 & EuropePMC SciLite
-└── postprocess.py            # Kiểm tra bằng chứng nguyên văn (verbatim verification) & khử trùng lặp
-```
+Hệ thống **Literature-Based Discovery (LBD) & Signed Knowledge Graph Drug Repurposing** kết hợp đồ thị tri thức sinh y chuẩn **Hetionet v1.0** (47.031 nút, 2.250.197 cạnh), mô hình trích xuất quan hệ **BioRED NLP**, thuật toán xếp hạng **M2 DWPC + Khử thiên lệch bậc ($\beta = 0.6$) + Signed Graph Net Therapeutic Ratio (NTR Flux)**, và cơ chế nạp cạnh vào **Phiên đồ thị RAM tạm thời (Ephemeral In-Memory Session Graph)** không làm biến đổi dữ liệu gốc trên ổ cứng.
 
 ---
 
-## 2. Tiến độ & Kết quả Kiểm nghiệm Hệ thống (Validation Milestones)
+## 1. Phân chia Khối Công việc & Quyền Quản lý File của 4 Thành viên
 
-### A. Kiểm thử Đơn vị & Tích hợp (Unit & Integration Tests)
-- **Unit Tests (Pytest):** **12 / 12 test cases PASSED (100%)** trong `tests/` (`test_contracts.py`, `test_normalization.py`, `test_path_search.py`, `test_ranking.py`, `test_relation_extraction.py`, `test_signed_rules.py`).
-- **Integration Smoke Test:** **PASS 6 / 6 bước** không có lỗi (`scripts/run_smoke_test.py`):
-  1. Trích xuất NLP bằng `NLPEngine` chuẩn.
-  2. Kiểm tra JSON Schema Contract B (`relation.schema.json`).
-  3. Chuẩn hóa tên và mã định danh quốc tế (MeSH, DOID, Entrez).
-  4. Hợp nhất bằng chứng Bayesian và kiểm tra JSON Schema Contract D (`graph_edge.schema.json`).
-  5. Xây dựng đồ thị NetworkX và tìm kiếm đường dẫn sinh học (Metapath Search).
-  6. Kiểm tra quy tắc nhân dấu đại số sinh học: $INHIBITS (-1) \times CAUSES (+1) = -1$ (Hướng trị liệu phù hợp $1.5$).
+Mỗi thành viên chịu trách nhiệm hoàn toàn trên các module, hợp đồng dữ liệu (Contracts A–E) và lệnh tự kiểm định riêng:
 
-### B. Kết quả Đánh giá trên Bộ Ground Truth Mù do Con người Gán nhãn (Blind 200 Gold Sample)
-Hệ thống đã chạy thực nghiệm End-to-End toàn diện có tích hợp mô hình **Live LLM** (`qwen/qwen3.8-27b` qua Groq API) đối chiếu trực tiếp trên 200 mẫu mù (`data/samples/gold_annotation_blind_200_annotated_for_kg.csv`):
-
-| Chỉ số kiểm định | Toàn bộ 200 mẫu thử nghiệm mù | Tập 63 Cạnh Đồ thị Sạch (KG-Ready Subset) | Ý nghĩa đánh giá |
-| :--- | :---: | :---: | :--- |
-| **Recall (Độ bao phủ)** | **82.00%** *(82 / 100)* | **92.06%** *(58 / 63)* | Hệ thống bắt trúng **92%** các quan hệ thực sự có giá trị đưa vào KG. |
-| **Precision (Độ chính xác)** | **65.08%** *(82 / 126)* | **56.86%** *(58 / 102)* | Tỷ lệ trích xuất chính xác trên tập nhãn khắt khe của con người. |
-| **F1-Score** | **72.57%** | **70.30%** | Điểm cân bằng điều hòa tối ưu cho bài toán trích xuất quan hệ y sinh. |
-| **Accuracy (Độ chính xác tổng)** | **69.00%** *(138 / 200)* | -- | Tỷ lệ dự đoán đúng trên cả hai nhóm $YES$ và $NO$. |
-
-#### Hiệu năng theo từng nhóm cặp thực thể cốt lõi:
-- **`Compound - Gene` (Dược lý phân tử):** Precision **85.0%**, Recall **100.0%**, F1 **91.9%** $\rightarrow$ Bắt trọn 100% các bằng chứng Dapagliflozin ức chế SLC5A2.
-- **`DrugClass - Phenotype` (Huyết áp, bài tiết đường):** Precision **100.0%**, Recall **100.0%**, F1 **100.0%**.
-- **`DrugClass - Disease` (Bệnh học Suy tim, Đái tháo đường):** Recall **100.0%**, F1 **80.0%**.
-- **`DrugClass - BiologicalProcess`:** Precision **83.3%**, Recall **100.0%**, F1 **90.9%**.
+| Thành viên | Vai trò chuyên môn | Các thư mục & Tệp mã nguồn cần nắm vững | Hợp đồng dữ liệu (Contracts) | Lệnh tự kiểm tra độc lập |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. Đặng Quang Huy** | **Data Engineering, Bộ lọc KG & Nạp Session Tạm Hetionet** | • [`src/lbd/data/fetch_pubmed.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/data/fetch_pubmed.py)<br>• [`src/lbd/data/load_hetionet.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/data/load_hetionet.py)<br>• [`src/lbd/data/normalize.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/data/normalize.py), [`src/lbd/common/ids.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/common/ids.py)<br>• [`scripts/collect_multidrug_abstracts.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/scripts/collect_multidrug_abstracts.py)<br>• [`scripts/filter_huy.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/scripts/filter_huy.py), [`configs/kg_filter.json`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/configs/kg_filter.json)<br>• [`src/lbd/graph/build_graph.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/graph/build_graph.py)<br>• Hàm `clone_for_session()` & `augment_session_edges()` trong [`src/lbd/ranking/m2_ranker.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/ranking/m2_ranker.py#L532-L645) | • **Contract A** (`abstract.schema.json`)<br>• **Contract C** (`entity.schema.json`)<br>• **Contract D** (`kg_edge.schema.json` & `kg_ingestion_edge.schema.json`) | `python scripts/run_team_verification.py --member huy` |
+| **2. Nguyễn Khang** | **Biomedical NLP, BioRED Relation Extraction & Verbatim Grounding** | • Toàn bộ [`src/lbd/nlp/`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/):<br>  - [`engine.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/engine.py), [`classifier.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/classifier.py)<br>  - [`zoning.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/zoning.py), [`ner.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/ner.py)<br>  - [`events.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/events.py), [`polarity.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/polarity.py), [`fusion.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/fusion.py)<br>  - [`model_v3_biored_multiclass.pkl`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/model_v3_biored_multiclass.pkl)<br>  - [`crosswalk_mesh_doid.json`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/nlp/crosswalk_mesh_doid.json)<br>• [`scripts/run_nlp_extraction.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/scripts/run_nlp_extraction.py) | • **Contract B** (`extracted_relation.schema.json` — bắt buộc câu trích dẫn nguyên văn `evidence` & dấu sinh học `sign` $\in \{-1, 0, +1\}$) | `python scripts/run_team_verification.py --member khang` |
+| **3. Nguyễn Nhật Lâm** | **Thuật toán Xếp hạng M2 DWPC, Khử thiên lệch bậc ($\beta=0.6$), Signed Graph NTR & Micro-DFS** | • Toàn bộ [`src/lbd/ranking/`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/ranking/):<br>  - [`m2_ranker.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/ranking/m2_ranker.py) (Trái tim thuật toán)<br>  - [`features.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/ranking/features.py), [`score_paths.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/ranking/score_paths.py), [`rank_candidates.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/ranking/rank_candidates.py)<br>• [`src/lbd/graph/filter_subgraph.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/graph/filter_subgraph.py), [`path_search.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/graph/path_search.py)<br>• [`artifacts/ranking_m2/`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/artifacts/ranking_m2/) (`features.npz`, `M2_model.pkl`, `M3_model.pkl`, `split_indices.npz`) | • **Contract E** (`ranked_candidate.schema.json`) | `python scripts/run_team_verification.py --member lam` |
+| **4. Nguyễn Công Gia Phước** | **Kiểm định (Evaluation), Ground Truth, Ablation Study & Giao diện Human-in-the-Loop UI** | • Toàn bộ [`src/lbd/evaluation/`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/evaluation/):<br>  - [`ground_truth.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/evaluation/ground_truth.py), [`metrics.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/evaluation/metrics.py), [`run_experiment.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/src/lbd/evaluation/run_experiment.py)<br>• Toàn bộ [`data/ground_truth/`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/data/ground_truth/) & [`artifacts/benchmarks/`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/artifacts/benchmarks/)<br>• [`scripts/run_landmark_ablation_study.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/scripts/run_landmark_ablation_study.py)<br>• [`scripts/run_live_e2e_repurposing_benchmark.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/scripts/run_live_e2e_repurposing_benchmark.py)<br>• [`ui/serve.py`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/ui/serve.py), [`ui/explorer.html`](file:///c:/Users/Admin/Downloads/tái%20định%20vị%20thuốc/dapagliflozin-lbd/ui/explorer.html) | • Giám sát toàn bộ **Contracts A–E**, kiểm định `MRR`, `Recall@K`, `NDCG@K` & phê duyệt lâm sàng trên UI | `python scripts/run_team_verification.py --member phuoc` |
 
 ---
 
-## 3. Lưu ý Quan trọng về Bộ Ground Truth cho Nhóm Nghiên cứu (Ground Truth Audit)
+## 2. Hướng dẫn Cài đặt Chuẩn chỉ (Step-by-Step Setup Guide)
 
-Qua đối soát chi tiết bộ Ground Truth 200 mẫu của nhóm, có **4 vấn đề phương pháp luận** cần các thành viên nắm rõ:
+### Bước 1: Khởi tạo môi trường ảo Python ($\ge$ 3.10)
+Mở PowerShell hoặc Terminal tại thư mục gốc `dapagliflozin-lbd`:
 
-1. **Mâu thuẫn chiều quan hệ (`direction_valid == NO`, 12 ca):**
-   - Một số câu được gán `has_relation = YES` nhưng chiều nhân quả bị **ngược hoàn toàn** với câu hỏi (ví dụ: `GOLD_042` hỏi *UGE -> CKD*, nhưng câu văn thực tế là *suy thận làm giảm bài tiết đường* $CKD \to UGE$; hay gen $SLC5A2$ sinh lý làm tăng tái hấp thu nhưng đề bài gán hiệu ứng giảm của thuốc ức chế vào gen).
-   - Mô hình NLP nhận định đúng chiều sinh học nên không trích xuất, do đó bị tính nhầm là False Negative.
-2. **Đánh đồng câu phủ định / giả thuyết với quan hệ thật (16 ca):**
-   - `GOLD_063`: Câu văn ghi rõ tần suất UTI bằng placebo (`NO_EFFECT_ON` - không có hiệu ứng), nhưng nhãn vẫn để `YES`.
-   - `GOLD_017, 054, 088, 122`: Câu mang tính giả thuyết tương lai (*"shows promise"*, *"may translate"*), chưa phải kết luận thực chứng.
-3. **Ép mã phân cấp thực thể (Subtype Mismatch, 11 ca):**
-   - Bệnh thận do đái tháo đường (*Diabetic Nephropathy*) bị ép cứng thành *Chronic Kidney Disease [DOID:784]*, gây lệch ngữ nghĩa.
-4. **Khuyến nghị sử dụng Ground Truth:**
-   - Khi đánh giá nghiệm thu mô hình, **nên ưu tiên sử dụng tập 63 cạnh sạch (`KG_READY_CONTENT_TEMPORAL_UNVERIFIED`)** thay vì lấy toàn bộ nhãn thô, để tránh phạt oan mô hình khi nó xử lý đúng về mặt sinh học.
+```powershell
+cd "c:\Users\Admin\Downloads\tái định vị thuốc\dapagliflozin-lbd"
 
----
+# Tạo môi trường ảo (khuyến nghị)
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 
-## 4. Hướng dẫn Sử dụng Nhanh cho Thành viên (Quickstart)
-
-### Cài đặt môi trường
-```bash
+# Cài đặt đầy đủ thư viện runtime + công cụ kiểm thử (editable mode)
 pip install -r requirements.txt
+pip install -e ".[dev]"
 ```
 
-### Chạy kiểm thử tự động (Unit Tests)
-```bash
-python -m pytest tests
+### Bước 2: Cấu hình biến môi trường (`.env` — tùy chọn cho giải thích AI)
+Hệ thống chạy **100% offline** đối với toàn bộ quy trình Trích xuất NLP BioRED, Nạp Session Hetionet, Xếp hạng M2/Signed Graph và Đo kiểm Benchmark. Nếu muốn bật tính năng tổng hợp giải thích bằng LLM trên giao diện Web UI:
+
+```powershell
+# Tạo tệp .env tại thư mục gốc dapagliflozin-lbd
+Set-Content -Path .env -Value "GROQ_API_KEY=gsk_your_api_key_here"
 ```
 
-### Chạy kiểm thử tích hợp toàn diện (Smoke Test)
-```bash
-python scripts/run_smoke_test.py
+### Bước 3: Chạy kiểm định toàn hệ thống (Unit Tests + 4-Member Self-Test)
+
+```powershell
+# 1. Chạy 34 bài kiểm thử đơn vị & bất biến kiến trúc (Pytest)
+python -m pytest tests/ -v
+
+# 2. Chạy kịch bản tự kiểm định toàn diện cho cả 4 thành viên (Huy, Khang, Lâm, Phước)
+python scripts/run_team_verification.py --member all
 ```
 
-### Chạy trích xuất quan hệ trên toàn bộ y văn PubMed
-```bash
-python scripts/run_nlp_extraction.py
+---
+
+## 3. Cấu trúc Thư mục Chuẩn hóa (`dapagliflozin-lbd/`)
+
+```text
+dapagliflozin-lbd/
+├── configs/
+│   ├── pipeline.yaml                        # Cấu hình tham số toàn cục (cutoff 2018-12-31, top_m, damping w=0.4)
+│   └── kg_filter.json                       # Quy tắc lọc cạnh nghiêm ngặt của Huy (Contract D gate)
+├── contracts/                               # 6 JSON Schemas khóa chặt giao tiếp giữa 4 thành viên
+│   ├── abstract.schema.json                 # Contract A (Huy -> Khang)
+│   ├── extracted_relation.schema.json       # Contract B (Khang -> Huy)
+│   ├── entity.schema.json                   # Contract C (Huy <-> Khang)
+│   ├── kg_edge.schema.json                  # Contract D (Huy -> Lâm)
+│   ├── kg_ingestion_edge.schema.json        # Contract D Strict (filter_huy.py)
+│   └── ranked_candidate.schema.json         # Contract E (Lâm -> Phước)
+├── data/
+│   ├── external/hetionet/                   # Đồ thị gốc Hetionet v1.0 (Bất biến - Zero Disk Mutation)
+│   ├── raw/
+│   │   ├── landmark_curated_abstracts.csv   # 10 bài báo y văn chuẩn mực (pre-2019) cho 4 dòng thuốc kinh điển
+│   │   └── dapagliflozin_abstracts.csv      # Tập bài báo mở rộng của Dapagliflozin
+│   └── ground_truth/                        # [PHƯỚC QUẢN LÝ] Toàn bộ nhãn chuẩn, Train labels & 4 Test Suites
+│       ├── README_GROUND_TRUTH.md           # Hồ sơ chứng thực nguồn gốc (DOI, SHA-256, chống rò rỉ)
+│       ├── ground_truth_credentials.json    # Metadata chứng thực của từng tập dữ liệu
+│       ├── gold_labels_from_hetionet.csv    # Nhãn huấn luyện gốc từ PharmacotherapyDB / Hetionet v1.0
+│       ├── prospective_temporal_test.json   # Suite A: 10 cặp thuốc tái định vị được duyệt sau năm 2018
+│       ├── rare_disease_test.json           # Suite B: 11 cặp bệnh hiếm (bậc nút <= 30)
+│       ├── clinical_failure_untrue_test.json# Suite C: 184 cặp thất bại thử nghiệm lâm sàng từ repoDB
+│       ├── landmark_4_classes_test.json     # Suite D: 4 dòng thuốc kinh điển (Ketamine, Colchicine, SGLT2i, GLP-1)
+│       ├── case_study_gold.csv              # Bảng CSV đối chiếu nhanh các ca chuẩn mực
+│       └── ground_truth_pairs.csv           # Bảng CSV gộp toàn bộ 205 cặp kiểm định
+├── artifacts/
+│   ├── ranking_m2/                          # [LÂM QUẢN LÝ] Trọng số mô hình & Ma trận đặc trưng đã huấn luyện
+│   │   ├── features.npz                     # Ma trận X (212.624 cặp x 68 đặc trưng DWPC + Signed features)
+│   │   ├── split_indices.npz                # Chỉ số chia 5-fold Nested CV theo cụm cấu trúc CrC
+│   │   ├── M0_model.pkl                     # Mô hình Baseline chỉ dùng bậc nút (Degree Prior)
+│   │   ├── M2_model.pkl                     # Mô hình DWPC Topological ElasticNet (65 đặc trưng)
+│   │   ├── M3_model.pkl                     # Mô hình Signed Graph (68 đặc trưng gồm L1000 & Directional)
+│   │   └── data_manifest.json               # Ánh xạ chỉ số thuốc (1.552), bệnh (137) và tên 68 đặc trưng
+│   └── benchmarks/                          # [PHƯỚC QUẢN LÝ] Báo cáo JSON kết quả thực nghiệm & Ablation
+│       ├── e2e_live_landmark_benchmark_report.json
+│       ├── landmark_ablation_study_report.json
+│       ├── live_pipeline_session_audit.json
+│       └── signed_graph_integration_benchmark_report.json
+├── src/lbd/
+│   ├── common/                              # Cấu hình, logging, валиdation & ID Crosswalk (Huy)
+│   ├── data/                                # Tải PubMed, Hetionet & chuẩn hóa thực thể (Huy)
+│   ├── nlp/                                 # Trích xuất quan hệ BioRED, Zoning, NER, Cực tính (Khang)
+│   ├── graph/                               # Dựng đồ thị, lọc ego-subgraph & DFS cơ bản (Huy & Lâm)
+│   ├── ranking/                             # M2RepurposingRanker, DWPC, β=0.6, Signed NTR & Micro-DFS (Lâm)
+│   └── evaluation/                          # Ground Truth, Recall@K, MRR, NDCG@K (Phước)
+├── scripts/
+│   ├── run_team_verification.py             # [SCRIPT CHÍNH] Tự kiểm tra theo từng thành viên (--member huy|khang|lam|phuoc|all)
+│   ├── run_explorer.py                      # Đường ống E2E nối từ bài báo -> NLP -> Session KG -> Ranking
+│   ├── test_live_session_pipeline.py        # Kiểm định đối chứng Có NLP vs Không có NLP (Zero Disk Mutation)
+│   ├── run_live_e2e_repurposing_benchmark.py# Chạy E2E từ nạp cạnh vào đồ thị đến đo MRR trên 4 dòng thuốc
+│   ├── run_landmark_ablation_study.py       # Chạy Ablation Study (C1 -> C6) trên 4 dòng thuốc kinh điển
+│   └── run_signed_graph_integration_benchmark.py # Đo kiểm Signed Graph trên Suite A, B, C
+├── ui/
+│   ├── serve.py                             # Máy chủ Web Human-in-the-Loop (`/api/rerank`, `/api/review`, `/api/explain`)
+│   └── explorer.html                        # Giao diện trực quan hóa Signed Graph, thanh trượt β / λ_ntr & bác sĩ thẩm định
+└── tests/                                   # 34 bài kiểm thử tự động (Unit, Contract, Acceptance Invariants)
 ```
 
-### Chạy đánh giá đối chiếu với bộ Ground Truth mù (có Live LLM)
-```bash
-python scripts/evaluate_gold_ground_truth.py
+---
+
+## 4. Tóm tắt Kết quả Kiểm định Thực nghiệm (Ground Truth Benchmarks)
+
+### 4.1. Thực nghiệm E2E từ Nạp cạnh Y văn vào Session Hetionet đến Đo MRR (4 Dòng thuốc Kinh điển)
+Chạy lệnh `python scripts/run_live_e2e_repurposing_benchmark.py`:
+
+| Dòng thuốc & Đích bệnh (FDA Approved Post-2018) | Cạnh NLP nạp vào Session | Hạng (Không NLP) | Hạng (Có NLP Session) | Dịch chuyển hạng | Điểm số (No NLP $\rightarrow$ With NLP) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **1. Ketamine (`DB01221`) $\rightarrow$ Trầm cảm (`DOID:1595`)** | 3 cạnh (`GRIN1`, `GRIN2A`, `BDNF`) | #24 | **#21** | **$\uparrow +3$ bậc** | `0.8588` $\rightarrow$ `0.8806` |
+| **2a. Colchicine (`DB01394`) $\rightarrow$ Bệnh mạch vành (`DOID:3393`)** | 5 cạnh (`CdG:INHIBITS NLRP3`, `IL1B`) | #35 | **#8** | **$\uparrow +27$ bậc (Top 10)** | `0.6254` $\rightarrow$ `0.7885` |
+| **2b. Colchicine (`DB01394`) $\rightarrow$ Xơ vữa động mạch (`DOID:1936`)** | 5 cạnh (`CdG:INHIBITS NLRP3`, `IL1B`) | #35 | **#7** | **$\uparrow +28$ bậc (Top 10)** | `0.6226` $\rightarrow$ `0.7867` |
+| **3a. Dapagliflozin (`DB06292`) $\rightarrow$ Suy tim (`DOID:12930`)** | 9 cạnh (`CdG:INHIBITS SLC5A2`) | #39 | **#5** | **$\uparrow +34$ bậc (Top 5)** | `0.7131` $\rightarrow$ `0.9355` |
+| **3b. Dapagliflozin (`DB06292`) $\rightarrow$ Suy thận mạn (`DOID:784`)** | 9 cạnh (`CdG:INHIBITS SLC5A2`) | #6 | **#3** | **$\uparrow +3$ bậc (Top 3)** | `0.9462` $\rightarrow$ `0.9963` |
+| **4. Nhóm Peptide GPCR / GLP-1 (`DB00104`) $\rightarrow$ Béo phì (`DOID:9970`)** | 2 cạnh (`GLP1R` multi-tissue axis) | #71 | **#52** | **$\uparrow +19$ bậc** | `0.3407` $\rightarrow$ `0.4090` |
+| **Tổng hợp toàn bộ (Global Metrics)** | **Bảo toàn SHA-256 (Zero Disk Mutation)** | **MRR = `0.0627`** | **MRR = `0.1303` (+108.0%)** | **Avg Rank: `35.0` $\rightarrow$ `16.0`** | **Hit@5: `0%` $\rightarrow$ `33.3%`** |
+
+### 4.2. Khởi chạy Giao diện Human-in-the-Loop Web UI
+
+```powershell
+python ui/serve.py --port 8000
 ```
-
-### Sử dụng NLPEngine trong mã nguồn
-```python
-from lbd.nlp import NLPEngine, extract_relations_from_text
-
-# Cách 1: Gọi hàm trích xuất chuẩn Contract B
-relations = extract_relations_from_text(
-    pmid="29085817",
-    abstract="Dapagliflozin reduces worsening heart failure. Dapagliflozin inhibits SLC5A2.",
-    title="Dapagliflozin in Heart Failure"
-)
-print("Extracted relations:", len(relations))
-
-# Cách 2: Sử dụng NLPEngine điều phối
-engine = NLPEngine.load_default(dataset_mode="biored")
-doc = {
-    "pmid": "29085817",
-    "title": "Dapagliflozin in Heart Failure",
-    "abstract": "Dapagliflozin reduces worsening heart failure. Dapagliflozin inhibits SLC5A2."
-}
-grounded, events, scores = engine.run_document(doc)
-contract_b, fused_edges, contract_d = engine.fuse_corpus(events)
-```
+Sau đó mở trình duyệt tại `http://localhost:8000` để:
+1. Chạy truy vấn đa thuốc theo thời gian thực hoặc chế độ Offline.
+2. Kéo thanh trượt **Signed Graph NTR Weight ($\lambda_{\text{ntr}}$)** và **Degree Debiasing ($\beta$)** để tái xếp hạng tức thì (<50ms).
+3. Xem nhãn dấu sinh học (`[Đảo ngược bệnh sinh (-1)]` vs `[Thuận chiều bệnh sinh (+1)]`) và lưu quyết định thẩm định của chuyên gia (`APPROVED`, `REJECTED`, `NEEDS_TRIAL`).

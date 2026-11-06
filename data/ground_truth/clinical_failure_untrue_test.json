@@ -1,0 +1,1474 @@
+[
+  {
+    "pair_id": "FAIL_001",
+    "drug_id": "Compound::DB00091",
+    "disease_id": "Disease::DOID:8893",
+    "disease_degree": 650.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_002",
+    "drug_id": "Compound::DB00145",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_003",
+    "drug_id": "Compound::DB00163",
+    "disease_id": "Disease::DOID:1936",
+    "disease_degree": 219.00003051757812,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_004",
+    "drug_id": "Compound::DB00169",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_005",
+    "drug_id": "Compound::DB00188",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_006",
+    "drug_id": "Compound::DB00188",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_007",
+    "drug_id": "Compound::DB00194",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_008",
+    "drug_id": "Compound::DB00194",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_009",
+    "drug_id": "Compound::DB00215",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_010",
+    "drug_id": "Compound::DB00215",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_011",
+    "drug_id": "Compound::DB00227",
+    "disease_id": "Disease::DOID:1909",
+    "disease_degree": 937.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_012",
+    "drug_id": "Compound::DB00230",
+    "disease_id": "Disease::DOID:1826",
+    "disease_degree": 505.99993896484375,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_013",
+    "drug_id": "Compound::DB00233",
+    "disease_id": "Disease::DOID:8577",
+    "disease_degree": 674.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_014",
+    "drug_id": "Compound::DB00260",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_015",
+    "drug_id": "Compound::DB00264",
+    "disease_id": "Disease::DOID:9970",
+    "disease_degree": 547.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_016",
+    "drug_id": "Compound::DB00273",
+    "disease_id": "Disease::DOID:14221",
+    "disease_degree": 134.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_017",
+    "drug_id": "Compound::DB00273",
+    "disease_id": "Disease::DOID:1826",
+    "disease_degree": 505.99993896484375,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_018",
+    "drug_id": "Compound::DB00273",
+    "disease_id": "Disease::DOID:9970",
+    "disease_degree": 547.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_019",
+    "drug_id": "Compound::DB00281",
+    "disease_id": "Disease::DOID:824",
+    "disease_degree": 169.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_020",
+    "drug_id": "Compound::DB00289",
+    "disease_id": "Disease::DOID:0050742",
+    "disease_degree": 538.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_021",
+    "drug_id": "Compound::DB00292",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_022",
+    "drug_id": "Compound::DB00297",
+    "disease_id": "Disease::DOID:824",
+    "disease_degree": 169.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_023",
+    "drug_id": "Compound::DB00300",
+    "disease_id": "Disease::DOID:2043",
+    "disease_degree": 97.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_024",
+    "drug_id": "Compound::DB00305",
+    "disease_id": "Disease::DOID:11054",
+    "disease_degree": 176.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_025",
+    "drug_id": "Compound::DB00305",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_026",
+    "drug_id": "Compound::DB00307",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_027",
+    "drug_id": "Compound::DB00317",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_028",
+    "drug_id": "Compound::DB00322",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_029",
+    "drug_id": "Compound::DB00322",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_030",
+    "drug_id": "Compound::DB00331",
+    "disease_id": "Disease::DOID:11612",
+    "disease_degree": 736.9999389648438,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_031",
+    "drug_id": "Compound::DB00346",
+    "disease_id": "Disease::DOID:2377",
+    "disease_degree": 284.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_032",
+    "drug_id": "Compound::DB00358",
+    "disease_id": "Disease::DOID:12365",
+    "disease_degree": 589.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_033",
+    "drug_id": "Compound::DB00363",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_034",
+    "drug_id": "Compound::DB00398",
+    "disease_id": "Disease::DOID:3571",
+    "disease_degree": 242.9999542236328,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_035",
+    "drug_id": "Compound::DB00399",
+    "disease_id": "Disease::DOID:2377",
+    "disease_degree": 284.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_036",
+    "drug_id": "Compound::DB00422",
+    "disease_id": "Disease::DOID:12995",
+    "disease_degree": 29.999996185302734,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_037",
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:11054",
+    "disease_degree": 176.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_038",
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_039",
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:1793",
+    "disease_degree": 704.9999389648438,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_040",
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:1964",
+    "disease_degree": 29.000003814697266,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_041",
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_042",
+    "drug_id": "Compound::DB00480",
+    "disease_id": "Disease::DOID:11054",
+    "disease_degree": 176.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_043",
+    "drug_id": "Compound::DB00480",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_044",
+    "drug_id": "Compound::DB00482",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_045",
+    "drug_id": "Compound::DB00482",
+    "disease_id": "Disease::DOID:2394",
+    "disease_degree": 383.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_046",
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_047",
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:11054",
+    "disease_degree": 176.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_048",
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_049",
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:1790",
+    "disease_degree": 45.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_050",
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:5041",
+    "disease_degree": 229.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_051",
+    "drug_id": "Compound::DB00526",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_052",
+    "drug_id": "Compound::DB00526",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_053",
+    "drug_id": "Compound::DB00530",
+    "disease_id": "Disease::DOID:1319",
+    "disease_degree": 273.0000305175781,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_054",
+    "drug_id": "Compound::DB00530",
+    "disease_id": "Disease::DOID:3953",
+    "disease_degree": 99.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_055",
+    "drug_id": "Compound::DB00530",
+    "disease_id": "Disease::DOID:5041",
+    "disease_degree": 229.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_056",
+    "drug_id": "Compound::DB00530",
+    "disease_id": "Disease::DOID:8893",
+    "disease_degree": 650.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_057",
+    "drug_id": "Compound::DB00531",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_058",
+    "drug_id": "Compound::DB00531",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_059",
+    "drug_id": "Compound::DB00531",
+    "disease_id": "Disease::DOID:2377",
+    "disease_degree": 284.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_060",
+    "drug_id": "Compound::DB00531",
+    "disease_id": "Disease::DOID:263",
+    "disease_degree": 779.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_061",
+    "drug_id": "Compound::DB00531",
+    "disease_id": "Disease::DOID:4159",
+    "disease_degree": 164.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_062",
+    "drug_id": "Compound::DB00531",
+    "disease_id": "Disease::DOID:418",
+    "disease_degree": 620.9999389648438,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_063",
+    "drug_id": "Compound::DB00541",
+    "disease_id": "Disease::DOID:263",
+    "disease_degree": 779.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_064",
+    "drug_id": "Compound::DB00544",
+    "disease_id": "Disease::DOID:5041",
+    "disease_degree": 229.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_065",
+    "drug_id": "Compound::DB00555",
+    "disease_id": "Disease::DOID:3312",
+    "disease_degree": 166.99998474121094,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_066",
+    "drug_id": "Compound::DB00563",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_067",
+    "drug_id": "Compound::DB00563",
+    "disease_id": "Disease::DOID:2394",
+    "disease_degree": 383.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_068",
+    "drug_id": "Compound::DB00569",
+    "disease_id": "Disease::DOID:2394",
+    "disease_degree": 383.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_069",
+    "drug_id": "Compound::DB00570",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_070",
+    "drug_id": "Compound::DB00583",
+    "disease_id": "Disease::DOID:8577",
+    "disease_degree": 674.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_071",
+    "drug_id": "Compound::DB00586",
+    "disease_id": "Disease::DOID:784",
+    "disease_degree": 221.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_072",
+    "drug_id": "Compound::DB00588",
+    "disease_id": "Disease::DOID:3083",
+    "disease_degree": 620.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_073",
+    "drug_id": "Compound::DB00605",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_074",
+    "drug_id": "Compound::DB00608",
+    "disease_id": "Disease::DOID:12365",
+    "disease_degree": 589.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_075",
+    "drug_id": "Compound::DB00612",
+    "disease_id": "Disease::DOID:3083",
+    "disease_degree": 620.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_076",
+    "drug_id": "Compound::DB00624",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_077",
+    "drug_id": "Compound::DB00624",
+    "disease_id": "Disease::DOID:2377",
+    "disease_degree": 284.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_078",
+    "drug_id": "Compound::DB00627",
+    "disease_id": "Disease::DOID:784",
+    "disease_degree": 221.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_079",
+    "drug_id": "Compound::DB00627",
+    "disease_id": "Disease::DOID:8893",
+    "disease_degree": 650.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_080",
+    "drug_id": "Compound::DB00630",
+    "disease_id": "Disease::DOID:11476",
+    "disease_degree": 148.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_081",
+    "drug_id": "Compound::DB00635",
+    "disease_id": "Disease::DOID:12365",
+    "disease_degree": 589.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_082",
+    "drug_id": "Compound::DB00641",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_083",
+    "drug_id": "Compound::DB00641",
+    "disease_id": "Disease::DOID:1936",
+    "disease_degree": 219.00003051757812,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_084",
+    "drug_id": "Compound::DB00642",
+    "disease_id": "Disease::DOID:1790",
+    "disease_degree": 45.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_085",
+    "drug_id": "Compound::DB00642",
+    "disease_id": "Disease::DOID:5041",
+    "disease_degree": 229.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_086",
+    "drug_id": "Compound::DB00650",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_087",
+    "drug_id": "Compound::DB00668",
+    "disease_id": "Disease::DOID:824",
+    "disease_degree": 169.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_088",
+    "drug_id": "Compound::DB00688",
+    "disease_id": "Disease::DOID:9074",
+    "disease_degree": 235.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_089",
+    "drug_id": "Compound::DB00704",
+    "disease_id": "Disease::DOID:8577",
+    "disease_degree": 674.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_090",
+    "drug_id": "Compound::DB00724",
+    "disease_id": "Disease::DOID:1909",
+    "disease_degree": 937.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_091",
+    "drug_id": "Compound::DB00745",
+    "disease_id": "Disease::DOID:3070",
+    "disease_degree": 296.0000305175781,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_092",
+    "drug_id": "Compound::DB00747",
+    "disease_id": "Disease::DOID:1595",
+    "disease_degree": 117.9999771118164,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_093",
+    "drug_id": "Compound::DB00758",
+    "disease_id": "Disease::DOID:1936",
+    "disease_degree": 219.00003051757812,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_094",
+    "drug_id": "Compound::DB00762",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_095",
+    "drug_id": "Compound::DB00762",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_096",
+    "drug_id": "Compound::DB00762",
+    "disease_id": "Disease::DOID:263",
+    "disease_degree": 779.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_097",
+    "drug_id": "Compound::DB00762",
+    "disease_id": "Disease::DOID:3571",
+    "disease_degree": 242.9999542236328,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_098",
+    "drug_id": "Compound::DB00773",
+    "disease_id": "Disease::DOID:263",
+    "disease_degree": 779.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_099",
+    "drug_id": "Compound::DB00783",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_100",
+    "drug_id": "Compound::DB00806",
+    "disease_id": "Disease::DOID:9744",
+    "disease_degree": 211.00003051757812,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_101",
+    "drug_id": "Compound::DB00818",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_102",
+    "drug_id": "Compound::DB00843",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_103",
+    "drug_id": "Compound::DB00853",
+    "disease_id": "Disease::DOID:1909",
+    "disease_degree": 937.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_104",
+    "drug_id": "Compound::DB00853",
+    "disease_id": "Disease::DOID:263",
+    "disease_degree": 779.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_105",
+    "drug_id": "Compound::DB00853",
+    "disease_id": "Disease::DOID:3070",
+    "disease_degree": 296.0000305175781,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_106",
+    "drug_id": "Compound::DB00855",
+    "disease_id": "Disease::DOID:3070",
+    "disease_degree": 296.0000305175781,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_107",
+    "drug_id": "Compound::DB00864",
+    "disease_id": "Disease::DOID:12306",
+    "disease_degree": 71.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_108",
+    "drug_id": "Compound::DB00877",
+    "disease_id": "Disease::DOID:10283",
+    "disease_degree": 662.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_109",
+    "drug_id": "Compound::DB00877",
+    "disease_id": "Disease::DOID:2377",
+    "disease_degree": 284.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_110",
+    "drug_id": "Compound::DB00877",
+    "disease_id": "Disease::DOID:3571",
+    "disease_degree": 242.9999542236328,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_111",
+    "drug_id": "Compound::DB00877",
+    "disease_id": "Disease::DOID:7148",
+    "disease_degree": 875.0001831054688,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_112",
+    "drug_id": "Compound::DB00878",
+    "disease_id": "Disease::DOID:216",
+    "disease_degree": 44.000003814697266,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_113",
+    "drug_id": "Compound::DB00882",
+    "disease_id": "Disease::DOID:11612",
+    "disease_degree": 736.9999389648438,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_114",
+    "drug_id": "Compound::DB00889",
+    "disease_id": "Disease::DOID:3070",
+    "disease_degree": 296.0000305175781,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_115",
+    "drug_id": "Compound::DB00904",
+    "disease_id": "Disease::DOID:3070",
+    "disease_degree": 296.0000305175781,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_116",
+    "drug_id": "Compound::DB00909",
+    "disease_id": "Disease::DOID:1826",
+    "disease_degree": 505.99993896484375,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_117",
+    "drug_id": "Compound::DB00909",
+    "disease_id": "Disease::DOID:3312",
+    "disease_degree": 166.99998474121094,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_118",
+    "drug_id": "Compound::DB00936",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_119",
+    "drug_id": "Compound::DB00936",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_120",
+    "drug_id": "Compound::DB00938",
+    "disease_id": "Disease::DOID:3083",
+    "disease_degree": 620.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_121",
+    "drug_id": "Compound::DB00945",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_122",
+    "drug_id": "Compound::DB00945",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_123",
+    "drug_id": "Compound::DB00958",
+    "disease_id": "Disease::DOID:1964",
+    "disease_degree": 29.000003814697266,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_124",
+    "drug_id": "Compound::DB00958",
+    "disease_id": "Disease::DOID:5041",
+    "disease_degree": 229.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_125",
+    "drug_id": "Compound::DB00973",
+    "disease_id": "Disease::DOID:1936",
+    "disease_degree": 219.00003051757812,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_126",
+    "drug_id": "Compound::DB00975",
+    "disease_id": "Disease::DOID:7148",
+    "disease_degree": 875.0001831054688,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_127",
+    "drug_id": "Compound::DB00983",
+    "disease_id": "Disease::DOID:3083",
+    "disease_degree": 620.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_128",
+    "drug_id": "Compound::DB00997",
+    "disease_id": "Disease::DOID:11819",
+    "disease_degree": 23.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_129",
+    "drug_id": "Compound::DB00997",
+    "disease_id": "Disease::DOID:1964",
+    "disease_degree": 29.000003814697266,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_130",
+    "drug_id": "Compound::DB00997",
+    "disease_id": "Disease::DOID:263",
+    "disease_degree": 779.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_131",
+    "drug_id": "Compound::DB00997",
+    "disease_id": "Disease::DOID:3571",
+    "disease_degree": 242.9999542236328,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_132",
+    "drug_id": "Compound::DB01008",
+    "disease_id": "Disease::DOID:418",
+    "disease_degree": 620.9999389648438,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_133",
+    "drug_id": "Compound::DB01008",
+    "disease_id": "Disease::DOID:9074",
+    "disease_degree": 235.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_134",
+    "drug_id": "Compound::DB01024",
+    "disease_id": "Disease::DOID:9074",
+    "disease_degree": 235.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_135",
+    "drug_id": "Compound::DB01039",
+    "disease_id": "Disease::DOID:3393",
+    "disease_degree": 597.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_136",
+    "drug_id": "Compound::DB01039",
+    "disease_id": "Disease::DOID:9970",
+    "disease_degree": 547.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_137",
+    "drug_id": "Compound::DB01041",
+    "disease_id": "Disease::DOID:11054",
+    "disease_degree": 176.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_138",
+    "drug_id": "Compound::DB01041",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_139",
+    "drug_id": "Compound::DB01041",
+    "disease_id": "Disease::DOID:7148",
+    "disease_degree": 875.0001831054688,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_140",
+    "drug_id": "Compound::DB01043",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_141",
+    "drug_id": "Compound::DB01045",
+    "disease_id": "Disease::DOID:9352",
+    "disease_degree": 336.0000915527344,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_142",
+    "drug_id": "Compound::DB01053",
+    "disease_id": "Disease::DOID:8893",
+    "disease_degree": 650.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_143",
+    "drug_id": "Compound::DB01073",
+    "disease_id": "Disease::DOID:10534",
+    "disease_degree": 370.9999694824219,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_144",
+    "drug_id": "Compound::DB01073",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_145",
+    "drug_id": "Compound::DB01073",
+    "disease_id": "Disease::DOID:2377",
+    "disease_degree": 284.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_146",
+    "drug_id": "Compound::DB01073",
+    "disease_id": "Disease::DOID:4159",
+    "disease_degree": 164.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_147",
+    "drug_id": "Compound::DB01073",
+    "disease_id": "Disease::DOID:418",
+    "disease_degree": 620.9999389648438,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_148",
+    "drug_id": "Compound::DB01073",
+    "disease_id": "Disease::DOID:9074",
+    "disease_degree": 235.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_149",
+    "drug_id": "Compound::DB01076",
+    "disease_id": "Disease::DOID:3393",
+    "disease_degree": 597.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_150",
+    "drug_id": "Compound::DB01076",
+    "disease_id": "Disease::DOID:8893",
+    "disease_degree": 650.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_151",
+    "drug_id": "Compound::DB01076",
+    "disease_id": "Disease::DOID:9352",
+    "disease_degree": 336.0000915527344,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_152",
+    "drug_id": "Compound::DB01088",
+    "disease_id": "Disease::DOID:418",
+    "disease_degree": 620.9999389648438,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_153",
+    "drug_id": "Compound::DB01098",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_154",
+    "drug_id": "Compound::DB01101",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_155",
+    "drug_id": "Compound::DB01101",
+    "disease_id": "Disease::DOID:5041",
+    "disease_degree": 229.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_156",
+    "drug_id": "Compound::DB01104",
+    "disease_id": "Disease::DOID:1826",
+    "disease_degree": 505.99993896484375,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_157",
+    "drug_id": "Compound::DB01113",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_158",
+    "drug_id": "Compound::DB01132",
+    "disease_id": "Disease::DOID:332",
+    "disease_degree": 637.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_159",
+    "drug_id": "Compound::DB01181",
+    "disease_id": "Disease::DOID:263",
+    "disease_degree": 779.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_160",
+    "drug_id": "Compound::DB01190",
+    "disease_id": "Disease::DOID:12365",
+    "disease_degree": 589.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_161",
+    "drug_id": "Compound::DB01217",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_162",
+    "drug_id": "Compound::DB01217",
+    "disease_id": "Disease::DOID:9970",
+    "disease_degree": 547.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_163",
+    "drug_id": "Compound::DB01221",
+    "disease_id": "Disease::DOID:3312",
+    "disease_degree": 166.99998474121094,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_164",
+    "drug_id": "Compound::DB01222",
+    "disease_id": "Disease::DOID:8577",
+    "disease_degree": 674.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_165",
+    "drug_id": "Compound::DB01229",
+    "disease_id": "Disease::DOID:1964",
+    "disease_degree": 29.000003814697266,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_166",
+    "drug_id": "Compound::DB01259",
+    "disease_id": "Disease::DOID:1909",
+    "disease_degree": 937.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_167",
+    "drug_id": "Compound::DB01273",
+    "disease_id": "Disease::DOID:0050742",
+    "disease_degree": 538.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_168",
+    "drug_id": "Compound::DB01283",
+    "disease_id": "Disease::DOID:784",
+    "disease_degree": 221.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_169",
+    "drug_id": "Compound::DB01409",
+    "disease_id": "Disease::DOID:3083",
+    "disease_degree": 620.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_170",
+    "drug_id": "Compound::DB01576",
+    "disease_id": "Disease::DOID:5419",
+    "disease_degree": 813.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_171",
+    "drug_id": "Compound::DB01586",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_172",
+    "drug_id": "Compound::DB01590",
+    "disease_id": "Disease::DOID:10283",
+    "disease_degree": 662.0001220703125,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_173",
+    "drug_id": "Compound::DB01590",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_174",
+    "drug_id": "Compound::DB01590",
+    "disease_id": "Disease::DOID:2377",
+    "disease_degree": 284.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_175",
+    "drug_id": "Compound::DB01590",
+    "disease_id": "Disease::DOID:3571",
+    "disease_degree": 242.9999542236328,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_176",
+    "drug_id": "Compound::DB01590",
+    "disease_id": "Disease::DOID:7148",
+    "disease_degree": 875.0001831054688,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_177",
+    "drug_id": "Compound::DB01611",
+    "disease_id": "Disease::DOID:219",
+    "disease_degree": 624.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_178",
+    "drug_id": "Compound::DB01611",
+    "disease_id": "Disease::DOID:784",
+    "disease_degree": 221.00001525878906,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_179",
+    "drug_id": "Compound::DB02300",
+    "disease_id": "Disease::DOID:8893",
+    "disease_degree": 650.9998779296875,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_180",
+    "drug_id": "Compound::DB02546",
+    "disease_id": "Disease::DOID:2394",
+    "disease_degree": 383.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_181",
+    "drug_id": "Compound::DB04953",
+    "disease_id": "Disease::DOID:1826",
+    "disease_degree": 505.99993896484375,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_182",
+    "drug_id": "Compound::DB06710",
+    "disease_id": "Disease::DOID:10763",
+    "disease_degree": 702.0000610351562,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_183",
+    "drug_id": "Compound::DB06710",
+    "disease_id": "Disease::DOID:2377",
+    "disease_degree": 284.0,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  },
+  {
+    "pair_id": "FAIL_184",
+    "drug_id": "Compound::DB08901",
+    "disease_id": "Disease::DOID:1781",
+    "disease_degree": 100.99999237060547,
+    "label": 0,
+    "status": "terminated_or_failed_clinical_trial"
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "wheel": "dapagliflozin-lbd\\artifacts\\wheels\\dapagliflozin_lbd-0.1.0-py3-none-any.whl",
+  "exit_code": 0,
+  "stdout": "WHEEL_CHECK_PASS: all canonical imports, packaged config/schema, checkpoint\n",
+  "stderr": ""
+}

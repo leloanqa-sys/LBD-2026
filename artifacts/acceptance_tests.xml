@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="25" time="11.305" timestamp="2026-11-01T13:49:35.570391+07:00" hostname="MSI"><testcase classname="tests.test_acceptance_invariants" name="test_contract_d_reaches_graph_without_seed_edges" time="0.005"><failure message="AssertionError: Contract D edge silently lost&#10;assert 0 == 1&#10; +  where 0 = number_of_edges()&#10; +    where number_of_edges = &lt;networkx.classes.multidigraph.MultiDiGraph object at 0x000001F267AC1FD0&gt;.number_of_edges">def test_contract_d_reaches_graph_without_seed_edges():
+        record = dict(edge_id='E1', source='A', target='B', metaedge='CtD',
+                      relation_type='TREATS', assertion_status='asserted', sign=-1,
+                      evidence_ids=['R1'], pmids=['123'], source_dataset='nlp_literature', tier=1)
+        graph = create_knowledge_graph({'nodes': [], 'edges': []}, [record])
+&gt;       assert graph.number_of_edges() == 1, 'Contract D edge silently lost'
+E       AssertionError: Contract D edge silently lost
+E       assert 0 == 1
+E        +  where 0 = number_of_edges()
+E        +    where number_of_edges = &lt;networkx.classes.multidigraph.MultiDiGraph object at 0x000001F267AC1FD0&gt;.number_of_edges
+
+dapagliflozin-lbd\tests\test_acceptance_invariants.py:25: AssertionError</failure></testcase><testcase classname="tests.test_acceptance_invariants" name="test_fusion_partition_is_permutation_invariant" time="0.014"><failure message="AssertionError: assert [('TREATS', '..._KG', 0.8073)] == [('TREATS', '...EUE', 0.8073)]&#10;  &#10;  At index 0 diff: ('TREATS', 'asserted', 'ADMITTED_KG', 0.8073) != ('TREATS', 'uncertain', 'PROVISIONAL_QUEUE', 0.8073)&#10;  Use -v to get more diff">def test_fusion_partition_is_permutation_invariant():
+        engine = NLPEngine()
+        _, events, _ = engine.run_document(dict(pmid='123', title='', abstract='Dapagliflozin reduces heart failure.'))
+        asserted = deepcopy(events[0].projected_edges[0])
+        uncertain = deepcopy(asserted)
+        uncertain.assertion_status = 'uncertain'
+        uncertain.pmid = '456'
+        fuser = BayesianFusionEngine()
+        def result(items):
+            _, edges = fuser.fuse_edges([SimpleNamespace(projected_edges=items)])
+            return [(e.canonical_relation, e.assertion_status, e.partition, e.posterior_mean) for e in edges]
+&gt;       assert result([asserted, uncertain]) == result([uncertain, asserted])
+E       AssertionError: assert [('TREATS', '..._KG', 0.8073)] == [('TREATS', '...EUE', 0.8073)]
+E         
+E         At index 0 diff: ('TREATS', 'asserted', 'ADMITTED_KG', 0.8073) != ('TREATS', 'uncertain', 'PROVISIONAL_QUEUE', 0.8073)
+E         Use -v to get more diff
+
+dapagliflozin-lbd\tests\test_acceptance_invariants.py:42: AssertionError</failure></testcase><testcase classname="tests.test_acceptance_invariants" name="test_structured_section_persists_until_next_header[BACKGROUND]" time="0.001"><failure message="AssertionError: assert 'RESULTS' == 'BACKGROUND'&#10;  &#10;  - BACKGROUND&#10;  + RESULTS">section = 'BACKGROUND'
+
+    @pytest.mark.parametrize('section', ['BACKGROUND', 'RESULTS', 'CONCLUSIONS', 'METHODS'])
+    def test_structured_section_persists_until_next_header(section):
+        sentences = ZoningEngine().split_and_zone_document('', f'{section}: First sentence. Further research is needed. RESULTS: Outcomes improved.')
+&gt;       assert sentences[1].section_zone == section
+E       AssertionError: assert 'RESULTS' == 'BACKGROUND'
+E         
+E         - BACKGROUND
+E         + RESULTS
+
+dapagliflozin-lbd\tests\test_acceptance_invariants.py:48: AssertionError</failure></testcase><testcase classname="tests.test_acceptance_invariants" name="test_structured_section_persists_until_next_header[RESULTS]" time="0.001" /><testcase classname="tests.test_acceptance_invariants" name="test_structured_section_persists_until_next_header[CONCLUSIONS]" time="0.002"><failure message="AssertionError: assert 'RESULTS' == 'CONCLUSIONS'&#10;  &#10;  - CONCLUSIONS&#10;  + RESULTS">section = 'CONCLUSIONS'
+
+    @pytest.mark.parametrize('section', ['BACKGROUND', 'RESULTS', 'CONCLUSIONS', 'METHODS'])
+    def test_structured_section_persists_until_next_header(section):
+        sentences = ZoningEngine().split_and_zone_document('', f'{section}: First sentence. Further research is needed. RESULTS: Outcomes improved.')
+&gt;       assert sentences[1].section_zone == section
+E       AssertionError: assert 'RESULTS' == 'CONCLUSIONS'
+E         
+E         - CONCLUSIONS
+E         + RESULTS
+
+dapagliflozin-lbd\tests\test_acceptance_invariants.py:48: AssertionError</failure></testcase><testcase classname="tests.test_acceptance_invariants" name="test_structured_section_persists_until_next_header[METHODS]" time="0.001" /><testcase classname="tests.test_acceptance_invariants" name="test_objective_alone_is_not_conclusion" time="0.001"><failure message="AssertionError: assert 'CONCLUSIONS' != 'CONCLUSIONS'&#10; +  where 'CONCLUSIONS' = ZonedSentence(sent_idx=1, text='We aim to investigate dapagliflozin in heart failure.', char_start=0, char_end=53, section_zone='CONCLUSIONS', section_weight=1.0, entities=[], has_coref_drug=False).section_zone">def test_objective_alone_is_not_conclusion():
+        sentence = ZoningEngine().split_and_zone_document('', 'We aim to investigate dapagliflozin in heart failure.')[0]
+&gt;       assert sentence.section_zone != 'CONCLUSIONS'
+E       AssertionError: assert 'CONCLUSIONS' != 'CONCLUSIONS'
+E        +  where 'CONCLUSIONS' = ZonedSentence(sent_idx=1, text='We aim to investigate dapagliflozin in heart failure.', char_start=0, char_end=53, section_zone='CONCLUSIONS', section_weight=1.0, entities=[], has_coref_drug=False).section_zone
+
+dapagliflozin-lbd\tests\test_acceptance_invariants.py:53: AssertionError</failure></testcase><testcase classname="tests.test_acceptance_invariants" name="test_empty_evidence_is_not_verified_in_strict_mode" time="0.001"><failure message="AssertionError: assert [{'pmid': '12...TREATS', ...}] == []&#10;  &#10;  Left contains one more item: {'pmid': '123', 'source_entity': 'A', 'target_entity': 'B', 'relation_type': 'TREATS', ...}&#10;  Use -v to get more diff">def test_empty_evidence_is_not_verified_in_strict_mode():
+        record = dict(pmid='123', source_entity='A', target_entity='B', relation_type='TREATS', evidence='')
+&gt;       assert postprocess_relations([record], 'Some unrelated text.', strict=True) == []
+E       AssertionError: assert [{'pmid': '12...TREATS', ...}] == []
+E         
+E         Left contains one more item: {'pmid': '123', 'source_entity': 'A', 'target_entity': 'B', 'relation_type': 'TREATS', ...}
+E         Use -v to get more diff
+
+dapagliflozin-lbd\tests\test_acceptance_invariants.py:58: AssertionError</failure></testcase><testcase classname="tests.test_acceptance_invariants" name="test_same_pmid_does_not_double_fusion_evidence" time="0.004" /><testcase classname="tests.test_acceptance_invariants" name="test_dfs_equals_independent_networkx_oracle_with_cycle_and_parallel_edges" time="0.001" /><testcase classname="tests.test_acceptance_invariants" name="test_sign_algebra_and_direction[signs0--1]" time="0.001" /><testcase classname="tests.test_acceptance_invariants" name="test_sign_algebra_and_direction[signs1-1]" time="0.001" /><testcase classname="tests.test_acceptance_invariants" name="test_sign_algebra_and_direction[signs2-0]" time="0.001" /><testcase classname="tests.test_contracts" name="test_contract_a_document_record" time="0.294" /><testcase classname="tests.test_contracts" name="test_contract_b_relation_record" time="0.006" /><testcase classname="tests.test_normalization" name="test_normalize_entity_name" time="0.001" /><testcase classname="tests.test_normalization" name="test_normalize_relation_record" time="0.001" /><testcase classname="tests.test_path_search" name="test_search_metapaths_prunes_historical" time="0.002" /><testcase classname="tests.test_ranking" name="test_score_disease_candidate" time="0.001" /><testcase classname="tests.test_relation_extraction" name="test_verify_evidence_verbatim" time="0.003" /><testcase classname="tests.test_relation_extraction" name="test_extract_relations_from_text" time="0.352" /><testcase classname="tests.test_relation_extraction" name="test_nlp_engine_end_to_end" time="0.021" /><testcase classname="tests.test_signed_rules" name="test_golden_path_heart_failure_sign" time="0.001" /><testcase classname="tests.test_signed_rules" name="test_golden_path_ckd_sign" time="0.001" /><testcase classname="tests.test_signed_rules" name="test_contradictory_path_sign" time="0.002" /></testsuite></testsuites>

@@ -1,0 +1,11 @@
+{
+  "source": "https://github.com/hetio/hetionet",
+  "nodes": "remote raw bytes SHA256 matches local",
+  "edges": "remote Git LFS SHA256 matches local compressed file",
+  "verified": true,
+  "edge_level_dates_verified": false,
+  "files": {
+    "hetionet-v1.0-edges.sif.gz": "611f0411ac666be4e0270e54bbca67407e14720bfc3099311f0f5eec25c5a947",
+    "hetionet-v1.0-nodes.tsv": "3ad9eb86c031df8bc7d5efefa6edc93562182eb9a6a71e5129d3f18b9d42c50e"
+  }
+}

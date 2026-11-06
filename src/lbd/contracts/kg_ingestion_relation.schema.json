@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract B & C - Relation Record",
+  "description": "Extracted and normalized relation between two biomedical entities",
+  "type": "object",
+  "required": [
+    "assertion_status",
+    "canonical_relation",
+    "evidence",
+    "evidence_origin",
+    "pmid",
+    "relation_id",
+    "relation_type",
+    "semantic_status",
+    "source_entity",
+    "source_standard_id",
+    "target_entity",
+    "target_standard_id"
+  ],
+  "properties": {
+    "relation_id": {
+      "type": "string"
+    },
+    "source_entity": {
+      "type": "string"
+    },
+    "target_entity": {
+      "type": "string"
+    },
+    "source_standard_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_standard_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relation_type": {
+      "type": "string",
+      "enum": [
+        "INHIBITS",
+        "ACTIVATES",
+        "CAUSES",
+        "INCREASES",
+        "DECREASES",
+        "ASSOCIATED_WITH",
+        "TREATS",
+        "PALLIATES"
+      ]
+    },
+    "assertion_status": {
+      "const": "asserted"
+    },
+    "evidence": {
+      "type": "string",
+      "description": "Exact concise quote from abstract"
+    },
+    "pmid": {
+      "type": "string"
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "normalization_status": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "ambiguous",
+        "unresolved"
+      ]
+    },
+    "evidence_origin": {
+      "const": "abstract"
+    },
+    "semantic_status": {
+      "const": "direct_pattern_verified"
+    },
+    "canonical_relation": {
+      "enum": [
+        "TREATS",
+        "INHIBITS",
+        "ACTIVATES"
+      ]
+    }
+  }
+}

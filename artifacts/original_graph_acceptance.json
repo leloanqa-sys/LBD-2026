@@ -1,0 +1,730 @@
+{
+  "scope": "Local baseline snapshot; upstream Hetionet authenticity and clinical predictions not certified",
+  "graph_sha256": "d467045acdd8dcccf975e7789aeacfe94d8e3b4376f7702e606ff02faafaf9a6",
+  "graph_unchanged": true,
+  "nodes": 721,
+  "edges": 2804,
+  "duplicate_node_ids": [],
+  "missing_endpoints": [],
+  "node_types": {
+    "BiologicalProcess": 27,
+    "Compound": 1,
+    "Disease": 114,
+    "Gene": 568,
+    "Pathway": 11
+  },
+  "paths": 4755,
+  "configured_metapath_matches": 0,
+  "path_type_sequences": {
+    "Compound -> Gene -> BiologicalProcess -> Gene -> Disease": 2632,
+    "Compound -> Gene -> Pathway -> Gene -> Disease": 2073,
+    "Compound -> Gene -> Gene -> Disease": 45,
+    "Compound -> Gene -> Disease": 5
+  },
+  "path_net_signs": {
+    "0": 4755
+  },
+  "edges_with_pmids": 0,
+  "edges_with_evidence_sentences": 0,
+  "independent_dfs_oracle": {
+    "all_targets_equal": true,
+    "targets": 114,
+    "details": [
+      {
+        "target": "DOID:0050156",
+        "actual": 76,
+        "oracle": 76,
+        "equal": true
+      },
+      {
+        "target": "DOID:0050425",
+        "actual": 6,
+        "oracle": 6,
+        "equal": true
+      },
+      {
+        "target": "DOID:0050741",
+        "actual": 36,
+        "oracle": 36,
+        "equal": true
+      },
+      {
+        "target": "DOID:0050742",
+        "actual": 60,
+        "oracle": 60,
+        "equal": true
+      },
+      {
+        "target": "DOID:0060119",
+        "actual": 1,
+        "oracle": 1,
+        "equal": true
+      },
+      {
+        "target": "DOID:1024",
+        "actual": 4,
+        "oracle": 4,
+        "equal": true
+      },
+      {
+        "target": "DOID:10283",
+        "actual": 122,
+        "oracle": 122,
+        "equal": true
+      },
+      {
+        "target": "DOID:10534",
+        "actual": 39,
+        "oracle": 39,
+        "equal": true
+      },
+      {
+        "target": "DOID:10608",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:10652",
+        "actual": 65,
+        "oracle": 65,
+        "equal": true
+      },
+      {
+        "target": "DOID:10763",
+        "actual": 214,
+        "oracle": 214,
+        "equal": true
+      },
+      {
+        "target": "DOID:10871",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:1094",
+        "actual": 18,
+        "oracle": 18,
+        "equal": true
+      },
+      {
+        "target": "DOID:10941",
+        "actual": 6,
+        "oracle": 6,
+        "equal": true
+      },
+      {
+        "target": "DOID:10976",
+        "actual": 11,
+        "oracle": 11,
+        "equal": true
+      },
+      {
+        "target": "DOID:11054",
+        "actual": 22,
+        "oracle": 22,
+        "equal": true
+      },
+      {
+        "target": "DOID:11119",
+        "actual": 7,
+        "oracle": 7,
+        "equal": true
+      },
+      {
+        "target": "DOID:1115",
+        "actual": 20,
+        "oracle": 20,
+        "equal": true
+      },
+      {
+        "target": "DOID:11239",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:11476",
+        "actual": 14,
+        "oracle": 14,
+        "equal": true
+      },
+      {
+        "target": "DOID:11612",
+        "actual": 152,
+        "oracle": 152,
+        "equal": true
+      },
+      {
+        "target": "DOID:11615",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:11714",
+        "actual": 15,
+        "oracle": 15,
+        "equal": true
+      },
+      {
+        "target": "DOID:1192",
+        "actual": 19,
+        "oracle": 19,
+        "equal": true
+      },
+      {
+        "target": "DOID:11934",
+        "actual": 7,
+        "oracle": 7,
+        "equal": true
+      },
+      {
+        "target": "DOID:12185",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:12236",
+        "actual": 14,
+        "oracle": 14,
+        "equal": true
+      },
+      {
+        "target": "DOID:12361",
+        "actual": 6,
+        "oracle": 6,
+        "equal": true
+      },
+      {
+        "target": "DOID:12365",
+        "actual": 69,
+        "oracle": 69,
+        "equal": true
+      },
+      {
+        "target": "DOID:1245",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:12849",
+        "actual": 69,
+        "oracle": 69,
+        "equal": true
+      },
+      {
+        "target": "DOID:12930",
+        "actual": 13,
+        "oracle": 13,
+        "equal": true
+      },
+      {
+        "target": "DOID:12995",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:1312",
+        "actual": 15,
+        "oracle": 15,
+        "equal": true
+      },
+      {
+        "target": "DOID:13189",
+        "actual": 25,
+        "oracle": 25,
+        "equal": true
+      },
+      {
+        "target": "DOID:1319",
+        "actual": 11,
+        "oracle": 11,
+        "equal": true
+      },
+      {
+        "target": "DOID:13223",
+        "actual": 23,
+        "oracle": 23,
+        "equal": true
+      },
+      {
+        "target": "DOID:1324",
+        "actual": 66,
+        "oracle": 66,
+        "equal": true
+      },
+      {
+        "target": "DOID:13241",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:14004",
+        "actual": 1,
+        "oracle": 1,
+        "equal": true
+      },
+      {
+        "target": "DOID:14221",
+        "actual": 73,
+        "oracle": 73,
+        "equal": true
+      },
+      {
+        "target": "DOID:14227",
+        "actual": 43,
+        "oracle": 43,
+        "equal": true
+      },
+      {
+        "target": "DOID:14330",
+        "actual": 99,
+        "oracle": 99,
+        "equal": true
+      },
+      {
+        "target": "DOID:1459",
+        "actual": 12,
+        "oracle": 12,
+        "equal": true
+      },
+      {
+        "target": "DOID:1595",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:1612",
+        "actual": 233,
+        "oracle": 233,
+        "equal": true
+      },
+      {
+        "target": "DOID:1686",
+        "actual": 14,
+        "oracle": 14,
+        "equal": true
+      },
+      {
+        "target": "DOID:175",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:1781",
+        "actual": 24,
+        "oracle": 24,
+        "equal": true
+      },
+      {
+        "target": "DOID:1790",
+        "actual": 1,
+        "oracle": 1,
+        "equal": true
+      },
+      {
+        "target": "DOID:1793",
+        "actual": 128,
+        "oracle": 128,
+        "equal": true
+      },
+      {
+        "target": "DOID:1826",
+        "actual": 114,
+        "oracle": 114,
+        "equal": true
+      },
+      {
+        "target": "DOID:184",
+        "actual": 9,
+        "oracle": 9,
+        "equal": true
+      },
+      {
+        "target": "DOID:1909",
+        "actual": 154,
+        "oracle": 154,
+        "equal": true
+      },
+      {
+        "target": "DOID:1936",
+        "actual": 53,
+        "oracle": 53,
+        "equal": true
+      },
+      {
+        "target": "DOID:2043",
+        "actual": 10,
+        "oracle": 10,
+        "equal": true
+      },
+      {
+        "target": "DOID:2174",
+        "actual": 11,
+        "oracle": 11,
+        "equal": true
+      },
+      {
+        "target": "DOID:219",
+        "actual": 88,
+        "oracle": 88,
+        "equal": true
+      },
+      {
+        "target": "DOID:2355",
+        "actual": 40,
+        "oracle": 40,
+        "equal": true
+      },
+      {
+        "target": "DOID:2377",
+        "actual": 27,
+        "oracle": 27,
+        "equal": true
+      },
+      {
+        "target": "DOID:2394",
+        "actual": 45,
+        "oracle": 45,
+        "equal": true
+      },
+      {
+        "target": "DOID:2531",
+        "actual": 125,
+        "oracle": 125,
+        "equal": true
+      },
+      {
+        "target": "DOID:263",
+        "actual": 130,
+        "oracle": 130,
+        "equal": true
+      },
+      {
+        "target": "DOID:2841",
+        "actual": 36,
+        "oracle": 36,
+        "equal": true
+      },
+      {
+        "target": "DOID:2986",
+        "actual": 128,
+        "oracle": 128,
+        "equal": true
+      },
+      {
+        "target": "DOID:2994",
+        "actual": 26,
+        "oracle": 26,
+        "equal": true
+      },
+      {
+        "target": "DOID:2998",
+        "actual": 12,
+        "oracle": 12,
+        "equal": true
+      },
+      {
+        "target": "DOID:3070",
+        "actual": 28,
+        "oracle": 28,
+        "equal": true
+      },
+      {
+        "target": "DOID:3083",
+        "actual": 86,
+        "oracle": 86,
+        "equal": true
+      },
+      {
+        "target": "DOID:3121",
+        "actual": 2,
+        "oracle": 2,
+        "equal": true
+      },
+      {
+        "target": "DOID:3277",
+        "actual": 5,
+        "oracle": 5,
+        "equal": true
+      },
+      {
+        "target": "DOID:3310",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:3312",
+        "actual": 31,
+        "oracle": 31,
+        "equal": true
+      },
+      {
+        "target": "DOID:332",
+        "actual": 40,
+        "oracle": 40,
+        "equal": true
+      },
+      {
+        "target": "DOID:3393",
+        "actual": 132,
+        "oracle": 132,
+        "equal": true
+      },
+      {
+        "target": "DOID:3565",
+        "actual": 6,
+        "oracle": 6,
+        "equal": true
+      },
+      {
+        "target": "DOID:3571",
+        "actual": 68,
+        "oracle": 68,
+        "equal": true
+      },
+      {
+        "target": "DOID:363",
+        "actual": 19,
+        "oracle": 19,
+        "equal": true
+      },
+      {
+        "target": "DOID:3953",
+        "actual": 4,
+        "oracle": 4,
+        "equal": true
+      },
+      {
+        "target": "DOID:4045",
+        "actual": 8,
+        "oracle": 8,
+        "equal": true
+      },
+      {
+        "target": "DOID:4159",
+        "actual": 17,
+        "oracle": 17,
+        "equal": true
+      },
+      {
+        "target": "DOID:418",
+        "actual": 56,
+        "oracle": 56,
+        "equal": true
+      },
+      {
+        "target": "DOID:4362",
+        "actual": 6,
+        "oracle": 6,
+        "equal": true
+      },
+      {
+        "target": "DOID:4481",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:4606",
+        "actual": 18,
+        "oracle": 18,
+        "equal": true
+      },
+      {
+        "target": "DOID:4989",
+        "actual": 34,
+        "oracle": 34,
+        "equal": true
+      },
+      {
+        "target": "DOID:5041",
+        "actual": 27,
+        "oracle": 27,
+        "equal": true
+      },
+      {
+        "target": "DOID:5408",
+        "actual": 5,
+        "oracle": 5,
+        "equal": true
+      },
+      {
+        "target": "DOID:5419",
+        "actual": 72,
+        "oracle": 72,
+        "equal": true
+      },
+      {
+        "target": "DOID:585",
+        "actual": 23,
+        "oracle": 23,
+        "equal": true
+      },
+      {
+        "target": "DOID:594",
+        "actual": 8,
+        "oracle": 8,
+        "equal": true
+      },
+      {
+        "target": "DOID:635",
+        "actual": 54,
+        "oracle": 54,
+        "equal": true
+      },
+      {
+        "target": "DOID:6364",
+        "actual": 16,
+        "oracle": 16,
+        "equal": true
+      },
+      {
+        "target": "DOID:7147",
+        "actual": 22,
+        "oracle": 22,
+        "equal": true
+      },
+      {
+        "target": "DOID:7148",
+        "actual": 102,
+        "oracle": 102,
+        "equal": true
+      },
+      {
+        "target": "DOID:7693",
+        "actual": 59,
+        "oracle": 59,
+        "equal": true
+      },
+      {
+        "target": "DOID:784",
+        "actual": 50,
+        "oracle": 50,
+        "equal": true
+      },
+      {
+        "target": "DOID:824",
+        "actual": 14,
+        "oracle": 14,
+        "equal": true
+      },
+      {
+        "target": "DOID:8398",
+        "actual": 8,
+        "oracle": 8,
+        "equal": true
+      },
+      {
+        "target": "DOID:8577",
+        "actual": 84,
+        "oracle": 84,
+        "equal": true
+      },
+      {
+        "target": "DOID:8778",
+        "actual": 114,
+        "oracle": 114,
+        "equal": true
+      },
+      {
+        "target": "DOID:8850",
+        "actual": 17,
+        "oracle": 17,
+        "equal": true
+      },
+      {
+        "target": "DOID:8893",
+        "actual": 64,
+        "oracle": 64,
+        "equal": true
+      },
+      {
+        "target": "DOID:8986",
+        "actual": 3,
+        "oracle": 3,
+        "equal": true
+      },
+      {
+        "target": "DOID:90",
+        "actual": 2,
+        "oracle": 2,
+        "equal": true
+      },
+      {
+        "target": "DOID:9008",
+        "actual": 47,
+        "oracle": 47,
+        "equal": true
+      },
+      {
+        "target": "DOID:9074",
+        "actual": 18,
+        "oracle": 18,
+        "equal": true
+      },
+      {
+        "target": "DOID:9206",
+        "actual": 96,
+        "oracle": 96,
+        "equal": true
+      },
+      {
+        "target": "DOID:9296",
+        "actual": 7,
+        "oracle": 7,
+        "equal": true
+      },
+      {
+        "target": "DOID:9352",
+        "actual": 158,
+        "oracle": 158,
+        "equal": true
+      },
+      {
+        "target": "DOID:9744",
+        "actual": 26,
+        "oracle": 26,
+        "equal": true
+      },
+      {
+        "target": "DOID:9835",
+        "actual": 17,
+        "oracle": 17,
+        "equal": true
+      },
+      {
+        "target": "DOID:986",
+        "actual": 53,
+        "oracle": 53,
+        "equal": true
+      },
+      {
+        "target": "DOID:9970",
+        "actual": 132,
+        "oracle": 132,
+        "equal": true
+      }
+    ]
+  },
+  "target_presence": {
+    "DOID:6000": false,
+    "DOID:9333": false,
+    "DOID:784": true
+  },
+  "acceptance": {
+    "dfs_enumeration": "PASS",
+    "configured_metapaths": "FAIL",
+    "therapeutic_evidence": "NOT_ESTABLISHED",
+    "production_end_to_end": "FAIL"
+  }
+}

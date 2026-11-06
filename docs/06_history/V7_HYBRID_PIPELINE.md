@@ -1,3 +1,5 @@
+> Historical design document. Current setup/status: ../README.md and REMEDIATION.md.
+
 # V7 Hybrid Pipeline
 
 V7 composes the fitted V3 relation classifier with V6 grounding, event reasoning,
@@ -19,7 +21,7 @@ and Bayesian evidence fusion.
 5. L5 consumes the V3 relation-existence probability as the evidence confidence,
    deduplicates evidence by PMID, fuses support/conflict, and exports Contract B/D.
 
-The engine is in `src/lbd/nlp/v7_hybrid/engine.py`. It accepts a fitted V3 model
+The engine is in `src/lbd/nlp/engine.py`. It accepts a fitted V3 model
 object and has no hard dependency on an API key. Live LLM calls default to off.
 
 ## Independent evaluation

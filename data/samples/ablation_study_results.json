@@ -1,0 +1,50 @@
+{
+  "1_Full_Pipeline_V6_P2": {
+    "total_entity_mentions": 120,
+    "doid_grounded_entities": 51,
+    "mesh_unresolved_entities": 14,
+    "doid_mapping_rate": 0.7846,
+    "extracted_relations_count": 11,
+    "treats_count": 1,
+    "inhibits_count": 6,
+    "causes_count": 1,
+    "associated_count": 0,
+    "avg_confidence": 0.8276
+  },
+  "2_Ablation_wo_P2_Crosswalk": {
+    "total_entity_mentions": 120,
+    "doid_grounded_entities": 51,
+    "mesh_unresolved_entities": 14,
+    "doid_mapping_rate": 0.7846,
+    "extracted_relations_count": 11,
+    "treats_count": 1,
+    "inhibits_count": 6,
+    "causes_count": 1,
+    "associated_count": 0,
+    "avg_confidence": 0.8276
+  },
+  "3_Ablation_wo_PubTator_Grounding": {
+    "total_entity_mentions": 95,
+    "doid_grounded_entities": 51,
+    "mesh_unresolved_entities": 0,
+    "doid_mapping_rate": 1.0,
+    "extracted_relations_count": 2,
+    "treats_count": 0,
+    "inhibits_count": 0,
+    "causes_count": 1,
+    "associated_count": 0,
+    "avg_confidence": 0.6123
+  },
+  "4_Ablation_wo_ML_Classifier_Cooccurrence": {
+    "total_entity_mentions": 120,
+    "doid_grounded_entities": 51,
+    "mesh_unresolved_entities": 14,
+    "doid_mapping_rate": 0.7846,
+    "extracted_relations_count": 12,
+    "treats_count": 1,
+    "inhibits_count": 7,
+    "causes_count": 1,
+    "associated_count": 0,
+    "avg_confidence": 1.0
+  }
+}

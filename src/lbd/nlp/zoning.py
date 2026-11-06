@@ -17,13 +17,7 @@ except ImportError:
     except ImportError:
         split_biomedical_sentences = None
 
-try:
-    from lbd.nlp.ner_hybrid import annotate_abstract_hybrid
-except ImportError:
-    try:
-        from nlp.ner_hybrid import annotate_abstract_hybrid
-    except ImportError:
-        annotate_abstract_hybrid = None
+# External annotations are supplied explicitly; no implicit network calls.
 
 # -------------------------------------------------------------------------
 # 1. Multi-Ontology Registry with Intrinsic Biological Valence (V_entity)
@@ -391,12 +385,14 @@ class Layer12_ZoningAndGroundingEngine:
                 raw_parts.append((offset + last, offset + len(abstract), tail.strip()))
 
         current_zone = "BACKGROUND"
+        structured = False
         n_parts = max(1, len(raw_parts))
 
         for idx, (s_start, s_end, s_text) in enumerate(raw_parts):
             # 1. Check explicit header
             hdr_match = _SECTION_HEADER_RX.match(s_text)
             if hdr_match:
+                structured = True
                 hdr = hdr_match.group(1).upper()
                 if hdr in ("BACKGROUND", "INTRODUCTION", "OBJECTIVE", "OBJECTIVES", "AIMS", "AIM", "IMPORTANCE OF THE FIELD", "AREAS COVERED"):
                     current_zone = "BACKGROUND"
@@ -417,11 +413,14 @@ class Layer12_ZoningAndGroundingEngine:
             else:
                 # Positional & cue refinement when abstract is unstructured
                 rel_pos = (idx + 1) / n_parts
-                if not hdr_match:
-                    if idx == n_parts - 1 or re.search(r"\b(?:in\s+conclusion|we\s+conclude|overall|summary)\b", s_text, re.I):
+                if structured:
+                    assigned_zone = current_zone
+                    weight = 1.0 if current_zone in ("RESULTS", "CONCLUSIONS") else 0.55
+                elif not hdr_match:
+                    if re.search(r"\b(?:in\s+conclusion|we\s+conclude|overall|summary)\b", s_text, re.I):
                         assigned_zone = "CONCLUSIONS"
                         weight = 1.0
-                    elif _RESULTS_FINDING_CUES_RX.search(s_text) or rel_pos >= 0.35:
+                    elif _RESULTS_FINDING_CUES_RX.search(s_text):
                         assigned_zone = "RESULTS"
                         weight = 1.0
                     else:
@@ -481,12 +480,6 @@ class Layer12_ZoningAndGroundingEngine:
 
         # Hybrid biomedical ontology enhancement
         hybrid_entities = list(external_entities or [])
-        if external_entities is None and annotate_abstract_hybrid is not None and str(pmid).isdigit():
-            try:
-                hybrid_entities = annotate_abstract_hybrid(str(pmid), full_text)
-            except Exception:
-                hybrid_entities = []
-
         # Pass 1: Extract all explicit entity mentions for each sentence
         sentence_explicit_entities: List[Dict[str, Dict[str, Any]]] = []
         doc_compounds_by_id: Dict[str, Dict[str, Any]] = {}

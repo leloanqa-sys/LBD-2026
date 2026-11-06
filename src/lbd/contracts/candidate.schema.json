@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract E - Candidate & Explanation",
+  "description": "Output candidate disease for drug repurposing with traceable paths",
+  "type": "object",
+  "required": [
+    "rank",
+    "drug_id",
+    "disease_id",
+    "disease_name",
+    "ranking_score",
+    "paths",
+    "ai_explanation"
+  ],
+  "properties": {
+    "rank": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "drug_id": {
+      "type": "string"
+    },
+    "disease_id": {
+      "type": "string"
+    },
+    "disease_name": {
+      "type": "string"
+    },
+    "ranking_score": {
+      "type": "number"
+    },
+    "paths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "nodes",
+          "relations",
+          "path_score",
+          "net_sign"
+        ],
+        "properties": {
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "path_score": {
+            "type": "number"
+          },
+          "net_sign": {
+            "type": "integer",
+            "enum": [
+              -1,
+              0,
+              1
+            ]
+          },
+          "supporting_pmids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_sentences": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ai_explanation": {
+      "type": "string"
+    },
+    "contradiction_pmids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

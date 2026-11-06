@@ -1,0 +1,26 @@
+{
+  "a0ab69afbb2d822f4eaa858b0a64a8c3cc2162affe9ea214b4cfc23a4748ac28": {
+    "relation": "TREATS",
+    "assertion_status": "asserted",
+    "confidence": 0.95,
+    "llm_verified": true,
+    "llm_mode": "live_groq_qwen",
+    "rationale": "Patient eligibility cohort context ('in patients with X'); separated from TREATS/CAUSES. | Blinded-LLM(TREATS, conf=0.95): The sentence states that the source chemical significantly reduced the risk of worsening the target disease or death, which aligns with the definition of TREATS for a pathological disease with positive valence."
+  },
+  "9fb9c7d369ed98db44e381e899d05e925263914be7d87482d8ea88d15757cd6c": {
+    "relation": "EVALUATED_IN_COHORT",
+    "assertion_status": "asserted",
+    "confidence": 0.99,
+    "llm_verified": true,
+    "llm_mode": "live_groq_qwen",
+    "rationale": "Co-occurring clinical context without directional therapeutic/adverse verb -> EVALUATED_IN_COHORT. | Blinded-LLM(EVALUATED_IN_COHORT, conf=0.99): The sentence describes a study evaluating the source chemical in a cohort of patients with the target disease. It does not claim the chemical treats, causes, or is contraindicated for the disease, but rather that it was tested in that specific population."
+  },
+  "ccbd48e020a6756008626e9930ade27851c217134148a20e13ba351daadd203d": {
+    "relation": "NO_RELATION",
+    "assertion_status": "asserted",
+    "confidence": 0.95,
+    "llm_verified": true,
+    "llm_mode": "live_groq_qwen",
+    "rationale": "Co-occurring clinical context without directional therapeutic/adverse verb -> EVALUATED_IN_COHORT. | Blinded-LLM(NO_RELATION, conf=0.95): The sentence states that the target disease was 'observed' when the source compound was coadministered with insulin secretagogues. This phrasing indicates a clinical observation or potential adverse event/interaction context, but does not explicitly state that the source causes, treats, or is contraindicated for the disease. It lacks the specific semantic markers for CAUSES (e.g., 'induced', 'led to') or TREATS (e.g., 'reduced', 'improved'). Therefore, no direct causal or therapeutic relation is asserted."
+  }
+}

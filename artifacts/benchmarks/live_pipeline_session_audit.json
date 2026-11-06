@@ -1,0 +1,2962 @@
+{
+  "drug": "Dapagliflozin",
+  "run_id": "1d92b98a82f14f59a628b5aef84eec0e",
+  "session_edges_added": 8,
+  "admitted_nlp_edges": 0,
+  "zero_disk_mutation": true,
+  "candidates": [
+    {
+      "rank": 1,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:9352",
+      "disease_name": "type 2 diabetes mellitus",
+      "ranking_score": 0.9902,
+      "base_score": 0.9514,
+      "literature_delta": 0.0388,
+      "session_evidence_count": 4,
+      "session_status": "augmented",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Disease::DOID:9352"
+          ],
+          "relations": [
+            "literature:CtD"
+          ],
+          "path_score": 1.5,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "supporting_pmids": [
+            "26571022",
+            "21105857",
+            "21105857",
+            "28105986",
+            "19584379",
+            "19584379",
+            "28587531",
+            "29794497",
+            "25525338",
+            "25525338",
+            "19243283",
+            "25418019",
+            "24705156",
+            "24705156"
+          ],
+          "evidence_sentences": [
+            "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM.",
+            "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption.",
+            "TAKE HOME MESSAGE: The use of dapagliflozin in the treatment of T2DM patients seems promising but more evidence is needed.",
+            "Canagliflozin, dapagliflozin and empagliflozin monotherapy for treating type 2 diabetes: systematic review and economic evaluation.",
+            "Dapagliflozin for the treatment of type 2 diabetes.",
+            "CONCLUSIONS: Dapagliflozin represents the first in a new class of drugs that may represent a promising new option in the treatment of type 2 diabetes.",
+            "Dapagliflozin for the treatment of type 1 diabetes mellitus.",
+            "SGLT-2 inhibitors have been approved by the Food and Drug Administration (FDA) and are effectively used in the treatment of type 2 diabetes (T2D).",
+            "Dapagliflozin for the treatment of type 2 diabetes: a review of the literature.",
+            "CONCLUSION: Dapagliflozin is a useful therapy for adult patients with T2D.",
+            "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney.",
+            "Pharmacokinetics, pharmacodynamics and clinical efficacy of dapagliflozin for the treatment of type 2 diabetes.",
+            "The US FDA approved dapagliflozin in January 2014 to improve glycemic control along with diet and exercise in adult patients afflicted with T2DM.",
+            "In addition to general discussion on the pharmacology of dapagliflozin, we propose in this review the possibilities of dual antidiabetic effect of dapagliflozin and its possible additional beneficial actions in hypertensive-obese-T2DM patients through its indirect blood pressure-lowering action and reduction of body calories and weight."
+          ]
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Disease::DOID:9352"
+          ],
+          "relations": [
+            "literature:CpD"
+          ],
+          "path_score": 1.5,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [
+            "24105299",
+            "24105299",
+            "24105299",
+            "26571022",
+            "26571022",
+            "26571022",
+            "21105857",
+            "21105857",
+            "25678954",
+            "25678954",
+            "25678954",
+            "23748519",
+            "23748519",
+            "25126408",
+            "25525338",
+            "25525338",
+            "26474563",
+            "26474563",
+            "26474563",
+            "26474563",
+            "19243283",
+            "19243283",
+            "19243283",
+            "25418019"
+          ],
+          "evidence_sentences": [
+            "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis).",
+            "No clinically relevant differences were observed in dapagliflozin exposure with respect to age, race, sex, body weight, food, or presence of T2DM.",
+            "After multiple doses of dapagliflozin, urinary glucose excretion was associated with dose-related decreases in plasma glucose parameters in subjects with T2DM.",
+            "Dapagliflozin combination therapy in type 2 diabetes mellitus.",
+            "This review discusses the clinical evidence and rationale for the use of dapagliflozin as add-on therapy in T2DM.",
+            "The results suggest that dapagliflozin add-on therapy is a promising new treatment option for a wide range of patients with T2DM.",
+            "AREAS COVERED IN THIS REVIEW: We critically assess the results of up-to-date clinical trials with dapagliflozin in patients with T2DM and discuss its potential therapeutic applications.",
+            "WHAT THE READER WILL GAIN: Dapagliflozin, apart from targeting hyperglycemia, also exerts beneficial effects on blood pressure, lipid profile, body weight and waist circumference.",
+            "Dapagliflozin in patients with type 2 diabetes mellitus.",
+            "Dapagliflozin has been approved as monotherapy in patients with type 2 diabetes mellitus (T2DM) who cannot tolerate metformin or in combination with other antidiabetic drugs, with the exception of pioglitazone due to the theoretical increased risk of bladder cancer.",
+            "Based on current evidence, dapagliflozin is a useful drug for patients with T2DM with a favorable safety profile.",
+            "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion.",
+            "Overall, dapagliflozin has shown beneficial effects on CV risk factors in patients with T2DM.",
+            "Renal effects of dapagliflozin in patients with type 2 diabetes.",
+            "OBJECTIVE: Dapagliflozin was the first drug in a class of therapies that took a new approach to glycemic control in adults with type 2 diabetes (T2D).",
+            "While longer-term outcome studies of safety and efficacy are awaited, dapagliflozin forms a very useful and welcome addition to our armamentarium for managing patients with T2D.",
+            "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus.",
+            "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin.",
+            "Preliminary data from a phase 2 pharmacokinetic/pharmacodynamic study suggest that dapagliflozin may also improve glycemic control in patients with type 1 diabetes mellitus.",
+            "Clinical trials published to date show that dapagliflozin is safe and effective as monotherapy or as an add-on to insulin or oral antidiabetic agents in patients with T2DM.",
+            "Dapagliflozin: an emerging treatment option in type 2 diabetes.",
+            "Clinical trials have shown that dapagliflozin treatment induces glucosuria and improves glycemic parameters in patients with type 2 diabetes.",
+            "This article reviews the role of dapagliflozin as an emerging treatment option in type 2 diabetes.",
+            "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment."
+          ]
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6527",
+            "Disease::DOID:9352"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.017506,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "literature:CtD",
+          "nodes": [
+            "Compound::DB06292",
+            "Disease::DOID:9352"
+          ],
+          "dwpc_weight": 1.0,
+          "beta": 1.5,
+          "contrib": 1.5,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "is_literature_augmented": true,
+          "supporting_pmids": [
+            "26571022",
+            "21105857",
+            "21105857",
+            "28105986",
+            "19584379",
+            "19584379",
+            "28587531",
+            "29794497",
+            "25525338",
+            "25525338",
+            "19243283",
+            "25418019",
+            "24705156",
+            "24705156"
+          ],
+          "quotes": [
+            {
+              "pmid": "26571022",
+              "text": "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM."
+            },
+            {
+              "pmid": "21105857",
+              "text": "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption."
+            },
+            {
+              "pmid": "21105857",
+              "text": "TAKE HOME MESSAGE: The use of dapagliflozin in the treatment of T2DM patients seems promising but more evidence is needed."
+            },
+            {
+              "pmid": "28105986",
+              "text": "Canagliflozin, dapagliflozin and empagliflozin monotherapy for treating type 2 diabetes: systematic review and economic evaluation."
+            },
+            {
+              "pmid": "19584379",
+              "text": "Dapagliflozin for the treatment of type 2 diabetes."
+            },
+            {
+              "pmid": "19584379",
+              "text": "CONCLUSIONS: Dapagliflozin represents the first in a new class of drugs that may represent a promising new option in the treatment of type 2 diabetes."
+            },
+            {
+              "pmid": "28587531",
+              "text": "Dapagliflozin for the treatment of type 1 diabetes mellitus."
+            },
+            {
+              "pmid": "29794497",
+              "text": "SGLT-2 inhibitors have been approved by the Food and Drug Administration (FDA) and are effectively used in the treatment of type 2 diabetes (T2D)."
+            },
+            {
+              "pmid": "25525338",
+              "text": "Dapagliflozin for the treatment of type 2 diabetes: a review of the literature."
+            },
+            {
+              "pmid": "25525338",
+              "text": "CONCLUSION: Dapagliflozin is a useful therapy for adult patients with T2D."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney."
+            },
+            {
+              "pmid": "25418019",
+              "text": "Pharmacokinetics, pharmacodynamics and clinical efficacy of dapagliflozin for the treatment of type 2 diabetes."
+            },
+            {
+              "pmid": "24705156",
+              "text": "The US FDA approved dapagliflozin in January 2014 to improve glycemic control along with diet and exercise in adult patients afflicted with T2DM."
+            },
+            {
+              "pmid": "24705156",
+              "text": "In addition to general discussion on the pharmacology of dapagliflozin, we propose in this review the possibilities of dual antidiabetic effect of dapagliflozin and its possible additional beneficial actions in hypertensive-obese-T2DM patients through its indirect blood pressure-lowering action and reduction of body calories and weight."
+            }
+          ],
+          "path_str": "Dapagliflozin --[Y văn: TREATS]--> type 2 diabetes mellitus [🟢 Trị liệu] [⚡ Y văn trực tiếp]"
+        },
+        {
+          "metapath": "literature:CpD",
+          "nodes": [
+            "Compound::DB06292",
+            "Disease::DOID:9352"
+          ],
+          "dwpc_weight": 1.0,
+          "beta": 1.5,
+          "contrib": 1.5,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": true,
+          "supporting_pmids": [
+            "24105299",
+            "24105299",
+            "24105299",
+            "26571022",
+            "26571022",
+            "26571022",
+            "21105857",
+            "21105857",
+            "25678954",
+            "25678954",
+            "25678954",
+            "23748519",
+            "23748519",
+            "25126408",
+            "25525338",
+            "25525338",
+            "26474563",
+            "26474563",
+            "26474563",
+            "26474563",
+            "19243283",
+            "19243283",
+            "19243283",
+            "25418019"
+          ],
+          "quotes": [
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "No clinically relevant differences were observed in dapagliflozin exposure with respect to age, race, sex, body weight, food, or presence of T2DM."
+            },
+            {
+              "pmid": "24105299",
+              "text": "After multiple doses of dapagliflozin, urinary glucose excretion was associated with dose-related decreases in plasma glucose parameters in subjects with T2DM."
+            },
+            {
+              "pmid": "26571022",
+              "text": "Dapagliflozin combination therapy in type 2 diabetes mellitus."
+            },
+            {
+              "pmid": "26571022",
+              "text": "This review discusses the clinical evidence and rationale for the use of dapagliflozin as add-on therapy in T2DM."
+            },
+            {
+              "pmid": "26571022",
+              "text": "The results suggest that dapagliflozin add-on therapy is a promising new treatment option for a wide range of patients with T2DM."
+            },
+            {
+              "pmid": "21105857",
+              "text": "AREAS COVERED IN THIS REVIEW: We critically assess the results of up-to-date clinical trials with dapagliflozin in patients with T2DM and discuss its potential therapeutic applications."
+            },
+            {
+              "pmid": "21105857",
+              "text": "WHAT THE READER WILL GAIN: Dapagliflozin, apart from targeting hyperglycemia, also exerts beneficial effects on blood pressure, lipid profile, body weight and waist circumference."
+            },
+            {
+              "pmid": "25678954",
+              "text": "Dapagliflozin in patients with type 2 diabetes mellitus."
+            },
+            {
+              "pmid": "25678954",
+              "text": "Dapagliflozin has been approved as monotherapy in patients with type 2 diabetes mellitus (T2DM) who cannot tolerate metformin or in combination with other antidiabetic drugs, with the exception of pioglitazone due to the theoretical increased risk of bladder cancer."
+            },
+            {
+              "pmid": "25678954",
+              "text": "Based on current evidence, dapagliflozin is a useful drug for patients with T2DM with a favorable safety profile."
+            },
+            {
+              "pmid": "23748519",
+              "text": "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion."
+            },
+            {
+              "pmid": "23748519",
+              "text": "Overall, dapagliflozin has shown beneficial effects on CV risk factors in patients with T2DM."
+            },
+            {
+              "pmid": "25126408",
+              "text": "Renal effects of dapagliflozin in patients with type 2 diabetes."
+            },
+            {
+              "pmid": "25525338",
+              "text": "OBJECTIVE: Dapagliflozin was the first drug in a class of therapies that took a new approach to glycemic control in adults with type 2 diabetes (T2D)."
+            },
+            {
+              "pmid": "25525338",
+              "text": "While longer-term outcome studies of safety and efficacy are awaited, dapagliflozin forms a very useful and welcome addition to our armamentarium for managing patients with T2D."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Preliminary data from a phase 2 pharmacokinetic/pharmacodynamic study suggest that dapagliflozin may also improve glycemic control in patients with type 1 diabetes mellitus."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Clinical trials published to date show that dapagliflozin is safe and effective as monotherapy or as an add-on to insulin or oral antidiabetic agents in patients with T2DM."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Dapagliflozin: an emerging treatment option in type 2 diabetes."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Clinical trials have shown that dapagliflozin treatment induces glucosuria and improves glycemic parameters in patients with type 2 diabetes."
+            },
+            {
+              "pmid": "19243283",
+              "text": "This article reviews the role of dapagliflozin as an emerging treatment option in type 2 diabetes."
+            },
+            {
+              "pmid": "25418019",
+              "text": "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment."
+            }
+          ],
+          "path_str": "Dapagliflozin --[Y văn: ASSOCIATED_WITH]--> type 2 diabetes mellitus [⚪ Trung tính] [⚡ Y văn trực tiếp]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6527",
+            "Disease::DOID:9352"
+          ],
+          "dwpc_weight": 0.036797,
+          "beta": 0.4757,
+          "contrib": 0.017506,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> SLC5A4 <--[DaG]-- type 2 diabetes mellitus [⚪ Trung tính]"
+        }
+      ],
+      "evidence_edges": [
+        {
+          "source": "DB06292",
+          "source_name": "Dapagliflozin",
+          "source_type": "Compound",
+          "target": "DOID:9352",
+          "target_name": "Type 2 Diabetes",
+          "target_type": "Disease",
+          "relation_type": "ASSOCIATED_WITH",
+          "sign": 0,
+          "partition": "REVIEW",
+          "quotes": [
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis)."
+            }
+          ]
+        },
+        {
+          "source": "DB06292",
+          "source_name": "Dapagliflozin",
+          "source_type": "Compound",
+          "target": "DOID:9352",
+          "target_name": "Type 2 Diabetes",
+          "target_type": "Disease",
+          "relation_type": "TREATS",
+          "sign": -1,
+          "partition": "REVIEW",
+          "quotes": [
+            {
+              "pmid": "26571022",
+              "text": "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM."
+            }
+          ]
+        }
+      ],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.061921,
+          "standardized_value": 4.9271,
+          "beta": 0.4757,
+          "logit_contribution": 2.344
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.036699,
+          "standardized_value": 3.3932,
+          "beta": 0.6443,
+          "logit_contribution": 2.1864
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 5.820083,
+          "standardized_value": 0.6809,
+          "beta": 0.5971,
+          "logit_contribution": 0.4066
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GpCC|DdG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5008,
+          "beta": -0.5245,
+          "logit_contribution": 0.2626
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        },
+        {
+          "feature": "dwpc:CuG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5277,
+          "beta": -0.3893,
+          "logit_contribution": 0.2054
+        },
+        {
+          "feature": "dwpc:CuG|GpMF|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.528,
+          "beta": -0.3169,
+          "logit_contribution": 0.1673
+        },
+        {
+          "feature": "dwpc:CdG|GpPW|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.519,
+          "beta": -0.3068,
+          "logit_contribution": 0.1592
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:10763",
+      "disease_name": "hypertension",
+      "ranking_score": 0.949,
+      "base_score": 0.948,
+      "literature_delta": 0.001,
+      "session_evidence_count": 1,
+      "session_status": "augmented",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Disease::DOID:10763"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.007941,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Disease::DOID:10763"
+          ],
+          "relations": [
+            "dwpc:CdG|direct|DaG"
+          ],
+          "path_score": 0.001889,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "supporting_pmids": [
+            "25516459",
+            "24105299",
+            "26571022",
+            "21105857",
+            "25678954",
+            "23748519",
+            "19584379",
+            "28587531",
+            "26474563",
+            "19243283",
+            "25418019",
+            "24705156"
+          ],
+          "evidence_sentences": [
+            "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors.",
+            "It has been hypothesized that SGLT-2 inhibitors can be effectively and safely combined with other agents, including insulin, and incretin-based therapies.",
+            "Ongoing studies may provide definitive answers on the cardiovascular safety and efficacy of SGLT-2 inhibitors in patients with type-2 diabetes.",
+            "Clinical pharmacokinetics and pharmacodynamics of dapagliflozin, a selective inhibitor of sodium-glucose co-transporter type 2.",
+            "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis).",
+            "Dapagliflozin metabolism occurs predominantly in the liver and kidneys by uridine diphosphate-glucuronosyltransferase-1A9 to the major metabolite dapagliflozin 3-O-glucuronide (this metabolite is not an SGLT2 inhibitor at clinically relevant exposures).",
+            "The first commercially available SGLT2 inhibitors (canagliflozin and dapagliflozin) were approved for use in the United States in 2013.",
+            "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM.",
+            "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption.",
+            "Dapagliflozin is a selective and reversible inhibitor of sodium-glucose linked transporter type 2 (SGLT2), which mediates approximately 90% of active renal glucose reabsorption in the early proximal tubule of the kidney.",
+            "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion.",
+            "DATA SOURCES: A search of the literature was conducted via MEDLINE (1995-March 2009) and ClinicalTrials.gov using the search terms dapagliflozin, SGLT2 inhibitor, sodium-glucose co-transport inhibition, and renal glucose reabsorption inhibition.",
+            "Dapagliflozin represents the first selective, sodium-glucose cotransporter 2 inhibitor that functions by regulating renal glucose reabsorption.",
+            "Areas covered: In this review, the authors summarize results from studies on the sodium glucose co-transporter 2 (SGLT2) inhibitor dapagliflozin in T1DM.",
+            "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus.",
+            "As the mechanism of action of SGLT2 inhibitors is different from other agents and completely insulin-independent, the use of these drugs might potentially be efficacious alone or in combination with any other antidiabetic drug, including insulin.",
+            "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin.",
+            "This review focuses on the safety and efficacy of this SGLT2 inhibitor.",
+            "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney.",
+            "Preclinical trials demonstrated that dapagliflozin is a potent and selective inhibitor of SGLT2.",
+            "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment.",
+            "Dapagliflozin is a selective inhibitor of SGLT2."
+          ]
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:10763"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.000935,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Disease::DOID:10763"
+          ],
+          "dwpc_weight": 0.016693,
+          "beta": 0.4757,
+          "contrib": 0.007941,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> SLC5A2 <--[DaG]-- hypertension [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CdG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Disease::DOID:10763"
+          ],
+          "dwpc_weight": 0.047972,
+          "beta": 0.0394,
+          "contrib": 0.001889,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "is_literature_augmented": true,
+          "supporting_pmids": [
+            "25516459",
+            "24105299",
+            "26571022",
+            "21105857",
+            "25678954",
+            "23748519",
+            "19584379",
+            "28587531",
+            "26474563",
+            "19243283",
+            "25418019",
+            "24705156"
+          ],
+          "quotes": [
+            {
+              "pmid": "25516459",
+              "text": "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors."
+            },
+            {
+              "pmid": "25516459",
+              "text": "It has been hypothesized that SGLT-2 inhibitors can be effectively and safely combined with other agents, including insulin, and incretin-based therapies."
+            },
+            {
+              "pmid": "25516459",
+              "text": "Ongoing studies may provide definitive answers on the cardiovascular safety and efficacy of SGLT-2 inhibitors in patients with type-2 diabetes."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Clinical pharmacokinetics and pharmacodynamics of dapagliflozin, a selective inhibitor of sodium-glucose co-transporter type 2."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin metabolism occurs predominantly in the liver and kidneys by uridine diphosphate-glucuronosyltransferase-1A9 to the major metabolite dapagliflozin 3-O-glucuronide (this metabolite is not an SGLT2 inhibitor at clinically relevant exposures)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "The first commercially available SGLT2 inhibitors (canagliflozin and dapagliflozin) were approved for use in the United States in 2013."
+            },
+            {
+              "pmid": "26571022",
+              "text": "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM."
+            },
+            {
+              "pmid": "21105857",
+              "text": "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption."
+            },
+            {
+              "pmid": "25678954",
+              "text": "Dapagliflozin is a selective and reversible inhibitor of sodium-glucose linked transporter type 2 (SGLT2), which mediates approximately 90% of active renal glucose reabsorption in the early proximal tubule of the kidney."
+            },
+            {
+              "pmid": "23748519",
+              "text": "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion."
+            },
+            {
+              "pmid": "19584379",
+              "text": "DATA SOURCES: A search of the literature was conducted via MEDLINE (1995-March 2009) and ClinicalTrials.gov using the search terms dapagliflozin, SGLT2 inhibitor, sodium-glucose co-transport inhibition, and renal glucose reabsorption inhibition."
+            },
+            {
+              "pmid": "19584379",
+              "text": "Dapagliflozin represents the first selective, sodium-glucose cotransporter 2 inhibitor that functions by regulating renal glucose reabsorption."
+            },
+            {
+              "pmid": "28587531",
+              "text": "Areas covered: In this review, the authors summarize results from studies on the sodium glucose co-transporter 2 (SGLT2) inhibitor dapagliflozin in T1DM."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus."
+            },
+            {
+              "pmid": "26474563",
+              "text": "As the mechanism of action of SGLT2 inhibitors is different from other agents and completely insulin-independent, the use of these drugs might potentially be efficacious alone or in combination with any other antidiabetic drug, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "This review focuses on the safety and efficacy of this SGLT2 inhibitor."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Preclinical trials demonstrated that dapagliflozin is a potent and selective inhibitor of SGLT2."
+            },
+            {
+              "pmid": "25418019",
+              "text": "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment."
+            },
+            {
+              "pmid": "24705156",
+              "text": "Dapagliflozin is a selective inhibitor of SGLT2."
+            }
+          ],
+          "path_str": "Dapagliflozin --[CdG]--> SLC5A2 <--[DaG]-- hypertension [🟢 Trị liệu] [⚡ Y văn mới]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:10763"
+          ],
+          "dwpc_weight": 0.001966,
+          "beta": 0.4757,
+          "contrib": 0.000935,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP1A1 <--[DaG]-- hypertension [⚪ Trung tính]"
+        }
+      ],
+      "evidence_edges": [
+        {
+          "source": "DB06292",
+          "source_name": "Dapagliflozin",
+          "source_type": "Compound",
+          "target": "6524",
+          "target_name": "SLC5A2",
+          "target_type": "Gene",
+          "relation_type": "INHIBITS",
+          "sign": -1,
+          "partition": "REVIEW",
+          "quotes": [
+            {
+              "pmid": "25516459",
+              "text": "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors."
+            }
+          ]
+        }
+      ],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.040639,
+          "standardized_value": 3.5338,
+          "beta": 0.6443,
+          "logit_contribution": 2.277
+        },
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.018659,
+          "standardized_value": 3.5014,
+          "beta": 0.4757,
+          "logit_contribution": 1.6657
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DuG",
+          "raw_value": 0.005086,
+          "standardized_value": 1.9211,
+          "beta": 0.3985,
+          "logit_contribution": 0.7655
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 6.555357,
+          "standardized_value": 1.1778,
+          "beta": 0.5971,
+          "logit_contribution": 0.7033
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DdG",
+          "raw_value": 0.006452,
+          "standardized_value": 2.1656,
+          "beta": 0.1818,
+          "logit_contribution": 0.3938
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DdG",
+          "raw_value": 0.006264,
+          "standardized_value": 2.2895,
+          "beta": 0.1653,
+          "logit_contribution": 0.3786
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        },
+        {
+          "feature": "dwpc:CuG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5277,
+          "beta": -0.3893,
+          "logit_contribution": 0.2054
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:1324",
+      "disease_name": "lung cancer",
+      "ranking_score": 0.8968,
+      "base_score": 0.8968,
+      "literature_delta": 0.0,
+      "session_evidence_count": 0,
+      "session_status": "baseline",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1548",
+            "Disease::DOID:1324"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.001751,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:1324"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.001226,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::5243",
+            "Disease::DOID:1324"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.000652,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1548",
+            "Disease::DOID:1324"
+          ],
+          "dwpc_weight": 0.00368,
+          "beta": 0.4757,
+          "contrib": 0.001751,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP2A6 <--[DaG]-- lung cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:1324"
+          ],
+          "dwpc_weight": 0.002578,
+          "beta": 0.4757,
+          "contrib": 0.001226,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP1A1 <--[DaG]-- lung cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::5243",
+            "Disease::DOID:1324"
+          ],
+          "dwpc_weight": 0.00137,
+          "beta": 0.4757,
+          "contrib": 0.000652,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> ABCB1 <--[DaG]-- lung cancer [⚪ Trung tính]"
+        }
+      ],
+      "evidence_edges": [],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.022397,
+          "standardized_value": 2.7145,
+          "beta": 0.6443,
+          "logit_contribution": 1.7491
+        },
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.007628,
+          "standardized_value": 2.4459,
+          "beta": 0.4757,
+          "logit_contribution": 1.1636
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DuG",
+          "raw_value": 0.011748,
+          "standardized_value": 2.8873,
+          "beta": 0.3985,
+          "logit_contribution": 1.1506
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 6.579251,
+          "standardized_value": 1.1934,
+          "beta": 0.5971,
+          "logit_contribution": 0.7126
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DdG",
+          "raw_value": 0.010515,
+          "standardized_value": 2.7322,
+          "beta": 0.1818,
+          "logit_contribution": 0.4968
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DdG",
+          "raw_value": 0.008042,
+          "standardized_value": 2.5793,
+          "beta": 0.1653,
+          "logit_contribution": 0.4265
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GiG|DuG",
+          "raw_value": 0.001494,
+          "standardized_value": 2.0865,
+          "beta": 0.1476,
+          "logit_contribution": 0.308
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:1612",
+      "disease_name": "breast cancer",
+      "ranking_score": 0.8537,
+      "base_score": 0.8484,
+      "literature_delta": 0.0053,
+      "session_evidence_count": 2,
+      "session_status": "augmented",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Biological Process::GO:0034219",
+            "Gene::55974",
+            "Disease::DOID:1612"
+          ],
+          "relations": [
+            "dwpc:CdG|GpBP|DuG"
+          ],
+          "path_score": 0.0012,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "supporting_pmids": [
+            "25516459",
+            "24105299",
+            "26571022",
+            "21105857",
+            "25678954",
+            "23748519",
+            "19584379",
+            "28587531",
+            "26474563",
+            "19243283",
+            "25418019",
+            "24705156"
+          ],
+          "evidence_sentences": [
+            "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors.",
+            "It has been hypothesized that SGLT-2 inhibitors can be effectively and safely combined with other agents, including insulin, and incretin-based therapies.",
+            "Ongoing studies may provide definitive answers on the cardiovascular safety and efficacy of SGLT-2 inhibitors in patients with type-2 diabetes.",
+            "Clinical pharmacokinetics and pharmacodynamics of dapagliflozin, a selective inhibitor of sodium-glucose co-transporter type 2.",
+            "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis).",
+            "Dapagliflozin metabolism occurs predominantly in the liver and kidneys by uridine diphosphate-glucuronosyltransferase-1A9 to the major metabolite dapagliflozin 3-O-glucuronide (this metabolite is not an SGLT2 inhibitor at clinically relevant exposures).",
+            "The first commercially available SGLT2 inhibitors (canagliflozin and dapagliflozin) were approved for use in the United States in 2013.",
+            "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM.",
+            "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption.",
+            "Dapagliflozin is a selective and reversible inhibitor of sodium-glucose linked transporter type 2 (SGLT2), which mediates approximately 90% of active renal glucose reabsorption in the early proximal tubule of the kidney.",
+            "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion.",
+            "DATA SOURCES: A search of the literature was conducted via MEDLINE (1995-March 2009) and ClinicalTrials.gov using the search terms dapagliflozin, SGLT2 inhibitor, sodium-glucose co-transport inhibition, and renal glucose reabsorption inhibition.",
+            "Dapagliflozin represents the first selective, sodium-glucose cotransporter 2 inhibitor that functions by regulating renal glucose reabsorption.",
+            "Areas covered: In this review, the authors summarize results from studies on the sodium glucose co-transporter 2 (SGLT2) inhibitor dapagliflozin in T1DM.",
+            "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus.",
+            "As the mechanism of action of SGLT2 inhibitors is different from other agents and completely insulin-independent, the use of these drugs might potentially be efficacious alone or in combination with any other antidiabetic drug, including insulin.",
+            "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin.",
+            "This review focuses on the safety and efficacy of this SGLT2 inhibitor.",
+            "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney.",
+            "Preclinical trials demonstrated that dapagliflozin is a potent and selective inhibitor of SGLT2.",
+            "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment.",
+            "Dapagliflozin is a selective inhibitor of SGLT2."
+          ]
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:1612"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.000904,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Biological Process::GO:0035428",
+            "Gene::81031",
+            "Disease::DOID:1612"
+          ],
+          "relations": [
+            "dwpc:CdG|GpBP|DaG"
+          ],
+          "path_score": 0.000767,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "supporting_pmids": [
+            "25516459",
+            "24105299",
+            "26571022",
+            "21105857",
+            "25678954",
+            "23748519",
+            "19584379",
+            "28587531",
+            "26474563",
+            "19243283",
+            "25418019",
+            "24705156"
+          ],
+          "evidence_sentences": [
+            "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors.",
+            "It has been hypothesized that SGLT-2 inhibitors can be effectively and safely combined with other agents, including insulin, and incretin-based therapies.",
+            "Ongoing studies may provide definitive answers on the cardiovascular safety and efficacy of SGLT-2 inhibitors in patients with type-2 diabetes.",
+            "Clinical pharmacokinetics and pharmacodynamics of dapagliflozin, a selective inhibitor of sodium-glucose co-transporter type 2.",
+            "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis).",
+            "Dapagliflozin metabolism occurs predominantly in the liver and kidneys by uridine diphosphate-glucuronosyltransferase-1A9 to the major metabolite dapagliflozin 3-O-glucuronide (this metabolite is not an SGLT2 inhibitor at clinically relevant exposures).",
+            "The first commercially available SGLT2 inhibitors (canagliflozin and dapagliflozin) were approved for use in the United States in 2013.",
+            "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM.",
+            "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption.",
+            "Dapagliflozin is a selective and reversible inhibitor of sodium-glucose linked transporter type 2 (SGLT2), which mediates approximately 90% of active renal glucose reabsorption in the early proximal tubule of the kidney.",
+            "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion.",
+            "DATA SOURCES: A search of the literature was conducted via MEDLINE (1995-March 2009) and ClinicalTrials.gov using the search terms dapagliflozin, SGLT2 inhibitor, sodium-glucose co-transport inhibition, and renal glucose reabsorption inhibition.",
+            "Dapagliflozin represents the first selective, sodium-glucose cotransporter 2 inhibitor that functions by regulating renal glucose reabsorption.",
+            "Areas covered: In this review, the authors summarize results from studies on the sodium glucose co-transporter 2 (SGLT2) inhibitor dapagliflozin in T1DM.",
+            "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus.",
+            "As the mechanism of action of SGLT2 inhibitors is different from other agents and completely insulin-independent, the use of these drugs might potentially be efficacious alone or in combination with any other antidiabetic drug, including insulin.",
+            "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin.",
+            "This review focuses on the safety and efficacy of this SGLT2 inhibitor.",
+            "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney.",
+            "Preclinical trials demonstrated that dapagliflozin is a potent and selective inhibitor of SGLT2.",
+            "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment.",
+            "Dapagliflozin is a selective inhibitor of SGLT2."
+          ]
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CdG|GpBP|DuG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Biological Process::GO:0034219",
+            "Gene::55974",
+            "Disease::DOID:1612"
+          ],
+          "dwpc_weight": 0.001163,
+          "beta": 1.0311,
+          "contrib": 0.0012,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "is_literature_augmented": true,
+          "supporting_pmids": [
+            "25516459",
+            "24105299",
+            "26571022",
+            "21105857",
+            "25678954",
+            "23748519",
+            "19584379",
+            "28587531",
+            "26474563",
+            "19243283",
+            "25418019",
+            "24705156"
+          ],
+          "quotes": [
+            {
+              "pmid": "25516459",
+              "text": "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors."
+            },
+            {
+              "pmid": "25516459",
+              "text": "It has been hypothesized that SGLT-2 inhibitors can be effectively and safely combined with other agents, including insulin, and incretin-based therapies."
+            },
+            {
+              "pmid": "25516459",
+              "text": "Ongoing studies may provide definitive answers on the cardiovascular safety and efficacy of SGLT-2 inhibitors in patients with type-2 diabetes."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Clinical pharmacokinetics and pharmacodynamics of dapagliflozin, a selective inhibitor of sodium-glucose co-transporter type 2."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin metabolism occurs predominantly in the liver and kidneys by uridine diphosphate-glucuronosyltransferase-1A9 to the major metabolite dapagliflozin 3-O-glucuronide (this metabolite is not an SGLT2 inhibitor at clinically relevant exposures)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "The first commercially available SGLT2 inhibitors (canagliflozin and dapagliflozin) were approved for use in the United States in 2013."
+            },
+            {
+              "pmid": "26571022",
+              "text": "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM."
+            },
+            {
+              "pmid": "21105857",
+              "text": "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption."
+            },
+            {
+              "pmid": "25678954",
+              "text": "Dapagliflozin is a selective and reversible inhibitor of sodium-glucose linked transporter type 2 (SGLT2), which mediates approximately 90% of active renal glucose reabsorption in the early proximal tubule of the kidney."
+            },
+            {
+              "pmid": "23748519",
+              "text": "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion."
+            },
+            {
+              "pmid": "19584379",
+              "text": "DATA SOURCES: A search of the literature was conducted via MEDLINE (1995-March 2009) and ClinicalTrials.gov using the search terms dapagliflozin, SGLT2 inhibitor, sodium-glucose co-transport inhibition, and renal glucose reabsorption inhibition."
+            },
+            {
+              "pmid": "19584379",
+              "text": "Dapagliflozin represents the first selective, sodium-glucose cotransporter 2 inhibitor that functions by regulating renal glucose reabsorption."
+            },
+            {
+              "pmid": "28587531",
+              "text": "Areas covered: In this review, the authors summarize results from studies on the sodium glucose co-transporter 2 (SGLT2) inhibitor dapagliflozin in T1DM."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus."
+            },
+            {
+              "pmid": "26474563",
+              "text": "As the mechanism of action of SGLT2 inhibitors is different from other agents and completely insulin-independent, the use of these drugs might potentially be efficacious alone or in combination with any other antidiabetic drug, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "This review focuses on the safety and efficacy of this SGLT2 inhibitor."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Preclinical trials demonstrated that dapagliflozin is a potent and selective inhibitor of SGLT2."
+            },
+            {
+              "pmid": "25418019",
+              "text": "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment."
+            },
+            {
+              "pmid": "24705156",
+              "text": "Dapagliflozin is a selective inhibitor of SGLT2."
+            }
+          ],
+          "path_str": "Dapagliflozin --[CdG]--> SLC5A2 --[GpBP]--> carbohydrate transmembrane transport <--[GpBP]-- SLC50A1 <--[DuG]-- breast cancer [🟢 Trị liệu] [⚡ Y văn mới]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:1612"
+          ],
+          "dwpc_weight": 0.001901,
+          "beta": 0.4757,
+          "contrib": 0.000904,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP1A1 <--[DaG]-- breast cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CdG|GpBP|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Biological Process::GO:0035428",
+            "Gene::81031",
+            "Disease::DOID:1612"
+          ],
+          "dwpc_weight": 0.00096,
+          "beta": 0.7988,
+          "contrib": 0.000767,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "is_literature_augmented": true,
+          "supporting_pmids": [
+            "25516459",
+            "24105299",
+            "26571022",
+            "21105857",
+            "25678954",
+            "23748519",
+            "19584379",
+            "28587531",
+            "26474563",
+            "19243283",
+            "25418019",
+            "24705156"
+          ],
+          "quotes": [
+            {
+              "pmid": "25516459",
+              "text": "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors."
+            },
+            {
+              "pmid": "25516459",
+              "text": "It has been hypothesized that SGLT-2 inhibitors can be effectively and safely combined with other agents, including insulin, and incretin-based therapies."
+            },
+            {
+              "pmid": "25516459",
+              "text": "Ongoing studies may provide definitive answers on the cardiovascular safety and efficacy of SGLT-2 inhibitors in patients with type-2 diabetes."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Clinical pharmacokinetics and pharmacodynamics of dapagliflozin, a selective inhibitor of sodium-glucose co-transporter type 2."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin metabolism occurs predominantly in the liver and kidneys by uridine diphosphate-glucuronosyltransferase-1A9 to the major metabolite dapagliflozin 3-O-glucuronide (this metabolite is not an SGLT2 inhibitor at clinically relevant exposures)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "The first commercially available SGLT2 inhibitors (canagliflozin and dapagliflozin) were approved for use in the United States in 2013."
+            },
+            {
+              "pmid": "26571022",
+              "text": "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM."
+            },
+            {
+              "pmid": "21105857",
+              "text": "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption."
+            },
+            {
+              "pmid": "25678954",
+              "text": "Dapagliflozin is a selective and reversible inhibitor of sodium-glucose linked transporter type 2 (SGLT2), which mediates approximately 90% of active renal glucose reabsorption in the early proximal tubule of the kidney."
+            },
+            {
+              "pmid": "23748519",
+              "text": "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion."
+            },
+            {
+              "pmid": "19584379",
+              "text": "DATA SOURCES: A search of the literature was conducted via MEDLINE (1995-March 2009) and ClinicalTrials.gov using the search terms dapagliflozin, SGLT2 inhibitor, sodium-glucose co-transport inhibition, and renal glucose reabsorption inhibition."
+            },
+            {
+              "pmid": "19584379",
+              "text": "Dapagliflozin represents the first selective, sodium-glucose cotransporter 2 inhibitor that functions by regulating renal glucose reabsorption."
+            },
+            {
+              "pmid": "28587531",
+              "text": "Areas covered: In this review, the authors summarize results from studies on the sodium glucose co-transporter 2 (SGLT2) inhibitor dapagliflozin in T1DM."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus."
+            },
+            {
+              "pmid": "26474563",
+              "text": "As the mechanism of action of SGLT2 inhibitors is different from other agents and completely insulin-independent, the use of these drugs might potentially be efficacious alone or in combination with any other antidiabetic drug, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "This review focuses on the safety and efficacy of this SGLT2 inhibitor."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Preclinical trials demonstrated that dapagliflozin is a potent and selective inhibitor of SGLT2."
+            },
+            {
+              "pmid": "25418019",
+              "text": "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment."
+            },
+            {
+              "pmid": "24705156",
+              "text": "Dapagliflozin is a selective inhibitor of SGLT2."
+            }
+          ],
+          "path_str": "Dapagliflozin --[CdG]--> SLC5A2 --[GpBP]--> hexose transmembrane transport <--[GpBP]-- SLC2A10 <--[DaG]-- breast cancer [🟢 Trị liệu] [⚡ Y văn mới]"
+        }
+      ],
+      "evidence_edges": [
+        {
+          "source": "DB06292",
+          "source_name": "Dapagliflozin",
+          "source_type": "Compound",
+          "target": "6524",
+          "target_name": "SLC5A2",
+          "target_type": "Gene",
+          "relation_type": "INHIBITS",
+          "sign": -1,
+          "partition": "REVIEW",
+          "quotes": [
+            {
+              "pmid": "25516459",
+              "text": "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors."
+            }
+          ]
+        }
+      ],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.030167,
+          "standardized_value": 3.1232,
+          "beta": 0.6443,
+          "logit_contribution": 2.0124
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DuG",
+          "raw_value": 0.01288,
+          "standardized_value": 2.9946,
+          "beta": 0.3985,
+          "logit_contribution": 1.1933
+        },
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.005538,
+          "standardized_value": 2.0744,
+          "beta": 0.4757,
+          "logit_contribution": 0.9869
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 7.018402,
+          "standardized_value": 1.473,
+          "beta": 0.5971,
+          "logit_contribution": 0.8795
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DdG",
+          "raw_value": 0.010246,
+          "standardized_value": 2.8617,
+          "beta": 0.1653,
+          "logit_contribution": 0.4732
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DdG",
+          "raw_value": 0.004913,
+          "standardized_value": 1.854,
+          "beta": 0.1818,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GpCC|DuG",
+          "raw_value": 0.005802,
+          "standardized_value": 2.3121,
+          "beta": 0.1136,
+          "logit_contribution": 0.2627
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:14330",
+      "disease_name": "Parkinson's disease",
+      "ranking_score": 0.844,
+      "base_score": 0.8412,
+      "literature_delta": 0.0028,
+      "session_evidence_count": 1,
+      "session_status": "augmented",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::3630",
+            "Disease::DOID:14330"
+          ],
+          "relations": [
+            "dwpc:CdG|direct|DaG"
+          ],
+          "path_score": 0.001469,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "supporting_pmids": [
+            "24705156"
+          ],
+          "evidence_sentences": [
+            "Although the mechanism of action of dapagliflozin is not directly linked with insulin or insulin sensitivity, reduction of plasma glucose by dapagliflozin via induction of glucosuria could improve muscle insulin sensitivity."
+          ]
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1565",
+            "Disease::DOID:14330"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.001145,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::5243",
+            "Disease::DOID:14330"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.000818,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CdG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::3630",
+            "Disease::DOID:14330"
+          ],
+          "dwpc_weight": 0.037314,
+          "beta": 0.0394,
+          "contrib": 0.001469,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "is_literature_augmented": true,
+          "supporting_pmids": [
+            "24705156"
+          ],
+          "quotes": [
+            {
+              "pmid": "24705156",
+              "text": "Although the mechanism of action of dapagliflozin is not directly linked with insulin or insulin sensitivity, reduction of plasma glucose by dapagliflozin via induction of glucosuria could improve muscle insulin sensitivity."
+            }
+          ],
+          "path_str": "Dapagliflozin --[CdG]--> INS <--[DaG]-- Parkinson's disease [🟢 Trị liệu] [⚡ Y văn mới]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1565",
+            "Disease::DOID:14330"
+          ],
+          "dwpc_weight": 0.002407,
+          "beta": 0.4757,
+          "contrib": 0.001145,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP2D6 <--[DaG]-- Parkinson's disease [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::5243",
+            "Disease::DOID:14330"
+          ],
+          "dwpc_weight": 0.001719,
+          "beta": 0.4757,
+          "contrib": 0.000818,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> ABCB1 <--[DaG]-- Parkinson's disease [⚪ Trung tính]"
+        }
+      ],
+      "evidence_edges": [
+        {
+          "source": "DB06292",
+          "source_name": "Dapagliflozin",
+          "source_type": "Compound",
+          "target": "3630",
+          "target_name": "INS",
+          "target_type": "Gene",
+          "relation_type": "INHIBITS",
+          "sign": -1,
+          "partition": "REVIEW",
+          "quotes": [
+            {
+              "pmid": "24705156",
+              "text": "Although the mechanism of action of dapagliflozin is not directly linked with insulin or insulin sensitivity, reduction of plasma glucose by dapagliflozin via induction of glucosuria could improve muscle insulin sensitivity."
+            }
+          ]
+        }
+      ],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.012867,
+          "standardized_value": 1.9631,
+          "beta": 0.6443,
+          "logit_contribution": 1.2649
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DuG",
+          "raw_value": 0.006145,
+          "standardized_value": 2.137,
+          "beta": 0.3985,
+          "logit_contribution": 0.8516
+        },
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.004125,
+          "standardized_value": 1.7393,
+          "beta": 0.4757,
+          "logit_contribution": 0.8275
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 6.64379,
+          "standardized_value": 1.2352,
+          "beta": 0.5971,
+          "logit_contribution": 0.7375
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DdG",
+          "raw_value": 0.012956,
+          "standardized_value": 2.976,
+          "beta": 0.1818,
+          "logit_contribution": 0.5411
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DdG",
+          "raw_value": 0.013544,
+          "standardized_value": 3.1883,
+          "beta": 0.1653,
+          "logit_contribution": 0.5272
+        },
+        {
+          "feature": "dwpc:CbG|GiG|DuG",
+          "raw_value": 0.003007,
+          "standardized_value": 2.9143,
+          "beta": 0.1476,
+          "logit_contribution": 0.4302
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GpCC|DuG",
+          "raw_value": 0.006581,
+          "standardized_value": 2.4562,
+          "beta": 0.1136,
+          "logit_contribution": 0.2791
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:11054",
+      "disease_name": "urinary bladder cancer",
+      "ranking_score": 0.8365,
+      "base_score": 0.8365,
+      "literature_delta": 0.0,
+      "session_evidence_count": 0,
+      "session_status": "baseline",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::7364",
+            "Disease::DOID:11054"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.006237,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::7363",
+            "Pathway::PC7_4214",
+            "Gene::7364",
+            "Disease::DOID:11054"
+          ],
+          "relations": [
+            "dwpc:CbG|GpPW|DaG"
+          ],
+          "path_score": 0.000268,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::7363",
+            "Pathway::WP698_r79224",
+            "Gene::7364",
+            "Disease::DOID:11054"
+          ],
+          "relations": [
+            "dwpc:CbG|GpPW|DaG"
+          ],
+          "path_score": 0.000217,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::7364",
+            "Disease::DOID:11054"
+          ],
+          "dwpc_weight": 0.01311,
+          "beta": 0.4757,
+          "contrib": 0.006237,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> UGT2B7 <--[DaG]-- urinary bladder cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|GpPW|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::7363",
+            "Pathway::PC7_4214",
+            "Gene::7364",
+            "Disease::DOID:11054"
+          ],
+          "dwpc_weight": 0.000415,
+          "beta": 0.6443,
+          "contrib": 0.000268,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> UGT2B4 --[GpPW]--> Glucuronidation <--[GpPW]-- UGT2B7 <--[DaG]-- urinary bladder cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|GpPW|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::7363",
+            "Pathway::WP698_r79224",
+            "Gene::7364",
+            "Disease::DOID:11054"
+          ],
+          "dwpc_weight": 0.000337,
+          "beta": 0.6443,
+          "contrib": 0.000217,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> UGT2B4 --[GpPW]--> Glucuronidation <--[GpPW]-- UGT2B7 <--[DaG]-- urinary bladder cancer [⚪ Trung tính]"
+        }
+      ],
+      "evidence_edges": [],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.01311,
+          "standardized_value": 3.0832,
+          "beta": 0.4757,
+          "logit_contribution": 1.4668
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.014741,
+          "standardized_value": 2.1458,
+          "beta": 0.6443,
+          "logit_contribution": 1.3826
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GpCC|DdG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5008,
+          "beta": -0.5245,
+          "logit_contribution": 0.2626
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        },
+        {
+          "feature": "dwpc:CuG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5277,
+          "beta": -0.3893,
+          "logit_contribution": 0.2054
+        },
+        {
+          "feature": "dwpc:CuG|GpMF|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.528,
+          "beta": -0.3169,
+          "logit_contribution": 0.1673
+        },
+        {
+          "feature": "dwpc:CdG|GpPW|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.519,
+          "beta": -0.3068,
+          "logit_contribution": 0.1592
+        },
+        {
+          "feature": "dwpc:CdG|GpBP|DdG",
+          "raw_value": 0.0,
+          "standardized_value": -0.341,
+          "beta": -0.4593,
+          "logit_contribution": 0.1566
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:10283",
+      "disease_name": "prostate cancer",
+      "ranking_score": 0.8216,
+      "base_score": 0.8185,
+      "literature_delta": 0.0031,
+      "session_evidence_count": 1,
+      "session_status": "augmented",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1548",
+            "Disease::DOID:10283"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.001296,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:10283"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.000908,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::3630",
+            "Disease::DOID:10283"
+          ],
+          "relations": [
+            "dwpc:CdG|direct|DaG"
+          ],
+          "path_score": 0.000867,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "supporting_pmids": [
+            "24705156"
+          ],
+          "evidence_sentences": [
+            "Although the mechanism of action of dapagliflozin is not directly linked with insulin or insulin sensitivity, reduction of plasma glucose by dapagliflozin via induction of glucosuria could improve muscle insulin sensitivity."
+          ]
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1548",
+            "Disease::DOID:10283"
+          ],
+          "dwpc_weight": 0.002723,
+          "beta": 0.4757,
+          "contrib": 0.001296,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP2A6 <--[DaG]-- prostate cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:10283"
+          ],
+          "dwpc_weight": 0.001908,
+          "beta": 0.4757,
+          "contrib": 0.000908,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP1A1 <--[DaG]-- prostate cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CdG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::3630",
+            "Disease::DOID:10283"
+          ],
+          "dwpc_weight": 0.022012,
+          "beta": 0.0394,
+          "contrib": 0.000867,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "is_literature_augmented": true,
+          "supporting_pmids": [
+            "24705156"
+          ],
+          "quotes": [
+            {
+              "pmid": "24705156",
+              "text": "Although the mechanism of action of dapagliflozin is not directly linked with insulin or insulin sensitivity, reduction of plasma glucose by dapagliflozin via induction of glucosuria could improve muscle insulin sensitivity."
+            }
+          ],
+          "path_str": "Dapagliflozin --[CdG]--> INS <--[DaG]-- prostate cancer [🟢 Trị liệu] [⚡ Y văn mới]"
+        }
+      ],
+      "evidence_edges": [
+        {
+          "source": "DB06292",
+          "source_name": "Dapagliflozin",
+          "source_type": "Compound",
+          "target": "3630",
+          "target_name": "INS",
+          "target_type": "Gene",
+          "relation_type": "INHIBITS",
+          "sign": -1,
+          "partition": "REVIEW",
+          "quotes": [
+            {
+              "pmid": "24705156",
+              "text": "Although the mechanism of action of dapagliflozin is not directly linked with insulin or insulin sensitivity, reduction of plasma glucose by dapagliflozin via induction of glucosuria could improve muscle insulin sensitivity."
+            }
+          ]
+        }
+      ],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.035848,
+          "standardized_value": 3.3608,
+          "beta": 0.6443,
+          "logit_contribution": 2.1655
+        },
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.005849,
+          "standardized_value": 2.1372,
+          "beta": 0.4757,
+          "logit_contribution": 1.0168
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 6.496775,
+          "standardized_value": 1.1395,
+          "beta": 0.5971,
+          "logit_contribution": 0.6804
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DdG",
+          "raw_value": 0.004515,
+          "standardized_value": 1.7585,
+          "beta": 0.1818,
+          "logit_contribution": 0.3197
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DdG",
+          "raw_value": 0.002991,
+          "standardized_value": 1.4533,
+          "beta": 0.1653,
+          "logit_contribution": 0.2403
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DuG",
+          "raw_value": 0.001354,
+          "standardized_value": 0.5634,
+          "beta": 0.3985,
+          "logit_contribution": 0.2245
+        },
+        {
+          "feature": "dwpc:CuG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5277,
+          "beta": -0.3893,
+          "logit_contribution": 0.2054
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:3083",
+      "disease_name": "chronic obstructive pulmonary disease",
+      "ranking_score": 0.8136,
+      "base_score": 0.8104,
+      "literature_delta": 0.0032,
+      "session_evidence_count": 1,
+      "session_status": "augmented",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:3083"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.001971,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1544",
+            "Disease::DOID:3083"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.0019,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Biological Process::GO:0035428",
+            "Gene::144195",
+            "Disease::DOID:3083"
+          ],
+          "relations": [
+            "dwpc:CdG|GpBP|DuG"
+          ],
+          "path_score": 0.00096,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "supporting_pmids": [
+            "25516459",
+            "24105299",
+            "26571022",
+            "21105857",
+            "25678954",
+            "23748519",
+            "19584379",
+            "28587531",
+            "26474563",
+            "19243283",
+            "25418019",
+            "24705156"
+          ],
+          "evidence_sentences": [
+            "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors.",
+            "It has been hypothesized that SGLT-2 inhibitors can be effectively and safely combined with other agents, including insulin, and incretin-based therapies.",
+            "Ongoing studies may provide definitive answers on the cardiovascular safety and efficacy of SGLT-2 inhibitors in patients with type-2 diabetes.",
+            "Clinical pharmacokinetics and pharmacodynamics of dapagliflozin, a selective inhibitor of sodium-glucose co-transporter type 2.",
+            "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis).",
+            "Dapagliflozin metabolism occurs predominantly in the liver and kidneys by uridine diphosphate-glucuronosyltransferase-1A9 to the major metabolite dapagliflozin 3-O-glucuronide (this metabolite is not an SGLT2 inhibitor at clinically relevant exposures).",
+            "The first commercially available SGLT2 inhibitors (canagliflozin and dapagliflozin) were approved for use in the United States in 2013.",
+            "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM.",
+            "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption.",
+            "Dapagliflozin is a selective and reversible inhibitor of sodium-glucose linked transporter type 2 (SGLT2), which mediates approximately 90% of active renal glucose reabsorption in the early proximal tubule of the kidney.",
+            "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion.",
+            "DATA SOURCES: A search of the literature was conducted via MEDLINE (1995-March 2009) and ClinicalTrials.gov using the search terms dapagliflozin, SGLT2 inhibitor, sodium-glucose co-transport inhibition, and renal glucose reabsorption inhibition.",
+            "Dapagliflozin represents the first selective, sodium-glucose cotransporter 2 inhibitor that functions by regulating renal glucose reabsorption.",
+            "Areas covered: In this review, the authors summarize results from studies on the sodium glucose co-transporter 2 (SGLT2) inhibitor dapagliflozin in T1DM.",
+            "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus.",
+            "As the mechanism of action of SGLT2 inhibitors is different from other agents and completely insulin-independent, the use of these drugs might potentially be efficacious alone or in combination with any other antidiabetic drug, including insulin.",
+            "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin.",
+            "This review focuses on the safety and efficacy of this SGLT2 inhibitor.",
+            "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney.",
+            "Preclinical trials demonstrated that dapagliflozin is a potent and selective inhibitor of SGLT2.",
+            "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment.",
+            "Dapagliflozin is a selective inhibitor of SGLT2."
+          ]
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:3083"
+          ],
+          "dwpc_weight": 0.004142,
+          "beta": 0.4757,
+          "contrib": 0.001971,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP1A1 <--[DaG]-- chronic obstructive pulmonary disease [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1544",
+            "Disease::DOID:3083"
+          ],
+          "dwpc_weight": 0.003994,
+          "beta": 0.4757,
+          "contrib": 0.0019,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP1A2 <--[DaG]-- chronic obstructive pulmonary disease [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CdG|GpBP|DuG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::6524",
+            "Biological Process::GO:0035428",
+            "Gene::144195",
+            "Disease::DOID:3083"
+          ],
+          "dwpc_weight": 0.000931,
+          "beta": 1.0311,
+          "contrib": 0.00096,
+          "net_sign": -1,
+          "mechanism_type": "therapeutic",
+          "is_literature_augmented": true,
+          "supporting_pmids": [
+            "25516459",
+            "24105299",
+            "26571022",
+            "21105857",
+            "25678954",
+            "23748519",
+            "19584379",
+            "28587531",
+            "26474563",
+            "19243283",
+            "25418019",
+            "24705156"
+          ],
+          "quotes": [
+            {
+              "pmid": "25516459",
+              "text": "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors."
+            },
+            {
+              "pmid": "25516459",
+              "text": "It has been hypothesized that SGLT-2 inhibitors can be effectively and safely combined with other agents, including insulin, and incretin-based therapies."
+            },
+            {
+              "pmid": "25516459",
+              "text": "Ongoing studies may provide definitive answers on the cardiovascular safety and efficacy of SGLT-2 inhibitors in patients with type-2 diabetes."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Clinical pharmacokinetics and pharmacodynamics of dapagliflozin, a selective inhibitor of sodium-glucose co-transporter type 2."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin is an orally active, highly selective SGLT2 inhibitor that improves glycemic control in patients with type 2 diabetes mellitus (T2DM) by reducing renal glucose reabsorption leading to urinary glucose excretion (glucuresis)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "Dapagliflozin metabolism occurs predominantly in the liver and kidneys by uridine diphosphate-glucuronosyltransferase-1A9 to the major metabolite dapagliflozin 3-O-glucuronide (this metabolite is not an SGLT2 inhibitor at clinically relevant exposures)."
+            },
+            {
+              "pmid": "24105299",
+              "text": "The first commercially available SGLT2 inhibitors (canagliflozin and dapagliflozin) were approved for use in the United States in 2013."
+            },
+            {
+              "pmid": "26571022",
+              "text": "Sodium-glucose cotransporter 2 inhibitors, such as dapagliflozin, are the newest class of antidiabetes drugs approved for the treatment of T2DM."
+            },
+            {
+              "pmid": "21105857",
+              "text": "Dapagliflozin, a selective inhibitor of sodium glucose transporter 2 (SGLT2), targets hyperglycemia independently of insulin, via decreasing renal glucose reabsorption."
+            },
+            {
+              "pmid": "25678954",
+              "text": "Dapagliflozin is a selective and reversible inhibitor of sodium-glucose linked transporter type 2 (SGLT2), which mediates approximately 90% of active renal glucose reabsorption in the early proximal tubule of the kidney."
+            },
+            {
+              "pmid": "23748519",
+              "text": "Dapagliflozin, a sodium-glucose co-transporter 2 inhibitor, lowers glucose levels in patients with T2DM by increasing urinary glucose excretion."
+            },
+            {
+              "pmid": "19584379",
+              "text": "DATA SOURCES: A search of the literature was conducted via MEDLINE (1995-March 2009) and ClinicalTrials.gov using the search terms dapagliflozin, SGLT2 inhibitor, sodium-glucose co-transport inhibition, and renal glucose reabsorption inhibition."
+            },
+            {
+              "pmid": "19584379",
+              "text": "Dapagliflozin represents the first selective, sodium-glucose cotransporter 2 inhibitor that functions by regulating renal glucose reabsorption."
+            },
+            {
+              "pmid": "28587531",
+              "text": "Areas covered: In this review, the authors summarize results from studies on the sodium glucose co-transporter 2 (SGLT2) inhibitor dapagliflozin in T1DM."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Efficacy and safety of dapagliflozin, a sodium glucose cotransporter 2 (SGLT2) inhibitor, in diabetes mellitus."
+            },
+            {
+              "pmid": "26474563",
+              "text": "As the mechanism of action of SGLT2 inhibitors is different from other agents and completely insulin-independent, the use of these drugs might potentially be efficacious alone or in combination with any other antidiabetic drug, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "Dapagliflozin is a highly selective and reversible SGLT2 inhibitor approved for use in adult patients with T2DM as monotherapy in patients intolerant of metformin or as adjunctive therapy in patients inadequately controlled on existing antidiabetic medications, including insulin."
+            },
+            {
+              "pmid": "26474563",
+              "text": "This review focuses on the safety and efficacy of this SGLT2 inhibitor."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Inhibition of SGLT2 by new agents, such as dapagliflozin, has the potential to reduce hyperglycemia by inhibiting glucose reabsorption in the kidney."
+            },
+            {
+              "pmid": "19243283",
+              "text": "Preclinical trials demonstrated that dapagliflozin is a potent and selective inhibitor of SGLT2."
+            },
+            {
+              "pmid": "25418019",
+              "text": "INTRODUCTION: Dapagliflozin (DAPA) (Farxiga or Forxiga) is a sodium glucose cotransporter 2 (SGLT2) inhibitor approved for type 2 diabetes mellitus(T2DM) treatment."
+            },
+            {
+              "pmid": "24705156",
+              "text": "Dapagliflozin is a selective inhibitor of SGLT2."
+            }
+          ],
+          "path_str": "Dapagliflozin --[CdG]--> SLC5A2 --[GpBP]--> hexose transmembrane transport <--[GpBP]-- SLC2A14 <--[DuG]-- chronic obstructive pulmonary disease [🟢 Trị liệu] [⚡ Y văn mới]"
+        }
+      ],
+      "evidence_edges": [
+        {
+          "source": "DB06292",
+          "source_name": "Dapagliflozin",
+          "source_type": "Compound",
+          "target": "6524",
+          "target_name": "SLC5A2",
+          "target_type": "Gene",
+          "relation_type": "INHIBITS",
+          "sign": -1,
+          "partition": "REVIEW",
+          "quotes": [
+            {
+              "pmid": "25516459",
+              "text": "Dapagliflozin is a new antidiabetic agent that belongs to the class of sodium glucose transporter 2 (SGLT-2) inhibitors."
+            }
+          ]
+        }
+      ],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|GpMF|DuG",
+          "raw_value": 0.016187,
+          "standardized_value": 3.2615,
+          "beta": 0.3985,
+          "logit_contribution": 1.2997
+        },
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.008137,
+          "standardized_value": 2.5214,
+          "beta": 0.4757,
+          "logit_contribution": 1.1995
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.010905,
+          "standardized_value": 1.7433,
+          "beta": 0.6443,
+          "logit_contribution": 1.1233
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 6.431331,
+          "standardized_value": 1.0965,
+          "beta": 0.5971,
+          "logit_contribution": 0.6547
+        },
+        {
+          "feature": "dwpc:CbG|GpMF|DdG",
+          "raw_value": 0.007246,
+          "standardized_value": 2.2994,
+          "beta": 0.1818,
+          "logit_contribution": 0.4181
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CbG|GpPW|DdG",
+          "raw_value": 0.007488,
+          "standardized_value": 2.4963,
+          "beta": 0.1653,
+          "logit_contribution": 0.4127
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GpCC|DuG",
+          "raw_value": 0.005979,
+          "standardized_value": 2.3463,
+          "beta": 0.1136,
+          "logit_contribution": 0.2666
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:784",
+      "disease_name": "chronic kidney failure",
+      "ranking_score": 0.7851,
+      "base_score": 0.7851,
+      "literature_delta": 0.0,
+      "session_evidence_count": 0,
+      "session_status": "baseline",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:784"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.001588,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1576",
+            "Disease::DOID:784"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.001014,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::5243",
+            "Disease::DOID:784"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.000844,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1543",
+            "Disease::DOID:784"
+          ],
+          "dwpc_weight": 0.003339,
+          "beta": 0.4757,
+          "contrib": 0.001588,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP1A1 <--[DaG]-- chronic kidney failure [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1576",
+            "Disease::DOID:784"
+          ],
+          "dwpc_weight": 0.002131,
+          "beta": 0.4757,
+          "contrib": 0.001014,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP3A4 <--[DaG]-- chronic kidney failure [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::5243",
+            "Disease::DOID:784"
+          ],
+          "dwpc_weight": 0.001774,
+          "beta": 0.4757,
+          "contrib": 0.000844,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> ABCB1 <--[DaG]-- chronic kidney failure [⚪ Trung tính]"
+        }
+      ],
+      "evidence_edges": [],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.02219,
+          "standardized_value": 2.7018,
+          "beta": 0.6443,
+          "logit_contribution": 1.7409
+        },
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.007245,
+          "standardized_value": 2.3857,
+          "beta": 0.4757,
+          "logit_contribution": 1.135
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GpCC|DdG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5008,
+          "beta": -0.5245,
+          "logit_contribution": 0.2626
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 5.402678,
+          "standardized_value": 0.3823,
+          "beta": 0.5971,
+          "logit_contribution": 0.2283
+        },
+        {
+          "feature": "dwpc:CuG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5277,
+          "beta": -0.3893,
+          "logit_contribution": 0.2054
+        },
+        {
+          "feature": "dwpc:CuG|GpMF|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.528,
+          "beta": -0.3169,
+          "logit_contribution": 0.1673
+        },
+        {
+          "feature": "dwpc:CdG|GpPW|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.519,
+          "beta": -0.3068,
+          "logit_contribution": 0.1592
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "drug_id": "Compound::DB06292",
+      "disease_id": "Disease::DOID:5041",
+      "disease_name": "esophageal cancer",
+      "ranking_score": 0.7717,
+      "base_score": 0.7717,
+      "literature_delta": 0.0,
+      "session_evidence_count": 0,
+      "session_status": "baseline",
+      "signed_mechanism": {
+        "therapeutic_flux": -3.9194,
+        "pathogenic_flux": -3.9154,
+        "net_flux": -1.9617,
+        "signature_reversal": 0.0,
+        "ntr_score": -1.9617,
+        "normalized_ntr": 0.0,
+        "mechanism_classification": "pathogenic_risk"
+      },
+      "paths": [
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1548",
+            "Disease::DOID:5041"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.002059,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::5243",
+            "Disease::DOID:5041"
+          ],
+          "relations": [
+            "dwpc:CbG|direct|DaG"
+          ],
+          "path_score": 0.000767,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        },
+        {
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::115584",
+            "Pathway::WP2884_r83041",
+            "Gene::218",
+            "Disease::DOID:5041"
+          ],
+          "relations": [
+            "dwpc:CbG|GpPW|DaG"
+          ],
+          "path_score": 0.000137,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "supporting_pmids": [],
+          "evidence_sentences": []
+        }
+      ],
+      "signed_paths": [],
+      "structural_paths": [
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::1548",
+            "Disease::DOID:5041"
+          ],
+          "dwpc_weight": 0.004328,
+          "beta": 0.4757,
+          "contrib": 0.002059,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> CYP2A6 <--[DaG]-- esophageal cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|direct|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::5243",
+            "Disease::DOID:5041"
+          ],
+          "dwpc_weight": 0.001611,
+          "beta": 0.4757,
+          "contrib": 0.000767,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> ABCB1 <--[DaG]-- esophageal cancer [⚪ Trung tính]"
+        },
+        {
+          "metapath": "dwpc:CbG|GpPW|DaG",
+          "nodes": [
+            "Compound::DB06292",
+            "Gene::115584",
+            "Pathway::WP2884_r83041",
+            "Gene::218",
+            "Disease::DOID:5041"
+          ],
+          "dwpc_weight": 0.000213,
+          "beta": 0.6443,
+          "contrib": 0.000137,
+          "net_sign": 0,
+          "mechanism_type": "neutral",
+          "is_literature_augmented": false,
+          "supporting_pmids": [],
+          "quotes": [],
+          "path_str": "Dapagliflozin --[CbG]--> SLC5A11 --[GpPW]--> NRF2 pathway <--[GpPW]-- ALDH3A1 <--[DaG]-- esophageal cancer [⚪ Trung tính]"
+        }
+      ],
+      "evidence_edges": [],
+      "warnings": [],
+      "ai_explanation": "Chưa tạo diễn giải LLM",
+      "features": [
+        {
+          "feature": "dwpc:CbG|GpPW|DaG",
+          "raw_value": 0.017836,
+          "standardized_value": 2.4038,
+          "beta": 0.6443,
+          "logit_contribution": 1.5489
+        },
+        {
+          "feature": "dwpc:CbG|direct|DaG",
+          "raw_value": 0.005939,
+          "standardized_value": 2.155,
+          "beta": 0.4757,
+          "logit_contribution": 1.0252
+        },
+        {
+          "feature": "log_drug_degree",
+          "raw_value": 4.691348,
+          "standardized_value": 0.443,
+          "beta": 0.9384,
+          "logit_contribution": 0.4158
+        },
+        {
+          "feature": "dwpc:CdG|GpMF|DuG",
+          "raw_value": 0.0,
+          "standardized_value": -0.3342,
+          "beta": -1.0088,
+          "logit_contribution": 0.3371
+        },
+        {
+          "feature": "dwpc:CbG|GpCC|DdG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5008,
+          "beta": -0.5245,
+          "logit_contribution": 0.2626
+        },
+        {
+          "feature": "dwpc:CdG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5427,
+          "beta": -0.4584,
+          "logit_contribution": 0.2488
+        },
+        {
+          "feature": "log_disease_degree",
+          "raw_value": 5.438079,
+          "standardized_value": 0.4081,
+          "beta": 0.5971,
+          "logit_contribution": 0.2437
+        },
+        {
+          "feature": "dwpc:CuG|GpCC|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.5277,
+          "beta": -0.3893,
+          "logit_contribution": 0.2054
+        },
+        {
+          "feature": "dwpc:CuG|GpMF|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.528,
+          "beta": -0.3169,
+          "logit_contribution": 0.1673
+        },
+        {
+          "feature": "dwpc:CdG|GpPW|DaG",
+          "raw_value": 0.0,
+          "standardized_value": -0.519,
+          "beta": -0.3068,
+          "logit_contribution": 0.1592
+        }
+      ]
+    }
+  ]
+}

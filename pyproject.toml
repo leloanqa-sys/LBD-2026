@@ -4,26 +4,26 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dapagliflozin-lbd"
-version = "0.1.0"
-description = "AI/NLP and Knowledge Graph-based Literature-Based Discovery for Drug Repurposing (Dapagliflozin)"
+version = "3.0.0"
+description = "Literature-Based Discovery (LBD) & Signed Knowledge Graph Drug Repurposing Engine (Hetionet v1.0 + BioRED NLP + Signed NTR Flux)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "Nguyen Nhat Liam", email = "lamnnk25416@st.uel.edu.vn"},
-    {name = "Nguyen Khang", email = "khangnk25416@st.uel.edu.vn"},
-    {name = "Dang Quang Huy", email = "huydqk25416@st.uel.edu.vn"},
-    {name = "Nguyen Cong Gia Phuoc", email = "phuocncgk25416@st.uel.edu.vn"}
+    {name = "Dang Quang Huy (Data & Ephemeral Session KG)", email = "huydqk25416@st.uel.edu.vn"},
+    {name = "Nguyen Khang (Biomedical NLP & BioRED Engine)", email = "khangnk25416@st.uel.edu.vn"},
+    {name = "Nguyen Nhat Lam (Algorithm, DWPC & Signed Graph Ranking)", email = "lamnnk25416@st.uel.edu.vn"},
+    {name = "Nguyen Cong Gia Phuoc (Evaluation, Ground Truth & Human-in-the-Loop UI)", email = "phuocncgk25416@st.uel.edu.vn"}
 ]
 dependencies = [
-    "pydantic>=2.0.0",
-    "pyyaml>=6.0",
+    "numpy>=1.26.0,<3.0.0",
+    "scipy>=1.12.0",
+    "scikit-learn>=1.4.0",
+    "networkx>=3.2.0",
+    "jsonschema>=4.20.0",
+    "referencing>=0.30.0",
     "requests>=2.31.0",
-    "networkx>=3.0",
-    "pandas>=2.0.0",
-    "numpy>=1.24.0",
-    "jsonschema>=4.18.0",
-    "tqdm>=4.66.0"
+    "PyYAML>=6.0.1"
 ]
 
 [project.optional-dependencies]
@@ -33,5 +33,16 @@ dev = [
     "ruff>=0.1.0"
 ]
 
+[project.scripts]
+lbd-verify-team = "run_team_verification:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+lbd = [
+    "contracts/*.json",
+    "configs/*.yaml",
+    "nlp/*.pkl",
+    "nlp/*.json"
+]

@@ -1,0 +1,2286 @@
+[
+  {
+    "row": 535,
+    "drug_id": "Compound::DB00091",
+    "disease_id": "Disease::DOID:8893",
+    "label": 0,
+    "statuses": [
+      "Withdrawn"
+    ],
+    "source_rows": [
+      7714
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 3714,
+    "drug_id": "Compound::DB00137",
+    "disease_id": "Disease::DOID:10871",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      163
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 9589,
+    "drug_id": "Compound::DB00182",
+    "disease_id": "Disease::DOID:9970",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      242
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 15022,
+    "drug_id": "Compound::DB00223",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      426
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 15957,
+    "drug_id": "Compound::DB00230",
+    "disease_id": "Disease::DOID:1826",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      7691
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 16179,
+    "drug_id": "Compound::DB00232",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      441
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 17351,
+    "drug_id": "Compound::DB00240",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      462
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 22530,
+    "drug_id": "Compound::DB00279",
+    "disease_id": "Disease::DOID:1781",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      633
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 23790,
+    "drug_id": "Compound::DB00288",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      683
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 24001,
+    "drug_id": "Compound::DB00290",
+    "disease_id": "Disease::DOID:11615",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      696
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 24075,
+    "drug_id": "Compound::DB00290",
+    "disease_id": "Disease::DOID:4362",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      690
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 26049,
+    "drug_id": "Compound::DB00305",
+    "disease_id": "Disease::DOID:11054",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      7741,
+      7742
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 26645,
+    "drug_id": "Compound::DB00309",
+    "disease_id": "Disease::DOID:1909",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      736
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 26917,
+    "drug_id": "Compound::DB00312",
+    "disease_id": "Disease::DOID:1826",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      740
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 28232,
+    "drug_id": "Compound::DB00322",
+    "disease_id": "Disease::DOID:10534",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8338
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 28316,
+    "drug_id": "Compound::DB00322",
+    "disease_id": "Disease::DOID:3571",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      828
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 29541,
+    "drug_id": "Compound::DB00332",
+    "disease_id": "Disease::DOID:3083",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      874
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 29879,
+    "drug_id": "Compound::DB00335",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      887
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 33138,
+    "drug_id": "Compound::DB00359",
+    "disease_id": "Disease::DOID:8577",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      965
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 34168,
+    "drug_id": "Compound::DB00368",
+    "disease_id": "Disease::DOID:14330",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      996
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 34194,
+    "drug_id": "Compound::DB00368",
+    "disease_id": "Disease::DOID:2841",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      992
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 36616,
+    "drug_id": "Compound::DB00389",
+    "disease_id": "Disease::DOID:12361",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1044
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 36960,
+    "drug_id": "Compound::DB00391",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1048
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 37906,
+    "drug_id": "Compound::DB00398",
+    "disease_id": "Disease::DOID:3571",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8616
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 39272,
+    "drug_id": "Compound::DB00408",
+    "disease_id": "Disease::DOID:3312",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1106
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 40343,
+    "drug_id": "Compound::DB00418",
+    "disease_id": "Disease::DOID:1826",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1173
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 40659,
+    "drug_id": "Compound::DB00420",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1196
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 40951,
+    "drug_id": "Compound::DB00422",
+    "disease_id": "Disease::DOID:8986",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1203
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 42270,
+    "drug_id": "Compound::DB00432",
+    "disease_id": "Disease::DOID:219",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1230
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 42440,
+    "drug_id": "Compound::DB00433",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1231
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 43311,
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:11054",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      9182
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 43356,
+    "drug_id": "Compound::DB00441",
+    "disease_id": "Disease::DOID:1793",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8099
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 43610,
+    "drug_id": "Compound::DB00443",
+    "disease_id": "Disease::DOID:13189",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1362
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 44587,
+    "drug_id": "Compound::DB00451",
+    "disease_id": "Disease::DOID:1781",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1392
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 47218,
+    "drug_id": "Compound::DB00472",
+    "disease_id": "Disease::DOID:3312",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1460
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 52627,
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:11054",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      9184
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 52685,
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:2394",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1639
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 52712,
+    "drug_id": "Compound::DB00515",
+    "disease_id": "Disease::DOID:5041",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      7582,
+      8117
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 53443,
+    "drug_id": "Compound::DB00521",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1653
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 54265,
+    "drug_id": "Compound::DB00528",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1667
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 55839,
+    "drug_id": "Compound::DB00541",
+    "disease_id": "Disease::DOID:263",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8595
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 56670,
+    "drug_id": "Compound::DB00547",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1763
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 58040,
+    "drug_id": "Compound::DB00557",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1786
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 60259,
+    "drug_id": "Compound::DB00573",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1858
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 60964,
+    "drug_id": "Compound::DB00579",
+    "disease_id": "Disease::DOID:9970",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1883
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 62013,
+    "drug_id": "Compound::DB00588",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1927
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 62175,
+    "drug_id": "Compound::DB00589",
+    "disease_id": "Disease::DOID:6364",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1928
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 63496,
+    "drug_id": "Compound::DB00599",
+    "disease_id": "Disease::DOID:1826",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      1995
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 64297,
+    "drug_id": "Compound::DB00605",
+    "disease_id": "Disease::DOID:13189",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2013
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 64368,
+    "drug_id": "Compound::DB00605",
+    "disease_id": "Disease::DOID:7147",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2010
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 64369,
+    "drug_id": "Compound::DB00605",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2011
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 64780,
+    "drug_id": "Compound::DB00608",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2026
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 64792,
+    "drug_id": "Compound::DB00608",
+    "disease_id": "Disease::DOID:9074",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2028
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 65225,
+    "drug_id": "Compound::DB00612",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2036
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 65962,
+    "drug_id": "Compound::DB00617",
+    "disease_id": "Disease::DOID:1826",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2038
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 66352,
+    "drug_id": "Compound::DB00620",
+    "disease_id": "Disease::DOID:13189",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2097
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 67701,
+    "drug_id": "Compound::DB00630",
+    "disease_id": "Disease::DOID:11476",
+    "label": 0,
+    "statuses": [
+      "Terminated",
+      "Withdrawn"
+    ],
+    "source_rows": [
+      6686,
+      9708
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 69253,
+    "drug_id": "Compound::DB00641",
+    "disease_id": "Disease::DOID:1936",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8154
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 72288,
+    "drug_id": "Compound::DB00663",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2332
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 75752,
+    "drug_id": "Compound::DB00688",
+    "disease_id": "Disease::DOID:9074",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      7983
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 77815,
+    "drug_id": "Compound::DB00704",
+    "disease_id": "Disease::DOID:9970",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2537
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 78891,
+    "drug_id": "Compound::DB00712",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2553
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 82824,
+    "drug_id": "Compound::DB00741",
+    "disease_id": "Disease::DOID:2377",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2668
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 82863,
+    "drug_id": "Compound::DB00741",
+    "disease_id": "Disease::DOID:7147",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2730
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 82875,
+    "drug_id": "Compound::DB00741",
+    "disease_id": "Disease::DOID:9008",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2703
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 83960,
+    "drug_id": "Compound::DB00749",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      2768
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 85635,
+    "drug_id": "Compound::DB00762",
+    "disease_id": "Disease::DOID:10534",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8341
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 85699,
+    "drug_id": "Compound::DB00762",
+    "disease_id": "Disease::DOID:219",
+    "label": 0,
+    "statuses": [
+      "Terminated",
+      "Withdrawn"
+    ],
+    "source_rows": [
+      6820,
+      7188,
+      7650,
+      8188,
+      8222,
+      8654,
+      8692,
+      9354,
+      9373
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 94803,
+    "drug_id": "Compound::DB00830",
+    "disease_id": "Disease::DOID:9970",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3077
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 95006,
+    "drug_id": "Compound::DB00832",
+    "disease_id": "Disease::DOID:1826",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3080
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 96593,
+    "drug_id": "Compound::DB00845",
+    "disease_id": "Disease::DOID:1024",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3129
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 96811,
+    "drug_id": "Compound::DB00846",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3142
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 97061,
+    "drug_id": "Compound::DB00849",
+    "disease_id": "Disease::DOID:1826",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3147
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 97240,
+    "drug_id": "Compound::DB00850",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3150
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 97611,
+    "drug_id": "Compound::DB00853",
+    "disease_id": "Disease::DOID:1909",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      9677
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 97629,
+    "drug_id": "Compound::DB00853",
+    "disease_id": "Disease::DOID:3070",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      9369
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 100665,
+    "drug_id": "Compound::DB00875",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3338
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 102009,
+    "drug_id": "Compound::DB00885",
+    "disease_id": "Disease::DOID:2841",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3358
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 104870,
+    "drug_id": "Compound::DB00909",
+    "disease_id": "Disease::DOID:1826",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8195,
+      8216
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 108344,
+    "drug_id": "Compound::DB00936",
+    "disease_id": "Disease::DOID:6364",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3485
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 108346,
+    "drug_id": "Compound::DB00936",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3477
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 108757,
+    "drug_id": "Compound::DB00939",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3498
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 109107,
+    "drug_id": "Compound::DB00942",
+    "disease_id": "Disease::DOID:14330",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3505
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 111348,
+    "drug_id": "Compound::DB00958",
+    "disease_id": "Disease::DOID:5041",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      7727,
+      7786
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 111505,
+    "drug_id": "Compound::DB00959",
+    "disease_id": "Disease::DOID:8893",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3634
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 113230,
+    "drug_id": "Compound::DB00973",
+    "disease_id": "Disease::DOID:1936",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8155
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 114408,
+    "drug_id": "Compound::DB00982",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3707
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 114618,
+    "drug_id": "Compound::DB00983",
+    "disease_id": "Disease::DOID:3083",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      9359
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 115029,
+    "drug_id": "Compound::DB00986",
+    "disease_id": "Disease::DOID:3083",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3718
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 115272,
+    "drug_id": "Compound::DB00988",
+    "disease_id": "Disease::DOID:14330",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3729
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 116530,
+    "drug_id": "Compound::DB00997",
+    "disease_id": "Disease::DOID:263",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8599
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 116544,
+    "drug_id": "Compound::DB00997",
+    "disease_id": "Disease::DOID:3571",
+    "label": 0,
+    "statuses": [
+      "Withdrawn"
+    ],
+    "source_rows": [
+      9036
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 117613,
+    "drug_id": "Compound::DB01005",
+    "disease_id": "Disease::DOID:1909",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3797
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 117623,
+    "drug_id": "Compound::DB01005",
+    "disease_id": "Disease::DOID:2394",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3795
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 118210,
+    "drug_id": "Compound::DB01009",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3803
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 119751,
+    "drug_id": "Compound::DB01021",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3867
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 122022,
+    "drug_id": "Compound::DB01039",
+    "disease_id": "Disease::DOID:3393",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8795
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 123553,
+    "drug_id": "Compound::DB01050",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      3960
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 126954,
+    "drug_id": "Compound::DB01076",
+    "disease_id": "Disease::DOID:3393",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8796
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 129729,
+    "drug_id": "Compound::DB01097",
+    "disease_id": "Disease::DOID:9008",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4253
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 130224,
+    "drug_id": "Compound::DB01101",
+    "disease_id": "Disease::DOID:219",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      7129,
+      7612,
+      7647,
+      7762,
+      8110,
+      8190,
+      8223,
+      10317
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 130254,
+    "drug_id": "Compound::DB01101",
+    "disease_id": "Disease::DOID:5041",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      7787
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 132818,
+    "drug_id": "Compound::DB01121",
+    "disease_id": "Disease::DOID:1826",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4359
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 134075,
+    "drug_id": "Compound::DB01130",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4376
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 135583,
+    "drug_id": "Compound::DB01142",
+    "disease_id": "Disease::DOID:3312",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4457
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 137277,
+    "drug_id": "Compound::DB01156",
+    "disease_id": "Disease::DOID:0050742",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4514
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 139717,
+    "drug_id": "Compound::DB01174",
+    "disease_id": "Disease::DOID:6364",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4638
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 142068,
+    "drug_id": "Compound::DB01191",
+    "disease_id": "Disease::DOID:9970",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4702
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 146300,
+    "drug_id": "Compound::DB01222",
+    "disease_id": "Disease::DOID:8577",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      8290
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 147730,
+    "drug_id": "Compound::DB01234",
+    "disease_id": "Disease::DOID:13189",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4937
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 148478,
+    "drug_id": "Compound::DB01239",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4962
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 150146,
+    "drug_id": "Compound::DB01251",
+    "disease_id": "Disease::DOID:9352",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4993
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 150283,
+    "drug_id": "Compound::DB01252",
+    "disease_id": "Disease::DOID:9352",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      4994
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 151055,
+    "drug_id": "Compound::DB01260",
+    "disease_id": "Disease::DOID:2841",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5022
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 152073,
+    "drug_id": "Compound::DB01273",
+    "disease_id": "Disease::DOID:0050742",
+    "label": 0,
+    "statuses": [
+      "Terminated"
+    ],
+    "source_rows": [
+      9707
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 153160,
+    "drug_id": "Compound::DB01289",
+    "disease_id": "Disease::DOID:9352",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5065
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 154823,
+    "drug_id": "Compound::DB01324",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5081
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 156741,
+    "drug_id": "Compound::DB01340",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5252
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 157289,
+    "drug_id": "Compound::DB01348",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5254
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 157426,
+    "drug_id": "Compound::DB01349",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5255
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 158325,
+    "drug_id": "Compound::DB01356",
+    "disease_id": "Disease::DOID:3312",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5264
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 158351,
+    "drug_id": "Compound::DB01356",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5271
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 159902,
+    "drug_id": "Compound::DB01377",
+    "disease_id": "Disease::DOID:11476",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5299
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160060,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:13189",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5335
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160092,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:2377",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5384
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160097,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:2841",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5307
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160131,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:7147",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5366
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160132,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5379
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160137,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:8577",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5386
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160140,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:8893",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5372
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160143,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:9008",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5391
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160144,
+    "drug_id": "Compound::DB01380",
+    "disease_id": "Disease::DOID:9074",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5311
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 160284,
+    "drug_id": "Compound::DB01382",
+    "disease_id": "Disease::DOID:9352",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5398
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 161365,
+    "drug_id": "Compound::DB01397",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5410
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 162568,
+    "drug_id": "Compound::DB01409",
+    "disease_id": "Disease::DOID:3083",
+    "label": 0,
+    "statuses": [
+      "Withdrawn"
+    ],
+    "source_rows": [
+      10689
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 162837,
+    "drug_id": "Compound::DB01411",
+    "disease_id": "Disease::DOID:2841",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5433
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 165308,
+    "drug_id": "Compound::DB01430",
+    "disease_id": "Disease::DOID:3083",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5482
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 167687,
+    "drug_id": "Compound::DB01550",
+    "disease_id": "Disease::DOID:9970",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5499
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 168934,
+    "drug_id": "Compound::DB01580",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5513
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 171366,
+    "drug_id": "Compound::DB01600",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5575
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 172873,
+    "drug_id": "Compound::DB01611",
+    "disease_id": "Disease::DOID:7148",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5637
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 172885,
+    "drug_id": "Compound::DB01611",
+    "disease_id": "Disease::DOID:9074",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5635
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 173686,
+    "drug_id": "Compound::DB01618",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5643
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 174097,
+    "drug_id": "Compound::DB01621",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5672
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 174688,
+    "drug_id": "Compound::DB01626",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5675
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 175621,
+    "drug_id": "Compound::DB02300",
+    "disease_id": "Disease::DOID:8893",
+    "label": 0,
+    "statuses": [
+      "Suspended"
+    ],
+    "source_rows": [
+      9389
+    ],
+    "original_training_label": 1
+  },
+  {
+    "row": 176903,
+    "drug_id": "Compound::DB04571",
+    "disease_id": "Disease::DOID:12306",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5821
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 177081,
+    "drug_id": "Compound::DB04572",
+    "disease_id": "Disease::DOID:2394",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5824
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 178892,
+    "drug_id": "Compound::DB04842",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5842
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 180012,
+    "drug_id": "Compound::DB04876",
+    "disease_id": "Disease::DOID:9352",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5856
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 180286,
+    "drug_id": "Compound::DB04878",
+    "disease_id": "Disease::DOID:9352",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5858
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 181127,
+    "drug_id": "Compound::DB04920",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5869
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 181769,
+    "drug_id": "Compound::DB04946",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5879
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 182561,
+    "drug_id": "Compound::DB05109",
+    "disease_id": "Disease::DOID:2394",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5884
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 182823,
+    "drug_id": "Compound::DB05246",
+    "disease_id": "Disease::DOID:1826",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5890
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 183250,
+    "drug_id": "Compound::DB05266",
+    "disease_id": "Disease::DOID:2841",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5893
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 183307,
+    "drug_id": "Compound::DB05271",
+    "disease_id": "Disease::DOID:0050425",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5894
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 184235,
+    "drug_id": "Compound::DB06144",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5915
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 184949,
+    "drug_id": "Compound::DB06155",
+    "disease_id": "Disease::DOID:9970",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5923
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 185355,
+    "drug_id": "Compound::DB06203",
+    "disease_id": "Disease::DOID:9352",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5935
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 186273,
+    "drug_id": "Compound::DB06216",
+    "disease_id": "Disease::DOID:3312",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5949
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 186290,
+    "drug_id": "Compound::DB06216",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5948
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 186754,
+    "drug_id": "Compound::DB06255",
+    "disease_id": "Disease::DOID:11476",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5956
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 186923,
+    "drug_id": "Compound::DB06262",
+    "disease_id": "Disease::DOID:14330",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5957
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 188095,
+    "drug_id": "Compound::DB06335",
+    "disease_id": "Disease::DOID:9352",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      5976
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 194629,
+    "drug_id": "Compound::DB06768",
+    "disease_id": "Disease::DOID:3310",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6101
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 199211,
+    "drug_id": "Compound::DB08808",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6185
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 199257,
+    "drug_id": "Compound::DB08808",
+    "disease_id": "Disease::DOID:1686",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6184
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 199699,
+    "drug_id": "Compound::DB08815",
+    "disease_id": "Disease::DOID:3312",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6187
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 199716,
+    "drug_id": "Compound::DB08815",
+    "disease_id": "Disease::DOID:5419",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6186
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 200170,
+    "drug_id": "Compound::DB08822",
+    "disease_id": "Disease::DOID:10763",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6193
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 203942,
+    "drug_id": "Compound::DB08897",
+    "disease_id": "Disease::DOID:3083",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6240
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 204002,
+    "drug_id": "Compound::DB08899",
+    "disease_id": "Disease::DOID:10283",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6241
+    ],
+    "original_training_label": 0
+  },
+  {
+    "row": 205372,
+    "drug_id": "Compound::DB08913",
+    "disease_id": "Disease::DOID:10283",
+    "label": 1,
+    "statuses": [
+      "Approved"
+    ],
+    "source_rows": [
+      6261
+    ],
+    "original_training_label": 0
+  }
+]

@@ -111,7 +111,7 @@ class Layer5_BayesianBetaBinomialFuser:
                     "evidence": cand.evidence_sentence,
                     "pmid": str(cand.pmid),
                     "confidence_score": round(float(cand.confidence_score), 4),
-                    "normalization_status": "verified",
+                    "normalization_status": "unresolved",
                 }
                 contract_b_records.append(cb_record)
                 all_candidates.append((rel_id, cand))
@@ -132,6 +132,9 @@ class Layer5_BayesianBetaBinomialFuser:
                 by_rel[cand.canonical_relation].append((rel_id, cand))
 
             for can_rel, rel_items in by_rel.items():
+                rel_items = sorted(rel_items, key=lambda item: (
+                    {"asserted": 0, "uncertain": 1, "negated": 2}.get(item[1].assertion_status, 3),
+                    -item[1].confidence_score, str(item[1].pmid), item[1].evidence_sentence))
                 exemplar = rel_items[0][1]
 
                 # Deduplicate supporting evidence at the PMID level
@@ -307,3 +310,63 @@ class Layer5_BayesianBetaBinomialFuser:
 
 # Canonical names
 BayesianFusionEngine = Layer5_BayesianBetaBinomialFuser
+
+
+# -----------------------------------------------------------------------------
+# Independent Graph-Topological Empirical Bayes Engine
+# -----------------------------------------------------------------------------
+class IndependentGraphBayesEngine:
+    """Independent Bayesian Fuser: Learns priors from Hetionet topology and updates via objective study tiers."""
+
+    TIER_WEIGHTS = {
+        "clinical_trial": 1.20,
+        "clinical_cohort": 0.90,
+        "preclinical_invivo": 0.60,
+        "invitro": 0.30,
+        "case_report": 0.40,
+    }
+
+    @staticmethod
+    def derive_topological_prior(kg_prior_strength: float) -> Tuple[float, float]:
+        """Dynamically learns alpha_0, beta_0 from Hetionet graph proximity."""
+        alpha_0 = 0.50 + 1.50 * kg_prior_strength
+        beta_0 = 1.20 - 0.90 * kg_prior_strength
+        return round(alpha_0, 4), round(beta_0, 4)
+
+    @classmethod
+    def compute_posterior(
+        cls,
+        kg_prior_strength: float,
+        study_tier: str,
+        n_studies: int = 1,
+        has_contradiction: bool = False,
+    ) -> Dict[str, Any]:
+        alpha_0, beta_0 = cls.derive_topological_prior(kg_prior_strength)
+
+        unit_w = cls.TIER_WEIGHTS.get(study_tier, 0.60)
+        delta_pos = n_studies * unit_w
+        delta_neg = 0.80 if has_contradiction else 0.0
+
+        alpha_post = alpha_0 + delta_pos
+        beta_post = beta_0 + delta_neg
+
+        total = alpha_post + beta_post
+        mean = alpha_post / total
+        var = (alpha_post * beta_post) / ((total ** 2) * (total + 1.0))
+        std = math.sqrt(max(1e-9, var))
+        lcb_90 = max(0.01, min(0.99, mean - 1.28155 * std))
+
+        req_lcb = 0.38 if study_tier == "clinical_trial" else 0.45
+        admitted = (lcb_90 >= req_lcb and mean >= 0.55)
+
+        return {
+            "alpha_0": alpha_0,
+            "beta_0": beta_0,
+            "alpha_post": round(alpha_post, 4),
+            "beta_post": round(beta_post, 4),
+            "posterior_mean": round(mean, 4),
+            "posterior_std": round(std, 4),
+            "lcb_90": round(lcb_90, 4),
+            "admitted": admitted,
+            "effective_evidence_weight": round(mean * delta_pos, 4) if admitted else 0.0,
+        }

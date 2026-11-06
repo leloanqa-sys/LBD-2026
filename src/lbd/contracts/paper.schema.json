@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract A - DocumentRecord",
+  "description": "Standard document record ingested before cutoff date T=31/12/2018",
+  "type": "object",
+  "required": [
+    "document_id",
+    "pmid",
+    "title",
+    "abstract",
+    "publication_date",
+    "study_type",
+    "dataset_version"
+  ],
+  "properties": {
+    "document_id": {
+      "type": "string"
+    },
+    "pmid": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "abstract": {
+      "type": "string"
+    },
+    "publication_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "study_type": {
+      "type": "string",
+      "enum": [
+        "clinical_trial",
+        "rct",
+        "in_vivo",
+        "in_vitro",
+        "review",
+        "observational",
+        "unknown"
+      ]
+    },
+    "dataset_version": {
+      "type": "string"
+    },
+    "retrieved_at": {
+      "type": "string"
+    },
+    "temporal_filter_status": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "rejected"
+      ]
+    }
+  }
+}

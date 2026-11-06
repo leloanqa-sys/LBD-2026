@@ -1,0 +1,23 @@
+{
+  "matrix_shape": [
+    212624,
+    67
+  ],
+  "all_features_finite": true,
+  "positive_palliative_overlap": 0,
+  "positive_coverage": 1.0,
+  "test_cluster_overlap": 0,
+  "signature_available_fraction_all_pairs": 0.17242644727230072,
+  "test_drugs": 139,
+  "development_drugs": 1411,
+  "reserved": {
+    "Compound::DB06292": {
+      "signature_available_diseases": 0,
+      "gold_treats": 0
+    },
+    "Compound::DB08907": {
+      "signature_available_diseases": 0,
+      "gold_treats": 0
+    }
+  }
+}

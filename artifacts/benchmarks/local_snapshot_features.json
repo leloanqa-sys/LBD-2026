@@ -1,0 +1,2110 @@
+{
+  "mode": "reference_feature_audit_not_predictions",
+  "graph_manifest": {
+    "sha256": "d467045acdd8dcccf975e7789aeacfe94d8e3b4376f7702e606ff02faafaf9a6",
+    "cutoff": "2018-12-31",
+    "temporal_unverified_edges": 2804,
+    "label_edges_removed": 0,
+    "strict_temporal": false
+  },
+  "pairs": [
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:0050156",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.332204510175204,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.2079941534894604,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.2079941534894604,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.27101968439529694,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.27101968439529694,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.21705871093597714,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.21705871093597714,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.22106442611951285,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.22106442611951285,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.03253011491494183,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.03253011491494183,
+        "distinct_targets": 3,
+        "distinct_node_chains": 76
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:0050425",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.1020670926257966,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.1020670926257966,
+        "distinct_targets": 3,
+        "distinct_node_chains": 6
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:0050741",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.9444389791664403,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.02073797307691648,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.02073797307691648,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.10954130974279455,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.10954130974279455,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.10517441162804028,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.10517441162804028,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.18133284815235826,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.18133284815235826,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.15027892303573384,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.15027892303573384,
+        "distinct_targets": 3,
+        "distinct_node_chains": 36
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:0050742",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.4339872044851463,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.12453409366548379,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.12453409366548379,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.1343246170705704,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.1343246170705704,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.05330680828857273,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.05330680828857273,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.25970461614520507,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.25970461614520507,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.1559060383920269,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.1559060383920269,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.14039687432835024,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.14039687432835024,
+        "distinct_targets": 3,
+        "distinct_node_chains": 60
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:0060119",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GiG|GaD": 0.10053983366614978,
+        "sign:unknown:CbG|GiG|GaD": 0.10053983366614978,
+        "distinct_targets": 1,
+        "distinct_node_chains": 1
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1024",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.06824941897467096,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.06824941897467096,
+        "distinct_targets": 3,
+        "distinct_node_chains": 4
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:10283",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 4.02535169073515,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.34404560207040974,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.34404560207040974,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.12069751689959039,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.12069751689959039,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.2625782774138368,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.2625782774138368,
+        "dwpc:CbG|GiG|GaD": 0.10899000128401842,
+        "sign:unknown:CbG|GiG|GaD": 0.10899000128401842,
+        "distinct_targets": 3,
+        "distinct_node_chains": 121
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:10534",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.9444389791664403,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.18191541681702247,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.18191541681702247,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.10506778168205382,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.10506778168205382,
+        "dwpc:CbG|GiG|GaD": 0.031639467117292916,
+        "sign:unknown:CbG|GiG|GaD": 0.031639467117292916,
+        "distinct_targets": 3,
+        "distinct_node_chains": 39
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:10608",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.13390064844714827,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.13390064844714827,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:10652",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.6375861597263857,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.06932251955739316,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.06932251955739316,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.12987757162302002,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.12987757162302002,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.16183225869915802,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.16183225869915802,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.17958493490132327,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.17958493490132327,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.11467933721137508,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.11467933721137508,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07148616237637172,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07148616237637172,
+        "distinct_targets": 3,
+        "distinct_node_chains": 65
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:10763",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 4.543294782270004,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.5452655490871219,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.5452655490871219,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.06001948326364108,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.06001948326364108,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.2916772085598841,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.2916772085598841,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.17397268218224285,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.17397268218224285,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.09983416160778874,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.09983416160778874,
+        "dwpc:CbG|GiG|GaD": 0.016694836098808525,
+        "sign:unknown:CbG|GiG|GaD": 0.016694836098808525,
+        "dwpc:CbG|GaD": 0.08109302426266253,
+        "sign:unknown:CbG|GaD": 0.08109302426266253,
+        "distinct_targets": 3,
+        "distinct_node_chains": 211
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:10871",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.04950969169521137,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.04950969169521137,
+        "distinct_targets": 1,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1094",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.302585092994046,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.09081057151156528,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.09081057151156528,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07890277416137358,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07890277416137358,
+        "distinct_targets": 3,
+        "distinct_node_chains": 18
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:10941",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.3862943611198906,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.03288571180709618,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.03288571180709618,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.033794239027355434,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.033794239027355434,
+        "distinct_targets": 3,
+        "distinct_node_chains": 6
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:10976",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.3862943611198906,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.022135313459075982,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.022135313459075982,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.09706931957427332,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.09706931957427332,
+        "distinct_targets": 3,
+        "distinct_node_chains": 11
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:11054",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.3978952727983707,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.06684034903293862,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.06684034903293862,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.12354588179779215,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.12354588179779215,
+        "dwpc:CbG|GiG|GaD": 0.040025628708750136,
+        "sign:unknown:CbG|GiG|GaD": 0.040025628708750136,
+        "distinct_targets": 3,
+        "distinct_node_chains": 22
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:11119",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.035334068637800614,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.035334068637800614,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.03347516211178707,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.03347516211178707,
+        "distinct_targets": 3,
+        "distinct_node_chains": 7
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1115",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.3978952727983707,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.09261890080188703,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.09261890080188703,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07944648294704151,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07944648294704151,
+        "dwpc:CbG|GiG|GaD": 0.040025628708750136,
+        "sign:unknown:CbG|GiG|GaD": 0.040025628708750136,
+        "distinct_targets": 3,
+        "distinct_node_chains": 20
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:11239",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.05442060622925763,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.05442060622925763,
+        "distinct_targets": 2,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:11476",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.3978952727983707,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.03382858162194623,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.03382858162194623,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.06934850621727746,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.06934850621727746,
+        "distinct_targets": 3,
+        "distinct_node_chains": 14
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:11612",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.8501476017100584,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.4256017274155838,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.4256017274155838,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.27586244322810155,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.27586244322810155,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.19810023072418972,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.19810023072418972,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.4075798517398131,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.4075798517398131,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.12297579794991238,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.12297579794991238,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.10079501141761592,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.10079501141761592,
+        "distinct_targets": 3,
+        "distinct_node_chains": 130
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:11615",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.07919618296687574,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.07919618296687574,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:11714",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.10393224726479379,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.10393224726479379,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.05503369643204227,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.05503369643204227,
+        "distinct_targets": 3,
+        "distinct_node_chains": 15
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1192",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.0794415416798357,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07973652103758602,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07973652103758602,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.0869852508501055,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.0869852508501055,
+        "distinct_targets": 3,
+        "distinct_node_chains": 19
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:11934",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.03141739505817011,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.03141739505817011,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.024154744632750157,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.024154744632750157,
+        "dwpc:CbG|GiG|GaD": 0.05774497077199088,
+        "sign:unknown:CbG|GiG|GaD": 0.05774497077199088,
+        "distinct_targets": 3,
+        "distinct_node_chains": 7
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:12185",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.024653217043532162,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.024653217043532162,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:12236",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.9459101490553132,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.07028230238433848,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.07028230238433848,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.11708404892961843,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.11708404892961843,
+        "distinct_targets": 3,
+        "distinct_node_chains": 14
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:12361",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.14123826353246877,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.14123826353246877,
+        "distinct_targets": 3,
+        "distinct_node_chains": 6
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:12365",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.332204510175204,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.26790459256554966,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.26790459256554966,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.41360086899988574,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.41360086899988574,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.06651437924485197,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.06651437924485197,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.11865230558641296,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.11865230558641296,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.12193296090408717,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.12193296090408717,
+        "dwpc:CbG|GiG|GuD": 0.08073140227224818,
+        "sign:unknown:CbG|GiG|GuD": 0.08073140227224818,
+        "distinct_targets": 3,
+        "distinct_node_chains": 69
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1245",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.10147771555891372,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.10147771555891372,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:12849",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.4339872044851463,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.26319973471986857,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.26319973471986857,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.18654020202363492,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.18654020202363492,
+        "distinct_targets": 3,
+        "distinct_node_chains": 69
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:12930",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.4849066497880004,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.10717577470850062,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.10717577470850062,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.05048171484971051,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.05048171484971051,
+        "dwpc:CbG|GiG|GaD": 0.038528410134771054,
+        "sign:unknown:CbG|GiG|GaD": 0.038528410134771054,
+        "distinct_targets": 3,
+        "distinct_node_chains": 13
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:12995",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.04246457740510282,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.04246457740510282,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1312",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.302585092994046,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.06299021610065778,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.06299021610065778,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.02777178705227111,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.02777178705227111,
+        "distinct_targets": 3,
+        "distinct_node_chains": 15
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:13189",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.791759469228055,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.2071037161598389,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.2071037161598389,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.2098770447588079,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.2098770447588079,
+        "distinct_targets": 3,
+        "distinct_node_chains": 25
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1319",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.0794415416798357,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07171041681755334,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07171041681755334,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.05436885751015916,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.05436885751015916,
+        "dwpc:CbG|GiG|GaD": 0.04616352315964469,
+        "sign:unknown:CbG|GiG|GaD": 0.04616352315964469,
+        "distinct_targets": 3,
+        "distinct_node_chains": 11
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:13223",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.70805020110221,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.24477990371430766,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.24477990371430766,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.10179450215562856,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.10179450215562856,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.05613638161098099,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.05613638161098099,
+        "distinct_targets": 3,
+        "distinct_node_chains": 23
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1324",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.5553480614894135,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.08537480988152199,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.08537480988152199,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.09449162410999937,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.09449162410999937,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.0724336291282263,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.0724336291282263,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.18707771495786055,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.18707771495786055,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.18299083431345806,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.18299083431345806,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.04345534281192839,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.04345534281192839,
+        "dwpc:CbG|GiG|GuD": 0.10381091163462641,
+        "sign:unknown:CbG|GiG|GuD": 0.10381091163462641,
+        "dwpc:CbG|GiG|GaD": 0.029747498034338907,
+        "sign:unknown:CbG|GiG|GaD": 0.029747498034338907,
+        "distinct_targets": 3,
+        "distinct_node_chains": 66
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:13241",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.04659415777379561,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.04659415777379561,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:14004",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.03145212968704786,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.03145212968704786,
+        "distinct_targets": 1,
+        "distinct_node_chains": 1
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:14221",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.8903717578961645,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.22594258115070234,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.22594258115070234,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.2089480573948267,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.2089480573948267,
+        "distinct_targets": 3,
+        "distinct_node_chains": 73
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:14227",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.995732273553991,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.2211300313575953,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.2211300313575953,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.1417196505236082,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.1417196505236082,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.1818079846055095,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.1818079846055095,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.10147771555891372,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.10147771555891372,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.0878706831272151,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.0878706831272151,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.013060297022651747,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.013060297022651747,
+        "distinct_targets": 3,
+        "distinct_node_chains": 43
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:14330",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.6888794541139363,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.09525282295985399,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.09525282295985399,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.2438028256116748,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.2438028256116748,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.1602186503159263,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.1602186503159263,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.13985125059612324,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.13985125059612324,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.1467091872657417,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.1467091872657417,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.3370094766882548,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.3370094766882548,
+        "dwpc:CbG|GiG|GaD": 0.06118296193083087,
+        "sign:unknown:CbG|GiG|GaD": 0.06118296193083087,
+        "dwpc:CbG|GiG|GuD": 0.24228882791180759,
+        "sign:unknown:CbG|GiG|GuD": 0.24228882791180759,
+        "distinct_targets": 3,
+        "distinct_node_chains": 99
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1459",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.3862943611198906,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.10012475687202418,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.10012475687202418,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.03582920521839047,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.03582920521839047,
+        "distinct_targets": 3,
+        "distinct_node_chains": 12
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1595",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.04246457740510282,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.04246457740510282,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1612",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 4.499809670330265,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.38805899301898433,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.38805899301898433,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.39380278766245863,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.39380278766245863,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.28376386598752024,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.28376386598752024,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.3201287901051758,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.3201287901051758,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.19680854378349016,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.19680854378349016,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.048814379964755183,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.048814379964755183,
+        "dwpc:CbG|GiG|GaD": 0.06397162754809949,
+        "sign:unknown:CbG|GiG|GaD": 0.06397162754809949,
+        "dwpc:CbG|GiG|GdD": 0.07195599806277589,
+        "sign:unknown:CbG|GiG|GdD": 0.07195599806277589,
+        "distinct_targets": 3,
+        "distinct_node_chains": 225
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1686",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.9459101490553132,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.116732119921881,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.116732119921881,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.02380993308313517,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.02380993308313517,
+        "distinct_targets": 3,
+        "distinct_node_chains": 14
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:175",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.3862943611198906,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.039402708389895125,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.039402708389895125,
+        "distinct_targets": 2,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1781",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.302585092994046,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.17380498969858232,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.17380498969858232,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.0843169692104426,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.0843169692104426,
+        "distinct_targets": 3,
+        "distinct_node_chains": 24
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1790",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.015359941356282169,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.015359941356282169,
+        "distinct_targets": 1,
+        "distinct_node_chains": 1
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1793",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.871201010907891,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.24376208143636346,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.24376208143636346,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.17252758877281468,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.17252758877281468,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.1365950446643479,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.1365950446643479,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.29281374171293323,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.29281374171293323,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.2458322432805029,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.2458322432805029,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.141211594685253,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.141211594685253,
+        "dwpc:CbG|GiG|GaD": 0.167422442564007,
+        "sign:unknown:CbG|GiG|GaD": 0.167422442564007,
+        "dwpc:CbG|GuD": 0.16109850374431353,
+        "sign:unknown:CbG|GuD": 0.16109850374431353,
+        "distinct_targets": 3,
+        "distinct_node_chains": 128
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1826",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.6888794541139363,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.4855334715309558,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.4855334715309558,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.2721932601275035,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.2721932601275035,
+        "distinct_targets": 3,
+        "distinct_node_chains": 114
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:184",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.0794415416798357,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.08560185407483956,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.08560185407483956,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.02158530541072267,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.02158530541072267,
+        "dwpc:CbG|GiG|GaD": 0.04616352315964469,
+        "sign:unknown:CbG|GiG|GaD": 0.04616352315964469,
+        "distinct_targets": 3,
+        "distinct_node_chains": 9
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1909",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 4.04305126783455,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.2897899089221608,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.2897899089221608,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.15339207776249872,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.15339207776249872,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.1817323504844493,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.1817323504844493,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.23899464796745315,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.23899464796745315,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.2622193336884162,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.2622193336884162,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.23182208118038372,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.23182208118038372,
+        "dwpc:CbG|GiG|GaD": 0.02651398155717569,
+        "sign:unknown:CbG|GiG|GaD": 0.02651398155717569,
+        "distinct_targets": 3,
+        "distinct_node_chains": 148
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:1936",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.295836866004329,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.171451051458497,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.171451051458497,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.10796067247720142,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.10796067247720142,
+        "dwpc:CbG|GiG|GaD": 0.05774497077199088,
+        "sign:unknown:CbG|GiG|GaD": 0.05774497077199088,
+        "distinct_targets": 3,
+        "distinct_node_chains": 53
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2043",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.0384128768353275,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.0384128768353275,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.060782754272816916,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.060782754272816916,
+        "distinct_targets": 3,
+        "distinct_node_chains": 10
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2174",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.3862943611198906,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.04888130329598913,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.04888130329598913,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.052379606415880936,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.052379606415880936,
+        "distinct_targets": 3,
+        "distinct_node_chains": 11
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:219",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.5263605246161616,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.25474709833311987,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.25474709833311987,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.14389649697696838,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.14389649697696838,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.2192437752989708,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.2192437752989708,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.39126267745702015,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.39126267745702015,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.018683644745329096,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.018683644745329096,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.04551332077910514,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.04551332077910514,
+        "dwpc:CbG|GiG|GaD": 0.05774497077199088,
+        "sign:unknown:CbG|GiG|GaD": 0.05774497077199088,
+        "distinct_targets": 3,
+        "distinct_node_chains": 88
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2355",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.295836866004329,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.20495544888516737,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.20495544888516737,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.10809555199275894,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.10809555199275894,
+        "distinct_targets": 3,
+        "distinct_node_chains": 40
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2377",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.4849066497880004,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.11782301159196767,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.11782301159196767,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.12461062563372541,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.12461062563372541,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.09983416160778874,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.09983416160778874,
+        "distinct_targets": 3,
+        "distinct_node_chains": 27
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2394",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.8903717578961645,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.14605230266740485,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.14605230266740485,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.17283386346315693,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.17283386346315693,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.0962212115349339,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.0962212115349339,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.04786485472653821,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.04786485472653821,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.1032200450328512,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.1032200450328512,
+        "dwpc:CbG|GiG|GaD": 0.04174852715390686,
+        "sign:unknown:CbG|GiG|GaD": 0.04174852715390686,
+        "distinct_targets": 3,
+        "distinct_node_chains": 45
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2531",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 4.07753744390572,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.2937972235672202,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.2937972235672202,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.09542069688152431,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.09542069688152431,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.14387143659439372,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.14387143659439372,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.29206514105416914,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.29206514105416914,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.1545429830104353,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.1545429830104353,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.02873466695699561,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.02873466695699561,
+        "dwpc:CbG|GiG|GdD": 0.09903346988700017,
+        "sign:unknown:CbG|GiG|GdD": 0.09903346988700017,
+        "distinct_targets": 3,
+        "distinct_node_chains": 112
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:263",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.9318256327243257,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.36315428196150484,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.36315428196150484,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.19938156049972794,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.19938156049972794,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.12504897928134598,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.12504897928134598,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.34749974933375904,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.34749974933375904,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.22076514853962756,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.22076514853962756,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.02386774974790963,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.02386774974790963,
+        "distinct_targets": 3,
+        "distinct_node_chains": 130
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2841",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.2188758248682006,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.09900230865999401,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.09900230865999401,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.09195445076991438,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.09195445076991438,
+        "dwpc:CbG|GiG|GaD": 0.028200295926010446,
+        "sign:unknown:CbG|GiG|GaD": 0.028200295926010446,
+        "distinct_targets": 3,
+        "distinct_node_chains": 36
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2986",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.871201010907891,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.46067940995020534,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.46067940995020534,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.17244086794940494,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.17244086794940494,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.23847297899332445,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.23847297899332445,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.30569868966250424,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.30569868966250424,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.24899643620967332,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.24899643620967332,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.14485888723810184,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.14485888723810184,
+        "distinct_targets": 3,
+        "distinct_node_chains": 123
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2994",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.791759469228055,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.17601979550500393,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.17601979550500393,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.15529113323965876,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.15529113323965876,
+        "distinct_targets": 3,
+        "distinct_node_chains": 26
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:2998",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.20131187716670246,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.20131187716670246,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.23779856164532687,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.23779856164532687,
+        "distinct_targets": 3,
+        "distinct_node_chains": 12
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3070",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.8903717578961645,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.14310745681423484,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.14310745681423484,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.04104623323398812,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.04104623323398812,
+        "dwpc:CbG|GiG|GaD": 0.032371184708575716,
+        "sign:unknown:CbG|GiG|GaD": 0.032371184708575716,
+        "distinct_targets": 3,
+        "distinct_node_chains": 28
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3083",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.5263605246161616,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.16576840552825292,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.16576840552825292,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.05570340618815661,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.05570340618815661,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.3095471344524611,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.3095471344524611,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.05674653426678826,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.05674653426678826,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.21246729196250058,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.21246729196250058,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.07450696964624937,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.07450696964624937,
+        "dwpc:CbG|GiG|GaD": 0.040025628708750136,
+        "sign:unknown:CbG|GiG|GaD": 0.040025628708750136,
+        "distinct_targets": 3,
+        "distinct_node_chains": 86
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3121",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.013060297022651747,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.013060297022651747,
+        "dwpc:CbG|GiG|GaD": 0.07619494574099153,
+        "sign:unknown:CbG|GiG|GaD": 0.07619494574099153,
+        "distinct_targets": 1,
+        "distinct_node_chains": 2
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3277",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.12331206953077128,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.12331206953077128,
+        "distinct_targets": 3,
+        "distinct_node_chains": 5
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3310",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.06331243704291825,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.06331243704291825,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3312",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.4849066497880004,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.08578447465339875,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.08578447465339875,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.22929896820007528,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.22929896820007528,
+        "distinct_targets": 3,
+        "distinct_node_chains": 31
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:332",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.995732273553991,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.2350094018044358,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.2350094018044358,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.10602220067594449,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.10602220067594449,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.10120006472774715,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.10120006472774715,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.17695237181197127,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.17695237181197127,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.08623767928579466,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.08623767928579466,
+        "distinct_targets": 3,
+        "distinct_node_chains": 40
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3393",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 4.174387269895637,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.3835531228414524,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.3835531228414524,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.22591771664486743,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.22591771664486743,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.09983416160778874,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.09983416160778874,
+        "dwpc:CbG|GiG|GaD": 0.03706835214071269,
+        "sign:unknown:CbG|GiG|GaD": 0.03706835214071269,
+        "distinct_targets": 3,
+        "distinct_node_chains": 132
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3565",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.791759469228055,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.05835868453248881,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.05835868453248881,
+        "distinct_targets": 2,
+        "distinct_node_chains": 6
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3571",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.367295829986474,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.17421216831093597,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.17421216831093597,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.31542526119541764,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.31542526119541764,
+        "distinct_targets": 3,
+        "distinct_node_chains": 68
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:363",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.302585092994046,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.08668903116870028,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.08668903116870028,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07367253521236716,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07367253521236716,
+        "dwpc:CbG|GiG|GaD": 0.09903346988700017,
+        "sign:unknown:CbG|GiG|GaD": 0.09903346988700017,
+        "distinct_targets": 3,
+        "distinct_node_chains": 19
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:3953",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.07919618296687574,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.07919618296687574,
+        "dwpc:CbG|GiG|GaD": 0.05774497077199088,
+        "sign:unknown:CbG|GiG|GaD": 0.05774497077199088,
+        "distinct_targets": 3,
+        "distinct_node_chains": 4
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:4045",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.791759469228055,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.06847936255925297,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.06847936255925297,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.019325751391341406,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.019325751391341406,
+        "distinct_targets": 3,
+        "distinct_node_chains": 8
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:4159",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.0794415416798357,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.09064255695203279,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.09064255695203279,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.09459596255697825,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.09459596255697825,
+        "distinct_targets": 3,
+        "distinct_node_chains": 17
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:418",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.044522437723423,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.2012285832484729,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.2012285832484729,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.07845045965259503,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.07845045965259503,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.08460689559684682,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.08460689559684682,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.1891794884029443,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.1891794884029443,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.25357653339157543,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.25357653339157543,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.018683644745329096,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.018683644745329096,
+        "distinct_targets": 3,
+        "distinct_node_chains": 56
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:4362",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.05733966860568754,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.05733966860568754,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.03332786115127381,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.03332786115127381,
+        "dwpc:CbG|GiG|GaD": 0.05774497077199088,
+        "sign:unknown:CbG|GiG|GaD": 0.05774497077199088,
+        "distinct_targets": 3,
+        "distinct_node_chains": 6
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:4481",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.03253011491494183,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.03253011491494183,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:4606",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.0794415416798357,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.10036091034442025,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.10036091034442025,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.03901616443119727,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.03901616443119727,
+        "dwpc:CbG|GiG|GaD": 0.04616352315964469,
+        "sign:unknown:CbG|GiG|GaD": 0.04616352315964469,
+        "distinct_targets": 3,
+        "distinct_node_chains": 18
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:4989",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.6390573296152584,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.19417625217166978,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.19417625217166978,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.04277115561237213,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.04277115561237213,
+        "distinct_targets": 3,
+        "distinct_node_chains": 34
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:5041",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.70805020110221,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.08701804891261267,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.08701804891261267,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.1924676530881506,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.1924676530881506,
+        "dwpc:CbG|GiG|GaD": 0.03498540841077995,
+        "sign:unknown:CbG|GiG|GaD": 0.03498540841077995,
+        "distinct_targets": 3,
+        "distinct_node_chains": 27
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:5408",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.1748910740104089,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.1748910740104089,
+        "distinct_targets": 3,
+        "distinct_node_chains": 5
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:5419",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.4011973816621555,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.155249762783136,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.155249762783136,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.09467678144535599,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.09467678144535599,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.2546808735006392,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.2546808735006392,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.04312638055429614,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.04312638055429614,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.22905081436685604,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.22905081436685604,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.21420485903802985,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.21420485903802985,
+        "dwpc:CbG|GiG|GaD": 0.13938699823655848,
+        "sign:unknown:CbG|GiG|GaD": 0.13938699823655848,
+        "distinct_targets": 3,
+        "distinct_node_chains": 72
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:585",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.290516372069733,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.290516372069733,
+        "distinct_targets": 3,
+        "distinct_node_chains": 23
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:594",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.09408797191147145,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.09408797191147145,
+        "distinct_targets": 3,
+        "distinct_node_chains": 8
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:635",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.1354942159291497,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.31897969033973406,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.31897969033973406,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.1493310044808074,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.1493310044808074,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07847631807466657,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07847631807466657,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.1552254583463832,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.1552254583463832,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.05361845448272775,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.05361845448272775,
+        "distinct_targets": 3,
+        "distinct_node_chains": 54
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:6364",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.9459101490553132,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.15760405746594003,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.15760405746594003,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.04875494546497156,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.04875494546497156,
+        "distinct_targets": 3,
+        "distinct_node_chains": 16
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:7147",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.302585092994046,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.1044999899278101,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.1044999899278101,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.09368073778574913,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.09368073778574913,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.19511580134978743,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.19511580134978743,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.06433253623033103,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.06433253623033103,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.05439342050604852,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.05439342050604852,
+        "distinct_targets": 3,
+        "distinct_node_chains": 22
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:7148",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.6109179126442243,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.11920956428896465,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.11920956428896465,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.3116109953202258,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.3116109953202258,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.2659110735478569,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.2659110735478569,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07825696135926857,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07825696135926857,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.3008654155968823,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.3008654155968823,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.05040847326628875,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.05040847326628875,
+        "dwpc:CbG|GiG|GdD": 0.08826865342073434,
+        "sign:unknown:CbG|GiG|GdD": 0.08826865342073434,
+        "distinct_targets": 3,
+        "distinct_node_chains": 98
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:7693",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.2188758248682006,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.39050667652871696,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.39050667652871696,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.1553672881308344,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.1553672881308344,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.08762608403283648,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.08762608403283648,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.1424671115241043,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.1424671115241043,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.08239346426430338,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.08239346426430338,
+        "distinct_targets": 3,
+        "distinct_node_chains": 59
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:784",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.091042453358316,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.2543222305440107,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.2543222305440107,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.0798597070477519,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.0798597070477519,
+        "distinct_targets": 3,
+        "distinct_node_chains": 50
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:824",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.1972245773362196,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.13124320112762383,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.13124320112762383,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.04463708106038459,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.04463708106038459,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.027006649392453373,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.027006649392453373,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.042184563803768615,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.042184563803768615,
+        "distinct_targets": 3,
+        "distinct_node_chains": 14
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:8398",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.3862943611198906,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.020962211357710828,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.020962211357710828,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.056111415024223774,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.056111415024223774,
+        "distinct_targets": 3,
+        "distinct_node_chains": 8
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:8577",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.6888794541139363,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.1056027490801893,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.1056027490801893,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.15114146063353184,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.15114146063353184,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.11334628449440115,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.11334628449440115,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.02662568748916104,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.02662568748916104,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.3045666378497313,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.3045666378497313,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.15479529961680913,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.15479529961680913,
+        "distinct_targets": 3,
+        "distinct_node_chains": 84
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:8778",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.6375861597263857,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.17378619165234513,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.17378619165234513,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.1692506660085619,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.1692506660085619,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.20364014615065076,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.20364014615065076,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.04674678198961143,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.04674678198961143,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.18949238000233393,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.18949238000233393,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.5265278589192233,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.5265278589192233,
+        "dwpc:CbG|GiG|GaD": 0.08826865342073434,
+        "sign:unknown:CbG|GiG|GaD": 0.08826865342073434,
+        "distinct_targets": 3,
+        "distinct_node_chains": 114
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:8850",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.9459101490553132,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.16722797184070798,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.16722797184070798,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.07568842390065966,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.07568842390065966,
+        "distinct_targets": 3,
+        "distinct_node_chains": 17
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:8893",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.4011973816621555,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.18467036355725636,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.18467036355725636,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.12086568716797044,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.12086568716797044,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.27438893735736725,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.27438893735736725,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.08746051538331474,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.08746051538331474,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.02873466695699561,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.02873466695699561,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.03296817300893186,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.03296817300893186,
+        "dwpc:CbG|GuD": 0.16109850374431353,
+        "sign:unknown:CbG|GuD": 0.16109850374431353,
+        "distinct_targets": 3,
+        "distinct_node_chains": 64
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:8986",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.0986122886681098,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.032182131731388744,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.032182131731388744,
+        "distinct_targets": 3,
+        "distinct_node_chains": 3
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:90",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 0.6931471805599453,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.053926691639388374,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.053926691639388374,
+        "distinct_targets": 1,
+        "distinct_node_chains": 2
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:9008",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.1354942159291497,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.17913690372245242,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.17913690372245242,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.21520062378527172,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.21520062378527172,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.09624101970683617,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.09624101970683617,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.17510468555121603,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.17510468555121603,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.02674321119981375,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.02674321119981375,
+        "distinct_targets": 3,
+        "distinct_node_chains": 47
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:9074",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.1972245773362196,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.053166835620029586,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.053166835620029586,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.09378868232424448,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.09378868232424448,
+        "distinct_targets": 3,
+        "distinct_node_chains": 18
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:9206",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.6375861597263857,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.4101579264899987,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.4101579264899987,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.18515127880674437,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.18515127880674437,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.114712320804467,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.114712320804467,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.38231123749989526,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.38231123749989526,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.1040772318325884,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.1040772318325884,
+        "distinct_targets": 3,
+        "distinct_node_chains": 96
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:9296",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 1.6094379124341003,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.08017234052314166,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.08017234052314166,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.012521318357592277,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.012521318357592277,
+        "distinct_targets": 3,
+        "distinct_node_chains": 7
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:9352",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.9889840465642745,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.390457615911073,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.390457615911073,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.33172642767318394,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.33172642767318394,
+        "dwpc:CbG|GaD": 0.23143285346462011,
+        "sign:unknown:CbG|GaD": 0.23143285346462011,
+        "dwpc:CbG|GiG|GaD": 0.0205412947578741,
+        "sign:unknown:CbG|GiG|GaD": 0.0205412947578741,
+        "distinct_targets": 3,
+        "distinct_node_chains": 158
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:9744",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.4849066497880004,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.14538846087181662,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.14538846087181662,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.07213527461799243,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.07213527461799243,
+        "dwpc:CbG|GiG|GaD": 0.038528410134771054,
+        "sign:unknown:CbG|GiG|GaD": 0.038528410134771054,
+        "distinct_targets": 3,
+        "distinct_node_chains": 26
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:9835",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.1972245773362196,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.1812687425458427,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.1812687425458427,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.08040468208221259,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.08040468208221259,
+        "distinct_targets": 3,
+        "distinct_node_chains": 17
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:986",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 2.995732273553991,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.15986211797424832,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.15986211797424832,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.14930146466339753,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.14930146466339753,
+        "dwpc:CbG|GpPW|PWpG|GuD": 0.20173285421889292,
+        "sign:unknown:CbG|GpPW|PWpG|GuD": 0.20173285421889292,
+        "dwpc:CbG|GpPW|PWpG|GdD": 0.31765704765452274,
+        "sign:unknown:CbG|GpPW|PWpG|GdD": 0.31765704765452274,
+        "distinct_targets": 3,
+        "distinct_node_chains": 53
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    },
+    {
+      "drug_id": "DB06292",
+      "disease_id": "DOID:9970",
+      "features": {
+        "log_drug_degree": 1.3862943611198906,
+        "log_disease_degree": 3.9512437185814275,
+        "dwpc:CbG|GpBP|BPpG|GaD": 0.3169722070453457,
+        "sign:unknown:CbG|GpBP|BPpG|GaD": 0.3169722070453457,
+        "dwpc:CbG|GpBP|BPpG|GuD": 0.14600132386052475,
+        "sign:unknown:CbG|GpBP|BPpG|GuD": 0.14600132386052475,
+        "dwpc:CbG|GpPW|PWpG|GaD": 0.2917074298228376,
+        "sign:unknown:CbG|GpPW|PWpG|GaD": 0.2917074298228376,
+        "dwpc:CbG|GpBP|BPpG|GdD": 0.09137726292400947,
+        "sign:unknown:CbG|GpBP|BPpG|GdD": 0.09137726292400947,
+        "distinct_targets": 3,
+        "distinct_node_chains": 132
+      },
+      "feature_source": "background_graph",
+      "temporal_verified": false
+    }
+  ]
+}
