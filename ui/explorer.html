@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Hệ Thống Tái Định Vị Thuốc Trên Đồ Thị Có Dấu (Signed LBD)</title>
+  <title>Hệ Thống Tái Định Vị Thuốc (Signed LBD Graph Engine)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
@@ -47,9 +47,6 @@
     .brand p { font-size: 13px; color: var(--text-muted); }
 
     .top-bar {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
       margin-bottom: 20px;
     }
     .card {
@@ -58,6 +55,7 @@
       border-radius: 8px;
       padding: 16px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 16px;
     }
     .card-title {
       font-size: 14px;
@@ -108,60 +106,12 @@
     }
     .btn-primary { background: var(--primary); color: #fff; }
     .btn-primary:hover { background: var(--primary-hover); }
-
-    /* TABS */
-    .tab-bar {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 4px;
-    }
-    .tab-btn {
-      padding: 8px 18px;
-      font-size: 14px;
-      font-weight: 700;
-      border-radius: 6px 6px 0 0;
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid transparent;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .tab-btn:hover { background: var(--neutral-bg); color: var(--text); }
-    .tab-btn.active-pos {
-      background: var(--green-bg);
-      color: var(--green);
-      border-color: var(--green-border);
-      border-bottom-color: var(--card-bg);
-    }
-    .tab-btn.active-neg {
-      background: var(--red-bg);
-      color: var(--red);
-      border-color: var(--red-border);
-      border-bottom-color: var(--card-bg);
-    }
-    .tab-btn.active-base {
-      background: var(--neutral-bg);
-      color: var(--neutral);
-      border-color: var(--border);
-      border-bottom-color: var(--card-bg);
-    }
-    .tab-badge {
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 12px;
-      font-weight: 700;
-    }
-    .tab-badge-pos { background: #bbf7d0; color: #15803d; }
-    .tab-badge-neg { background: #fecaca; color: #b91c1c; }
-    .tab-badge-base { background: #e2e8f0; color: #334155; }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
     /* LAYOUT */
     .split-view {
       display: grid;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: 380px 1fr;
       gap: 16px;
       align-items: start;
     }
@@ -169,7 +119,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      max-height: calc(100vh - 280px);
+      max-height: calc(100vh - 260px);
       overflow-y: auto;
       padding-right: 4px;
     }
@@ -239,6 +189,17 @@
     }
     .path-str { font-weight: 600; margin-bottom: 2px; }
 
+    .llm-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      color: #14532d;
+    }
+
     .empty-state {
       padding: 30px;
       text-align: center;
@@ -251,8 +212,8 @@
 
   <header>
     <div class="brand">
-      <h1>🧬 Hệ Thống Tái Định Vị Thuốc (Signed LBD Graph Engine)</h1>
-      <p>Mô hình M2 DWPC + Biểu Hiện Đảo Ngược Sinh Học (Signed Graph NTR) + Phiên Y Văn Tạm Hetionet</p>
+      <h1>🧬 Hệ Thống Tái Định Vị Thuốc (Literature-Based Discovery & Signed Graph Engine)</h1>
+      <p>Mô hình M2 DWPC + Khử Thiên Lệch Bậc (β=0.6) + Diễn Giải Bằng Chứng Y Văn (Groq AI Explainer)</p>
     </div>
   </header>
 
@@ -275,42 +236,26 @@
     </div>
   </div>
 
-  <!-- MAIN TABBED VIEW -->
+  <!-- MAIN VIEW -->
   <div id="main-view" hidden>
-    <!-- TAB BUTTONS: POSITIVE (+), NEGATIVE (-), BASELINE -->
-    <div class="tab-bar">
-      <button id="tab-pos" class="tab-btn active-pos" onclick="switchTab('pos')">
-        🟢 Tab 1: Chỉ Định Triển Vọng / Đảo Ngược Bệnh Sinh (Dấu +)
-        <span id="badge-pos" class="tab-badge tab-badge-pos">0</span>
-      </button>
-      <button id="tab-neg" class="tab-btn" onclick="switchTab('neg')">
-        🔴 Tab 2: Cảnh Báo Nguy Cơ / Cùng Chiều Bệnh Sinh (Dấu -)
-        <span id="badge-neg" class="tab-badge tab-badge-neg">0</span>
-      </button>
-      <button id="tab-base" class="tab-btn" onclick="switchTab('base')">
-        📋 Chỉ Định Gốc Đã Duyệt (FDA Baseline)
-        <span id="badge-base" class="tab-badge tab-badge-base">0</span>
-      </button>
-    </div>
-
-    <!-- SPLIT CONTENT -->
     <div class="split-view">
-      <!-- LEFT: CANDIDATES IN CURRENT TAB -->
+      <!-- LEFT: UNIFIED CANDIDATES LIST -->
       <div class="card" style="padding: 12px;">
         <div class="card-title">
-          <span id="tab-list-title">Danh Sách Bệnh Ứng Viên</span>
-          <span id="tab-cand-count" class="tab-badge tab-badge-pos">0</span>
+          <span>Xếp Hạng Ứng Viên Bệnh Đích</span>
+          <span id="cand-count" class="pill-sm" style="background:#e0f2fe;color:#0369a1;">0</span>
         </div>
-        <input id="search-cand" type="text" placeholder="Lọc theo tên bệnh..." style="width: 100%; margin-bottom: 10px;" oninput="renderTabList();">
+        <input id="search-cand" type="text" placeholder="Tìm kiếm tên bệnh..." style="width: 100%; margin-bottom: 10px;" oninput="renderCandidateList();">
         <div id="cand-list" class="candidate-items"></div>
       </div>
 
-      <!-- RIGHT: DETAIL OF SELECTED CANDIDATE -->
+      <!-- RIGHT: DETAIL & AI EXPLAINER -->
       <div class="cand-detail">
+        <!-- HEADER STATS -->
         <div class="card">
           <div class="detail-header">
             <div class="detail-title">
-              <h2 id="cand-name">Chọn một bệnh để xem phân tích</h2>
+              <h2 id="cand-name">Chọn một bệnh</h2>
               <div class="doid" id="cand-doid">DOID:------</div>
             </div>
             <div>
@@ -325,14 +270,14 @@
               <div id="stat-base-score" style="font-size: 11px; color: var(--text-muted);">M2 gốc: 0.000</div>
             </div>
             <div class="stat-box">
-              <div class="stat-label">Đảo Ngược (Φ_rev)</div>
+              <div class="stat-label">Đảo Ngược Bệnh Sinh (Φ_rev)</div>
               <div id="stat-rev" class="stat-num" style="color: var(--green);">0.00</div>
-              <div style="font-size: 11px; color: var(--text-muted);">Khắc phục bệnh</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Trị liệu</div>
             </div>
             <div class="stat-box">
-              <div class="stat-label">Cùng Chiều (Φ_cong)</div>
+              <div class="stat-label">Cùng Chiều Bệnh Sinh (Φ_cong)</div>
               <div id="stat-cong" class="stat-num" style="color: var(--red);">0.00</div>
-              <div style="font-size: 11px; color: var(--text-muted);">Nguy cơ bất lợi</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Đối kháng/Nguy cơ</div>
             </div>
             <div class="stat-box">
               <div class="stat-label">Dấu Ròng (NTR)</div>
@@ -340,11 +285,22 @@
               <div id="stat-ntr-desc" style="font-size: 11px; color: var(--text-muted);">Độ khớp sinh học</div>
             </div>
             <div class="stat-box">
-              <div class="stat-label">Δ Y Văn Nạp Thêm</div>
+              <div class="stat-label">Δ Y Văn Nạp Mới</div>
               <div id="stat-lit" class="stat-num" style="color: #0284c7;">+0.00</div>
               <div id="stat-lit-desc" style="font-size: 11px; color: var(--text-muted);">0 bằng chứng</div>
             </div>
           </div>
+        </div>
+
+        <!-- LLM EXPLAINER CARD -->
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div class="card-title" style="margin: 0;">🤖 Diễn Giải Báo Cáo Y Khoa (Groq LLM)</div>
+            <button type="button" id="btn-explain" class="btn-primary" style="font-size: 13px; height: 32px; padding: 0 12px;" onclick="generateAIExplanation();">
+              Tạo Diễn Giải Chuyên Sâu
+            </button>
+          </div>
+          <div id="llm-box" class="llm-box">Nhấn 'Tạo Diễn Giải Chuyên Sâu' để mô hình AI phân tích chi tiết cơ chế sinh học, các gen trung gian và trích dẫn PubMed thực tế.</div>
         </div>
 
         <!-- PATHWAYS -->
@@ -368,7 +324,6 @@
 
   <script>
     let runData = null;
-    let currentTab = 'pos'; // 'pos', 'neg', 'base'
     let currentCand = null;
 
     const el = id => document.getElementById(id);
@@ -398,7 +353,7 @@
           return;
         }
 
-        const jobId = resp.job_id;
+        const jobId = resp.job_id || resp.job;
         const poll = setInterval(async () => {
           const res = await fetch(`/api/poll/${jobId}`).then(r => r.json());
           if (res.run_id) {
@@ -424,75 +379,23 @@
       const data = await fetch(`/api/result/${runId}`).then(r => r.json());
       runData = data;
       el('main-view').hidden = false;
-      categorizeData();
-      switchTab('pos');
-    }
-
-    let posList = [];
-    let negList = [];
-    let baseList = [];
-
-    function categorizeData() {
-      if (!runData) return;
-      posList = [];
-      negList = [];
-      baseList = runData.known_indications || [];
-
-      (runData.candidates || []).forEach(c => {
-        const ntr = (c.signed_mechanism && c.signed_mechanism.ntr_score) || 0;
-        const litDelta = c.literature_delta || 0;
-        
-        // Tab 1 (Dấu +): Có cơ chế đảo ngược bệnh sinh (ntr >= 0 hoặc delta y văn > 0, hoặc liên kết topo triển vọng)
-        if (ntr >= 0 || litDelta > 0) {
-          posList.push(c);
-        } else {
-          // Tab 2 (Dấu -): Cùng chiều bệnh sinh / cảnh báo nguy cơ độc tính (ntr < 0)
-          negList.push(c);
-        }
-      });
-
-      el('badge-pos').textContent = posList.length;
-      el('badge-neg').textContent = negList.length;
-      el('badge-base').textContent = baseList.length;
-    }
-
-    function switchTab(tab) {
-      currentTab = tab;
-      el('tab-pos').className = 'tab-btn' + (tab === 'pos' ? ' active-pos' : '');
-      el('tab-neg').className = 'tab-btn' + (tab === 'neg' ? ' active-neg' : '');
-      el('tab-base').className = 'tab-btn' + (tab === 'base' ? ' active-base' : '');
-
-      if (tab === 'pos') {
-        el('tab-list-title').textContent = '🟢 Chỉ Định Triển Vọng / Đảo Ngược Cơ Chế (+)';
-        el('tab-cand-count').className = 'tab-badge tab-badge-pos';
-      } else if (tab === 'neg') {
-        el('tab-list-title').textContent = '🔴 Cảnh Báo Nguy Cơ / Cùng Chiều Bệnh Sinh (-)';
-        el('tab-cand-count').className = 'tab-badge tab-badge-neg';
-      } else {
-        el('tab-list-title').textContent = '📋 Chỉ Định Gốc Đã Được Phê Duyệt (FDA)';
-        el('tab-cand-count').className = 'tab-badge tab-badge-base';
-      }
-
-      renderTabList();
-      const currentList = tab === 'pos' ? posList : (tab === 'neg' ? negList : baseList);
-      if (currentList.length > 0) {
-        selectCandidate(currentList[0]);
-      } else {
-        clearDetail();
+      renderCandidateList();
+      if (runData.candidates && runData.candidates.length > 0) {
+        selectCandidate(runData.candidates[0]);
       }
     }
 
-    function renderTabList() {
+    function renderCandidateList() {
       const list = el('cand-list');
       const q = el('search-cand').value.toLowerCase().trim();
       list.innerHTML = '';
 
-      const currentList = currentTab === 'pos' ? posList : (currentTab === 'neg' ? negList : baseList);
-      const filtered = currentList.filter(c => !q || c.disease_name.toLowerCase().includes(q));
-      el('tab-cand-count').textContent = filtered.length;
+      if (!runData || !runData.candidates) return;
+      const filtered = runData.candidates.filter(c => !q || c.disease_name.toLowerCase().includes(q));
+      el('cand-count').textContent = filtered.length;
 
       if (filtered.length === 0) {
-        list.innerHTML = '<div class="empty-state">Không có ứng viên nào trong nhóm này.</div>';
+        list.innerHTML = '<div class="empty-state">Không có ứng viên nào phù hợp.</div>';
         return;
       }
 
@@ -502,14 +405,12 @@
         
         const ntr = (c.signed_mechanism && c.signed_mechanism.ntr_score) || 0;
         let badge = '';
-        if (currentTab === 'base') {
-          badge = `<span class="pill-sm" style="background:#e2e8f0;color:#334155;">Chỉ định gốc</span>`;
-        } else if (ntr > 0.05) {
-          badge = `<span class="pill-sm" style="background:var(--green-bg);color:var(--green);">🟢 Đảo ngược (+${ntr.toFixed(2)})</span>`;
+        if (ntr > 0.05) {
+          badge = `<span class="pill-sm" style="background:var(--green-bg);color:var(--green);">🟢 Kháng bệnh (+${ntr.toFixed(2)})</span>`;
         } else if (ntr < -0.05) {
-          badge = `<span class="pill-sm" style="background:var(--red-bg);color:var(--red);">🔴 Nguy cơ (${ntr.toFixed(2)})</span>`;
+          badge = `<span class="pill-sm" style="background:var(--red-bg);color:var(--red);">🔴 Cảnh báo (${ntr.toFixed(2)})</span>`;
         } else {
-          badge = `<span class="pill-sm" style="background:var(--neutral-bg);color:var(--neutral);">⚪ Trung tính (0.00)</span>`;
+          badge = `<span class="pill-sm" style="background:var(--neutral-bg);color:var(--neutral);">⚪ Liên kết topo (0.00)</span>`;
         }
 
         const evCount = (c.evidence_edges || []).reduce((s, e) => s + (e.quotes || []).length, 0);
@@ -530,26 +431,22 @@
 
     function selectCandidate(c) {
       currentCand = c;
-      renderTabList();
+      renderCandidateList();
 
       el('cand-name').textContent = c.disease_name;
       el('cand-doid').textContent = c.disease_id;
 
       const ntr = (c.signed_mechanism && c.signed_mechanism.ntr_score) || 0;
-      if (currentTab === 'base') {
-        el('cand-tag').textContent = 'CHỈ ĐỊNH ĐÃ DUYỆT';
-        el('cand-tag').style.background = '#e2e8f0';
-        el('cand-tag').style.color = '#334155';
-      } else if (ntr > 0.05) {
-        el('cand-tag').textContent = 'TRIỂN VỌNG ĐIỀU TRỊ (+)';
+      if (ntr > 0.05) {
+        el('cand-tag').textContent = 'ĐẢO NGƯỢC BỆNH SINH (+)';
         el('cand-tag').style.background = 'var(--green-bg)';
         el('cand-tag').style.color = 'var(--green)';
       } else if (ntr < -0.05) {
-        el('cand-tag').textContent = 'CẢNH BÁO NGUY CƠ (-)';
+        el('cand-tag').textContent = 'CÙNG CHIỀU BỆNH SINH (-)';
         el('cand-tag').style.background = 'var(--red-bg)';
         el('cand-tag').style.color = 'var(--red)';
       } else {
-        el('cand-tag').textContent = 'LIÊN KẾT MẠNG LƯỚI (0)';
+        el('cand-tag').textContent = 'LIÊN KẾT MẠNG LƯỚI (TOPO)';
         el('cand-tag').style.background = 'var(--neutral-bg)';
         el('cand-tag').style.color = 'var(--neutral)';
       }
@@ -601,21 +498,42 @@
           </div>
         `).join('');
       }
+
+      // Reset AI Explainer box
+      el('llm-box').textContent = c.ai_explanation && c.ai_explanation !== "Chưa tạo diễn giải LLM" 
+        ? c.ai_explanation 
+        : "Nhấn 'Tạo Diễn Giải Chuyên Sâu' để mô hình AI phân tích chi tiết cơ chế sinh học, các gen trung gian và trích dẫn PubMed thực tế.";
     }
 
-    function clearDetail() {
-      currentCand = null;
-      el('cand-name').textContent = 'Không có bệnh nào được chọn';
-      el('cand-doid').textContent = 'DOID:------';
-      el('cand-tag').textContent = 'TRỐNG';
-      el('stat-score').textContent = '0.000';
-      el('stat-base-score').textContent = 'M2 gốc: 0.000';
-      el('stat-rev').textContent = '0.00';
-      el('stat-cong').textContent = '0.00';
-      el('stat-ntr').textContent = '0.00';
-      el('stat-lit').textContent = '+0.00';
-      el('path-list').innerHTML = '<div class="empty-state">Chọn ứng viên bệnh để xem đường đi.</div>';
-      el('evidence-list').innerHTML = '<div class="empty-state">Chưa có trích đoạn.</div>';
+    async function generateAIExplanation() {
+      if (!currentCand || !runData) return;
+      const btn = el('btn-explain');
+      const box = el('llm-box');
+
+      btn.disabled = true;
+      btn.textContent = 'Đang phân tích LLM...';
+      box.textContent = 'Đang liên hệ Groq LLM để phân tích báo cáo y sinh chuyên sâu, vui lòng đợi trong giây lát...';
+
+      try {
+        const resp = await api('/api/explain', {
+          run_id: runData.run_id,
+          disease: currentCand.disease_id,
+          paths: [0, 1, 2],
+          quotes: [0, 1, 2]
+        });
+
+        if (resp.text) {
+          box.textContent = resp.text;
+          currentCand.ai_explanation = resp.text;
+        } else if (resp.error) {
+          box.textContent = 'Lỗi diễn giải AI: ' + resp.error;
+        }
+      } catch (err) {
+        box.textContent = 'Lỗi gọi API diễn giải: ' + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Tạo Diễn Giải Chuyên Sâu';
+      }
     }
   </script>
 </body>
