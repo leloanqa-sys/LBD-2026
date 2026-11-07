@@ -1,4 +1,7 @@
-"""Path-level Scoring with Signed Rules and Direction Fit."""
+"""[LEGACY COMPATIBILITY MODULE] Path-level Scoring with Signed Rules and Direction Fit.
+Notice: This module contains legacy heuristic path formulas from Sprint 3.
+For production topological ranking, use `lbd.ranking.m2_ranker.M2RepurposingRanker` or `lbd.ranking.core`.
+"""
 from typing import List, Dict, Any
 from lbd.ranking.features import compute_path_quality, compute_path_penalty
 

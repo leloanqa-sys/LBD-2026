@@ -1,4 +1,7 @@
-"""Compute Edge Confidence, Hub Node Damping, and Path Quality Features."""
+"""[LEGACY COMPATIBILITY MODULE] Compute Edge Confidence, Hub Node Damping, and Path Quality Features.
+Notice: This module contains legacy heuristic path formulas from Sprint 3.
+For production topological ranking, use `lbd.ranking.m2_ranker.M2RepurposingRanker` or `lbd.ranking.core`.
+"""
 import math
 from typing import Dict, List, Any
 

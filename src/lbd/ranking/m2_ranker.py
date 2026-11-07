@@ -19,7 +19,7 @@ Architecture & Training Data Specification (`artifacts/ranking_m2/`):
    - Evaluates directional biological sign multiplication (`+1`, `-1`, `0`):
      * Therapeutic Reversal (`net_sign = -1`): `CdG..DuG`, `CuG..DdG`, and L1000 signature reversal.
      * Pathogenic Exacerbation (`net_sign = +1`): `CdG..DdG`, `CuG..DuG`.
-     * `NTR(c, d) = (Flux_rev - Flux_cong) / (Flux_rev + Flux_cong + 1.0) in [-1, +1]`.
+     * `NTR(c, d) = (Flux_rev - Flux_cong) / max(Flux_rev + Flux_cong, 1e-6) + 0.5 * Sig_term` (clipped to `[-1, +1]`).
 4. Ephemeral In-Memory Session Graph Augmentation (`augment_session_edges`):
    - Injects NLP-extracted edges (`Compound->Gene`, `Gene->Disease`) into an isolated RAM session copy
      of the Hetionet graph (Zero Disk Mutation) and computes live DWPC + NTR deltas.
@@ -112,6 +112,15 @@ class M2RepurposingRanker:
             zip(self.selected_feature_names, [float(x) for x in self.clf.coef_[0]])
         )
         self.intercept: float = float(self.clf.intercept_[0])
+
+        # Normalized linear sensitivity in raw feature space: beta_j / (scale_j * std_j)
+        std_vals = getattr(self.scaler, "scale_", np.ones_like(self.scale))
+        self.norm_beta_dict: Dict[str, float] = {}
+        for i, fname in enumerate(self.selected_feature_names):
+            s = float(self.scale[i]) if i < len(self.scale) else 1.0
+            sigma = float(std_vals[i]) if i < len(std_vals) else 1.0
+            eff_scale = s * sigma if (s * sigma) > 1e-12 else 1.0
+            self.norm_beta_dict[fname] = float(self.clf.coef_[0][i]) / eff_scale
 
         # Detect Signed Graph Metapaths & Signature Reversal Features
         self.rev_cols = [
@@ -209,8 +218,8 @@ class M2RepurposingRanker:
         return float((d_out * d_in) ** (-self.w))
 
     def explain_pair_dfs(
-        self, drug_id: str, disease_id: str, top_k: int = 3
-    ) -> Tuple[int, List[Dict[str, Any]]]:
+        self, drug_id: str, disease_id: str, top_k: int = 3, return_all_lit: bool = False
+    ) -> Tuple[Any, ...]:
         """
         Meet-in-the-Middle Micro-DFS: Finds all 3-node (C-G-D) and 5-node (C-G-X-G-D)
         simple paths and returns total path count plus top_k paths sorted by M2 contribution.
@@ -281,7 +290,8 @@ class M2RepurposingRanker:
                         mp_name = f"dwpc:{cm}|direct|{dm}"
                         weight = w1 * w2
                         beta = self.coef_dict.get(mp_name, 0.0)
-                        contrib = beta * weight
+                        norm_beta = self.norm_beta_dict.get(mp_name, 0.0)
+                        contrib = norm_beta * weight
 
                         lit_info = []
                         if hasattr(self, "lit_edges"):
@@ -292,16 +302,19 @@ class M2RepurposingRanker:
                         pmids = [q["pmid"] for item in lit_info for q in item.get("quotes", []) if q.get("pmid")]
                         tag = " [⚡ Y văn mới]" if is_lit else ""
 
-                        # Biological sign tracking
+                        # Biological sign tracking (DuG: +1, DdG: -1, DaG: 0 associative)
                         cm_s = -1 if cm == "CdG" else (1 if cm == "CuG" else 0)
-                        dm_s = 1 if dm in ("DuG", "DaG") else (-1 if dm == "DdG" else 0)
-                        p_sign = 0 if cm == "CbG" else (cm_s * dm_s)
+                        dm_s = 1 if dm == "DuG" else (-1 if dm == "DdG" else 0)
+                        p_sign = 0 if (cm == "CbG" or dm == "DaG") else (cm_s * dm_s)
                         if p_sign == -1:
                             sign_tag = " [🟢 Trị liệu]"
                             mech_type = "therapeutic"
                         elif p_sign == 1:
                             sign_tag = " [🔴 Cảnh báo độc tính]"
                             mech_type = "pathogenic"
+                        elif dm == "DaG":
+                            sign_tag = " [⚪ Tương quan]"
+                            mech_type = "suggestive_association"
                         else:
                             sign_tag = " [⚪ Trung tính]"
                             mech_type = "neutral"
@@ -311,6 +324,7 @@ class M2RepurposingRanker:
                             "nodes": [drug_id, g1, disease_id],
                             "dwpc_weight": round(float(weight), 6),
                             "beta": round(float(beta), 4),
+                            "norm_beta": round(float(norm_beta), 4),
                             "contrib": round(float(contrib), 6),
                             "net_sign": int(p_sign),
                             "mechanism_type": mech_type,
@@ -335,7 +349,8 @@ class M2RepurposingRanker:
                                 mp_name = f"dwpc:{cm}|{bm}|{dm}"
                                 weight = w1 * w2 * w3 * w4
                                 beta = self.coef_dict.get(mp_name, 0.0)
-                                contrib = beta * weight
+                                norm_beta = self.norm_beta_dict.get(mp_name, 0.0)
+                                contrib = norm_beta * weight
                                 g2_name = self.names.get(g2, g2)
 
                                 lit_info = []
@@ -347,16 +362,19 @@ class M2RepurposingRanker:
                                 pmids = [q["pmid"] for item in lit_info for q in item.get("quotes", []) if q.get("pmid")]
                                 tag = " [⚡ Y văn mới]" if is_lit else ""
 
-                                # Biological sign tracking
+                                # Biological sign tracking (DuG: +1, DdG: -1, DaG: 0 associative)
                                 cm_s = -1 if cm == "CdG" else (1 if cm == "CuG" else 0)
-                                dm_s = 1 if dm in ("DuG", "DaG") else (-1 if dm == "DdG" else 0)
-                                p_sign = 0 if cm == "CbG" else (cm_s * dm_s)
+                                dm_s = 1 if dm == "DuG" else (-1 if dm == "DdG" else 0)
+                                p_sign = 0 if (cm == "CbG" or dm == "DaG") else (cm_s * dm_s)
                                 if p_sign == -1:
                                     sign_tag = " [🟢 Trị liệu]"
                                     mech_type = "therapeutic"
                                 elif p_sign == 1:
                                     sign_tag = " [🔴 Cảnh báo độc tính]"
                                     mech_type = "pathogenic"
+                                elif dm == "DaG":
+                                    sign_tag = " [⚪ Tương quan]"
+                                    mech_type = "suggestive_association"
                                 else:
                                     sign_tag = " [⚪ Trung tính]"
                                     mech_type = "neutral"
@@ -366,6 +384,7 @@ class M2RepurposingRanker:
                                     "nodes": [drug_id, g1, b, g2, disease_id],
                                     "dwpc_weight": round(float(weight), 6),
                                     "beta": round(float(beta), 4),
+                                    "norm_beta": round(float(norm_beta), 4),
                                     "contrib": round(float(contrib), 6),
                                     "net_sign": int(p_sign),
                                     "mechanism_type": mech_type,
@@ -380,6 +399,9 @@ class M2RepurposingRanker:
                                 })
 
         paths.sort(key=lambda x: x["contrib"], reverse=True)
+        all_lit_paths = [p for p in paths if p.get("is_literature_augmented")]
+        if return_all_lit:
+            return len(paths), paths[:top_k], all_lit_paths
         return len(paths), paths[:top_k]
 
     def compute_feature_contributions(
@@ -435,7 +457,7 @@ class M2RepurposingRanker:
         Executes the packaged M2 + Signed Graph NTR ranking pipeline for a drug across all 137 diseases:
         1. Macro DWPC scoring with Compound-Degree debiasing (beta=0.6).
         2. Signed Graph Net Therapeutic Ratio (NTR) Flux computation:
-           NTR = (Phi_therapeutic - 0.5 * Phi_pathogenic) + 0.8 * Cosine_reversal
+           NTR = (Phi_therapeutic - Phi_pathogenic) / max(Phi_therapeutic + Phi_pathogenic, 1e-6) + 0.5 * Cosine_reversal (clipped to [-1.0, 1.0])
         3. Separation of known indications (CtD/CpD) vs novel candidates.
         4. Micro-DFS path explanation with biological sign tracking.
         """
@@ -700,11 +722,12 @@ class M2RepurposingRanker:
             dis_id = cand["disease_id"]
             base_score = cand["score"]
 
-            n_paths, top_paths = 0, []
+            n_paths, top_paths, all_lit_paths = 0, [], []
             if self._graph_loaded:
-                n_paths, top_paths = self.explain_pair_dfs(drug_id, dis_id, top_k=dfs_top_k)
+                n_paths, top_paths, all_lit_paths = self.explain_pair_dfs(
+                    drug_id, dis_id, top_k=dfs_top_k, return_all_lit=True
+                )
 
-            lit_paths = [p for p in top_paths if p.get("is_literature_augmented")]
             direct_lit = [
                 e for (u, m, v), e in getattr(self, "lit_edges", {}).items()
                 if (u == drug_id and v == dis_id) or (u == dis_id and v == drug_id)
@@ -724,7 +747,7 @@ class M2RepurposingRanker:
                     adverse_count += 1
                     evidence_weight -= 1.5 * conf
 
-            for lp in lit_paths:
+            for lp in all_lit_paths:
                 evidence_weight += 1.2 * max(lp.get("dwpc_weight", 0.1), 0.05)
 
             # Logit-space shift (preserves distribution & avoids probability ties at 0.9999)
@@ -738,7 +761,7 @@ class M2RepurposingRanker:
             cand_entry["base_score"] = base_score
             cand_entry["literature_delta"] = round(delta, 4)
             cand_entry["score"] = session_score
-            cand_entry["session_evidence_count"] = len(direct_lit) + len(lit_paths)
+            cand_entry["session_evidence_count"] = len(direct_lit) + len(all_lit_paths)
             cand_entry["session_status"] = "augmented" if delta > 0 else "baseline"
             cand_entry["total_dfs_paths"] = n_paths
             cand_entry["top_paths"] = top_paths
