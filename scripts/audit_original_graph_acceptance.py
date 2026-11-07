@@ -1,4 +1,6 @@
-"""Offline acceptance audit; graph is read-only. Independent NetworkX DFS oracle."""
+"""[LEGACY SPRINT 3 AUDIT] Offline acceptance audit for 721-node snapshot; graph is read-only.
+Notice: Preserved for historical regression testing. For production, use `scripts/run_lbd_m2_ranking.py`.
+"""
 import hashlib
 import json
 import sys

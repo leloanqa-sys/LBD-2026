@@ -1,10 +1,14 @@
-# LEGACY CONFIG: canonical verifier currently uses its own defaults; see docs/REMEDIATION.md.
-# NLP & Relation Extraction configuration
+# =============================================================================
+# NLP & Relation Extraction Configuration
+# =============================================================================
+# Production NLP Architecture:
+#   - NER: PubTator 3.0 API & Regex Grounding
+#   - RE: Zoned Pooling MultiClass BioRE Engine (V3) on BioRED + Optional Groq LLM Verifier
+#   - Polarity & Fusion: Layer 4 Polarity FSM + Layer 5 Bayesian Fusion Engine
 ner:
   engine: "pubtator_v3"
   base_url: "https://www.ncbi.nlm.nih.gov/research/pubtator3-api"
   cache_dir: "data/cache/pubtator"
-  batch_size: 50
 re:
   provider: "groq"
   model: "llama-3.1-70b-versatile"
@@ -12,7 +16,6 @@ re:
   max_retries: 5
   backoff_factor: 2.0
   fallback_model: "llama-3.1-8b-instant"
-  confidence_scorer: "pubmedbert_optional"
 allowed_relations:
   - "INHIBITS"
   - "ACTIVATES"
@@ -22,3 +25,4 @@ allowed_relations:
   - "ASSOCIATED_WITH"
   - "TREATS"
   - "PALLIATES"
+  - "CONTRAINDICATED_FOR"

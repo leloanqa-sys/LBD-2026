@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Run the repository's DFS and ranking code on the clean Hetionet baseline."""
+"""[LEGACY SPRINT 3 RUNNER] Run the historical heuristic DFS and ranking code on the 721-node snapshot.
+
+Notice:
+    This script is preserved for historical baseline audit and regression testing.
+    For the official production M2 topological ranking on Hetionet v1.0, use:
+    `python scripts/run_lbd_m2_ranking.py --drugs "Dapagliflozin" --top-k 5`
+"""
 from __future__ import annotations
 
 import hashlib

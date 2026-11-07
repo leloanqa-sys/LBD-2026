@@ -1,9 +1,5 @@
-# Knowledge Graph & Subgraph settings
-backend: "networkx" # options: "networkx", "neo4j"
-neo4j:
-  uri: "bolt://localhost:7687"
-  user: "neo4j"
-  password: "password"
+# Knowledge Graph & Subgraph Settings
+backend: "networkx"  # In-memory MultiDiGraph & sparse adjacency representation
 subgraph:
   max_hops: 4
   node_types:

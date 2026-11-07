@@ -1,4 +1,11 @@
-"""Metapath-Constrained Pruned DFS Path Search."""
+"""[LEGACY COMPATIBILITY MODULE] Metapath-Constrained Pruned DFS Path Search (Sprint 3).
+
+Notice:
+    This module contains the historical bounded DFS algorithm evaluated on the
+    legacy 721-node merged_graph.json snapshot.
+    For production M2 topological explanations, use Meet-in-the-Middle Micro-DFS:
+    `lbd.ranking.m2_ranker.M2RepurposingRanker.explain_pair_dfs`.
+"""
 from typing import List, Dict, Any, Set
 
 HISTORICAL_DISEASES = {"DOID:9352"} # Type 2 Diabetes Mellitus

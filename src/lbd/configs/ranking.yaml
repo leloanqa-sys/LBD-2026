@@ -1,4 +1,15 @@
-# LBD Path Search and Candidate Ranking settings
+# =============================================================================
+# Ranking Configuration Specification
+# =============================================================================
+# Production Ranking Architecture:
+#   Topological DWPC ranking and Meet-in-the-Middle Micro-DFS are driven by
+#   `M2RepurposingRanker` (trained on Hetionet v1.0, 47,031 nodes, 2,250,197 edges)
+#   with frozen hyper-parameters in `artifacts/ranking_m2/frozen_design.json`.
+#
+# Legacy Path Search & Heuristic Candidate Scoring (Sprint 3 Reference):
+#   The parameters below serve as reference for the legacy heuristic scoring
+#   modules in `lbd.ranking.legacy`.
+
 search:
   min_length: 3
   max_length: 5
