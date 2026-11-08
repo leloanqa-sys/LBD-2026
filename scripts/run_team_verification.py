@@ -130,6 +130,9 @@ def verify_huy() -> Dict[str, Any]:
     sample_edges = [
         {
             "relation_id": "rel_valid_colchicine",
+            "partition": "ADMITTED_KG",
+            "assertion_status": "asserted",
+            "publication_date": "2018-12-31",
             "pmid": "25686106",
             "source_entity": "Colchicine",
             "source_type": "Compound",

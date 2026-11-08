@@ -216,10 +216,9 @@ def run(drug, limit=20, source=None, progress=print):
         for e in graph.get("edges", []):
             session_edges.append(dict(e, quotes=[dict(pmid=evidence[i]["pmid"], text=evidence[i]["evidence"]) for i in e.get("evidence_ids", []) if i in evidence]))
         review_file = filtered / "relations_review.jsonl"
-        if review_file.exists():
-            for r in lines(review_file):
-                session_edges.append(dict(r, quotes=[{"pmid": r.get("pmid", ""), "text": r.get("evidence", "")}]))
-        session_edges_count = session_ranker.augment_session_edges(session_edges)
+        session_edges_count = session_ranker.augment_session_edges(
+            session_edges, publication_cutoff=graph["metadata"]["publication_cutoff"]
+        )
 
         result = session_ranker.rank_drug_with_session(drug_id, top_n_novel=25, dfs_top_k=3)
         known_indications_list = []
