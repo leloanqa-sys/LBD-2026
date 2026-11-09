@@ -8,16 +8,16 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-# Robust biomedical sentence splitter & PubTator hybrid annotator
+# Package-relative imports: the uploaded archive is a standalone biomed_nlp package.
 try:
-    from lbd.nlp.sentence_splitter import split_biomedical_sentences
+    from .sentence_splitter import split_biomedical_sentences
 except ImportError:
-    try:
-        from nlp.sentence_splitter import split_biomedical_sentences
-    except ImportError:
-        split_biomedical_sentences = None
+    split_biomedical_sentences = None
 
-# External annotations are supplied explicitly; no implicit network calls.
+try:
+    from .ner import annotate_abstract_hybrid
+except ImportError:
+    annotate_abstract_hybrid = None
 
 # -------------------------------------------------------------------------
 # 1. Multi-Ontology Registry with Intrinsic Biological Valence (V_entity)
@@ -42,6 +42,86 @@ ONTOLOGY_REGISTRY: List[Dict[str, Any]] = [
             r"\bbms-512148\b",
             r"\bfarxiga\b",
             r"\bforxiga\b",
+        ],
+    },
+    {
+        "id": "CLASS:SGLT2i",
+        "canonical_name": "SGLT2 Inhibitors",
+        "type": "DrugClass",
+        "valence": 0,
+        "patterns": [
+            r"\bsglt[\s\-]?2\s+inhibitor(?:s)?\b",
+            r"\bsglt2i(?:s)?\b",
+            r"\bsodium[\s\-]glucose\s+co[\-\s]?transporter[\s\-]?2\s+inhibitor(?:s)?\b",
+        ],
+    },
+    {
+        "id": "CUSTOM:UGE",
+        "canonical_name": "Urinary Glucose Excretion",
+        "type": "BiologicalProcess",
+        "valence": -1,
+        "patterns": [
+            r"\burinary\s+glucose\s+excretion\b",
+            r"\bglucose\s+excretion\b",
+            r"\burinary\s+glucose\b",
+            r"\bglucosuria\b",
+            r"\bglycosuria\b",
+        ],
+    },
+    {
+        "id": "CUSTOM:GLUCOSE_REABSORPTION",
+        "canonical_name": "Glucose Reabsorption",
+        "type": "BiologicalProcess",
+        "valence": 1,
+        "patterns": [
+            r"\b(?:renal\s+)?glucose\s+reabsorption\b",
+            r"\breabsorption\s+of\s+glucose\b",
+        ],
+    },
+    {
+        "id": "CUSTOM:HBA1C",
+        "canonical_name": "Glycated Hemoglobin A",
+        "type": "Phenotype",
+        "valence": 1,
+        "patterns": [
+            r"\bhba1c\b",
+            r"\bhemoglobin\s+a1c\b",
+            r"\bhaemoglobin\s+a1c\b",
+            r"\bglycated\s+h(?:a)?emoglobin(?:\s+a(?:1c)?)?\b",
+            r"\bglycosylated\s+h(?:a)?emoglobin\b",
+        ],
+    },
+    {
+        "id": "CUSTOM:BP",
+        "canonical_name": "Blood Pressure",
+        "type": "Phenotype",
+        "valence": 1,
+        "patterns": [
+            r"\b(?:systolic\s+|diastolic\s+)?blood\s+pressure\b",
+            r"\bsbp\b",
+            r"\bdbp\b",
+        ],
+    },
+    {
+        "id": "CUSTOM:WEIGHT",
+        "canonical_name": "Body Weight",
+        "type": "Phenotype",
+        "valence": 1,
+        "patterns": [
+            r"\bbody\s+weight\b",
+            r"\bweight\s+loss\b",
+            r"\bweight\s+reduction\b",
+        ],
+    },
+    {
+        "id": "DOID:11979",
+        "canonical_name": "Hypoglycemia",
+        "type": "Disease",
+        "valence": 1,
+        "is_historical_baseline": False,
+        "patterns": [
+            r"\bhypoglyc(?:a)?emia\b",
+            r"\bhypoglyc(?:a)?emic\s+events?\b",
         ],
     },
     # --- MOLECULAR TARGETS (GENES / PROTEINS) ---
@@ -328,10 +408,16 @@ class ZonedSentence:
 
 
 class Layer12_ZoningAndGroundingEngine:
-    """Performs Section Zoning, Multi-Ontology Entity Linking with Intrinsic Valence,
+    """Performs section zoning, PubTator/local entity grounding and coreference.
 
-    and Cross-Sentence Drug Coreference Resolution (preventing the 'Gene treats Disease' category error).
+    ``use_ontology_registry=False`` is recommended when strict PubTator3 grounding
+    is used: it prevents broad local regexes (for example the abbreviation ``HF``)
+    from creating entities that PubTator did not annotate. Enable it explicitly when
+    offline recall is preferred over this stricter precision setting.
     """
+
+    def __init__(self, use_ontology_registry: bool = True) -> None:
+        self.use_ontology_registry = bool(use_ontology_registry)
 
     def detect_study_design(self, title: str, abstract: str) -> Tuple[str, float]:
         """Classifies study design according to GRADE hierarchy."""
@@ -514,28 +600,36 @@ class Layer12_ZoningAndGroundingEngine:
                             "matched_text": he.get("text"),
                             "span_start": rel_start,
                             "span_end": rel_end,
+                            "all_spans": [(rel_start, rel_end, he.get("text"))],
                             "is_coref_resolved": False,
                             "annotation_source": he.get("source", "external_annotator"),
                         }
+                    else:
+                        spans_list = found_by_id[eid].setdefault("all_spans", [])
+                        if (rel_start, rel_end, he.get("text")) not in spans_list:
+                            spans_list.append((rel_start, rel_end, he.get("text")))
 
-            for entry in ONTOLOGY_REGISTRY:
-                for rx in entry["compiled_rx"]:
-                    m = rx.search(sent.text)
-                    if m:
-                        eid = entry["id"]
-                        if eid not in found_by_id:
-                            found_by_id[eid] = {
-                                "id": eid,
-                                "canonical_name": entry["canonical_name"],
-                                "type": entry["type"],
-                                "valence": entry["valence"],
-                                "is_historical_baseline": entry.get("is_historical_baseline", False),
-                                "matched_text": sent.text[m.start():m.end()],
-                                "span_start": m.start(),
-                                "span_end": m.end(),
-                                "is_coref_resolved": False,
-                            }
-                        break
+            if self.use_ontology_registry:
+                for entry in ONTOLOGY_REGISTRY:
+                    for rx in entry["compiled_rx"]:
+                        m = rx.search(sent.text)
+                        if m:
+                            eid = entry["id"]
+                            if eid not in found_by_id:
+                                found_by_id[eid] = {
+                                    "id": eid,
+                                    "canonical_name": entry["canonical_name"],
+                                    "type": entry["type"],
+                                    "valence": entry["valence"],
+                                    "is_historical_baseline": entry.get("is_historical_baseline", False),
+                                    "matched_text": sent.text[m.start():m.end()],
+                                    "span_start": m.start(),
+                                    "span_end": m.end(),
+                                    "all_spans": [(m.start(), m.end(), sent.text[m.start():m.end()])],
+                                    "is_coref_resolved": False,
+                                    "annotation_source": "LocalOntologyRegistry",
+                                }
+                            break
 
             sentence_explicit_entities.append(found_by_id)
             for eid, ent in found_by_id.items():

@@ -1,20 +1,53 @@
 #!/usr/bin/env python3
 """
-LAYER 4: Algebra of Polarity, Clause-Scoped Negation, Contraindication Resolver,
-and Domain-Range Ontology Enforcer.
-Location: nlp/v6_industrial/layer4_polarity_and_grade.py
+LAYER 4: Algebra of Polarity, ConText/BioScope Clause-Scoped Negation, Pseudo-Trigger Filtering,
+Contraindication Resolver, and Domain-Range Ontology Enforcer.
+
+Literature Grounding:
+- Harkema et al. (J. Biomed. Inform. 2009, ConText) & Chapman et al. (J. Biomed. Inform. 2001, NegEx):
+  Pre-negation, post-negation, pseudo-negation triggers, and scope termination tokens.
+- Vincze et al. (BMC Bioinformatics 2008, BioScope) & Peng et al. (AMIA 2018, NegBio):
+  Clause-scoped negation and uncertainty detection in biomedical text.
+- Luo et al. (Briefings in Bioinformatics 2022, BioRED):
+  Coarse polarity (`POSITIVE`, `NEGATIVE`, `ASSOCIATION`) and ontological domain-range constraints.
 """
 import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
+try:
+    from .sentence_splitter import split_sentence_clauses
+except ImportError:
+    split_sentence_clauses = None
+
+# -------------------------------------------------------------------------
+# 0. ConText Pseudo-Triggers (Harkema et al. 2009)
+#    Expressions that superficially contain directional or negation tokens
+#    but do NOT assert causation, increase, or clinical negation.
+# -------------------------------------------------------------------------
+PSEUDO_CAUSE_OR_INCREASE_RX = re.compile(
+    r"\b(?:all[\s\-]cause(?:s)?|other\s+causes?\s+of|common\s+causes?\s+of|leading\s+causes?\s+of|"
+    r"root\s+cause|cause\s+of\s+death|without\s+causing|did\s+not\s+cause|does\s+not\s+cause|"
+    r"no\s+significant\s+increase\s+in(?:\s+the\s+risk\s+of)?|no\s+increase\s+in(?:\s+the\s+risk\s+of)?|"
+    r"did\s+not\s+increase(?:\s+the\s+risk\s+of)?|does\s+not\s+increase(?:\s+the\s+risk\s+of)?|"
+    r"not\s+associated\s+with\s+an?\s+increased\s+risk\s+of|similar\s+risk\s+of|comparable\s+risk\s+of|"
+    r"lower\s+risk\s+of|reduced\s+risk\s+of|decreased\s+risk\s+of|reduction\s+in\s+(?:the\s+)?risk\s+of|"
+    r"at\s+(?:high\s+|increased\s+)?risk\s+(?:of|for)|patients\s+at\s+risk\s+(?:of|for))\b",
+    re.IGNORECASE,
+)
+
+PSEUDO_NEGATION_RX = re.compile(
+    r"\b(?:no\s+longer|not\s+only|non[\s\-]inferior(?:ity)?|no\s+further|not\s+significantly\s+different)\b",
+    re.IGNORECASE,
+)
+
 # -------------------------------------------------------------------------
 # 1. Verb Direction Dictionaries (\Delta_verb \in {-1, +1})
 # -------------------------------------------------------------------------
-# \Delta_verb = -1 : Down-regulation, inhibition, reduction, attenuation, protection
+# \Delta_verb = -1 : Down-regulation, inhibition, reduction, attenuation, protection, therapy
 DECREASE_VERB_PATTERNS = [
     r"\b(?:inhibit|inhibits|inhibited|inhibiting|inhibition\s+of|inhibitor(?:s)?\s+of)\b",
-    r"\b(?:reduce|reduces|reduced|reducing|reduction\s+in|reduction\s+of)\b",
+    r"\b(?:reduce|reduces|reduced|reducing|reduction\s+in|reduction\s+of|reduced\s+the\s+risk\s+of|lower\s+risk\s+of|lowered\s+the\s+risk\s+of)\b",
     r"\b(?:decrease|decreases|decreased|decreasing|decline\s+in|lowering|lower|lowers|lowered)\b",
     r"\b(?:attenuate|attenuates|attenuated|attenuating|attenuation\s+of)\b",
     r"\b(?:ameliorate|ameliorates|ameliorated|ameliorating|amelioration\s+of)\b",
@@ -24,18 +57,22 @@ DECREASE_VERB_PATTERNS = [
     r"\b(?:slow|slows|slowed|slowing\s+the\s+progression\s+of|delay|delays|delayed)\b",
     r"\b(?:protect|protects|protected|protecting\s+against|protective\s+against)\b",
     r"\b(?:improve|improves|improved|improving|improvement\s+in|beneficial\s+in|effective\s+in)\b",
-    r"\b(?:treat|treats|treated|treating|treatment\s+of|treatment\s+for|therapy\s+for)\b",
+    r"\b(?:treat|treats|treated|treating|treatment\s+of|treatment\s+for|therapy\s+for|reverse|reverses|reversed|abolish|abolished|mitigate|mitigates|mitigated)\b",
 ]
 
-# \Delta_verb = +1 : Up-regulation, induction, elevation, causation, risk increase
+# \Delta_verb = +1 : Up-regulation, induction, elevation, causation, toxicity, adverse risk increase
+# Note: bare "risk of" is deliberately excluded to prevent false positives on "reduced risk of" / "similar risk of";
+# explicit "increased risk of" / "higher risk of" / "excess risk of" are matched instead.
 INCREASE_VERB_PATTERNS = [
     r"\b(?:increase|increases|increased|increasing|elevation\s+of|elevate|elevates|elevated)\b",
-    r"\b(?:induce|induces|induced|inducing|induction\s+of)\b",
-    r"\b(?:cause|causes|caused|causing)\b",
+    r"\b(?:induce|induces|induced|inducing|induction\s+of|[a-z0-9\-]+[\s\-]induced)\b",
+    r"\b(?<!all[\s\-])(?:cause|causes|caused|causing)\b",
     r"\b(?:promote|promotes|promoted|promoting|stimulate|stimulates|stimulated|enhancing|enhance|enhances)\b",
-    r"\b(?:trigger|triggers|triggered|precipitate|precipitates|precipitated)\b",
-    r"\b(?:worsen|worsens|worsened|aggravate|aggravates|aggravated)\b",
-    r"\b(?:risk\s+of|associated\s+with\s+an?\s+increased\s+risk\s+of|higher\s+incidence\s+of)\b",
+    r"\b(?:trigger|triggers|triggered|precipitate|precipitates|precipitated|provoke|provokes|provoked|elicit|elicits|elicited)\b",
+    r"\b(?:worsen|worsens|worsened|aggravate|aggravates|aggravated|exacerbate|exacerbates|exacerbated)\b",
+    r"\b(?:increased\s+(?:the\s+)?risk\s+of|higher\s+(?:risk|incidence|rate)\s+of|excess\s+risk\s+of|associated\s+with\s+an?\s+increased\s+risk\s+of)\b",
+    r"\b(?:lead\s+to|leads\s+to|led\s+to|result\s+in|results\s+in|resulted\s+in|produce|produces|produced|develop|developed)\b",
+    r"\b(?:toxicity|adverse\s+effect(?:s)?|adverse\s+event(?:s)?|side\s+effect(?:s)?|complication(?:s)?\s+of|overdose)\b",
 ]
 
 # Contraindication / Regulatory Restriction cues (NEVER classify as TREATS or EVALUATED_IN_COHORT)
@@ -53,7 +90,7 @@ COHORT_CONTEXT_RX = re.compile(
     re.IGNORECASE,
 )
 
-# Speculative / Hypothesis / Uncertain cues (Hedges)
+# Speculative / Hypothesis / Uncertain cues (Hedges - ConText / BioScope)
 UNCERTAIN_RX = re.compile(
     r"\b(?:may\s+potentially|hypothesized|hypothesis|remains\s+unclear|yet\s+to\s+be\s+determined|"
     r"requires\s+further\s+investigation|might\s+speculatively|may\s+play\s+a\s+role|"
@@ -90,30 +127,39 @@ class PolarityResolution:
     rationale: str
 
 
+def _mask_pseudo_triggers(text: str) -> str:
+    """Masks ConText pseudo-triggers with spaces of identical length so character offsets
+    remain unchanged while preventing false verb/negation matches.
+    """
+    chars = list(text)
+    for m in PSEUDO_CAUSE_OR_INCREASE_RX.finditer(text):
+        phrase = m.group(0).lower()
+        # Keep 'reduced/lower/decreased risk of' intact for DECREASE_VERB_PATTERNS, mask the rest
+        if any(w in phrase for w in ("reduced risk", "lower risk", "decreased risk", "reduction in")):
+            continue
+        for idx in range(m.start(), m.end()):
+            chars[idx] = " "
+    return "".join(chars)
+
+
 class Layer4_PolarityAndGradeReasoner:
     r"""Implements the Algebra of Polarity:
         Clinical_Polarity = \Delta_verb * V_target
-    with strict Clause-Scoped Negation and Domain-Range Ontology Constraints.
+    with ConText/BioScope Clause-Scoped Negation and Domain-Range Ontology Constraints.
     """
 
     def extract_local_clause(self, sentence_text: str, target_start: int, target_end: int) -> str:
-        """Splits a complex sentence at clause boundaries (', whereas', ', while', ';',
-        ', without ', ', but ', ', and ') and returns ONLY the local clause containing
-        the target entity span. This prevents 'without weight gain or hypoglycemia' in a
-        subordinate phrase from falsely negating 'DKA' in the main clause.
+        """Splits a complex sentence at BioScope/ConText clause boundaries (', whereas', ', while', ';',
+        ', without ', ', but ', ', however ', ', although ') and returns ONLY the local clause containing
+        the target entity span.
         """
-        # Identify prepositional 'without ...' boundaries specifically
         without_matches = list(re.finditer(r"(?:,\s*)?\bwithout\s+[^,.;]+", sentence_text, re.I))
         for wm in without_matches:
             if wm.start() <= target_start and target_end <= wm.end():
-                # Target is INSIDE the 'without ...' phrase!
                 return sentence_text[wm.start():wm.end()].strip()
 
-        # If target is NOT inside a 'without ...' phrase, strip out any 'without ...' phrase
-        # so its negation token cannot leak into the main clause!
         cleaned_sent = sentence_text
         if without_matches:
-            # Replace 'without ...' segments with spaces of equal length to preserve offsets
             chars = list(sentence_text)
             for wm in without_matches:
                 if not (wm.start() <= target_start and target_end <= wm.end()):
@@ -121,9 +167,8 @@ class Layer4_PolarityAndGradeReasoner:
                         chars[i] = " "
             cleaned_sent = "".join(chars)
 
-        # Further split by major clause delimiters (; or , whereas / , while / , however / , but)
         clause_delims = list(
-            re.finditer(r"(?:;|\s*,\s*(?:whereas|while|however|but|although)\s+)", cleaned_sent, re.I)
+            re.finditer(r"(?:;|\s*,\s*(?:whereas|while|however|but|although|though|yet)\s+)", cleaned_sent, re.I)
         )
         if not clause_delims:
             return cleaned_sent.strip()
@@ -137,62 +182,91 @@ class Layer4_PolarityAndGradeReasoner:
         return cleaned_sent.strip()
 
     def is_locally_negated(self, local_clause: str, target_matched_text: str) -> Tuple[bool, str]:
-        """Checks if the target entity is governed by a true clinical negation inside its local clause."""
+        """Checks if the target entity is governed by a true clinical negation inside its local clause
+        using ConText pre/post-negation rules and termination tokens (Harkema et al. 2009).
+        """
         clause_l = local_clause.lower()
+        # Strip pseudo-negations ('not only', 'no longer', 'non-inferior')
+        clause_clean = PSEUDO_NEGATION_RX.sub(lambda m: " " * len(m.group(0)), clause_l)
         target_l = target_matched_text.lower()
 
-        # 1. Check if inside a 'without [target]' phrase
-        if re.search(r"\bwithout\b", clause_l):
-            return True, "Negated locally via 'without' prepositional phrase"
+        if re.search(r"\bwithout\b", clause_clean):
+            return True, "Negated locally via 'without' prepositional phrase (ConText)"
 
-        # 2. Check explicit non-occurrence / lack of effect on target
-        # Note: Do NOT trigger negation if followed by contrastive 'but instead aggravated/increased'
-        if re.search(r"\bdid\s+not\s+(?:alleviate|reduce|improve)[^,.;]*?\b(?:aggravated|worsened|increased)\b", clause_l):
+        if re.search(r"\bdid\s+not\s+(?:alleviate|reduce|improve)[^,.;]*?\b(?:aggravated|worsened|increased)\b", clause_clean):
             return False, ""
 
         neg_patterns = [
-            r"\b(?:did\s+not|does\s+not|do\s+not)\s+(?:increase|cause|induce|affect|alter|reduce|worsen)\b",
-            r"\b(?:no\s+suggestion\s+of\s+increased\s+risk|no\s+significant\s+increase\s+in|no\s+increase\s+in|no\s+effect\s+on|no\s+evidence\s+of|not\s+associated\s+with)\b",
-            r"\b(?:free\s+of|absence\s+of)\b",
+            r"\b(?:did\s+not|does\s+not|do\s+not|failed\s+to)\s+(?:increase|cause|induce|affect|alter|reduce|worsen|prevent|produce|elicit)\b",
+            r"\b(?:no\s+suggestion\s+of\s+increased\s+risk|no\s+significant\s+increase\s+in|no\s+increase\s+in|no\s+effect\s+on|no\s+evidence\s+of|not\s+associated\s+with|unrelated\s+to|lack\s+of\s+effect\s+on)\b",
+            r"\b(?:free\s+of|absence\s+of|ruled\s+out)\b",
         ]
         for np in neg_patterns:
-            m = re.search(np, clause_l)
+            m = re.search(np, clause_clean)
             if m:
-                # Verify negation precedes target in the local clause
-                t_pos = clause_l.find(target_l)
+                t_pos = clause_clean.find(target_l)
                 if t_pos == -1 or m.start() < t_pos + 25:
-                    return True, f"Negated locally via '{m.group(0)}'"
+                    # Check ConText termination tokens between negation trigger and target
+                    if t_pos > m.end():
+                        between = clause_clean[m.end():t_pos]
+                        if re.search(r"\b(?:but|however|whereas|although|except|aside\s+from)\b", between):
+                            continue
+                    return True, f"Negated locally via '{m.group(0)}' (ConText)"
 
         return False, ""
 
-    def detect_verb_delta(self, local_clause: str, sentence_text: str, target_entity: Dict[str, Any]) -> Tuple[int, str]:
-        r"""Determines the governing verb direction \Delta_verb \in {-1, +1, 0} for a target entity."""
+    def detect_verb_delta(
+        self,
+        local_clause: str,
+        sentence_text: str,
+        target_entity: Dict[str, Any],
+        source_entity: Optional[Dict[str, Any]] = None,
+    ) -> Tuple[int, str]:
+        r"""Determines the governing verb direction \Delta_verb \in {-1, +1, 0} for a (source, target) pair."""
         target_text = re.escape(target_entity["matched_text"])
 
-        # Priority 0: Override "did not alleviate/reduce/prevent but instead aggravated/increased/worsened"
         if re.search(
             r"\b(?:did\s+not\s+(?:alleviate|reduce|prevent|improve|attenuate)[^,.;]*?\b(?:but\s+instead\s+)?(?:aggravated|worsened|increased))\b",
             sentence_text,
             re.I,
         ):
             return +1, "Contrastive adverse override ('did not alleviate but instead aggravated' -> +1)"
-        # e.g., "increase urinary glucose excretion", "attenuates the progression of diabetic nephropathy"
-        local_window_before = local_clause
-        t_idx = local_clause.lower().find(target_entity["matched_text"].lower())
-        if t_idx != -1:
-            # Look at 65 chars before target and 40 chars after target
-            w_start = max(0, t_idx - 75)
-            w_end = min(len(local_clause), t_idx + len(target_entity["matched_text"]) + 45)
-            local_window_before = local_clause[w_start:w_end]
 
-        # Check specific high-precision object patterns first
+        # Mask ConText pseudo-triggers (e.g. 'all-cause', 'other causes of', 'similar risk of', 'no increase in')
+        masked_clause = _mask_pseudo_triggers(local_clause)
+        masked_sent = _mask_pseudo_triggers(sentence_text)
+
+        # If source_entity is provided and co-occurs in the sentence, inspect the span between source and target first!
+        if source_entity is not None:
+            s_start = int(source_entity.get("span_start", -1))
+            s_end = int(source_entity.get("span_end", -1))
+            t_start = int(target_entity.get("span_start", -1))
+            t_end = int(target_entity.get("span_end", -1))
+            if 0 <= s_start < len(masked_sent) and 0 <= t_start < len(masked_sent):
+                lo = max(0, min(s_start, t_start) - 20)
+                hi = min(len(masked_sent), max(s_end, t_end) + 25)
+                between_window = masked_sent[lo:hi]
+                dec_btw = [rx.search(between_window).group(0) for rx in _DECREASE_RX_LIST if rx.search(between_window)]
+                inc_btw = [rx.search(between_window).group(0) for rx in _INCREASE_RX_LIST if rx.search(between_window)]
+                if dec_btw and not inc_btw:
+                    return -1, f"Inter-entity DECREASE verb '{dec_btw[0]}' (-1)"
+                if inc_btw and not dec_btw:
+                    return +1, f"Inter-entity INCREASE/CAUSE verb '{inc_btw[0]}' (+1)"
+
+        local_window_before = masked_clause
+        t_idx = masked_clause.lower().find(target_entity["matched_text"].lower())
+        if t_idx != -1:
+            w_start = max(0, t_idx - 75)
+            w_end = min(len(masked_clause), t_idx + len(target_entity["matched_text"]) + 45)
+            local_window_before = masked_clause[w_start:w_end]
+
         if re.search(
-            r"\b(?:increase|increases|increased|increasing|enhance|enhances|enhanced|promote|promotes|inducing)\s+(?:[a-z\-]+\s+){0,4}"
+            r"\b(?:increase|increases|increased|increasing|enhance|enhances|enhanced|promote|promotes|inducing|induce|induces|induced|cause|causes|caused|causing|trigger|triggers|triggered)\s+(?:[a-z\-]+\s+){0,4}"
             + target_text,
             local_window_before,
             re.I,
         ):
-            return +1, "Direct object of INCREASE/PROMOTE verb (+1)"
+            return +1, "Direct object of INCREASE/CAUSE/INDUCE verb (+1)"
 
         if re.search(
             r"\b(?:inhibit|inhibits|inhibited|inhibiting|inhibition\s+of|inhibitor(?:s)?\s+of|"
@@ -202,14 +276,13 @@ class Layer4_PolarityAndGradeReasoner:
             r"ameliorate|ameliorates|ameliorated|"
             r"prevent|prevents|prevented|preventing|"
             r"slow|slows|slowed|slowing\s+the\s+progression\s+of|"
-            r"improve|improves|improved|improving)\s+(?:[a-z\-]+\s+){0,5}"
+            r"improve|improves|improved|improving|treat|treats|treated|treating|treatment\s+of)\s+(?:[a-z\-]+\s+){0,5}"
             + target_text,
             local_window_before,
             re.I,
         ):
-            return -1, "Direct object of DECREASE/INHIBIT/ATTENUATE verb (-1)"
+            return -1, "Direct object of DECREASE/INHIBIT/TREAT verb (-1)"
 
-        # Check passive or post-target verb ("diabetic nephropathy was attenuated", "SGLT2 inhibition")
         if re.search(
             target_text + r"\s+(?:[a-z\-]+\s+){0,3}(?:was\s+|were\s+|is\s+)?(?:inhibited|reduced|decreased|attenuated|ameliorated|prevented|improved|inhibition|inhibitor|inhibitors)",
             local_window_before,
@@ -218,13 +291,12 @@ class Layer4_PolarityAndGradeReasoner:
             return -1, "Subject/modifier of DECREASE/INHIBIT verb (-1)"
 
         if re.search(
-            target_text + r"\s+(?:[a-z\-]+\s+){0,3}(?:was\s+|were\s+|is\s+)?(?:increased|elevated|induced|caused|triggered|worsened)",
+            target_text + r"\s+(?:[a-z\-]+\s+){0,3}(?:was\s+|were\s+|is\s+)?(?:increased|elevated|induced|caused|triggered|worsened|provoked)",
             local_window_before,
             re.I,
         ):
             return +1, "Subject/modifier of INCREASE/CAUSE verb (+1)"
 
-        # Priority 2: Scan the narrow window around the target
         dec_hits = [rx.search(local_window_before).group(0) for rx in _DECREASE_RX_LIST if rx.search(local_window_before)]
         inc_hits = [rx.search(local_window_before).group(0) for rx in _INCREASE_RX_LIST if rx.search(local_window_before)]
 
@@ -233,28 +305,26 @@ class Layer4_PolarityAndGradeReasoner:
         if inc_hits and not dec_hits:
             return +1, f"Window INCREASE verb '{inc_hits[0]}' (+1)"
 
-        # Priority 3: Fallback to local clause scan
-        dec_clause = [rx.search(local_clause).group(0) for rx in _DECREASE_RX_LIST if rx.search(local_clause)]
-        inc_clause = [rx.search(local_clause).group(0) for rx in _INCREASE_RX_LIST if rx.search(local_clause)]
+        dec_clause = [rx.search(masked_clause).group(0) for rx in _DECREASE_RX_LIST if rx.search(masked_clause)]
+        inc_clause = [rx.search(masked_clause).group(0) for rx in _INCREASE_RX_LIST if rx.search(masked_clause)]
 
         if dec_clause and not inc_clause:
             return -1, f"Clause DECREASE verb '{dec_clause[0]}' (-1)"
         if inc_clause and not dec_clause:
             return +1, f"Clause INCREASE verb '{inc_clause[0]}' (+1)"
         if dec_clause and inc_clause:
-            # Resolve conflict by choosing the verb closest in character distance to target_entity
             best_delta = -1
             best_dist = 9999
             best_word = ""
             for rx in _DECREASE_RX_LIST:
-                for m in rx.finditer(sentence_text):
+                for m in rx.finditer(masked_sent):
                     dist = min(abs(m.end() - target_entity["span_start"]), abs(target_entity["span_end"] - m.start()))
                     if dist < best_dist:
                         best_dist = dist
                         best_delta = -1
                         best_word = m.group(0)
             for rx in _INCREASE_RX_LIST:
-                for m in rx.finditer(sentence_text):
+                for m in rx.finditer(masked_sent):
                     dist = min(abs(m.end() - target_entity["span_start"]), abs(target_entity["span_end"] - m.start()))
                     if dist < best_dist:
                         best_dist = dist
@@ -269,18 +339,28 @@ class Layer4_PolarityAndGradeReasoner:
         sentence_text: str,
         source_ent: Dict[str, Any],
         target_ent: Dict[str, Any],
+        *,
+        strict_cohort_scope: bool = False,
+        v3_class_probabilities: Optional[Dict[str, float]] = None,
     ) -> PolarityResolution:
-        """Applies Layer 4 Algebra of Polarity + Domain-Range Constraints to a (source, target) pair."""
+        """Applies Layer 4 Algebra of Polarity + Domain-Range Constraints to a (source, target) pair,
+        integrating calibrated 4-class statistical polarity probabilities when symbolic verbs are neutral.
+        """
         src_type = source_ent["type"]
         tgt_type = target_ent["type"]
         tgt_valence = int(target_ent.get("valence", 0))
 
-        local_clause = self.extract_local_clause(
-            sentence_text, target_ent["span_start"], target_ent["span_end"]
-        )
+        # Select closest mention span when an entity appears multiple times in the sentence
+        s_start = int(source_ent.get("span_start", 0))
+        t_start = int(target_ent.get("span_start", 0))
+        t_end = int(target_ent.get("span_end", len(sentence_text)))
+        if target_ent.get("all_spans") and len(target_ent["all_spans"]) > 1:
+            best_sp = min(target_ent["all_spans"], key=lambda sp: abs(sp[0] - s_start))
+            t_start, t_end = best_sp[0], best_sp[1]
 
-        # 1. Check Contraindication FIRST (before cohort or therapeutic!)
-        # Fixes Bug #5: "Dapagliflozin is not recommended in patients with moderate or severe renal impairment"
+        local_clause = self.extract_local_clause(sentence_text, t_start, t_end)
+
+        # 1. Check Contraindication FIRST
         if CONTRAINDICATION_RX.search(sentence_text) and tgt_type == "Disease":
             return PolarityResolution(
                 source_id=source_ent["id"],
@@ -297,20 +377,42 @@ class Layer4_PolarityAndGradeReasoner:
                 rationale="Regulatory Contraindication ('not recommended / contraindicated in'); blocked from TREATS/STUDIED_IN.",
             )
 
-        # 2. Check Cohort Eligibility Context EARLY ("in patients with X", "other causes of X")
-        # before clause-wide verbs from another phrase can pollute the cohort disease!
+        # 2. Check Cohort Eligibility Context EARLY ("in patients with X")
         if tgt_type == "Disease":
             tgt_esc = re.escape(target_ent["matched_text"])
-            is_cohort_phrase = bool(
-                re.search(
-                    rf"\b(?:in\s+patients\s+with|among\s+patients\s+with|in\s+adults\s+with|"
-                    rf"in\s+subjects\s+with|patients\s+with\s+type\s+2\s+diabetes(?:\s+mellitus)?\s+and|"
-                    rf"patients\s+with\s+moderate\s+or\s+severe|patients\s+with\s+moderate|"
-                    rf"other\s+causes\s+of(?:\s+nondiabetic)?)\s+(?:[a-z0-9\-]+\s+){{0,3}}{tgt_esc}",
-                    sentence_text,
-                    re.I,
+            if strict_cohort_scope:
+                is_cohort_phrase = False
+                cohort_cues = list(re.finditer(
+                    r"\b(?:in\s+patients\s+with|among\s+patients\s+with|"
+                    r"in\s+adults\s+with|in\s+subjects\s+with|"
+                    r"patients\s+with\s+type\s+2\s+diabetes(?:\s+mellitus)?)\b",
+                    sentence_text, re.I
+                ))
+                for cue in cohort_cues:
+                    tail_end = len(sentence_text)
+                    boundary = re.search(r"[,;:.]", sentence_text[cue.end():])
+                    if boundary:
+                        tail_end = cue.end() + boundary.start()
+                    if t_start >= cue.end() and t_end <= tail_end:
+                        is_cohort_phrase = True
+                        break
+                if not is_cohort_phrase:
+                    other_cause = re.search(r"\bother\s+causes\s+of\b", sentence_text, re.I)
+                    if other_cause and t_start >= other_cause.end():
+                        boundary = re.search(r"[,;:.]", sentence_text[other_cause.end():])
+                        other_end = other_cause.end() + boundary.start() if boundary else len(sentence_text)
+                        is_cohort_phrase = t_end <= other_end
+            else:
+                is_cohort_phrase = bool(
+                    re.search(
+                        rf"\b(?:in\s+patients\s+with|among\s+patients\s+with|in\s+adults\s+with|"
+                        rf"in\s+subjects\s+with|patients\s+with\s+type\s+2\s+diabetes(?:\s+mellitus)?\s+and|"
+                        rf"patients\s+with\s+moderate\s+or\s+severe|patients\s+with\s+moderate|"
+                        rf"other\s+causes\s+of(?:\s+nondiabetic)?)\s+(?:[a-z0-9\-]+\s+){{0,3}}{tgt_esc}",
+                        sentence_text,
+                        re.I,
+                    )
                 )
-            )
             if is_cohort_phrase:
                 return PolarityResolution(
                     source_id=source_ent["id"],
@@ -332,14 +434,23 @@ class Layer4_PolarityAndGradeReasoner:
         is_uncertain = bool(UNCERTAIN_RX.search(local_clause))
         assertion_status = "negated" if is_neg else ("uncertain" if is_uncertain else "asserted")
 
-        # 4. Compute Verb Direction \Delta_verb
-        verb_delta, verb_reason = self.detect_verb_delta(local_clause, sentence_text, target_ent)
+        # 4. Compute Verb Direction \Delta_verb (assisted by V3 statistical polarity when symbolic verb_delta == 0)
+        verb_delta, verb_reason = self.detect_verb_delta(local_clause, sentence_text, target_ent, source_entity=source_ent)
+        if verb_delta == 0 and v3_class_probabilities:
+            p_pos = float(v3_class_probabilities.get("POSITIVE", 0.0))
+            p_neg = float(v3_class_probabilities.get("NEGATIVE", 0.0))
+            p_ass = float(v3_class_probabilities.get("ASSOCIATION", 0.0))
+            if p_pos > max(p_neg, p_ass) and p_pos >= 0.25:
+                verb_delta = +1
+                verb_reason = f"V3 statistical polarity POSITIVE (p={p_pos:.3f})"
+            elif p_neg > max(p_pos, p_ass) and p_neg >= 0.25:
+                verb_delta = -1
+                verb_reason = f"V3 statistical polarity NEGATIVE (p={p_neg:.3f})"
 
         # -----------------------------------------------------------------
         # DOMAIN-RANGE CASE A: Compound -> Gene (Pharmacological Target)
         # -----------------------------------------------------------------
         if src_type == "Compound" and tgt_type == "Gene":
-            # SGLT2 (6524) or SGLT1 (6523) are pharmacologically inhibited by Dapagliflozin
             if source_ent["id"] == "DB06292" and target_ent["id"] in ("6524", "6523"):
                 return PolarityResolution(
                     source_id=source_ent["id"],
@@ -355,7 +466,6 @@ class Layer4_PolarityAndGradeReasoner:
                     local_clause=local_clause,
                     rationale=f"Primary pharmacological target inhibition ({verb_reason})",
                 )
-            # Check explicit activation/upregulation right near the target gene (e.g., "AMPK activation")
             tgt_esc = re.escape(target_ent["matched_text"])
             if re.search(
                 rf"(?:{tgt_esc}\s+(?:[a-z\-]+\s+){{0,2}}(?:activation|activated|stimulation|upregulation|phosphorylation|pathway\s+activation)|"
@@ -377,7 +487,7 @@ class Layer4_PolarityAndGradeReasoner:
                     local_clause=local_clause,
                     rationale=f"Compound->Gene activation ({verb_reason})",
                 )
-            else:
+            elif verb_delta < 0:
                 return PolarityResolution(
                     source_id=source_ent["id"],
                     target_id=target_ent["id"],
@@ -392,27 +502,33 @@ class Layer4_PolarityAndGradeReasoner:
                     local_clause=local_clause,
                     rationale=f"Compound->Gene inhibition ({verb_reason})",
                 )
+            else:
+                return PolarityResolution(
+                    source_id=source_ent["id"],
+                    target_id=target_ent["id"],
+                    verb_delta=0,
+                    target_valence=tgt_valence,
+                    clinical_polarity="MOLECULAR_ASSOCIATION (0)",
+                    canonical_relation="ASSOCIATED_WITH",
+                    contract_b_relation="ASSOCIATED_WITH",
+                    hetionet_metaedge="CbG",
+                    hetionet_sign=0,
+                    assertion_status=assertion_status,
+                    local_clause=local_clause,
+                    rationale=f"Compound->Gene association/binding ({verb_reason})",
+                )
 
         # -----------------------------------------------------------------
         # DOMAIN-RANGE CASE B: Compound/Gene -> BiologicalProcess (Bridging)
-        # Fixes Bug #4 & Feedback Lỗ hổng 1:
-        # Physiological Target Polarity Inversion:
-        # - When Compound acts on BiologicalProcess: e.g. Dapagliflozin increases UGE.
-        # - When Target Gene acts on BiologicalProcess: SGLT2 naturally REABSORBS glucose!
-        #   Normal SGLT2 function DECREASES Urinary Glucose Excretion (Sign = -1),
-        #   and INCREASES Renal Glucose Reabsorption (Sign = +1).
-        #   Therefore, for Gene -> BiologicalProcess:
-        #   effective_verb_delta = -1 * verb_delta_of_inhibition!
         # -----------------------------------------------------------------
         if tgt_type == "BiologicalProcess":
             eff_delta = verb_delta
             if src_type == "Gene":
-                # Check known physiological role inversion for transport/metabolic genes
                 if source_ent["id"] in ("6524", "6523"):
-                    if target_ent["id"] in ("GO:0060004", "GO:0003091"):  # UGE, Natriuresis
-                        eff_delta = -1  # SGLT2 naturally decreases excretion
-                    elif target_ent["id"] in ("GO:0003092", "HP:0012592", "GO:0006954"):  # Reabsorption, Albuminuria, Fibrosis
-                        eff_delta = +1  # SGLT2 naturally increases reabsorption & diabetic strain
+                    if target_ent["id"] in ("GO:0060004", "GO:0003091"):
+                        eff_delta = -1
+                    elif target_ent["id"] in ("GO:0003092", "HP:0012592", "GO:0006954"):
+                        eff_delta = +1
                 else:
                     if eff_delta == 0:
                         eff_delta = +1 if tgt_valence == 1 else -1
@@ -420,7 +536,7 @@ class Layer4_PolarityAndGradeReasoner:
                 if eff_delta == 0:
                     eff_delta = -1 if tgt_valence == 1 else +1
 
-            product = eff_delta * tgt_valence  # -1 = Beneficial/Therapeutic mechanism, +1 = Pathological/Adverse
+            product = eff_delta * tgt_valence
             clinical_pol = "THERAPEUTIC_MECHANISM (-1)" if product <= 0 else "PATHOLOGICAL_PROCESS (+1)"
             cb_rel = "INCREASES" if eff_delta > 0 else "DECREASES"
             metaedge = f"{src_type[0]}uBP" if eff_delta > 0 else f"{src_type[0]}dBP"
@@ -444,8 +560,6 @@ class Layer4_PolarityAndGradeReasoner:
 
         # -----------------------------------------------------------------
         # DOMAIN-RANGE CASE C: Gene -> Disease
-        # Fixes Bug #1: A Gene (SLC5A2 / SGLT2) can NEVER 'TREATS' or 'CAUSES' a Disease
-        # directly when standing in for an inhibitor; Gene->Disease is strictly ASSOCIATED_WITH (DaG).
         # -----------------------------------------------------------------
         if src_type == "Gene" and tgt_type == "Disease":
             return PolarityResolution(
@@ -465,14 +579,8 @@ class Layer4_PolarityAndGradeReasoner:
 
         # -----------------------------------------------------------------
         # DOMAIN-RANGE CASE D: Compound -> Disease
-        # Apply Algebra of Polarity: Clinical_Polarity = \Delta_verb * V_disease
-        # Since V_disease = +1:
-        #   - \Delta_verb = -1 => Clinical_Polarity = -1 => TREATS (CtD, sign = -1)
-        #   - \Delta_verb = +1 => Clinical_Polarity = +1 => CAUSES (CcSE / CpD, sign = +1)
         # -----------------------------------------------------------------
         if src_type == "Compound" and tgt_type == "Disease":
-            # Check if target is strictly inside a Cohort Eligibility phrase ("in patients with X")
-            # AND not the direct object of a therapeutic/adverse verb
             cohort_match = re.search(
                 r"\b(?:in\s+patients\s+with|among\s+patients\s+with|in\s+adults\s+with|in\s+subjects\s+with)\s+(?:[a-z0-9\-]+\s+){0,4}"
                 + re.escape(target_ent["matched_text"]),
@@ -495,7 +603,6 @@ class Layer4_PolarityAndGradeReasoner:
                     rationale="Patient eligibility cohort context ('in patients with X'); separated from TREATS.",
                 )
 
-            # Known adverse events (DKA, UTI/Genital infection) when discussed as risk/adverse event
             if target_ent["id"] in ("DOID:11714", "DOID:0060073") and verb_delta >= 0:
                 return PolarityResolution(
                     source_id=source_ent["id"],
@@ -544,7 +651,6 @@ class Layer4_PolarityAndGradeReasoner:
                     rationale=f"Algebra of Polarity: Delta_verb(+1) * V_disease(+1) = +1 [ADVERSE] ({verb_reason})",
                 )
 
-            # Default when verb_delta == 0 in a clinical sentence
             return PolarityResolution(
                 source_id=source_ent["id"],
                 target_id=target_ent["id"],
@@ -560,7 +666,40 @@ class Layer4_PolarityAndGradeReasoner:
                 rationale="Co-occurring clinical context without directional therapeutic/adverse verb -> EVALUATED_IN_COHORT.",
             )
 
-        # Fallback for any other combination
+        # -----------------------------------------------------------------
+        # DOMAIN-RANGE CASE E: Gene-Gene, Chemical-Chemical, Variant-*
+        # -----------------------------------------------------------------
+        if verb_delta == +1:
+            return PolarityResolution(
+                source_id=source_ent["id"],
+                target_id=target_ent["id"],
+                verb_delta=+1,
+                target_valence=tgt_valence,
+                clinical_polarity="POSITIVE_REGULATION (+1)",
+                canonical_relation="INCREASES",
+                contract_b_relation="INCREASES",
+                hetionet_metaedge=f"{src_type[0]}u{tgt_type[0]}",
+                hetionet_sign=1,
+                assertion_status=assertion_status,
+                local_clause=local_clause,
+                rationale=f"Positive directional interaction ({verb_reason})",
+            )
+        if verb_delta == -1:
+            return PolarityResolution(
+                source_id=source_ent["id"],
+                target_id=target_ent["id"],
+                verb_delta=-1,
+                target_valence=tgt_valence,
+                clinical_polarity="NEGATIVE_REGULATION (-1)",
+                canonical_relation="DECREASES",
+                contract_b_relation="DECREASES",
+                hetionet_metaedge=f"{src_type[0]}d{tgt_type[0]}",
+                hetionet_sign=-1,
+                assertion_status=assertion_status,
+                local_clause=local_clause,
+                rationale=f"Negative directional interaction ({verb_reason})",
+            )
+
         return PolarityResolution(
             source_id=source_ent["id"],
             target_id=target_ent["id"],

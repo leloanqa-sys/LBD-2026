@@ -3,10 +3,6 @@
 LAYER 3: N-ary Contextual Bio-Event Extraction & Counterfactual Entity-Blinded LLM Verifier.
 Location: nlp/v6_industrial/layer3_event_and_blinded_llm.py
 """
-import logging
-
-logger = logging.getLogger(__name__)
-
 import hashlib
 import json
 import os
@@ -51,9 +47,11 @@ class ProjectedEdgeCandidate:
     source_id: str
     source_name: str
     source_type: str
+    source_raw_text: str
     target_id: str
     target_name: str
     target_type: str
+    target_raw_text: str
     target_valence: int
     is_historical_baseline: bool
     verb_delta: int
@@ -103,13 +101,17 @@ class Layer3_BioEventAndBlindedLLMEngine:
         cache_path: Optional[Path] = None,
         enable_live_llm: bool = True,
         max_live_llm_calls: int = 80,
+        improvements: Optional[Dict[str, bool]] = None,
     ) -> None:
         self.layer4 = Layer4_PolarityAndGradeReasoner()
         self.enable_live_llm = enable_live_llm
+        self.improvements = dict(improvements or {})
         self.max_live_llm_calls = max_live_llm_calls
         self.live_llm_calls_made = 0
         self.cache_hits = 0
         self.symbolic_decisions = 0
+        # Non-invasive gate tracing for evaluation; does not alter prediction logic.
+        self.debug_records: List[Dict[str, Any]] = []
 
         if cache_path is None:
             cache_path = Path(__file__).resolve().parent.parent / "output" / "v6_blinded_llm_cache.json"
@@ -205,16 +207,36 @@ class Layer3_BioEventAndBlindedLLMEngine:
                 "rationale": f"{symbolic_res.rationale} | Router Bypass: Regulatory contraindication invariant.",
             }
 
-        # Router Check 2: Domain-Range constraint: Gene can NEVER treat Disease
+        # Router Check 2: Domain-Range constraint: Gene can NEVER treat Disease,
+        # but in genetic/genomic contexts (BioRED), Gene->Disease may carry POSITIVE/NEGATIVE/ASSOCIATION polarity.
         if src_type == "Gene" and tgt_type == "Disease":
             self.symbolic_decisions += 1
+            if self.improvements.get("association_trigger"):
+                assoc_trigger = re.search(
+                    r"\b(?:associated\s+with|correlated\s+with|linked\s+to|related\s+to|"
+                    r"co[- ]occurs?\s+with|predicts?|predictor\s+of|contributes?\s+to|"
+                    r"mediates?|regulates?|increases?\s+(?:the\s+)?risk\s+of|"
+                    r"higher\s+risk\s+of|increased\s+incidence\s+of)\b",
+                    symbolic_res.local_clause, re.I
+                )
+                if not assoc_trigger:
+                    return {
+                        "relation": "NO_RELATION",
+                        "assertion_status": symbolic_res.assertion_status,
+                        "confidence": 0.0,
+                        "llm_verified": False,
+                        "llm_mode": "router_association_trigger_block",
+                        "rationale": f"{symbolic_res.rationale} | No explicit association/cause trigger in local clause.",
+                    }
+            router_conf = 0.75 if self.improvements.get("lower_gene_disease_router_confidence") else 0.95
+            out_rel = symbolic_res.canonical_relation if symbolic_res.canonical_relation in ("INCREASES", "DECREASES", "ASSOCIATED_WITH") else "ASSOCIATED_WITH"
             return {
-                "relation": "ASSOCIATED_WITH",
+                "relation": out_rel,
                 "assertion_status": symbolic_res.assertion_status,
-                "confidence": 0.95,
+                "confidence": router_conf,
                 "llm_verified": False,
                 "llm_mode": "router_bypass_domain_range",
-                "rationale": f"{symbolic_res.rationale} | Router Bypass: Gene->Disease restricted to ASSOCIATED_WITH.",
+                "rationale": f"{symbolic_res.rationale} | Router Bypass: Gene->Disease ({out_rel}).",
             }
 
         # Router Check 3: Deterministic direct-object therapeutic verbs
@@ -308,7 +330,7 @@ class Layer3_BioEventAndBlindedLLMEngine:
         )
 
         payload = {
-            "model": "qwen/qwen3.8-27b",
+            "model": os.environ.get("BIOMED_SLM_MODEL", "llama-3.1-8b-instant"),
             "messages": [
                 {"role": "system", "content": "Output strictly valid JSON. Do not include markdown fences or thinking tags."},
                 {"role": "user", "content": prompt},
@@ -325,7 +347,7 @@ class Layer3_BioEventAndBlindedLLMEngine:
                 headers={
                     "Authorization": f"Bearer {self.api_key}",
                     "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+                    "User-Agent": "Mozilla/5.0",
                 },
                 method="POST",
             )
@@ -375,26 +397,15 @@ class Layer3_BioEventAndBlindedLLMEngine:
             }
             self.cache[cache_key] = result
             return result
-        except urllib.error.HTTPError as e:
-            if e.code in (401, 403):
-                logger.warning(f"Groq API key returned HTTP {e.code} (Unauthorized/Forbidden). Fast-disabling live LLM for this run.")
-                self.api_key = None
-            self.symbolic_decisions += 1
-            return {
-                "relation": symbolic_res.canonical_relation,
-                "assertion_status": symbolic_res.assertion_status,
-                "confidence": 0.88 if symbolic_res.verb_delta != 0 else 0.72,
-                "llm_verified": False, "llm_mode": "symbolic_fallback_http",
-                "rationale": symbolic_res.rationale,
-            }
         except Exception as e:
             self.symbolic_decisions += 1
+            mode = "symbolic_fallback_http" if isinstance(e, urllib.error.HTTPError) else "symbolic_fallback"
             return {
                 "relation": symbolic_res.canonical_relation,
                 "assertion_status": symbolic_res.assertion_status,
                 "confidence": 0.88 if symbolic_res.verb_delta != 0 else 0.72,
                 "llm_verified": False,
-                "llm_mode": f"symbolic_fallback",
+                "llm_mode": mode,
                 "rationale": symbolic_res.rationale,
             }
 
@@ -417,13 +428,33 @@ class Layer3_BioEventAndBlindedLLMEngine:
         events: List[BioEventFrame] = []
 
         for sent in sentences:
+            self.debug_records.append({
+                "pmid": str(pmid), "evidence_sentence": sent.text,
+                "section_zone": sent.section_zone, "section_weight": float(sent.section_weight),
+                "stage": "sentence_entities", "entities": list(sent.entities),
+            })
             # Skip METHODS_SEARCH noise immediately (weight == 0.0)
             if sent.section_zone == "METHODS_SEARCH" or sent.section_weight <= 0.0:
+                self.debug_records.append({
+                    "pmid": str(pmid), "evidence_sentence": sent.text,
+                    "section_zone": sent.section_zone, "section_weight": float(sent.section_weight),
+                    "stage": "section_weight_blocked", "entities": list(sent.entities),
+                })
                 continue
 
             if len(sent.entities) == 0:
+                self.debug_records.append({
+                    "pmid": str(pmid), "evidence_sentence": sent.text,
+                    "section_zone": sent.section_zone, "section_weight": float(sent.section_weight),
+                    "stage": "entity_coverage_zero", "entities": [],
+                })
                 continue
             if len(sent.entities) < 2 and (v3_relation_scores is None or v3_threshold is None):
+                self.debug_records.append({
+                    "pmid": str(pmid), "evidence_sentence": sent.text,
+                    "section_zone": sent.section_zone, "section_weight": float(sent.section_weight),
+                    "stage": "insufficient_entities", "entities": list(sent.entities),
+                })
                 continue
 
             # Partition sentence entities by ontological role
@@ -478,6 +509,12 @@ class Layer3_BioEventAndBlindedLLMEngine:
                     candidate_pairs.append((comp, bp))
                 for d in diseases:
                     candidate_pairs.append((comp, d))
+                for v in variants:
+                    candidate_pairs.append((comp, v))
+
+            for i_c in range(len(compounds)):
+                for j_c in range(i_c + 1, len(compounds)):
+                    candidate_pairs.append((compounds[i_c], compounds[j_c]))
 
             for g in genes:
                 for bp in processes:
@@ -487,52 +524,88 @@ class Layer3_BioEventAndBlindedLLMEngine:
                 for v in variants:
                     candidate_pairs.append((g, v))
 
+            for i_g in range(len(genes)):
+                for j_g in range(i_g + 1, len(genes)):
+                    candidate_pairs.append((genes[i_g], genes[j_g]))
+
             for v in variants:
                 for d in diseases:
                     candidate_pairs.append((v, d))
 
-            # Cross-Sentence Scope Expansion (Gated by V3 relation existence probability):
-            # When V3 relation scores are provided (V7 Hybrid mode), bridge cross-sentence
-            # relations where the Compound is introduced in Title or adjacent previous sentence,
-            # and the endpoint (Disease/Gene/Process) is reported in the current sentence.
+            for i_v in range(len(variants)):
+                for j_v in range(i_v + 1, len(variants)):
+                    candidate_pairs.append((variants[i_v], variants[j_v]))
+
+            # Optional improvement A: add explicit Phenotype/BiologicalProcess -> Disease candidates.
+            if self.improvements.get("direction_pair_expansion"):
+                disease_only = [e for e in sent.entities if e.get("type") == "Disease"]
+                phenotype_only = [e for e in sent.entities if e.get("type") == "Phenotype"]
+                for bp in processes:
+                    for dis in disease_only:
+                        candidate_pairs.append((bp, dis))
+                for phenotype in phenotype_only:
+                    for dis in disease_only:
+                        candidate_pairs.append((phenotype, dis))
+                # DrugClass is already included in the Compound-like anchor list above;
+                # reverse GT directions are evaluated order-independently and flagged.
+
+            # Cross-Sentence Scope Expansion:
+            # Bridge cross-sentence relations where an entity (Compound/Gene/Variant) is introduced
+            # in the Title or adjacent previous sentence and the endpoint is reported in the current sentence.
+            title_sent = grounded_doc["sentences"][0] if (grounded_doc.get("sentences") and grounded_doc["sentences"][0].section_zone == "TITLE") else None
             if v3_relation_scores is not None and v3_threshold is not None:
-                cross_sources: List[Dict[str, Any]] = []
-                # Check Title compounds
-                title_sent = grounded_doc["sentences"][0] if (grounded_doc.get("sentences") and grounded_doc["sentences"][0].section_zone == "TITLE") else None
-                if title_sent and title_sent != sent:
-                    cross_sources.extend([e for e in title_sent.entities if e.get("type") in ("Compound", "Chemical")])
-                # Check adjacent previous sentence compounds
-                if sent.sent_idx > 1 and grounded_doc.get("sentences"):
-                    prev_idx = sent.sent_idx - 2  # 0-indexed position
-                    if 0 <= prev_idx < len(grounded_doc["sentences"]):
-                        prev_sent = grounded_doc["sentences"][prev_idx]
-                        if prev_sent.section_weight > 0:
-                            cross_sources.extend([e for e in prev_sent.entities if e.get("type") in ("Compound", "Chemical")])
+                prev_entities: List[Dict[str, Any]] = []
+                for prev_sent in grounded_doc.get("sentences", []):
+                    if prev_sent.sent_idx < sent.sent_idx and prev_sent.section_weight > 0:
+                        prev_entities.extend(prev_sent.entities)
 
-                existing_comp_ids = {c["id"] for c in compounds}
+                existing_ids = {e["id"] for e in sent.entities}
                 seen_cross_ids = set()
-                for c_src in cross_sources:
-                    if c_src["id"] in existing_comp_ids or c_src["id"] in seen_cross_ids:
+                type_rank = {
+                    "Compound": 0, "Chemical": 0, "DrugClass": 0,
+                    "Gene": 1, "Variant": 2,
+                    "BiologicalProcess": 3, "Phenotype": 3, "Disease": 4,
+                }
+                for e_prev in prev_entities:
+                    if e_prev["id"] in existing_ids or e_prev["id"] in seen_cross_ids:
                         continue
-                    seen_cross_ids.add(c_src["id"])
-
+                    seen_cross_ids.add(e_prev["id"])
+                    for e_curr in sent.entities:
+                        if e_curr["id"] == e_prev["id"]:
+                            continue
+                        pair_key = tuple(sorted((str(e_prev["id"]), str(e_curr["id"]))))
+                        sc = v3_relation_scores.get(pair_key)
+                        if sc and float(sc.get("prob_has_relation", 0.0)) >= float(v3_threshold):
+                            r_prev = type_rank.get(str(e_prev.get("type")), 5)
+                            r_curr = type_rank.get(str(e_curr.get("type")), 5)
+                            if r_prev <= r_curr:
+                                candidate_pairs.append((e_prev, e_curr))
+                            else:
+                                candidate_pairs.append((e_curr, e_prev))
+            elif title_sent and title_sent != sent and sent.section_zone in ("RESULTS", "CONCLUSIONS"):
+                # Rule-only Title-to-Results/Conclusions bridging when no classifier is active:
+                # only bridge the primary Title Compound to a Disease in Results/Conclusions if an explicit causal/therapeutic verb is present
+                title_comps = [e for e in title_sent.entities if e.get("type") in ("Compound", "Chemical")]
+                existing_comp_ids = {c["id"] for c in compounds}
+                if len(title_comps) == 1 and title_comps[0]["id"] not in existing_comp_ids:
                     for d in diseases:
-                        pair_key = tuple(sorted((str(c_src["id"]), str(d["id"]))))
-                        sc = v3_relation_scores.get(pair_key)
-                        if sc and float(sc.get("prob_has_relation", 0.0)) >= float(v3_threshold):
-                            candidate_pairs.append((c_src, d))
+                        candidate_pairs.append((title_comps[0], d))
 
-                    for g in genes:
-                        pair_key = tuple(sorted((str(c_src["id"]), str(g["id"]))))
-                        sc = v3_relation_scores.get(pair_key)
-                        if sc and float(sc.get("prob_has_relation", 0.0)) >= float(v3_threshold):
-                            candidate_pairs.append((c_src, g))
-
-                    for bp in processes:
-                        pair_key = tuple(sorted((str(c_src["id"]), str(bp["id"]))))
-                        sc = v3_relation_scores.get(pair_key)
-                        if sc and float(sc.get("prob_has_relation", 0.0)) >= float(v3_threshold):
-                            candidate_pairs.append((c_src, bp))
+            candidate_debug = []
+            for src_ent, tgt_ent in candidate_pairs:
+                candidate_debug.append({
+                    "pmid": str(pmid), "evidence_sentence": sent.text,
+                    "section_zone": sent.section_zone, "section_weight": float(sent.section_weight),
+                    "stage": "candidate_generated",
+                    "source_id": str(src_ent.get("id", "")),
+                    "source_name": str(src_ent.get("canonical_name", "")),
+                    "source_type": str(src_ent.get("type", "")),
+                    "target_id": str(tgt_ent.get("id", "")),
+                    "target_name": str(tgt_ent.get("canonical_name", "")),
+                    "target_type": str(tgt_ent.get("type", "")),
+                    "classifier_probability": None,
+                })
+            self.debug_records.extend(candidate_debug)
 
             seen_pairs_in_frame: Set[Tuple[str, str]] = set()
             for src_ent, tgt_ent in candidate_pairs:
@@ -547,18 +620,136 @@ class Layer3_BioEventAndBlindedLLMEngine:
                 pair_key = tuple(sorted((str(src_ent["id"]), str(tgt_ent["id"]))))
                 v3_score = (v3_relation_scores or {}).get(pair_key)
 
-                # Layer 4: Symbolic Algebra of Polarity + Local Clause Scoping
-                sym_res = self.layer4.resolve_pair_polarity(sent.text, src_ent, tgt_ent)
+                # Optional improvement C: filter explicit research-intent sentences only;
+                # do not hard-block BACKGROUND as a section.
+                if self.improvements.get("objective_sentence_filter"):
+                    intent_cue = re.search(
+                        r"\b(?:aims?\s+to|objective(?:s)?\s*:|purpose\s*:|"
+                        r"to\s+(?:evaluate|assess|investigate|determine|examine|compare)|"
+                        r"we\s+sought\s+to|whether\s+the)\b",
+                        sent.text, re.I
+                    )
+                    result_cue = re.search(
+                        r"\b(?:significantly|reduced|increased|improved|improves|decreased|"
+                        r"attenuated|lowered|higher|lower|showed|demonstrated|found|observed|"
+                        r"hazard\s+ratio|odds\s+ratio|confidence\s+interval|efficacy|"
+                        r"effective|associated\s+with|resulted\s+in)\b",
+                        sent.text, re.I
+                    )
+                    if intent_cue and not result_cue:
+                        self.debug_records.append({
+                            "pmid": str(pmid), "evidence_sentence": sent.text,
+                            "section_zone": sent.section_zone, "section_weight": float(sent.section_weight),
+                            "stage": "objective_sentence_filter",
+                            "source_id": str(src_ent.get("id", "")),
+                            "source_name": str(src_ent.get("canonical_name", "")),
+                            "source_type": str(src_ent.get("type", "")),
+                            "target_id": str(tgt_ent.get("id", "")),
+                            "target_name": str(tgt_ent.get("canonical_name", "")),
+                            "target_type": str(tgt_ent.get("type", "")),
+                        })
+                        continue
+
+                # Layer 4: Symbolic Algebra of Polarity + Local Clause Scoping + V3 Statistical Polarity
+                sym_res = self.layer4.resolve_pair_polarity(
+                    sent.text, src_ent, tgt_ent,
+                    strict_cohort_scope=bool(self.improvements.get("strict_cohort_scope")),
+                    v3_class_probabilities=(v3_score.get("class_probabilities") if v3_score is not None else None),
+                )
+                trace = {
+                    "pmid": str(pmid), "evidence_sentence": sent.text,
+                    "section_zone": sent.section_zone, "section_weight": float(sent.section_weight),
+                    "stage": "polarity_resolved",
+                    "source_id": str(src_ent.get("id", "")),
+                    "source_name": str(src_ent.get("canonical_name", "")),
+                    "source_type": str(src_ent.get("type", "")),
+                    "target_id": str(tgt_ent.get("id", "")),
+                    "target_name": str(tgt_ent.get("canonical_name", "")),
+                    "target_type": str(tgt_ent.get("type", "")),
+                    "symbolic_relation": sym_res.canonical_relation,
+                    "symbolic_assertion_status": sym_res.assertion_status,
+                    "local_clause": sym_res.local_clause,
+                    "classifier_probability": None,
+                }
 
                 # V7 hybrid gate: V3 contributes relation-existence probability only.
                 # Its correlation polarity is deliberately not converted into a directed predicate.
+                if v3_score is not None:
+                    trace["classifier_probability"] = float(v3_score.get("prob_has_relation", 0.0))
+                    trace["classifier_threshold"] = float(v3_threshold) if v3_threshold is not None else None
                 if (
                     v3_score is not None
                     and v3_threshold is not None
                     and float(v3_score.get("prob_has_relation", 0.0)) < float(v3_threshold)
                     and sym_res.canonical_relation != "CONTRAINDICATED_FOR"
                 ):
+                    trace["stage"] = "classifier_blocked"
+                    self.debug_records.append(trace)
                     continue
+
+                # Router Pattern: When V3 Statistical Classifier already provided calibrated
+                # class probabilities (POSITIVE, NEGATIVE, ASSOCIATION), use V3 polarity when
+                # symbolic polarity is neutral or Gene->Disease / Gene->Gene / Compound->Compound!
+                if v3_score is not None and not self.enable_live_llm:
+                    v3_probs = v3_score.get("class_probabilities") or {}
+                    p_pos = float(v3_probs.get("POSITIVE", 0.0))
+                    p_neg = float(v3_probs.get("NEGATIVE", 0.0))
+                    p_ass = float(v3_probs.get("ASSOCIATION", 0.0))
+                    s_type = src_ent["type"]
+                    t_type = tgt_ent["type"]
+                    is_bc5cdr_cid_model = (p_pos > 0.0 and p_neg == 0.0 and p_ass == 0.0)
+                    if is_bc5cdr_cid_model and s_type in ("Compound", "Chemical") and t_type == "Disease":
+                        sym_res.canonical_relation = "CAUSES"
+                        sym_res.contract_b_relation = "CAUSES"
+                        sym_res.hetionet_metaedge = "CcSE"
+                        sym_res.hetionet_sign = 1
+                        sym_res.assertion_status = "asserted"
+                    elif sym_res.canonical_relation != "CONTRAINDICATED_FOR":
+                        # If target is a clinical Phenotype or BiologicalProcess and Layer 4 resolved an explicit
+                        # directional verb (INCREASES/DECREASES/INHIBITS), preserve Layer 4's algebraic predicate.
+                        has_explicit_clinical_verb = (
+                            sym_res.verb_delta != 0
+                            and (
+                                t_type in ("Phenotype", "BiologicalProcess")
+                                or s_type in ("Phenotype", "BiologicalProcess", "DrugClass")
+                                or (s_type in ("Compound", "Chemical") and t_type in ("Gene", "Disease") and p_ass < 0.55)
+                            )
+                        )
+                        if not has_explicit_clinical_verb:
+                            if p_pos >= max(p_neg, p_ass):
+                                if s_type in ("Compound", "Chemical") and t_type == "Disease":
+                                    sym_res.canonical_relation = "CAUSES"
+                                    sym_res.contract_b_relation = "CAUSES"
+                                    sym_res.hetionet_metaedge = "CcSE"
+                                    sym_res.hetionet_sign = 1
+                                elif s_type in ("Compound", "Chemical") and t_type == "Gene":
+                                    sym_res.canonical_relation = "ACTIVATES"
+                                    sym_res.contract_b_relation = "ACTIVATES"
+                                    sym_res.hetionet_metaedge = "CaG"
+                                    sym_res.hetionet_sign = 1
+                                else:
+                                    sym_res.canonical_relation = "INCREASES"
+                                    sym_res.contract_b_relation = "INCREASES"
+                                    sym_res.hetionet_sign = 1
+                            elif p_neg >= max(p_pos, p_ass):
+                                if s_type in ("Compound", "Chemical") and t_type == "Disease":
+                                    sym_res.canonical_relation = "TREATS"
+                                    sym_res.contract_b_relation = "TREATS"
+                                    sym_res.hetionet_metaedge = "CtD"
+                                    sym_res.hetionet_sign = -1
+                                elif s_type in ("Compound", "Chemical") and t_type == "Gene":
+                                    sym_res.canonical_relation = "INHIBITS"
+                                    sym_res.contract_b_relation = "INHIBITS"
+                                    sym_res.hetionet_metaedge = "CiG"
+                                    sym_res.hetionet_sign = -1
+                                else:
+                                    sym_res.canonical_relation = "DECREASES"
+                                    sym_res.contract_b_relation = "DECREASES"
+                                    sym_res.hetionet_sign = -1
+                            else:
+                                sym_res.canonical_relation = "ASSOCIATED_WITH"
+                                sym_res.contract_b_relation = "ASSOCIATED_WITH"
+                                sym_res.hetionet_sign = 0
 
                 # Layer 3: Counterfactual Entity-Blinded LLM Verification
                 blinded_text, src_mask, tgt_mask = self.blind_sentence_entities(
@@ -573,6 +764,29 @@ class Layer3_BioEventAndBlindedLLMEngine:
                     int(tgt_ent.get("valence", 0)),
                     sym_res,
                 )
+                if self.improvements.get("association_trigger") and llm_res.get("relation") in ("ASSOCIATED_WITH", "EVALUATED_IN_COHORT"):
+                    trigger_text = sym_res.local_clause
+                    relation_trigger = re.search(
+                        r"\b(?:associated\s+with|correlated\s+with|linked\s+to|related\s+to|"
+                        r"co[- ]occurs?\s+with|predicts?|predictor\s+of|contributes?\s+to|"
+                        r"mediates?|regulates?|increases?\s+(?:the\s+)?risk\s+of|"
+                        r"higher\s+risk\s+of|increased\s+incidence\s+of|"
+                        r"in\s+patients\s+with|among\s+patients\s+with|"
+                        r"in\s+adults\s+with|in\s+subjects\s+with)\b",
+                        trigger_text, re.I
+                    )
+                    if not relation_trigger:
+                        llm_res = {
+                            "relation": "NO_RELATION",
+                            "assertion_status": llm_res.get("assertion_status", sym_res.assertion_status),
+                            "confidence": 0.0,
+                            "llm_verified": False,
+                            "llm_mode": "association_trigger_gate",
+                            "rationale": "No explicit association/cohort trigger in the local clause.",
+                        }
+                trace["routed_relation"] = str(llm_res.get("relation", ""))
+                trace["routed_assertion_status"] = str(llm_res.get("assertion_status", ""))
+                trace["routed_confidence"] = float(llm_res.get("confidence", 0.0) or 0.0)
 
                 if v3_score is not None:
                     # L5 consumes the V3 relation-existence probability as the edge evidence score.
@@ -583,8 +797,11 @@ class Layer3_BioEventAndBlindedLLMEngine:
                     )
 
                 final_canonical_rel = llm_res["relation"]
+                trace["final_relation"] = final_canonical_rel
                 # Hard Rule: NEVER admit NO_RELATION / NONE into projected edges!
                 if final_canonical_rel in ("NO_RELATION", "NONE"):
+                    trace["stage"] = "no_relation_blocked"
+                    self.debug_records.append(trace)
                     continue
 
                 # Map canonical_relation to strict Contract B enum & Hetionet metaedge
@@ -630,9 +847,11 @@ class Layer3_BioEventAndBlindedLLMEngine:
                     source_id=src_ent["id"],
                     source_name=src_ent["canonical_name"],
                     source_type=src_ent["type"],
+                    source_raw_text=str(src_ent.get("matched_text") or src_ent.get("text") or ""),
                     target_id=tgt_ent["id"],
                     target_name=tgt_ent["canonical_name"],
                     target_type=tgt_ent["type"],
+                    target_raw_text=str(tgt_ent.get("matched_text") or tgt_ent.get("text") or ""),
                     target_valence=int(tgt_ent.get("valence", 0)),
                     is_historical_baseline=bool(tgt_ent.get("is_historical_baseline", False)),
                     verb_delta=sym_res.verb_delta,
@@ -653,6 +872,12 @@ class Layer3_BioEventAndBlindedLLMEngine:
                     v3_class_probabilities=(dict(v3_score.get("class_probabilities", {})) if v3_score is not None else None),
                 )
                 frame.projected_edges.append(edge_cand)
+                trace["stage"] = "projected_edge"
+                trace["final_relation"] = final_canonical_rel
+                trace["contract_b_relation"] = cb_rel
+                trace["hetionet_metaedge"] = metaedge
+                trace["hetionet_sign"] = sign
+                self.debug_records.append(trace)
 
             if frame.projected_edges:
                 events.append(frame)

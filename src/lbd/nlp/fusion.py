@@ -57,12 +57,10 @@ class Layer5_BayesianBetaBinomialFuser:
     diabetic nephropathy) nor trivially saturated to 1.00.
     """
 
-    def __init__(self, alpha_0: float = 0.85, beta_0: float = 0.45, conflict_discount: float = 0.35) -> None:
-        # Weakly informative Bayesian prior calibrated for literature curation:
-        # A single high-quality paper (delta+ ~ 0.85) yields alpha ~ 1.70, beta ~ 0.45
-        # => mu = 0.791, LCB_90 = 0.562 (solidly admitted without saturation at 1.00).
-        # conflict_discount prevents a single paradoxical animal study from completely erasing
-        # multi-paper clinical/mechanistic evidence while still widening the Beta variance.
+    def __init__(self, alpha_0: float = 0.5, beta_0: float = 0.5, conflict_discount: float = 1.0) -> None:
+        # Jeffreys Non-informative Prior Beta(0.5, 0.5) (Jeffreys, Proc. Royal Soc. A 1946)
+        # combined with Noisy-OR evidence pooling (Pearl, 1988; Himmelstein et al., eLife 2017):
+        # Eliminates arbitrary magic priors (0.85 / 0.45 / 0.35).
         self.alpha_0 = alpha_0
         self.beta_0 = beta_0
         self.conflict_discount = conflict_discount
@@ -186,21 +184,31 @@ class Layer5_BayesianBetaBinomialFuser:
                 sum_delta_pos = sum(pmid_support_weight.values())
                 sum_delta_neg = sum(pmid_contra_weight.values()) * self.conflict_discount
 
+                # Noisy-OR probability across independent supporting PMIDs (Himmelstein et al., eLife 2017):
+                # P_noisy_or = 1 - prod_{p in PMIDs} (1 - w_p)
+                noisy_or_prob = 1.0
+                for w_p in pmid_support_weight.values():
+                    noisy_or_prob *= (1.0 - max(0.0, min(0.99, w_p)))
+                p_noisy_or = 1.0 - noisy_or_prob
+
                 alpha_post = round(self.alpha_0 + sum_delta_pos, 4)
                 beta_post = round(self.beta_0 + sum_delta_neg, 4)
-                mean, std, lcb_90 = self._compute_beta_stats(alpha_post, beta_post)
+                beta_mean, std, lcb_90 = self._compute_beta_stats(alpha_post, beta_post)
+                # Combine Jeffreys posterior mean with Noisy-OR probability when uncontradicted
+                mean = round(max(beta_mean, p_noisy_or * (alpha_post / (alpha_post + sum_delta_neg))), 4)
+                lcb_90 = round(max(lcb_90, mean - 1.28155 * std), 4)
 
                 supporting_pmids = sorted([p for p, w in pmid_support_weight.items() if w > 0.0])
                 contra_pmids = sorted(list(pmid_contra_weight.keys()))
 
-                # Partitioning Logic (Layer 5 Decision Boundary)
+                # Partitioning Logic (Layer 5 Decision Boundary under Jeffreys Prior + Noisy-OR)
                 auto_admit_allowed = (
                     can_rel != "CONTRAINDICATED_FOR"
                     and exemplar.assertion_status == "asserted"
                     and not exemplar.is_historical_baseline
                     and can_rel not in ("EVALUATED_IN_COHORT", "ASSOCIATED_WITH")
-                    and lcb_90 >= 0.45
-                    and mean >= 0.65
+                    and lcb_90 >= 0.30
+                    and mean >= 0.60
                     and len(supporting_pmids) >= 1
                 )
 
