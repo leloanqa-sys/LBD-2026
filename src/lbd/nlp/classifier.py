@@ -562,8 +562,8 @@ class ZonedPoolingMultiClassBioREEngineV3:
             n_jobs=1,
         )
 
-        self.ensemble_weights: Tuple[float, float, float] = (0.15, 0.45, 0.40)
-        self.relation_threshold: float = 0.50
+        self.ensemble_weights: Tuple[float, float, float] = (0.0, 0.0, 1.0)
+        self.relation_threshold: float = 0.69
         self.high_recall_threshold: float = 0.40
         self.is_fitted: bool = False
         self.classes_: List[int] = [0, 1, 2, 3]
