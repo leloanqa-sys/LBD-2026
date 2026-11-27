@@ -409,6 +409,42 @@ class Layer3_BioEventAndBlindedLLMEngine:
                 "rationale": symbolic_res.rationale,
             }
 
+    @staticmethod
+    def _index_biorex_relations(
+        biorex_relations: Optional[List[Dict[str, Any]]],
+    ) -> Dict[Tuple[str, str], Dict[str, Any]]:
+        if not biorex_relations:
+            return {}
+        priority = {
+            "Negative_Correlation": 5,
+            "Positive_Correlation": 5,
+            "Comparison": 4,
+            "Cotreatment": 4,
+            "Drug_Interaction": 3,
+            "Bind": 3,
+            "Conversion": 2,
+            "Association": 1,
+        }
+        index: Dict[Tuple[str, str], Dict[str, Any]] = {}
+        for rel in biorex_relations:
+            if not isinstance(rel, dict):
+                continue
+            r1 = rel.get("role1") or {}
+            r2 = rel.get("role2") or {}
+            ids1 = {str(v).strip() for v in (r1.get("id"), r1.get("raw_identifier")) if v}
+            ids2 = {str(v).strip() for v in (r2.get("id"), r2.get("raw_identifier")) if v}
+            rel_prio = priority.get(str(rel.get("type") or ""), 0)
+            for id1 in ids1:
+                for id2 in ids2:
+                    if id1 == id2:
+                        continue
+                    key = tuple(sorted((id1, id2)))
+                    prev = index.get(key)
+                    prev_prio = priority.get(str(prev.get("type") or ""), 0) if prev else -1
+                    if rel_prio > prev_prio:
+                        index[key] = rel
+        return index
+
     def extract_document_events(
         self,
         pmid: str,
@@ -416,6 +452,7 @@ class Layer3_BioEventAndBlindedLLMEngine:
         grounded_doc: Dict[str, Any],
         v3_relation_scores: Optional[Dict[Tuple[str, str], Dict[str, Any]]] = None,
         v3_threshold: Optional[float] = None,
+        biorex_relations: Optional[List[Dict[str, Any]]] = None,
     ) -> List[BioEventFrame]:
         """Extracts N-ary Contextual Bio-Event Frames from a zoned & grounded document,
 
@@ -424,6 +461,7 @@ class Layer3_BioEventAndBlindedLLMEngine:
         study_design = grounded_doc["study_design"]
         study_weight = float(grounded_doc["study_weight"])
         sentences: List[ZonedSentence] = grounded_doc["sentences"]
+        biorex_index = self._index_biorex_relations(biorex_relations)
 
         events: List[BioEventFrame] = []
 
@@ -650,11 +688,21 @@ class Layer3_BioEventAndBlindedLLMEngine:
                         })
                         continue
 
-                # Layer 4: Symbolic Algebra of Polarity + Local Clause Scoping + V3 Statistical Polarity
+                # Match BioREx relation only for pairs co-occurring in the current sentence
+                sent_entity_ids = {str(e.get("id", "")) for e in sent.entities}
+                matched_biorex = (
+                    biorex_index.get(pair_key)
+                    if (biorex_index and str(src_ent.get("id", "")) in sent_entity_ids and str(tgt_ent.get("id", "")) in sent_entity_ids)
+                    else None
+                )
+
+                # Layer 4: Symbolic Algebra of Polarity + Local Clause Scoping + BioREx + V3 Statistical Polarity
                 sym_res = self.layer4.resolve_pair_polarity(
                     sent.text, src_ent, tgt_ent,
                     strict_cohort_scope=bool(self.improvements.get("strict_cohort_scope")),
                     v3_class_probabilities=(v3_score.get("class_probabilities") if v3_score is not None else None),
+                    section_zone=sent.section_zone,
+                    biorex_relation=matched_biorex,
                 )
                 trace = {
                     "pmid": str(pmid), "evidence_sentence": sent.text,
@@ -704,7 +752,10 @@ class Layer3_BioEventAndBlindedLLMEngine:
                         sym_res.hetionet_metaedge = "CcSE"
                         sym_res.hetionet_sign = 1
                         sym_res.assertion_status = "asserted"
-                    elif sym_res.canonical_relation != "CONTRAINDICATED_FOR":
+                    elif (
+                        sym_res.canonical_relation != "CONTRAINDICATED_FOR"
+                        and sym_res.clinical_polarity not in ("COMPARISON_CONTEXT (0)", "COTREATMENT_CONTEXT (0)")
+                    ):
                         # If target is a clinical Phenotype or BiologicalProcess and Layer 4 resolved an explicit
                         # directional verb (INCREASES/DECREASES/INHIBITS), preserve Layer 4's algebraic predicate.
                         has_explicit_clinical_verb = (

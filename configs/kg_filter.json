@@ -1,6 +1,6 @@
 {
   "policy_version": "conservative_rules_v1",
-  "profile": "LBD pilot v1; reconstructed, not original thresholds",
+  "profile": "LBD pilot v2; 3-tier evidence tiering with expanded metaedges",
   "min_unique_pmids": 2,
   "min_extraction_score": 0.6,
   "publication_cutoff": "2018-12-31",
@@ -18,9 +18,50 @@
     "IN_VITRO_CELLULAR"
   ],
   "drug_aliases": {},
+  "allowed_metaedges": [
+    "CtD",
+    "CpD",
+    "CcSE",
+    "CiG",
+    "CaG",
+    "CuBP",
+    "CdBP",
+    "DaG"
+  ],
   "metaedges": {
     "Compound|Disease|TREATS": "CtD",
+    "Compound|Disease|PALLIATES": "CpD",
+    "Compound|Disease|CAUSES": "CcSE",
+    "Compound|Phenotype|CAUSES": "CcSE",
     "Compound|Gene|INHIBITS": "CiG",
-    "Compound|Gene|ACTIVATES": "CaG"
+    "Compound|Gene|ACTIVATES": "CaG",
+    "Compound|BiologicalProcess|INCREASES": "CuBP",
+    "Compound|BiologicalProcess|DECREASES": "CdBP",
+    "Gene|Disease|ASSOCIATED_WITH": "DaG",
+    "Disease|Gene|ASSOCIATED_WITH": "DaG"
+  },
+  "tiering": {
+    "tier1_partition": "ADMITTED_KG",
+    "tier2_partition": "HYPOTHESIS_EDGE",
+    "tier3_partition": "QUARANTINE",
+    "tier2_min_unique_pmids": 1,
+    "tier2_min_extraction_score": 0.45,
+    "tier2_allowed_assertion_statuses": [
+      "asserted",
+      "uncertain"
+    ],
+    "tier2_allowed_study_designs": [
+      "RCT_CLINICAL_TRIAL",
+      "REAL_WORLD_COHORT",
+      "REVIEW_ARTICLE",
+      "PRECLINICAL_IN_VIVO",
+      "IN_VITRO_CELLULAR"
+    ],
+    "tier2_allowed_sections": [
+      "TITLE",
+      "BACKGROUND",
+      "RESULTS",
+      "CONCLUSIONS"
+    ]
   }
 }

@@ -124,6 +124,39 @@ def _normalize_pubtator_type(raw_type: str) -> str | None:
     }.get(key)
 
 
+BIOREX_RELATION_TYPES = {
+    "positive_correlation": "Positive_Correlation",
+    "negative_correlation": "Negative_Correlation",
+    "association": "Association",
+    "bind": "Bind",
+    "cotreatment": "Cotreatment",
+    "comparison": "Comparison",
+    "drug_interaction": "Drug_Interaction",
+    "conversion": "Conversion",
+}
+
+
+def _crosswalk_pubtator_id(
+    raw_identifier: str,
+    entity_type: str | None,
+    fallback_name: str = "",
+) -> tuple[str, str, str | None]:
+    identifier = raw_identifier
+    canonical_name = fallback_name or raw_identifier
+    resolved_type = entity_type
+    mesh_id = raw_identifier.removeprefix("MESH:")
+    if mesh_id in MESH_TO_V6:
+        identifier, canonical_name, mapped_type = MESH_TO_V6[mesh_id]
+        resolved_type = mapped_type
+    elif resolved_type == "Gene" and raw_identifier.isdigit():
+        identifier = raw_identifier
+    elif raw_identifier.startswith("MESH:"):
+        identifier = raw_identifier
+    elif resolved_type == "Compound" and raw_identifier.startswith("CHEBI:"):
+        identifier = raw_identifier
+    return identifier, canonical_name, resolved_type
+
+
 def _normalize_pubtator_entity(annotation: dict[str, Any], passage_offset: int) -> dict[str, Any] | None:
     infons = annotation.get("infons") or {}
     raw_type = str(infons.get("type") or "")
@@ -133,18 +166,8 @@ def _normalize_pubtator_entity(annotation: dict[str, Any], passage_offset: int) 
     if not entity_type or not raw_identifier or not text:
         return None
 
-    identifier = raw_identifier
-    canonical_name = text
-    mesh_id = raw_identifier.removeprefix("MESH:")
-    if mesh_id in MESH_TO_V6:
-        identifier, canonical_name, mapped_type = MESH_TO_V6[mesh_id]
-        entity_type = mapped_type
-    elif entity_type == "Gene" and raw_identifier.isdigit():
-        identifier = raw_identifier
-    elif raw_identifier.startswith("MESH:"):
-        identifier = raw_identifier
-    elif entity_type == "Compound" and raw_identifier.startswith("CHEBI:"):
-        identifier = raw_identifier
+    identifier, canonical_name, resolved_type = _crosswalk_pubtator_id(raw_identifier, entity_type, text)
+    entity_type = resolved_type or entity_type
 
     locations = annotation.get("locations") or []
     start = end = None
@@ -171,8 +194,126 @@ def _normalize_pubtator_entity(annotation: dict[str, Any], passage_offset: int) 
     }
 
 
-def _parse_pubtator(payload: Any) -> dict[str, list[dict[str, Any]]]:
-    result: dict[str, list[dict[str, Any]]] = {}
+def _normalize_biorex_role(
+    raw_role: Any,
+    fallback_type: str = "",
+    id_to_entity: dict[str, dict[str, Any]] | None = None,
+) -> dict[str, Any] | None:
+    if isinstance(raw_role, dict):
+        raw_id = str(raw_role.get("identifier") or raw_role.get("id") or "").strip()
+        raw_type = str(raw_role.get("type") or fallback_type or "")
+        name = str(raw_role.get("name") or raw_role.get("text") or "").strip()
+        if not raw_id and raw_role.get("refid") and id_to_entity:
+            ref_ent = id_to_entity.get(str(raw_role["refid"]))
+            if ref_ent:
+                return {
+                    "id": ref_ent["id"],
+                    "raw_identifier": ref_ent.get("raw_identifier", ref_ent["id"]),
+                    "name": ref_ent.get("canonical_name") or ref_ent.get("text", ""),
+                    "type": ref_ent.get("type", ""),
+                }
+        if not raw_id:
+            return None
+        ent_type = _normalize_pubtator_type(raw_type) or (raw_type if raw_type else None)
+        cid, cname, ctype = _crosswalk_pubtator_id(raw_id, ent_type, name)
+        return {
+            "id": cid,
+            "raw_identifier": raw_id,
+            "name": cname,
+            "type": ctype or "",
+        }
+    if isinstance(raw_role, str):
+        token = raw_role.strip()
+        if not token:
+            return None
+        if id_to_entity and token in id_to_entity:
+            ref_ent = id_to_entity[token]
+            return {
+                "id": ref_ent["id"],
+                "raw_identifier": ref_ent.get("raw_identifier", ref_ent["id"]),
+                "name": ref_ent.get("canonical_name") or ref_ent.get("text", ""),
+                "type": ref_ent.get("type", ""),
+            }
+        raw_type = fallback_type
+        raw_id = token
+        if "|" in token:
+            parts = token.split("|", 1)
+            raw_type = parts[0].strip()
+            raw_id = parts[1].strip()
+        ent_type = _normalize_pubtator_type(raw_type) or (raw_type if raw_type else None)
+        cid, cname, ctype = _crosswalk_pubtator_id(raw_id, ent_type, "")
+        return {
+            "id": cid,
+            "raw_identifier": raw_id,
+            "name": cname,
+            "type": ctype or "",
+        }
+    return None
+
+
+def _normalize_pubtator_relation(
+    relation: dict[str, Any],
+    id_to_entity: dict[str, dict[str, Any]] | None = None,
+) -> dict[str, Any] | None:
+    infons = relation.get("infons") or {}
+    raw_rel_type = str(infons.get("type") or relation.get("type") or "").strip()
+    if not raw_rel_type:
+        return None
+    canonical_rel_type = BIOREX_RELATION_TYPES.get(raw_rel_type.casefold())
+    if not canonical_rel_type:
+        return None
+
+    role1 = _normalize_biorex_role(
+        infons.get("role1") or infons.get("entity1"),
+        fallback_type=str(infons.get("role1_type") or ""),
+        id_to_entity=id_to_entity,
+    )
+    role2 = _normalize_biorex_role(
+        infons.get("role2") or infons.get("entity2"),
+        fallback_type=str(infons.get("role2_type") or ""),
+        id_to_entity=id_to_entity,
+    )
+
+    if (role1 is None or role2 is None) and isinstance(relation.get("nodes"), list):
+        nodes = [n for n in relation["nodes"] if isinstance(n, dict)]
+        if len(nodes) >= 2:
+            if role1 is None:
+                role1 = _normalize_biorex_role(nodes[0], id_to_entity=id_to_entity)
+            if role2 is None:
+                role2 = _normalize_biorex_role(nodes[1], id_to_entity=id_to_entity)
+
+    if not role1 or not role2 or not role1.get("id") or not role2.get("id"):
+        return None
+
+    raw_novel = infons.get("novel")
+    if isinstance(raw_novel, bool):
+        novel = "Novel" if raw_novel else "No"
+    elif raw_novel is None or str(raw_novel).strip() == "":
+        novel = "Unknown"
+    else:
+        novel = str(raw_novel).strip()
+
+    score_val = None
+    if infons.get("score") is not None:
+        try:
+            score_val = float(infons["score"])
+        except (TypeError, ValueError):
+            score_val = None
+
+    return {
+        "id": str(relation.get("id") or ""),
+        "type": canonical_rel_type,
+        "role1": role1,
+        "role2": role2,
+        "novel": novel,
+        "score": score_val,
+        "source": "PubTator3_BioREx",
+    }
+
+
+def _parse_pubtator(payload: Any) -> dict[str, dict[str, list[dict[str, Any]]]]:
+    """Parse PubTator 3 BioC JSON preserving BOTH normalized entities and BioREx relations."""
+    result: dict[str, dict[str, list[dict[str, Any]]]] = {}
     documents = payload.get("PubTator3", []) if isinstance(payload, dict) else []
     if not isinstance(documents, list):
         return result
@@ -182,7 +323,9 @@ def _parse_pubtator(payload: Any) -> dict[str, list[dict[str, Any]]]:
         pmid = _pmid_from_doc(doc)
         if not pmid:
             continue
-        result.setdefault(pmid, [])
+        doc_bundle = result.setdefault(pmid, {"entities": [], "relations": []})
+        id_to_entity: dict[str, dict[str, Any]] = {}
+        seen_relations: set[tuple[str, str, str, str]] = set()
         for passage in doc.get("passages", []) or []:
             try:
                 passage_offset = int(passage.get("offset", 0))
@@ -193,7 +336,28 @@ def _parse_pubtator(payload: Any) -> dict[str, list[dict[str, Any]]]:
                     continue
                 entity = _normalize_pubtator_entity(annotation, passage_offset)
                 if entity:
-                    result[pmid].append(entity)
+                    doc_bundle["entities"].append(entity)
+                    ann_id = str(annotation.get("id") or "").strip()
+                    if ann_id:
+                        id_to_entity[ann_id] = entity
+            for raw_rel in passage.get("relations", []) or []:
+                if not isinstance(raw_rel, dict):
+                    continue
+                rel = _normalize_pubtator_relation(raw_rel, id_to_entity)
+                if rel:
+                    rkey = (rel["type"], rel["role1"]["id"], rel["role2"]["id"], rel["novel"])
+                    if rkey not in seen_relations:
+                        seen_relations.add(rkey)
+                        doc_bundle["relations"].append(rel)
+        for raw_rel in doc.get("relations", []) or []:
+            if not isinstance(raw_rel, dict):
+                continue
+            rel = _normalize_pubtator_relation(raw_rel, id_to_entity)
+            if rel:
+                rkey = (rel["type"], rel["role1"]["id"], rel["role2"]["id"], rel["novel"])
+                if rkey not in seen_relations:
+                    seen_relations.add(rkey)
+                    doc_bundle["relations"].append(rel)
     return result
 
 
@@ -218,12 +382,69 @@ def _save_provider_cache(cache_root: Path, provider: str, values: dict[str, list
         _write_json(_cache_path(cache_root, provider, pmid), annotations)
 
 
-def fetch_pubtator(pmids: list[str], cache_root: Path, *, offline: bool = False, batch_size: int = 40) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
+def _load_pubtator_cache(
+    cache_root: Path,
+    pmids: list[str],
+) -> tuple[dict[str, dict[str, list[dict[str, Any]]]], list[str], int, int]:
+    """Load PubTator3 cache preferring v3 ({entities, relations}) with full v2 backward compatibility."""
+    found: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    missing: list[str] = []
+    v3_hits = 0
+    v2_hits = 0
+    for pmid in pmids:
+        v3_val = _read_json(_cache_path(cache_root, "pubtator3_bioc_v3", pmid))
+        if (
+            isinstance(v3_val, dict)
+            and isinstance(v3_val.get("entities"), list)
+            and isinstance(v3_val.get("relations"), list)
+        ):
+            found[pmid] = {"entities": v3_val["entities"], "relations": v3_val["relations"]}
+            v3_hits += 1
+            continue
+        v2_val = _read_json(_cache_path(cache_root, "pubtator3_bioc_v2", pmid))
+        if isinstance(v2_val, list):
+            found[pmid] = {"entities": v2_val, "relations": []}
+            v2_hits += 1
+            continue
+        missing.append(pmid)
+    return found, missing, v3_hits, v2_hits
+
+
+def _save_pubtator_v3_cache(
+    cache_root: Path,
+    values: dict[str, dict[str, list[dict[str, Any]]]],
+) -> None:
+    for pmid, bundle in values.items():
+        _write_json(
+            _cache_path(cache_root, "pubtator3_bioc_v3", pmid),
+            {"entities": bundle.get("entities", []), "relations": bundle.get("relations", [])},
+        )
+
+
+def fetch_pubtator_with_relations(
+    pmids: list[str],
+    cache_root: Path,
+    *,
+    offline: bool = False,
+    batch_size: int = 40,
+) -> tuple[dict[str, list[dict[str, Any]]], dict[str, list[dict[str, Any]]], dict[str, Any]]:
+    """Fetch PubTator 3 entities and BioREx relations using v3 cache (with v2 fallback)."""
     pmids = sorted({str(p).strip() for p in pmids if str(p).strip().isdigit()})
-    # v2 invalidates old caches that incorrectly added passage offsets to
-    # already document-absolute BioC locations.
-    values, missing = _load_provider_cache(cache_root, "pubtator3_bioc_v2", pmids)
-    stats = {"provider": "PubTator3", "requested_pmids": len(pmids), "cache_hits": len(values), "api_batches": 0, "api_failures": [], "annotated_pmids": 0, "annotations": 0}
+    bundles, missing, v3_hits, v2_hits = _load_pubtator_cache(cache_root, pmids)
+    stats = {
+        "provider": "PubTator3",
+        "cache_schema": "pubtator3_bioc_v3",
+        "requested_pmids": len(pmids),
+        "cache_hits": len(bundles),
+        "v3_cache_hits": v3_hits,
+        "v2_fallback_hits": v2_hits,
+        "api_batches": 0,
+        "api_failures": [],
+        "annotated_pmids": 0,
+        "annotations": 0,
+        "pmids_with_relations": 0,
+        "relations": 0,
+    }
     if not offline:
         for start in range(0, len(missing), batch_size):
             batch = missing[start:start + batch_size]
@@ -231,16 +452,31 @@ def fetch_pubtator(pmids: list[str], cache_root: Path, *, offline: bool = False,
             try:
                 payload = _request_json_with_retry(f"{PUBTATOR_URL}?{params}")
                 parsed = _parse_pubtator(payload)
+                batch_bundles: dict[str, dict[str, list[dict[str, Any]]]] = {}
                 for pmid in batch:
-                    values[pmid] = parsed.get(pmid, [])
-                _save_provider_cache(cache_root, "pubtator3_bioc_v2", {p: values[p] for p in batch})
+                    entry = parsed.get(pmid, {"entities": [], "relations": []})
+                    bundles[pmid] = entry
+                    batch_bundles[pmid] = entry
+                _save_pubtator_v3_cache(cache_root, batch_bundles)
                 stats["api_batches"] += 1
             except Exception as exc:  # preserve explicit failure per batch
                 stats["api_failures"].append({"pmids": batch, "error": f"{type(exc).__name__}: {exc}"})
-    stats["annotated_pmids"] = sum(bool(items) for items in values.values())
-    stats["annotations"] = sum(len(items) for items in values.values())
-    stats["unavailable_pmids"] = [p for p in pmids if p not in values]
-    return values, stats
+    entities_map = {p: b.get("entities", []) for p, b in bundles.items()}
+    relations_map = {p: b.get("relations", []) for p, b in bundles.items()}
+    stats["annotated_pmids"] = sum(bool(items) for items in entities_map.values())
+    stats["annotations"] = sum(len(items) for items in entities_map.values())
+    stats["pmids_with_relations"] = sum(bool(items) for items in relations_map.values())
+    stats["relations"] = sum(len(items) for items in relations_map.values())
+    stats["unavailable_pmids"] = [p for p in pmids if p not in bundles]
+    return entities_map, relations_map, stats
+
+
+def fetch_pubtator(pmids: list[str], cache_root: Path, *, offline: bool = False, batch_size: int = 40) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
+    """Backward-compatible wrapper returning (entities_by_pmid, stats) backed by v3 cache."""
+    entities_map, _, stats = fetch_pubtator_with_relations(
+        pmids, cache_root, offline=offline, batch_size=batch_size
+    )
+    return entities_map, stats
 
 
 def _collect_strings(value: Any) -> list[str]:

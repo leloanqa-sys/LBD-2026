@@ -86,7 +86,16 @@ CONTRAINDICATION_RX = re.compile(
 # Cohort / Eligibility Context cues (Patients enrolled with baseline disease X)
 COHORT_CONTEXT_RX = re.compile(
     r"\b(?:in\s+patients\s+with|among\s+patients\s+with|in\s+adults\s+with|"
-    r"in\s+subjects\s+with|patients\s+with\s+type\s+2\s+diabetes|cohort\s+of\s+patients\s+with)\b",
+    r"in\s+subjects\s+with|in\s+participants\s+with|cohort\s+of\s+patients\s+with|"
+    r"enrolled\s+patients\s+with|recruited\s+patients\s+with)\b",
+    re.IGNORECASE,
+)
+
+# Therapeutic/efficacy cues immediately governing "in patients with X" so X is treated as target, not mere cohort
+THERAPEUTIC_COHORT_GOVERNOR_RX = re.compile(
+    r"\b(?:effective|efficacy|beneficial|benefit(?:s)?|approved|indicated|licensed|"
+    r"treatment\s+of|therapy\s+(?:for|of)|monotherapy\s+(?:for|in)|first[\s\-]line\s+(?:for|in)|"
+    r"safe\s+and\s+effective)\s+(?:in\s+|for\s+)?(?:patients|adults|subjects|individuals)\s+with\b",
     re.IGNORECASE,
 )
 
@@ -95,11 +104,54 @@ UNCERTAIN_RX = re.compile(
     r"\b(?:may|might|could|suggests?|suggested|suggesting|suggestive\s+of|appears?\s+to|"
     r"potentially|potential|possible|possibly|hypothesis|hypothesized|hypothesize|"
     r"warrants?\s+further|trend\s+toward|trends?\s+towards?|preliminary|controversial|"
-    r"unclear|remains?\s+unclear|yet\s+to\s+be\s+determined|whether|"
+    r"unclear|remains?\s+unclear|remains?\s+to\s+be|yet\s+to\s+be\s+determined|whether|"
     r"requires?\s+further\s+investigation|further\s+studies|speculat\w*|"
     r"theoretical(?:ly)?|promising|proposed\s+as|seems?\s+to|"
     r"was\s+likely\s+associated\s+with|likely\s+to|rationale\s+for\s+testing|"
-    r"expected\s+to\s+provide)\b",
+    r"expected\s+to\s+provide|can\s+be\s+expected\s+to|not\s+yet\s+established|"
+    r"is\s+thought\s+to|is\s+believed\s+to|is\s+hypothesized\s+to|indicative\s+of|"
+    r"plausible|putative|tentative|inconclusive|not\s+fully\s+understood|poorly\s+understood|"
+    r"limited\s+evidence|merits?\s+further|need(?:s)?\s+to\s+be\s+confirmed|should\s+be\s+confirmed|"
+    r"future\s+trials?|ongoing\s+trials?|is\s+being\s+evaluated|will\s+(?:evaluate|assess|determine|investigate))\b",
+    re.IGNORECASE,
+)
+
+# Outer-clause / Matrix-clause Epistemic Scope cues (propagate uncertainty to subordinate clauses)
+OUTER_EPISTEMIC_SCOPE_RX = re.compile(
+    r"\b(?:to\s+(?:evaluate|assess|investigate|determine|examine|explore|test|compare|study|elucidate|clarify)\s+"
+    r"(?:whether|if|the\s+(?:effect|effects|efficacy|safety|impact|role|association|relationship|potential|benefits?))|"
+    r"(?:aimed|aims?|sought|designed|intended)\s+to\s+(?:evaluate|assess|investigate|determine|examine|explore|test|compare|study)|"
+    r"(?:investigated|evaluated|assessed|examined|tested|explored|studied)\s+(?:whether|if)|"
+    r"(?:hypothesized|postulated|proposed|speculated)\s+that|"
+    r"remains?\s+(?:unclear|unknown|uncertain|to\s+be\s+(?:determined|elucidated|established|clarified|confirmed))|"
+    r"it\s+is\s+(?:unclear|unknown|uncertain|hypothesized|suggested|proposed)\s+(?:whether|if|that))\b",
+    re.IGNORECASE,
+)
+
+# Strong empirical result assertions that block outer-clause epistemic propagation into a results clause
+ASSERTIVE_RESULT_RX = re.compile(
+    r"\b(?:significantly\s+(?:reduced|decreased|increased|improved|inhibited|lowered|attenuated|elevated|prevented|prolonged|delayed)|"
+    r"(?:demonstrated|showed|proved|confirmed)\s+(?:that|a\s+significant|significant)|"
+    r"hazard\s+ratio|odds\s+ratio|95%\s*ci|statistically\s+significant|"
+    r"p\s*[<≤=]\s*0\.0\d*|compared\s+with\s+placebo)\b",
+    re.IGNORECASE,
+)
+
+# Section-level header hints when section_zone metadata is not explicitly supplied
+SECTION_HEADER_OBJECTIVE_METHODS_RX = re.compile(
+    r"^\s*(?:objectives?|aims?|purpose|methods?|study\s+design|trial\s+design)\s*:",
+    re.IGNORECASE,
+)
+SECTION_HEADER_BACKGROUND_RX = re.compile(
+    r"^\s*(?:background|introduction|context)\s*:",
+    re.IGNORECASE,
+)
+
+# Weak study-plan / hypothesis cues used together with BACKGROUND section prior
+STUDY_PLAN_OR_WEAK_HEDGE_RX = re.compile(
+    r"\b(?:we\s+(?:investigated|examined|evaluated|assessed|explored|aimed|sought)|"
+    r"this\s+(?:study|trial|review|analysis)\s+(?:evaluated|assessed|investigated|examines|explores|aims)|"
+    r"rationale|candidate|emerging|ongoing|planned|designed\s+to|under\s+investigation)\b",
     re.IGNORECASE,
 )
 
@@ -348,6 +400,120 @@ class Layer4_PolarityAndGradeReasoner:
 
         return 0, "No directional verb detected (0)"
 
+    def assess_epistemic_status(
+        self,
+        sentence_text: str,
+        local_clause: str,
+        target_matched_text: str,
+        section_zone: Optional[str] = None,
+    ) -> Tuple[str, float, str]:
+        """White-box Epistemic Scope & Uncertainty Scoring:
+        Combines (i) local negation & hedging, (ii) outer-clause epistemic scope propagation
+        ('to evaluate whether...', 'aimed to assess...', 'investigated if...'), and
+        (iii) Section Prior (OBJECTIVES/METHODS/BACKGROUND without assertive result verbs).
+        """
+        is_neg, neg_reason = self.is_locally_negated(local_clause, target_matched_text)
+        if is_neg:
+            return "negated", 0.0, neg_reason
+
+        uncertainty_score = 0.0
+        reasons: List[str] = []
+        has_assertive_result = bool(ASSERTIVE_RESULT_RX.search(local_clause))
+
+        # (i-a) Local hedging / modal verbs / research gaps
+        local_hedge = UNCERTAIN_RX.search(local_clause) or RESEARCH_GAP_RX.search(local_clause)
+        if local_hedge:
+            uncertainty_score += 0.70
+            reasons.append(f"local_hedge='{local_hedge.group(0)}'")
+
+        # (i-b) Outer-clause epistemic scope propagation (blocked if local clause asserts empirical results)
+        if not has_assertive_result:
+            outer_match = OUTER_EPISTEMIC_SCOPE_RX.search(sentence_text)
+            if outer_match:
+                uncertainty_score += 0.65
+                reasons.append(f"outer_epistemic_scope='{outer_match.group(0)}'")
+            elif sentence_text.strip().endswith("?"):
+                uncertainty_score += 0.65
+                reasons.append("interrogative_sentence")
+
+        # (ii) Section Prior (OBJECTIVES / METHODS / BACKGROUND without assertive result verbs)
+        zone = (section_zone or "").upper().strip()
+        if not zone:
+            if SECTION_HEADER_OBJECTIVE_METHODS_RX.search(sentence_text):
+                zone = "OBJECTIVES"
+            elif SECTION_HEADER_BACKGROUND_RX.search(sentence_text):
+                zone = "BACKGROUND"
+
+        if not has_assertive_result:
+            if zone in {"OBJECTIVES", "METHODS"}:
+                uncertainty_score += 0.55
+                reasons.append(f"section_prior={zone}")
+            elif zone == "BACKGROUND":
+                uncertainty_score += 0.25
+                reasons.append("section_prior=BACKGROUND")
+                weak_cue = STUDY_PLAN_OR_WEAK_HEDGE_RX.search(sentence_text)
+                if weak_cue:
+                    uncertainty_score += 0.30
+                    reasons.append(f"background_study_cue='{weak_cue.group(0)}'")
+
+        uncertainty_score = min(1.0, round(uncertainty_score, 3))
+        if uncertainty_score >= 0.50:
+            return "uncertain", uncertainty_score, "; ".join(reasons)
+        return "asserted", uncertainty_score, "; ".join(reasons) if reasons else "asserted_default"
+
+    @staticmethod
+    def _is_direct_action_target(
+        sentence_text: str,
+        local_clause: str,
+        target_ent: Dict[str, Any],
+    ) -> bool:
+        """Return True if the target disease is governed directly by a therapeutic or adverse verb
+        rather than serving purely as an enrolled patient-cohort eligibility criterion.
+        """
+        tgt_text = str(target_ent.get("matched_text") or "").strip()
+        if not tgt_text:
+            return False
+        tgt_esc = re.escape(tgt_text)
+        masked_sent = _mask_pseudo_triggers(sentence_text)
+        masked_clause = _mask_pseudo_triggers(local_clause)
+
+        # Direct therapeutic/adverse verb governing target without crossing a cohort preposition ('in patients with')
+        direct_obj_rx = re.compile(
+            r"\b(?:treat(?:s|ed|ing)?|treatment\s+(?:of|for)|therapy\s+for|"
+            r"ameliorat(?:e|es|ed|ing)|attenuat(?:e|es|ed|ing)|alleviat(?:e|es|ed|ing)|"
+            r"prevent(?:s|ed|ing)?|prevention\s+of|improv(?:e|es|ed|ing)|"
+            r"reduc(?:e|es|ed|ing)|reduction\s+(?:in|of)|lower(?:s|ed|ing)?|"
+            r"slow(?:s|ed|ing)?\s+(?:the\s+)?progression\s+of|delay(?:s|ed|ing)?|"
+            r"protect(?:s|ed|ing)?\s+against|revers(?:e|es|ed|ing)|mitigat(?:e|es|ed|ing)|"
+            r"caus(?:e|es|ed|ing)|induc(?:e|es|ed|ing)|trigger(?:s|ed|ing)?|"
+            r"worsen(?:s|ed|ing)?|aggravat(?:e|es|ed|ing)|exacerbat(?:e|es|ed|ing)|"
+            r"precipitat(?:e|es|ed|ing)|increas(?:e|es|ed|ing)\s+(?:the\s+)?(?:risk|incidence|rate)\s+of)\s+"
+            r"(?:the\s+|risk\s+of\s+|incidence\s+of\s+|progression\s+of\s+|hospitalization\s+for\s+|worsening\s+of\s+)?"
+            rf"(?:(?!\b(?:in|among)\s+(?:patients|adults|subjects|participants)\s+with\b)[a-z0-9\-]+\s+){{0,4}}{tgt_esc}\b",
+            re.IGNORECASE,
+        )
+        if direct_obj_rx.search(masked_clause) or direct_obj_rx.search(masked_sent):
+            return True
+
+        # Passive voice: "<target> was reduced/improved/prevented/induced/worsened"
+        passive_rx = re.compile(
+            rf"\b{tgt_esc}\b\s+(?:[a-z0-9\-]+\s+){{0,3}}(?:was|were|is|are|been)\s+"
+            r"(?:reduced|decreased|improved|ameliorated|attenuated|prevented|treated|induced|caused|worsened|aggravated|triggered)\b",
+            re.IGNORECASE,
+        )
+        if passive_rx.search(masked_clause):
+            return True
+
+        # Efficacy/therapeutic governor immediately before "in patients with <target>"
+        if re.search(
+            rf"{THERAPEUTIC_COHORT_GOVERNOR_RX.pattern}\s+(?:[a-z0-9\-]+\s+){{0,4}}{tgt_esc}\b",
+            masked_sent,
+            re.IGNORECASE,
+        ):
+            return True
+
+        return False
+
     def resolve_pair_polarity(
         self,
         sentence_text: str,
@@ -356,9 +522,11 @@ class Layer4_PolarityAndGradeReasoner:
         *,
         strict_cohort_scope: bool = False,
         v3_class_probabilities: Optional[Dict[str, float]] = None,
+        section_zone: Optional[str] = None,
+        biorex_relation: Optional[Dict[str, Any]] = None,
     ) -> PolarityResolution:
         """Applies Layer 4 Algebra of Polarity + Domain-Range Constraints to a (source, target) pair,
-        integrating calibrated 4-class statistical polarity probabilities when symbolic verbs are neutral.
+        integrating BioREx relation cues, Epistemic Scope scoring, and calibrated statistical polarity.
         """
         src_type = source_ent["type"]
         tgt_type = target_ent["type"]
@@ -391,23 +559,19 @@ class Layer4_PolarityAndGradeReasoner:
                 rationale="Regulatory Contraindication ('not recommended / contraindicated in'); blocked from TREATS/STUDIED_IN.",
             )
 
-        # 2. Compute Local Clause Assertion Status (Negation / Uncertainty) BEFORE cohort early-return
+        # 2. Compute Epistemic Status (Negation / Uncertainty Scope / Section Prior) BEFORE cohort early-return
         # so negated or hedged clinical statements are never silently coerced to 'asserted'.
-        is_neg, neg_reason = self.is_locally_negated(local_clause, target_ent["matched_text"])
-        is_uncertain = bool(UNCERTAIN_RX.search(local_clause))
-        assertion_status = "negated" if is_neg else ("uncertain" if is_uncertain else "asserted")
+        assertion_status, epistemic_score, epistemic_reason = self.assess_epistemic_status(
+            sentence_text, local_clause, target_ent["matched_text"], section_zone=section_zone
+        )
 
-        # 3. Check Cohort Eligibility Context EARLY ("in patients with X")
+        # 3. Check Cohort Eligibility Context ("in patients with X") ONLY when disease is a baseline
+        # eligibility criterion and NOT the direct target of a therapeutic/adverse verb.
         if tgt_type == "Disease":
             tgt_esc = re.escape(target_ent["matched_text"])
             if strict_cohort_scope:
                 is_cohort_phrase = False
-                cohort_cues = list(re.finditer(
-                    r"\b(?:in\s+patients\s+with|among\s+patients\s+with|"
-                    r"in\s+adults\s+with|in\s+subjects\s+with|"
-                    r"patients\s+with\s+type\s+2\s+diabetes(?:\s+mellitus)?)\b",
-                    sentence_text, re.I
-                ))
+                cohort_cues = list(COHORT_CONTEXT_RX.finditer(sentence_text))
                 for cue in cohort_cues:
                     tail_end = len(sentence_text)
                     boundary = re.search(r"[,;:.]", sentence_text[cue.end():])
@@ -426,14 +590,15 @@ class Layer4_PolarityAndGradeReasoner:
                 is_cohort_phrase = bool(
                     re.search(
                         rf"\b(?:in\s+patients\s+with|among\s+patients\s+with|in\s+adults\s+with|"
-                        rf"in\s+subjects\s+with|patients\s+with\s+type\s+2\s+diabetes(?:\s+mellitus)?\s+and|"
+                        rf"in\s+subjects\s+with|in\s+participants\s+with|cohort\s+of\s+patients\s+with|"
+                        rf"patients\s+with\s+type\s+2\s+diabetes(?:\s+mellitus)?\s+and|"
                         rf"patients\s+with\s+moderate\s+or\s+severe|patients\s+with\s+moderate|"
                         rf"other\s+causes\s+of(?:\s+nondiabetic)?)\s+(?:[a-z0-9\-]+\s+){{0,3}}{tgt_esc}",
                         sentence_text,
                         re.I,
                     )
                 )
-            if is_cohort_phrase:
+            if is_cohort_phrase and not self._is_direct_action_target(sentence_text, local_clause, target_ent):
                 return PolarityResolution(
                     source_id=source_ent["id"],
                     target_id=target_ent["id"],
@@ -446,11 +611,74 @@ class Layer4_PolarityAndGradeReasoner:
                     hetionet_sign=0,
                     assertion_status=assertion_status,
                     local_clause=local_clause,
-                    rationale="Patient eligibility cohort context ('in patients with X'); separated from TREATS/CAUSES.",
+                    rationale=f"Patient eligibility cohort context ('in patients with X'); separated from TREATS/CAUSES. [epistemic={epistemic_reason}]",
                 )
 
-        # 4. Compute Verb Direction \Delta_verb (assisted by V3 statistical polarity when symbolic verb_delta == 0)
+        # 4. Compute Verb Direction \Delta_verb (assisted by BioREx & V3 statistical polarity when symbolic verb_delta == 0)
         verb_delta, verb_reason = self.detect_verb_delta(local_clause, sentence_text, target_ent, source_entity=source_ent)
+
+        # 4a. BioREx fine-grained relation refinement for co-occurring sentence pairs
+        biorex_type = str((biorex_relation or {}).get("type") or "").strip()
+        if biorex_type in {"Comparison", "Cotreatment"}:
+            # Separate comparative / co-treatment mentions from causal edges unless target is directly governed by an action verb
+            is_direct = (
+                tgt_type == "Disease" and self._is_direct_action_target(sentence_text, local_clause, target_ent)
+            )
+            if not is_direct:
+                ctx_label = "COMPARISON_CONTEXT (0)" if biorex_type == "Comparison" else "COTREATMENT_CONTEXT (0)"
+                return PolarityResolution(
+                    source_id=source_ent["id"],
+                    target_id=target_ent["id"],
+                    verb_delta=0,
+                    target_valence=tgt_valence,
+                    clinical_polarity=ctx_label,
+                    canonical_relation="ASSOCIATED_WITH",
+                    contract_b_relation="ASSOCIATED_WITH",
+                    hetionet_metaedge="CdC" if (src_type == "Compound" and tgt_type == "Compound") else "CaX",
+                    hetionet_sign=0,
+                    assertion_status=assertion_status,
+                    local_clause=local_clause,
+                    rationale=f"BioREx {biorex_type}: separated non-causal comparative/cotreatment context from causal edge.",
+                )
+        elif biorex_type == "Drug_Interaction" and src_type == "Compound" and tgt_type == "Compound" and verb_delta == 0:
+            return PolarityResolution(
+                source_id=source_ent["id"],
+                target_id=target_ent["id"],
+                verb_delta=0,
+                target_valence=tgt_valence,
+                clinical_polarity="DRUG_INTERACTION (0)",
+                canonical_relation="ASSOCIATED_WITH",
+                contract_b_relation="ASSOCIATED_WITH",
+                hetionet_metaedge="CdC",
+                hetionet_sign=0,
+                assertion_status=assertion_status,
+                local_clause=local_clause,
+                rationale="BioREx Drug_Interaction: Compound-Compound pharmacological interaction.",
+            )
+        elif biorex_type == "Bind" and src_type == "Compound" and tgt_type == "Gene" and verb_delta == 0:
+            return PolarityResolution(
+                source_id=source_ent["id"],
+                target_id=target_ent["id"],
+                verb_delta=0,
+                target_valence=tgt_valence,
+                clinical_polarity="MOLECULAR_BINDING (0)",
+                canonical_relation="ASSOCIATED_WITH",
+                contract_b_relation="ASSOCIATED_WITH",
+                hetionet_metaedge="CbG",
+                hetionet_sign=0,
+                assertion_status=assertion_status,
+                local_clause=local_clause,
+                rationale="BioREx Bind: direct Compound-Gene binding without explicit activation/inhibition direction.",
+            )
+        elif verb_delta == 0 and biorex_type == "Negative_Correlation":
+            verb_delta = -1
+            verb_reason = f"BioREx Negative_Correlation (-1; novel={(biorex_relation or {}).get('novel', 'Unknown')})"
+        elif verb_delta == 0 and biorex_type == "Positive_Correlation":
+            verb_delta = +1
+            verb_reason = f"BioREx Positive_Correlation (+1; novel={(biorex_relation or {}).get('novel', 'Unknown')})"
+        elif verb_delta == 0 and biorex_type == "Conversion":
+            verb_reason = f"BioREx Conversion ({verb_reason})"
+
         if verb_delta == 0 and v3_class_probabilities:
             p_pos = float(v3_class_probabilities.get("POSITIVE", 0.0))
             p_neg = float(v3_class_probabilities.get("NEGATIVE", 0.0))

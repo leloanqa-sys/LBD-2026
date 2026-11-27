@@ -269,10 +269,38 @@ def numeric(value: Any) -> float:
     return number
 
 
+QUARANTINE_SOFT_REASONS = {
+    "negation_or_comparable_effect",
+    "possible_refutation",
+    "conditional_question_or_refuted_claim",
+    "evidence_not_verbatim_in_original_source",
+    "publication_after_cutoff_or_range_crosses_cutoff",
+}
+
+
+def is_quarantine_record(record: dict[str, Any], hard: list[str], soft: list[str]) -> list[str]:
+    """Determine strict Tier 3 QUARANTINE reasons (0% negation/contraindication/leakage tolerance)."""
+    q_reasons: list[str] = list(hard)
+    if str(record.get("assertion_status", "")).strip().lower() == "negated":
+        q_reasons.append("assertion_status_negated")
+    if str(record.get("canonical_relation", "")).strip().upper() == "CONTRAINDICATED_FOR":
+        q_reasons.append("contraindicated_relation")
+    if str(record.get("relation_type", "")).strip().upper() == "CONTRAINDICATED_FOR":
+        q_reasons.append("contraindicated_relation")
+    if explicit_negation(record):
+        q_reasons.append("explicit_negation_in_evidence")
+    for reason in soft:
+        if reason in QUARANTINE_SOFT_REASONS:
+            q_reasons.append(reason)
+    return sorted(set(q_reasons))
+
+
 def filter_record(row: dict[str, str], policy: dict[str, Any], papers: dict[str, Any],
                   mention_index: set[tuple[str, str, str, str]],
                   sentences: set[tuple[str, str]], checks: dict[str, Any],
-                  sentence_entities: dict[tuple[str, str, str, str], set[str]]) -> tuple[dict[str, Any], list[str], list[str]]:
+                  sentence_entities: dict[tuple[str, str, str, str], set[str]],
+                  pmid_id_index: set[tuple[str, str, str]] | None = None,
+                  sentence_id_index: dict[tuple[str, str, str], set[str]] | None = None) -> tuple[dict[str, Any], list[str], list[str]]:
     record = dict(row)
     reject, review = [], []
     for field in ["relation_id", "source_entity", "target_entity", "source_standard_id", "target_standard_id",
@@ -297,22 +325,32 @@ def filter_record(row: dict[str, str], policy: dict[str, Any], papers: dict[str,
         reject.append("invalid_sign")
     for role in ("source", "target"):
         entity_type, entity_id = record.get(role + "_type", ""), record.get(role + "_standard_id", "")
+        id_ok = entity_type in TYPES and identifier_valid(entity_id, entity_type)
         if entity_type not in TYPES:
             reject.append(f"unsupported_{role}_type")
-        elif not identifier_valid(entity_id, entity_type):
+        elif not id_ok:
             reject.append(f"invalid_or_nonatomic_{role}_id")
-        key = (record.get("pmid", ""), norm(record.get(role + "_raw_text", "")), entity_id, entity_type)
-        if key not in mention_index:
+        pmid_val = record.get("pmid", "")
+        raw_norm = norm(record.get(role + "_raw_text", ""))
+        key = (pmid_val, raw_norm, entity_id, entity_type)
+        id_grounded_in_pmid = bool(pmid_id_index and (pmid_val, entity_id, entity_type) in pmid_id_index)
+        if key not in mention_index and not (id_ok and id_grounded_in_pmid):
             review.append(f"{role}_mention_id_not_grounded")
-        sentence_key = (record.get("pmid", ""), norm(record.get("evidence", "")),
-                        norm(record.get(role + "_raw_text", "")), entity_type)
-        if sentence_entities.get(sentence_key) != {entity_id}:
+        sentence_key = (pmid_val, norm(record.get("evidence", "")), raw_norm, entity_type)
+        id_grounded_in_sent = bool(
+            sentence_id_index
+            and entity_id in sentence_id_index.get((pmid_val, norm(record.get("evidence", "")), entity_type), set())
+        )
+        if sentence_entities.get(sentence_key) != {entity_id} and not (id_ok and id_grounded_in_sent):
             review.append(f"{role}_id_missing_or_ambiguous_in_evidence_sentence")
-        aliases = policy["drug_aliases"].get(entity_id)
-        if aliases and norm(record.get(role + "_raw_text", "")) not in set(map(norm, aliases)):
+        has_verified_id = id_ok and (
+            id_grounded_in_sent or id_grounded_in_pmid or record.get("normalization_status") == "verified"
+        )
+        aliases = policy.get("drug_aliases", {}).get(entity_id)
+        if aliases and raw_norm not in set(map(norm, aliases)) and not has_verified_id:
             review.append(f"{role}_drug_alias_not_verified")
         disease_aliases = policy.get("disease_aliases", {}).get(entity_id)
-        if disease_aliases and norm(record.get(role + "_raw_text", "")) not in set(map(norm, disease_aliases)):
+        if disease_aliases and raw_norm not in set(map(norm, disease_aliases)) and not has_verified_id:
             review.append(f"{role}_disease_alias_or_subtype_not_verified")
     if record.get("source_standard_id") == record.get("target_standard_id"):
         reject.append("self_loop")
@@ -321,7 +359,8 @@ def filter_record(row: dict[str, str], policy: dict[str, Any], papers: dict[str,
         reject.append("relation_sign_mismatch")
     meta_key = "|".join(record.get(k, "") for k in ("source_type", "target_type", "relation_type"))
     expected_meta = policy["metaedges"].get(meta_key)
-    if not expected_meta:
+    allowed_metaedges = policy.get("allowed_metaedges")
+    if not expected_meta or (allowed_metaedges is not None and expected_meta not in allowed_metaedges):
         review.append("unsupported_relation_domain_range")
     elif record.get("metaedge") != expected_meta:
         reject.append("metaedge_domain_range_mismatch")
@@ -442,21 +481,49 @@ def run(input_path: Path, output: Path, papers_path: Path | None = None,
     mention_index = {(r["pmid"], norm(r["mention_text"]), r["entity_id"], r["entity_type"])
                      for r in mentions if r.get("offset_status") in {"verified_exact", "recovered_unique_quote"}
                      and identifier_valid(r.get("entity_id", ""), r.get("entity_type", ""))}
+    pmid_id_index = {(r["pmid"], r["entity_id"], r["entity_type"])
+                     for r in mentions if r.get("offset_status") in {"verified_exact", "recovered_unique_quote"}
+                     and identifier_valid(r.get("entity_id", ""), r.get("entity_type", ""))}
     sentences = set()
     sentence_entities = defaultdict(set)
+    sentence_id_index = defaultdict(set)
     for line in bundle.read("grounded_sentences.jsonl").decode("utf-8-sig").splitlines():
         if line.strip():
             sentence = json.loads(line)
-            sentences.add((str(sentence["pmid"]), norm(sentence["sentence"])))
+            s_pmid = str(sentence["pmid"])
+            s_norm = norm(sentence["sentence"])
+            sentences.add((s_pmid, s_norm))
             for entity in sentence.get("entities", []):
-                sentence_entities[(str(sentence["pmid"]), norm(sentence["sentence"]),
-                                   norm(entity.get("matched_text", "")), entity.get("type", ""))].add(entity.get("id", ""))
+                eid = entity.get("id", "")
+                etype = entity.get("type", "")
+                sentence_entities[(s_pmid, s_norm, norm(entity.get("matched_text", "")), etype)].add(eid)
+                if eid and etype:
+                    sentence_id_index[(s_pmid, s_norm, etype)].add(eid)
+    tier_cfg = policy.get("tiering") or {}
+    tier2_min_pmids = int(tier_cfg.get("tier2_min_unique_pmids", 1))
+    tier2_min_score = float(tier_cfg.get("tier2_min_extraction_score", 0.45))
+    tier2_allowed_status = set(tier_cfg.get("tier2_allowed_assertion_statuses", ["asserted", "uncertain"]))
+    tier2_allowed_designs = set(tier_cfg.get(
+        "tier2_allowed_study_designs",
+        ["RCT_CLINICAL_TRIAL", "REAL_WORLD_COHORT", "REVIEW_ARTICLE", "PRECLINICAL_IN_VIVO", "IN_VITRO_CELLULAR"],
+    ))
+    tier2_allowed_sections = set(tier_cfg.get(
+        "tier2_allowed_sections",
+        ["TITLE", "BACKGROUND", "RESULTS", "CONCLUSIONS"],
+    ))
+
     audits, filtered, rejected, review_records = [], [], [], []
+    tier2_candidates, quarantine_records = [], []
     seen = set()
     all_signs = defaultdict(set)
+    tier2_all_signs = defaultdict(set)
     negated_keys = set()
+    quarantined_pair_rels = defaultdict(set)
     for index, row in enumerate(candidates, 1):
-        record, hard, soft = filter_record(row, policy, papers, mention_index, sentences, checks, sentence_entities)
+        record, hard, soft = filter_record(
+            row, policy, papers, mention_index, sentences, checks, sentence_entities,
+            pmid_id_index=pmid_id_index, sentence_id_index=sentence_id_index,
+        )
         if row["relation_id"] in duplicate_ids:
             hard.append("duplicate_relation_id")
         key = tuple(record.get(k) for k in ["pmid", "source_standard_id", "target_standard_id", "relation_type", "assertion_status", "evidence"])
@@ -464,29 +531,57 @@ def run(input_path: Path, output: Path, papers_path: Path | None = None,
             hard.append("duplicate_evidence_record")
         seen.add(key)
         pair = (row["source_standard_id"], row["target_standard_id"])
+        pair_rel = (*pair, row["relation_type"])
+        q_reasons = is_quarantine_record(record, hard, soft)
         # Only well-formed, explicit evidence can create a polarity conflict.
         if not hard and not soft:
             all_signs[pair].add(record["sign"])
+        if not q_reasons and record.get("relation_type") in SIGNS and record.get("sign") in (-1, 1):
+            tier2_all_signs[pair].add(record["sign"])
         if (not hard and record.get("evidence_origin") == "abstract"
                 and "publication_date_not_verified" not in soft and explicit_negation(record)):
-            negated_keys.add((*pair, row["relation_type"]))
+            negated_keys.add(pair_rel)
+        if q_reasons:
+            quarantined_pair_rels[pair_rel].update(q_reasons)
+            if any(r in q_reasons for r in ("assertion_status_negated", "contraindicated_relation", "explicit_negation_in_evidence", "negation_or_comparable_effect", "possible_refutation")):
+                negated_keys.add(pair_rel)
         decision = "REJECT" if hard else "REVIEW" if soft else "PASS_RELATION"
         audit = {"row_number": index, "relation_id": row["relation_id"], "pmid": row["pmid"],
                  "source_entity": row["source_entity"], "target_entity": row["target_entity"],
                  "relation_type": row["relation_type"], "decision": decision,
-                 "reject_reasons": sorted(set(hard)), "review_reasons": sorted(set(soft)), "evidence": row["evidence"]}
+                 "reject_reasons": sorted(set(hard)), "review_reasons": sorted(set(soft)),
+                 "quarantine_reasons": q_reasons, "evidence": row["evidence"]}
         audits.append(audit)
-        record["filter_audit"] = {k: audit[k] for k in ["decision", "reject_reasons", "review_reasons"]}
+        record["filter_audit"] = {k: audit[k] for k in ["decision", "reject_reasons", "review_reasons", "quarantine_reasons"]}
         if hard:
             rejected.append(record)
+            quarantine_records.append(record)
         elif soft:
             review_records.append(record)
+            if q_reasons:
+                quarantine_records.append(record)
+            else:
+                # Eligible for Tier 2 HYPOTHESIS_EDGE if directional, verbatim (when papers supplied), within cutoff, non-negated
+                verbatim_ok = (not papers) or (record.get("evidence_origin") in {"abstract", "title"})
+                temporal_ok = (not papers) or ("publication_date_not_verified" not in soft)
+                score_ok = record.get("confidence_score") is not None and record["confidence_score"] >= tier2_min_score
+                meta_ok = "unsupported_relation_domain_range" not in soft
+                if (
+                    record.get("relation_type") in SIGNS
+                    and record.get("assertion_status") in tier2_allowed_status
+                    and record.get("study_design") in tier2_allowed_designs
+                    and record.get("section_zone") in tier2_allowed_sections
+                    and verbatim_ok and temporal_ok and score_ok and meta_ok
+                ):
+                    tier2_candidates.append(record)
         else:
             filtered.append(record)
+            tier2_candidates.append(record)
     groups = defaultdict(list)
     for record in filtered:
         groups[tuple(record[k] for k in ["source_standard_id", "target_standard_id", "relation_type"])].append(record)
     edges, edge_audit, ready_ids = [], [], set()
+    admitted_keys: set[tuple[str, str, str]] = set()
     for key, records in sorted(groups.items()):
         pmids = sorted({r["pmid"] for r in records})
         reasons = []
@@ -513,8 +608,98 @@ def run(input_path: Path, output: Path, papers_path: Path | None = None,
             if errors:
                 raise ValueError(f"Generated edge failed strict schema: {errors}")
             edges.append(edge)
+            admitted_keys.add(key)
             ready_ids.update(edge["evidence_ids"])
         edge_audit.append({**edge, "decision": "REVIEW" if reasons else "ADMIT", "reasons": reasons})
+
+    # Tier 2 (HYPOTHESIS_EDGE -> kg_edges_hypothesis.jsonl) & Tier 3 (QUARANTINE -> kg_edges_quarantine.jsonl)
+    t2_groups = defaultdict(list)
+    for record in tier2_candidates:
+        gkey = tuple(record[k] for k in ["source_standard_id", "target_standard_id", "relation_type"])
+        if gkey not in admitted_keys:
+            t2_groups[gkey].append(record)
+
+    hypothesis_edges: list[dict[str, Any]] = []
+    quarantine_edges: list[dict[str, Any]] = []
+    quarantine_seen_keys: set[tuple[str, str, str]] = set()
+
+    for key, records in sorted(t2_groups.items()):
+        pmids = sorted({r["pmid"] for r in records})
+        q_block: list[str] = []
+        if len(all_signs[key[:2]]) > 1 or len(tier2_all_signs[key[:2]]) > 1:
+            q_block.append("opposite_polarity_evidence")
+        if key in negated_keys:
+            q_block.append("negated_pair_evidence")
+        if any(r.get("assertion_status") == "negated" for r in records):
+            q_block.append("assertion_status_negated")
+        if any(r.get("canonical_relation") == "CONTRAINDICATED_FOR" for r in records):
+            q_block.append("contraindicated_relation")
+        first = records[0]
+        edge_id = "KGH_" + digest_bytes("|".join(key).encode())[:16]
+        pub_dates = [r["publication_date"] for r in records if r.get("publication_date")]
+        if q_block:
+            quarantine_seen_keys.add(key)
+            quarantine_edges.append({
+                "edge_id": "KGQ_" + digest_bytes("|".join(key).encode())[:16],
+                "source": key[0], "target": key[1], "relation_type": key[2],
+                "source_name": first["source_entity"], "target_name": first["target_entity"],
+                "source_type": first["source_type"], "target_type": first["target_type"],
+                "metaedge": first["metaedge"], "sign": SIGNS.get(key[2], 0),
+                "pmids": pmids, "evidence_ids": sorted({r["relation_id"] for r in records}),
+                "unique_supporting_pmids": len(pmids), "source_dataset": "nlp_literature",
+                "tier": 3, "partition": "QUARANTINE", "quarantine_reasons": sorted(set(q_block)),
+            })
+            continue
+        if len(pmids) < tier2_min_pmids:
+            continue
+        hyp_reasons = sorted({
+            reason
+            for r in records
+            for reason in (r.get("filter_audit", {}).get("review_reasons") or [])
+        } | ({"single_supporting_pmid"} if len(pmids) < policy["min_unique_pmids"] else set()))
+        has_asserted = any(r.get("assertion_status") == "asserted" for r in records)
+        hyp_edge = {
+            "edge_id": edge_id, "source": key[0], "target": key[1], "relation_type": key[2],
+            "source_name": first["source_entity"], "target_name": first["target_entity"],
+            "source_type": first["source_type"], "target_type": first["target_type"],
+            "metaedge": first["metaedge"], "sign": SIGNS[key[2]],
+            "assertion_status": "asserted" if has_asserted else "uncertain",
+            "pmids": pmids, "evidence_ids": sorted({r["relation_id"] for r in records}),
+            "unique_supporting_pmids": len(pmids), "source_dataset": "nlp_literature",
+            "tier": 2, "partition": "HYPOTHESIS_EDGE", "evidence_tier": "TIER_2_HYPOTHESIS",
+            "validation_method": "tiered_conservative_rules_v2",
+            "hypothesis_reasons": hyp_reasons,
+            "study_designs": sorted({str(r.get("study_design") or "") for r in records if r.get("study_design")}),
+            "publication_date_upper_bound_min": min(pub_dates) if pub_dates else None,
+            "publication_date_upper_bound_max": max(pub_dates) if pub_dates else None,
+        }
+        hypothesis_edges.append(hyp_edge)
+
+    # Also record quarantined edges from quarantine_records not already emitted
+    q_groups = defaultdict(list)
+    for record in quarantine_records:
+        gkey = (str(record.get("source_standard_id", "")), str(record.get("target_standard_id", "")), str(record.get("relation_type", "")))
+        if gkey not in quarantine_seen_keys:
+            q_groups[gkey].append(record)
+    for key, records in sorted(q_groups.items()):
+        first = records[0]
+        q_reasons = sorted({
+            reason
+            for r in records
+            for reason in (r.get("filter_audit", {}).get("quarantine_reasons") or [])
+        })
+        quarantine_edges.append({
+            "edge_id": "KGQ_" + digest_bytes("|".join(key).encode())[:16],
+            "source": key[0], "target": key[1], "relation_type": key[2],
+            "source_name": first.get("source_entity", ""), "target_name": first.get("target_entity", ""),
+            "source_type": first.get("source_type", ""), "target_type": first.get("target_type", ""),
+            "metaedge": first.get("metaedge", ""), "sign": first.get("sign"),
+            "pmids": sorted({str(r.get("pmid", "")) for r in records if r.get("pmid")}),
+            "evidence_ids": sorted({str(r.get("relation_id", "")) for r in records if r.get("relation_id")}),
+            "unique_supporting_pmids": len({str(r.get("pmid", "")) for r in records if r.get("pmid")}),
+            "source_dataset": "nlp_literature",
+            "tier": 3, "partition": "QUARANTINE", "quarantine_reasons": q_reasons,
+        })
     ready = [r for r in filtered if r["relation_id"] in ready_ids]
     ready_by_id = {r["relation_id"]: r for r in ready}
     for edge in edges:
@@ -561,7 +746,16 @@ def run(input_path: Path, output: Path, papers_path: Path | None = None,
         "candidate_file": candidate_file, "candidate_rows": len(candidates),
         "relation_decisions": dict(counts), "reason_counts_overlapping": dict(reasons.most_common()),
         "relations_passed": len(filtered), "relations_in_admitted_edges": len(ready),
-        "admitted_edges": len(edges), "edge_groups_held": sum(a["decision"] == "REVIEW" for a in edge_audit),
+        "admitted_edges": len(edges), "hypothesis_edges": len(hypothesis_edges),
+        "quarantine_edges": len(quarantine_edges),
+        "tier_summary": {
+            "tier1_admitted_kg": len(edges),
+            "tier2_hypothesis_edges": len(hypothesis_edges),
+            "tier3_quarantine_edges": len(quarantine_edges),
+            "tier1_negated_leaks": sum(e.get("assertion_status") == "negated" for e in edges),
+            "tier2_negated_leaks": sum(e.get("assertion_status") == "negated" for e in hypothesis_edges),
+        },
+        "edge_groups_held": sum(a["decision"] == "REVIEW" for a in edge_audit),
         "nodes": len(nodes), "original_paper_records": len(papers), "candidate_pmids": len({r["pmid"] for r in candidates}),
         "documents_audited": len(pmid_audit),
         "documents_without_extracted_relations": sum(r["status"] == "NO_EXTRACTED_RELATION" for r in pmid_audit),
@@ -584,6 +778,8 @@ def run(input_path: Path, output: Path, papers_path: Path | None = None,
         jsonl_dump(stage / "relations_review.jsonl", review_records)
         jsonl_dump(stage / "relations_rejected.jsonl", rejected)
         jsonl_dump(stage / "kg_edges_contract_d.jsonl", edges)
+        jsonl_dump(stage / "kg_edges_hypothesis.jsonl", hypothesis_edges)
+        jsonl_dump(stage / "kg_edges_quarantine.jsonl", quarantine_edges)
         json_dump(stage / "kg_graph.json", {"nodes": list(nodes.values()), "edges": edges,
             "metadata": {"validation_method": "conservative_rules_v1", "publication_cutoff": policy["publication_cutoff"],
                          "source": "filtered_pubtator3_output", "requires_existing_graph_merge": True}})

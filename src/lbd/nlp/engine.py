@@ -160,6 +160,7 @@ class NLPEngine:
         document: Dict[str, Any],
         *,
         external_entities: Optional[List[Dict[str, Any]]] = None,
+        biorex_relations: Optional[List[Dict[str, Any]]] = None,
         apply_relation_gate: bool = True,
     ) -> Tuple[Dict[str, Any], List[BioEventFrame], Dict[Tuple[str, str], Dict[str, Any]]]:
         """Runs end-to-end zoning, entity grounding, candidate scoring, and bio-event extraction."""
@@ -170,6 +171,7 @@ class NLPEngine:
             title, abstract, pmid=pmid, external_entities=external_entities
         )
         source_mentions = external_entities if external_entities is not None else grounded.get("external_entities")
+        resolved_biorex = biorex_relations if biorex_relations is not None else document.get("biorex_relations")
         scores = {}
         if self.classifier is not None and apply_relation_gate:
             scores = self.score_grounded_document(pmid, title, abstract, grounded, source_mentions)
@@ -180,6 +182,7 @@ class NLPEngine:
             grounded,
             v3_relation_scores=(scores if (self.classifier and apply_relation_gate) else None),
             v3_threshold=(self.relation_threshold if (self.classifier and apply_relation_gate) else None),
+            biorex_relations=resolved_biorex,
         )
         return grounded, events, scores
 
@@ -197,10 +200,13 @@ class NLPEngine:
         abstract: str,
         title: str = "",
         external_entities: Optional[List[Dict[str, Any]]] = None,
+        biorex_relations: Optional[List[Dict[str, Any]]] = None,
     ) -> List[Dict[str, Any]]:
         """Convenience method: runs document and returns Contract B relation records."""
         doc = {"pmid": pmid, "title": title, "abstract": abstract}
-        _, events, _ = self.run_document(doc, external_entities=external_entities)
+        _, events, _ = self.run_document(
+            doc, external_entities=external_entities, biorex_relations=biorex_relations
+        )
         contract_b, _, _ = self.fuse_corpus(events)
         return contract_b
 
