@@ -1,15 +1,16 @@
-# Hệ thống Tái định vị Thuốc trên Đồ thị Tri thức Có dấu & Khai phá Y văn (LBD + Signed Graph Engine v3.0)
+# Hệ thống Tái định vị Thuốc trên Đồ thị Tri thức Động & Suy luận Nhân quả (Dynamic Causal KG & Literature-Based Discovery)
 
-> **[CẬP NHẬT 2026-11-27]:** Hệ thống đã được kiểm duyệt và nâng cấp lên kiến trúc sạch **Fail-Closed & White-Box Causal**:
-> - **NLP & Ontology:** Nâng cấp ConText/BioScope (`NEGATED Recall 83.3%`), exact Beta quantile, tách `CLASS:SGLT2i` & `Semaglutide (DB13928)`, sửa `Duloxetine (DB00476)`, bổ sung `BaseRelationEncoder` sẵn sàng cắm BERT.
-> - **KG & Session Ranking:** Khôi phục cạnh NLP `Gene -> Disease` trong Micro-DFS, bỏ ép `CpD`, chống bão hòa `1.0000` (`tanh` + `max_lit_delta`), ép `run_explorer.py` Fail-Closed (không đọc lén `relations_review.jsonl`).
-> - **Single Source of Truth:** Toàn bộ số liệu benchmark chuẩn được đồng bộ tự động tại [`../evaluation_metrics_summary/README.md`](../evaluation_metrics_summary/README.md) (kiểm định `53/53 pytest PASS` & `verify_report_sync.py 37/37 PASS`). Các bảng số liệu cũ ở Mục 4 bên dưới chỉ mang tính tham chiếu lịch sử trước đợt kiểm toán.
+> **🎓 ĐỒ ÁN MÔN HỌC: GIẢI PHÁP TRÍ TUỆ NHÂN TẠO (AI SOLUTIONS)**  
+> **🏛️ ĐƠN VỊ ĐÀO TẠO:** Khoa Hệ thống Thông tin / Công nghệ Thông tin Kinh doanh — **Trường Đại học Kinh tế - Luật (UEL), Đại học Quốc gia TP.HCM (VNU-HCM)**  
+> **🏷️ DỰ ÁN:** Nghiên cứu và Thiết kế Hệ thống Suy luận Nhân quả Hỗ trợ Tái định vị Thuốc (Computational Drug Repurposing via Dynamic Knowledge Graphs & Causal Inference)  
+> **📌 TRIẾT LÝ HỌC THUẬT:** "Học trong sự nghèo nàn tri thức" (Hetionet mốc 2017), White-Box Dual-Head Causal Ranker, 0% rò rỉ dữ liệu hậu-2017.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Tests: 34 Passed](https://img.shields.io/badge/pytest-34%20passed-brightgreen.svg)]()
-[![Zero Disk Mutation](https://img.shields.io/badge/Hetionet%20v1.0-Zero%20Disk%20Mutation-orange.svg)]()
-
-Hệ thống **Literature-Based Discovery (LBD) & Signed Knowledge Graph Drug Repurposing** kết hợp đồ thị tri thức sinh y chuẩn **Hetionet v1.0** (47.031 nút, 2.250.197 cạnh), mô hình trích xuất quan hệ **BioRED NLP**, thuật toán xếp hạng **M2 DWPC + Khử thiên lệch bậc ($\beta = 0.6$) + Signed Graph Net Therapeutic Ratio (NTR Flux)**, và cơ chế nạp cạnh vào **Phiên đồ thị RAM tạm thời (Ephemeral In-Memory Session Graph)** không làm biến đổi dữ liệu gốc trên ổ cứng.
+[![UEL VNU-HCM](https://img.shields.io/badge/institution-UEL%20VNU--HCM-003366.svg)]()
+[![Course: AI Solutions](https://img.shields.io/badge/course-Gi%E1%BA%A3i%20Ph%C3%A1p%20AI-orange.svg)]()
+[![Tests: 70 Passed](https://img.shields.io/badge/pytest-70%20passed-brightgreen.svg)]()
+[![Single Source of Truth: Verified](https://img.shields.io/badge/benchmark%20sync-49%2F49%20PASS-success.svg)]()
+[![Zero Post-2017 Leakage](https://img.shields.io/badge/temporal%20boundary-Hetionet%202017-red.svg)]()
 
 ---
 
