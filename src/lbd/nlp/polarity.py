@@ -37,7 +37,7 @@ PSEUDO_CAUSE_OR_INCREASE_RX = re.compile(
 )
 
 PSEUDO_NEGATION_RX = re.compile(
-    r"\b(?:no\s+longer|not\s+only|non[\s\-]inferior(?:ity)?|no\s+further|not\s+significantly\s+different)\b",
+    r"\b(?:no\s+longer|not\s+only|non[\s\-]inferior(?:ity)?|no\s+further|not\s+ruled\s+out)\b",
     re.IGNORECASE,
 )
 
@@ -92,11 +92,14 @@ COHORT_CONTEXT_RX = re.compile(
 
 # Speculative / Hypothesis / Uncertain cues (Hedges - ConText / BioScope)
 UNCERTAIN_RX = re.compile(
-    r"\b(?:may\s+potentially|hypothesized|hypothesis|remains\s+unclear|yet\s+to\s+be\s+determined|"
-    r"requires\s+further\s+investigation|might\s+speculatively|may\s+play\s+a\s+role|"
-    r"may\s+be\s+the\s+result\s+of|may\s+be\s+attributed\s+to|was\s+likely\s+associated\s+with|"
-    r"could\s+theoretically\s+lead\s+to|theoretical\s+concern|theoretically\s+lead|suggestive\s+of|"
-    r"may\s+help\s+control|potential\s+use|rationale\s+for\s+testing|expected\s+to\s+provide)\b",
+    r"\b(?:may|might|could|suggests?|suggested|suggesting|suggestive\s+of|appears?\s+to|"
+    r"potentially|potential|possible|possibly|hypothesis|hypothesized|hypothesize|"
+    r"warrants?\s+further|trend\s+toward|trends?\s+towards?|preliminary|controversial|"
+    r"unclear|remains?\s+unclear|yet\s+to\s+be\s+determined|whether|"
+    r"requires?\s+further\s+investigation|further\s+studies|speculat\w*|"
+    r"theoretical(?:ly)?|promising|proposed\s+as|seems?\s+to|"
+    r"was\s+likely\s+associated\s+with|likely\s+to|rationale\s+for\s+testing|"
+    r"expected\s+to\s+provide)\b",
     re.IGNORECASE,
 )
 
@@ -186,29 +189,40 @@ class Layer4_PolarityAndGradeReasoner:
         using ConText pre/post-negation rules and termination tokens (Harkema et al. 2009).
         """
         clause_l = local_clause.lower()
-        # Strip pseudo-negations ('not only', 'no longer', 'non-inferior')
+        # Strip pseudo-negations ('not only', 'no longer', 'non-inferior', 'not ruled out')
         clause_clean = PSEUDO_NEGATION_RX.sub(lambda m: " " * len(m.group(0)), clause_l)
         target_l = target_matched_text.lower()
 
         if re.search(r"\bwithout\b", clause_clean):
             return True, "Negated locally via 'without' prepositional phrase (ConText)"
 
+        if re.search(r"\bneither\b[^,.;]*?\bnor\b", clause_clean):
+            return True, "Negated locally via 'neither ... nor' construct (ConText)"
+
         if re.search(r"\bdid\s+not\s+(?:alleviate|reduce|improve)[^,.;]*?\b(?:aggravated|worsened|increased)\b", clause_clean):
             return False, ""
 
         neg_patterns = [
-            r"\b(?:did\s+not|does\s+not|do\s+not|failed\s+to)\s+(?:increase|cause|induce|affect|alter|reduce|worsen|prevent|produce|elicit)\b",
-            r"\b(?:no\s+suggestion\s+of\s+increased\s+risk|no\s+significant\s+increase\s+in|no\s+increase\s+in|no\s+effect\s+on|no\s+evidence\s+of|not\s+associated\s+with|unrelated\s+to|lack\s+of\s+effect\s+on)\b",
-            r"\b(?:free\s+of|absence\s+of|ruled\s+out)\b",
+            r"\b(?:did\s+not|does\s+not|do\s+not|failed\s+to|fail\s+to|fails\s+to|cannot|can\s+not|never)\s+(?:significantly\s+)?(?:increase|elevate|cause|induce|affect|alter|reduce|decrease|attenuate|ameliorate|worsen|prevent|produce|elicit|improve|change|differ|demonstrate|show|lower|treat|inhibit|activate|trigger|promote|stimulate)\b",
+            r"\b(?:was\s+not|were\s+not|is\s+not|are\s+not|has\s+not\s+been|have\s+not\s+been)\s+(?:significantly\s+|very\s+)?(?:increased|reduced|decreased|elevated|different|associated|related|linked|caused|induced|affected|altered|improved|effective|demonstrated|observed|found|shown)\b",
+            r"\b(?:no\s+suggestion\s+of\s+increased\s+risk|no\s+significant(?:\s+\w+){0,3}|no\s+clear(?:\s+\w+){0,3}|no\s+increase\s+in|no\s+effect\s+on|no\s+evidence\s+of|no\s+difference(?:\s+in)?|no\s+association(?:\s+between|\s+with)?|no\s+relationship(?:\s+between|\s+with)?|no\s+change\s+in|no\s+impact\s+on|no\s+reduction\s+in|no\s+other\s+\w+\s+was\s+(?:independently\s+)?predictive)\b",
+            r"\b(?:not\s+associated\s+with|not\s+related\s+to|unrelated\s+to|lack\s+of|lacks|lacking|ineffective|free\s+of|absence\s+of|ruled\s+out)\b",
+            r"\b(?:low\s+intrinsic\s+propensity\s+to\s+cause|similar\s+(?:in|between)\b[^.;]{0,80}\bplacebo)\b",
         ]
+        # Generous ConText/BioScope clause-scoped window (120 chars after target, full clause before target)
+        post_window_chars = 120
         for np in neg_patterns:
             m = re.search(np, clause_clean)
             if m:
-                t_pos = clause_clean.find(target_l)
-                if t_pos == -1 or m.start() < t_pos + 25:
+                t_pos = clause_clean.find(target_l) if target_l else -1
+                if t_pos == -1 or m.start() < t_pos + post_window_chars:
                     # Check ConText termination tokens between negation trigger and target
                     if t_pos > m.end():
                         between = clause_clean[m.end():t_pos]
+                        if re.search(r"\b(?:but|however|whereas|although|except|aside\s+from)\b", between):
+                            continue
+                    elif t_pos != -1 and m.start() > t_pos + len(target_l):
+                        between = clause_clean[t_pos + len(target_l):m.start()]
                         if re.search(r"\b(?:but|however|whereas|although|except|aside\s+from)\b", between):
                             continue
                     return True, f"Negated locally via '{m.group(0)}' (ConText)"
@@ -377,7 +391,13 @@ class Layer4_PolarityAndGradeReasoner:
                 rationale="Regulatory Contraindication ('not recommended / contraindicated in'); blocked from TREATS/STUDIED_IN.",
             )
 
-        # 2. Check Cohort Eligibility Context EARLY ("in patients with X")
+        # 2. Compute Local Clause Assertion Status (Negation / Uncertainty) BEFORE cohort early-return
+        # so negated or hedged clinical statements are never silently coerced to 'asserted'.
+        is_neg, neg_reason = self.is_locally_negated(local_clause, target_ent["matched_text"])
+        is_uncertain = bool(UNCERTAIN_RX.search(local_clause))
+        assertion_status = "negated" if is_neg else ("uncertain" if is_uncertain else "asserted")
+
+        # 3. Check Cohort Eligibility Context EARLY ("in patients with X")
         if tgt_type == "Disease":
             tgt_esc = re.escape(target_ent["matched_text"])
             if strict_cohort_scope:
@@ -424,15 +444,10 @@ class Layer4_PolarityAndGradeReasoner:
                     contract_b_relation="ASSOCIATED_WITH",
                     hetionet_metaedge="CpD",
                     hetionet_sign=0,
-                    assertion_status="asserted",
+                    assertion_status=assertion_status,
                     local_clause=local_clause,
                     rationale="Patient eligibility cohort context ('in patients with X'); separated from TREATS/CAUSES.",
                 )
-
-        # 3. Check Local Clause Negation
-        is_neg, neg_reason = self.is_locally_negated(local_clause, target_ent["matched_text"])
-        is_uncertain = bool(UNCERTAIN_RX.search(local_clause))
-        assertion_status = "negated" if is_neg else ("uncertain" if is_uncertain else "asserted")
 
         # 4. Compute Verb Direction \Delta_verb (assisted by V3 statistical polarity when symbolic verb_delta == 0)
         verb_delta, verb_reason = self.detect_verb_delta(local_clause, sentence_text, target_ent, source_entity=source_ent)

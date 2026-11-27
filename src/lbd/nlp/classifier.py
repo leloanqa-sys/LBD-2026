@@ -18,6 +18,7 @@ import math
 import pickle
 import re
 import sys
+from abc import ABC, abstractmethod
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
@@ -512,12 +513,42 @@ class ZonedEmbeddingPooler:
         return out
 
 
-class ZonedPoolingMultiClassBioREEngineV3:
-    """Reformed V3 Engine: Entity-Blinded Zoned Embedding Pooling + Neural MLP + Multi-Class Softmax."""
+class BaseRelationEncoder(ABC):
+    """Abstract adapter interface for biomedical relation extraction encoders.
 
-    def __init__(self, embed_dim: int = 48, random_state: int = 42):
+    Enables drop-in replacement of the clean TF-IDF + LogisticRegression baseline
+    with pretrained biomedical transformers (e.g., BioLinkBERT, PubMedBERT)
+    without altering downstream NLPEngine / Layer 3-5 contracts.
+
+    Contract:
+        - `predict_multiclass(docs, dataset_mode)` returns `(probs_4class, aux_probs, meta_list)`
+          where columns correspond to `[NO_RELATION, POSITIVE, NEGATIVE, ASSOCIATION]`.
+        - `relation_threshold` exposes the calibrated decision threshold on `1 - P(NO_RELATION)`.
+    """
+
+    relation_threshold: float = 0.50
+    is_fitted: bool = False
+
+    @abstractmethod
+    def predict_multiclass(
+        self, docs: List[Dict[str, Any]], dataset_mode: str = "biored"
+    ) -> Tuple[np.ndarray, np.ndarray, List[Dict[str, Any]]]:
+        """Predicts 4-class relation probabilities `[NO_RELATION, POSITIVE, NEGATIVE, ASSOCIATION]`."""
+        raise NotImplementedError
+
+
+class ZonedPoolingMultiClassBioREEngineV3(BaseRelationEncoder):
+    """Clean Baseline V3 Engine: Entity-Blinded Zoned Representation + Calibrated LogisticRegression.
+
+    MLP is disabled by default (`use_mlp=False`) because small-N MLP overfitting degrades
+    relation F1 compared to regularized LogisticRegression on zoned TF-IDF + structural features.
+    Implements `BaseRelationEncoder` so BioLinkBERT/PubMedBERT can be plugged in later.
+    """
+
+    def __init__(self, embed_dim: int = 48, random_state: int = 42, use_mlp: bool = False):
         self.embed_dim = embed_dim
         self.random_state = random_state
+        self.use_mlp = use_mlp
         self.dict_vec = DictVectorizer(sparse=False)
         self.struct_scaler = StandardScaler()
         self.pooler = ZonedEmbeddingPooler(embed_dim=embed_dim, random_state=random_state)
@@ -562,7 +593,8 @@ class ZonedPoolingMultiClassBioREEngineV3:
             n_jobs=1,
         )
 
-        self.ensemble_weights: Tuple[float, float, float] = (0.0, 0.0, 1.0)
+        # Clean baseline default: 100% regularized LogisticRegression (zero noisy MLP weight)
+        self.ensemble_weights: Tuple[float, float, float] = (0.0, 1.0, 0.0)
         self.relation_threshold: float = 0.69
         self.high_recall_threshold: float = 0.40
         self.is_fitted: bool = False
@@ -690,7 +722,8 @@ class ZonedPoolingMultiClassBioREEngineV3:
         X_tfidf_tr = self.zoned_tfidf.fit_transform(z_tr)
         X_full_tr = hstack([csr_matrix(X_dense_tr), X_tfidf_tr])
 
-        self.mlp_clf.fit(X_dense_tr, y_tr)
+        if self.use_mlp:
+            self.mlp_clf.fit(X_dense_tr, y_tr)
         self.softmax_linear_clf.fit(X_full_tr, y_tr)
         self.rf_clf.fit(X_dense_raw_tr, y_tr)
         self.classes_ = list(self.softmax_linear_clf.classes_)
@@ -704,23 +737,34 @@ class ZonedPoolingMultiClassBioREEngineV3:
         X_tfidf_dev = self.zoned_tfidf.transform(z_dev)
         X_full_dev = hstack([csr_matrix(X_dense_dev), X_tfidf_dev])
 
-        p_mlp_dev = self._align_proba_4class(self.mlp_clf.predict_proba(X_dense_dev), getattr(self.mlp_clf, "classes_", self.classes_))
         p_lin_dev = self._align_proba_4class(self.softmax_linear_clf.predict_proba(X_full_dev), getattr(self.softmax_linear_clf, "classes_", self.classes_))
         p_rf_dev = self._align_proba_4class(self.rf_clf.predict_proba(X_dense_raw_dev), getattr(self.rf_clf, "classes_", self.classes_))
+        p_mlp_dev = (
+            self._align_proba_4class(self.mlp_clf.predict_proba(X_dense_dev), getattr(self.mlp_clf, "classes_", self.classes_))
+            if self.use_mlp
+            else np.zeros_like(p_lin_dev)
+        )
 
-        # Simplex candidate grid selected strictly on official Dev split (zero Test exposure)
-        weight_grid = [
-            (0.00, 0.35, 0.65),
-            (0.00, 0.50, 0.50),
-            (0.10, 0.40, 0.50),
-            (0.15, 0.45, 0.40),
-            (0.20, 0.50, 0.30),
-            (0.25, 0.50, 0.25),
-            (0.30, 0.45, 0.25),
-        ]
+        # Simplex candidate grid selected strictly on official Dev split (zero Test exposure).
+        # Clean baseline prioritizes LogisticRegression and excludes noisy MLP unless opted in.
+        if self.use_mlp:
+            weight_grid = [
+                (0.00, 1.00, 0.00),
+                (0.00, 0.70, 0.30),
+                (0.00, 0.50, 0.50),
+                (0.10, 0.50, 0.40),
+                (0.15, 0.45, 0.40),
+            ]
+        else:
+            weight_grid = [
+                (0.00, 1.00, 0.00),
+                (0.00, 0.85, 0.15),
+                (0.00, 0.70, 0.30),
+                (0.00, 0.50, 0.50),
+            ]
 
         best_f1 = -1.0
-        best_w = (0.15, 0.45, 0.40)
+        best_w = (0.00, 1.00, 0.00)
         best_th = 0.50
         best_p, best_r = 0.0, 0.0
 
@@ -799,11 +843,17 @@ class ZonedPoolingMultiClassBioREEngineV3:
         X_tfidf = self.zoned_tfidf.transform(z_d)
         X_full = hstack([csr_matrix(X_dense), X_tfidf])
 
-        p_mlp = self._align_proba_4class(self.mlp_clf.predict_proba(X_dense), getattr(self.mlp_clf, "classes_", self.classes_))
         p_lin = self._align_proba_4class(self.softmax_linear_clf.predict_proba(X_full), getattr(self.softmax_linear_clf, "classes_", self.classes_))
-        p_rf = self._align_proba_4class(self.rf_clf.predict_proba(X_dense_raw), getattr(self.rf_clf, "classes_", self.classes_))
-
         w_mlp, w_lin, w_rf = self.ensemble_weights
+        if w_mlp > 0.0:
+            p_mlp = self._align_proba_4class(self.mlp_clf.predict_proba(X_dense), getattr(self.mlp_clf, "classes_", self.classes_))
+        else:
+            p_mlp = p_lin
+        if w_rf > 0.0:
+            p_rf = self._align_proba_4class(self.rf_clf.predict_proba(X_dense_raw), getattr(self.rf_clf, "classes_", self.classes_))
+        else:
+            p_rf = np.zeros_like(p_lin)
+
         p_ensemble = w_mlp * p_mlp + w_lin * p_lin + w_rf * p_rf
 
         for idx, m in enumerate(meta_list):

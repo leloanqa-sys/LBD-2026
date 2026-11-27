@@ -17,15 +17,23 @@ _DEFAULT_ENGINE: Optional[NLPEngine] = None
 
 
 def get_default_engine() -> NLPEngine:
-    """Lazily loads and caches the canonical NLP engine."""
+    """Lazily loads and caches the canonical NLP engine.
+
+    When the statistical classifier checkpoint or runtime dependency is unavailable,
+    falls back explicitly to rule-only mode and marks `degraded_mode = True`
+    (no silent fallback).
+    """
     global _DEFAULT_ENGINE
     if _DEFAULT_ENGINE is None:
         try:
             _DEFAULT_ENGINE = NLPEngine.load_default(dataset_mode="biored")
+            _DEFAULT_ENGINE.degraded_mode = False
+            _DEFAULT_ENGINE.degraded_reason = None
         except (OSError, ImportError, AttributeError, ValueError) as exc:
-            warnings.warn(f"Classifier unavailable; using rule-only engine: {exc}", RuntimeWarning)
-            # Fallback to rule-based engine if checkpoints are not available
+            warnings.warn(f"Classifier unavailable; using rule-only engine (degraded_mode=True): {exc}", RuntimeWarning)
             _DEFAULT_ENGINE = NLPEngine()
+            _DEFAULT_ENGINE.degraded_mode = True
+            _DEFAULT_ENGINE.degraded_reason = str(exc)
     return _DEFAULT_ENGINE
 
 
@@ -81,6 +89,11 @@ def extract_relations_from_text(
         title=title,
         strict=strict_postprocess,
     )
+    if getattr(nlp_engine, "degraded_mode", False):
+        reason = getattr(nlp_engine, "degraded_reason", "rule_only_fallback")
+        for rec in cleaned:
+            rec["degraded_mode"] = True
+            rec["degraded_reason"] = reason
     return cleaned
 
 

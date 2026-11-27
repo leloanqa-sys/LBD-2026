@@ -11,14 +11,13 @@
 #   modules in `lbd.ranking.legacy`.
 
 search:
-  min_length: 3
+  min_length: 2
   max_length: 5
   max_candidates: 100
   allowed_metapaths:
-    - ["Compound", "Gene", "BiologicalProcess", "Disease"]
-    - ["Compound", "Gene", "Pathway", "Disease"]
-    - ["Compound", "Gene", "BiologicalProcess", "BiologicalProcess", "Disease"]
-    - ["Compound", "Gene", "BiologicalProcess", "Phenotype", "Disease"]
+    - ["Compound", "Gene", "Disease"]
+    - ["Compound", "Gene", "BiologicalProcess", "Gene", "Disease"]
+    - ["Compound", "Gene", "Pathway", "Gene", "Disease"]
 scoring:
   tier_weights:
     tier_1: 1.0  # Molecular mechanism, in vivo, human physiology

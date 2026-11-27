@@ -51,7 +51,8 @@ ONTOLOGY_REGISTRY: List[Dict[str, Any]] = [
         "valence": 0,
         "patterns": [
             r"\bsglt[\s\-]?2\s+inhibitor(?:s)?\b",
-            r"\bsglt2i(?:s)?\b",
+            r"\bsglt[\s\-]?2i(?:s)?\b",
+            r"\bsglt[\s\-]?2\s+inhibition\b",
             r"\bsodium[\s\-]glucose\s+co[\-\s]?transporter[\s\-]?2\s+inhibitor(?:s)?\b",
         ],
     },
@@ -532,8 +533,9 @@ class Layer12_ZoningAndGroundingEngine:
     def ground_and_resolve_coref(self, title: str, abstract: str, pmid: str = "", external_entities: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
         """Extracts ontology-grounded spans per sentence and applies Layer 2 Cross-Sentence
 
-        Coreference Resolution so 'the drug', 'SGLT2i', 'SGLT2 inhibition' in a Dapagliflozin
-        paper accurately retain the Compound anchor (DB06292) alongside the Gene target (6524).
+        Coreference Resolution for true anaphora ('this drug', 'the drug', 'this compound',
+        'the agent') while preserving drug-class mentions ('SGLT2i', 'SGLT2 inhibitors',
+        'SGLT2 inhibition') distinctly as CLASS:SGLT2i rather than conflating them with DB06292.
         """
         full_text = f"{title} {abstract}"
         study_design, study_weight = self.detect_study_design(title, abstract)
@@ -544,10 +546,10 @@ class Layer12_ZoningAndGroundingEngine:
             re.search(r"\b(?:dapagliflozin|bms-512148|farxiga|forxiga)\b", full_text, re.I)
         )
 
-        # Coreference / Metonymy patterns referring back to Dapagliflozin in a Dapagliflozin paper
+        # True anaphoric coreference patterns (NEVER conflate class terms SGLT2i/SGLT2 inhibitors -> DB06292)
         coref_drug_rx = re.compile(
-            r"\b(?:sglt[\s\-]?2\s+inhibitor(?:s)?|sglt[\s\-]?2i|sglt[\s\-]?2\s+inhibition|"
-            r"this\s+drug|the\s+drug|this\s+agent|the\s+agent|dapagliflozin\s+treatment|"
+            r"\b(?:this\s+drug|the\s+drug|this\s+compound|the\s+compound|"
+            r"this\s+agent|the\s+agent|dapagliflozin\s+treatment|"
             r"dapagliflozin\s+therapy)\b",
             re.IGNORECASE,
         )

@@ -10,10 +10,26 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+try:
+    from scipy.stats import beta as _scipy_beta
+except ImportError:  # pragma: no cover - safe fallback when scipy is unavailable
+    _scipy_beta = None
+
 from .events import (
     BioEventFrame,
     ProjectedEdgeCandidate,
 )
+
+
+def _exact_beta_lcb_90(alpha: float, beta_param: float, mean: float, std: float) -> float:
+    """Computes the exact 10th-percentile Beta quantile (90% Lower Confidence Bound)
+    via scipy.stats.beta.ppf(0.10, alpha, beta), with a safe normal fallback if scipy is absent.
+    """
+    if _scipy_beta is not None and alpha > 0.0 and beta_param > 0.0:
+        q10 = float(_scipy_beta.ppf(0.10, alpha, beta_param))
+        if math.isfinite(q10):
+            return max(0.01, min(0.99, q10))
+    return max(0.01, min(0.99, mean - 1.28155 * std))
 
 
 @dataclass
@@ -71,8 +87,8 @@ class Layer5_BayesianBetaBinomialFuser:
         mean = alpha / total
         var = (alpha * beta) / ((total ** 2) * (total + 1.0))
         std = math.sqrt(max(1e-9, var))
-        # Normal-approximate 90% Lower Confidence Bound (z_0.90 = 1.2816), bounded in [0.01, 0.99]
-        lcb_90 = max(0.01, min(0.99, mean - 1.28155 * std))
+        # Exact 10th-percentile Beta quantile (90% Lower Confidence Bound), bounded in [0.01, 0.99]
+        lcb_90 = _exact_beta_lcb_90(alpha, beta, mean, std)
         return round(mean, 4), round(std, 4), round(lcb_90, 4)
 
     def fuse_edges(
@@ -196,7 +212,7 @@ class Layer5_BayesianBetaBinomialFuser:
                 beta_mean, std, lcb_90 = self._compute_beta_stats(alpha_post, beta_post)
                 # Combine Jeffreys posterior mean with Noisy-OR probability when uncontradicted
                 mean = round(max(beta_mean, p_noisy_or * (alpha_post / (alpha_post + sum_delta_neg))), 4)
-                lcb_90 = round(max(lcb_90, mean - 1.28155 * std), 4)
+                lcb_90 = round(min(mean, lcb_90), 4)
 
                 supporting_pmids = sorted([p for p, w in pmid_support_weight.items() if w > 0.0])
                 contra_pmids = sorted(list(pmid_contra_weight.keys()))
@@ -207,7 +223,7 @@ class Layer5_BayesianBetaBinomialFuser:
                     and exemplar.assertion_status == "asserted"
                     and not exemplar.is_historical_baseline
                     and can_rel not in ("EVALUATED_IN_COHORT", "ASSOCIATED_WITH")
-                    and lcb_90 >= 0.30
+                    and lcb_90 >= 0.20
                     and mean >= 0.60
                     and len(supporting_pmids) >= 1
                 )
@@ -362,7 +378,7 @@ class IndependentGraphBayesEngine:
         mean = alpha_post / total
         var = (alpha_post * beta_post) / ((total ** 2) * (total + 1.0))
         std = math.sqrt(max(1e-9, var))
-        lcb_90 = max(0.01, min(0.99, mean - 1.28155 * std))
+        lcb_90 = _exact_beta_lcb_90(alpha_post, beta_post, mean, std)
 
         req_lcb = 0.38 if study_tier == "clinical_trial" else 0.45
         admitted = (lcb_90 >= req_lcb and mean >= 0.55)

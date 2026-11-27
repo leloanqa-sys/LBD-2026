@@ -168,18 +168,17 @@ class Layer3_BioEventAndBlindedLLMEngine:
         tgt_mask = f"@{target_ent['type'].upper()}_TGT$"
 
         blinded = sentence_text
-        # Replace longer matched_text first or by regex boundary
-        for ent, mask in sorted(
-            [(source_ent, src_mask), (target_ent, tgt_mask)],
-            key=lambda x: len(x[0]["matched_text"]),
-            reverse=True,
-        ):
-            pattern = re.compile(re.escape(ent["matched_text"]), re.IGNORECASE)
+        # Mask only the current source and target entities (matched_text and canonical_name)
+        # without hardcoding drug-specific tokens across unrelated pairs.
+        mask_terms: List[Tuple[str, str]] = []
+        for ent, mask in ((source_ent, src_mask), (target_ent, tgt_mask)):
+            for key in ("matched_text", "canonical_name"):
+                term = str(ent.get(key) or "").strip()
+                if term and len(term) >= 2:
+                    mask_terms.append((term, mask))
+        for term, mask in sorted(mask_terms, key=lambda x: len(x[0]), reverse=True):
+            pattern = re.compile(rf"(?<!\w){re.escape(term)}(?!\w)", re.IGNORECASE)
             blinded = pattern.sub(mask, blinded)
-
-        # Also mask any remaining mention of dapagliflozin or sglt2 to ensure complete blinding
-        blinded = re.sub(r"\bdapagliflozin\b", "@COMPOUND_SRC$", blinded, flags=re.I)
-        blinded = re.sub(r"\bsglt[\s\-]?2\b", "@GENE_TARGET$", blinded, flags=re.I)
         return blinded, src_mask, tgt_mask
 
     def route_and_verify(
@@ -244,7 +243,7 @@ class Layer3_BioEventAndBlindedLLMEngine:
             self.symbolic_decisions += 1
             return {
                 "relation": "TREATS",
-                "assertion_status": "asserted",
+                "assertion_status": symbolic_res.assertion_status,
                 "confidence": 0.92,
                 "llm_verified": False,
                 "llm_mode": "router_bypass_direct_syntax",
@@ -329,8 +328,9 @@ class Layer3_BioEventAndBlindedLLMEngine:
             "\"assertion_status\": \"asserted|negated|uncertain\", \"confidence\": 0.0 to 1.0, \"rationale\": \"short explanation\"}"
         )
 
+        slm_model = os.environ.get("BIOMED_SLM_MODEL", "llama-3.1-8b-instant")
         payload = {
-            "model": os.environ.get("BIOMED_SLM_MODEL", "llama-3.1-8b-instant"),
+            "model": slm_model,
             "messages": [
                 {"role": "system", "content": "Output strictly valid JSON. Do not include markdown fences or thinking tags."},
                 {"role": "user", "content": prompt},
@@ -392,7 +392,7 @@ class Layer3_BioEventAndBlindedLLMEngine:
                 "assertion_status": assertion,
                 "confidence": conf,
                 "llm_verified": True,
-                "llm_mode": "live_groq_qwen",
+                "llm_mode": f"live_groq:{slm_model}",
                 "rationale": f"{symbolic_res.rationale} | Blinded-LLM({rel}, conf={conf:.2f}): {parsed.get('rationale', '')}",
             }
             self.cache[cache_key] = result

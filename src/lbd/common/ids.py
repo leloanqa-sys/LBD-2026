@@ -43,7 +43,23 @@ ID_CROSSWALK: Dict[str, Dict[str, str]] = {
     "Liraglutide": {
         "hetionet_id": "DB06655",
         "mesh_id": "D000068718",
-        "alias": "Semaglutide",
+        "type": "Compound",
+    },
+    "Semaglutide": {
+        "hetionet_id": "DB13928",
+        "mesh_id": "C000591009",
+        "type": "Compound",
+    },
+    "Duloxetine": {
+        "hetionet_id": "Compound::DB00476",
+        "drugbank_id": "DB00476",
+        "mesh_id": "D000068736",
+        "type": "Compound",
+    },
+    "Montelukast": {
+        "hetionet_id": "Compound::DB00471",
+        "drugbank_id": "DB00471",
+        "mesh_id": "D000068258",
         "type": "Compound",
     },
     "Octreotide": {
@@ -143,8 +159,8 @@ ID_CROSSWALK: Dict[str, Dict[str, str]] = {
     },
     # --- Diseases (Disease Ontology DOIDs) ---
     "Heart Failure": {
-        "doid": "DOID:9333",
-        "hetionet_doid": "Disease::DOID:12930",
+        "doid": "DOID:6000",
+        "hetionet_doid": "Disease::DOID:6000",
         "mesh_id": "D006333",
         "canonical_name": "Heart Failure",
         "type": "Disease",
@@ -153,7 +169,7 @@ ID_CROSSWALK: Dict[str, Dict[str, str]] = {
         "doid": "DOID:12930",
         "hetionet_doid": "Disease::DOID:12930",
         "mesh_id": "D002311",
-        "canonical_name": "Dilated Cardiomyopathy (Heart Failure)",
+        "canonical_name": "Dilated Cardiomyopathy",
         "type": "Disease",
     },
     "Chronic Kidney Disease": {

@@ -46,13 +46,17 @@ SYNONYM_MAP: Dict[str, str] = {
     "il-1beta": "IL1B",
     "interleukin-1 beta": "IL1B",
     "tubulin": "TUBB",
-    # GLP-1 & Obesity axis
+    # GLP-1 & Obesity axis (Liraglutide DB06655 and Semaglutide DB13928 are distinct drugs)
     "liraglutide": "Liraglutide",
     "saxenda": "Liraglutide",
     "victoza": "Liraglutide",
-    "semaglutide": "Liraglutide",
-    "wegovy": "Liraglutide",
-    "ozempic": "Liraglutide",
+    "semaglutide": "Semaglutide",
+    "wegovy": "Semaglutide",
+    "ozempic": "Semaglutide",
+    "rybelsus": "Semaglutide",
+    # SNRI (Duloxetine DB00476)
+    "duloxetine": "Duloxetine",
+    "cymbalta": "Duloxetine",
     "glp1r": "GLP1R",
     "glp-1r": "GLP1R",
     "glp-1 receptor": "GLP1R",
