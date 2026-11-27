@@ -1,5 +1,10 @@
 # Hệ thống Tái định vị Thuốc trên Đồ thị Tri thức Có dấu & Khai phá Y văn (LBD + Signed Graph Engine v3.0)
 
+> **[CẬP NHẬT 2026-11-27]:** Hệ thống đã được kiểm duyệt và nâng cấp lên kiến trúc sạch **Fail-Closed & White-Box Causal**:
+> - **NLP & Ontology:** Nâng cấp ConText/BioScope (`NEGATED Recall 83.3%`), exact Beta quantile, tách `CLASS:SGLT2i` & `Semaglutide (DB13928)`, sửa `Duloxetine (DB00476)`, bổ sung `BaseRelationEncoder` sẵn sàng cắm BERT.
+> - **KG & Session Ranking:** Khôi phục cạnh NLP `Gene -> Disease` trong Micro-DFS, bỏ ép `CpD`, chống bão hòa `1.0000` (`tanh` + `max_lit_delta`), ép `run_explorer.py` Fail-Closed (không đọc lén `relations_review.jsonl`).
+> - **Single Source of Truth:** Toàn bộ số liệu benchmark chuẩn được đồng bộ tự động tại [`../evaluation_metrics_summary/README.md`](../evaluation_metrics_summary/README.md) (kiểm định `53/53 pytest PASS` & `verify_report_sync.py 37/37 PASS`). Các bảng số liệu cũ ở Mục 4 bên dưới chỉ mang tính tham chiếu lịch sử trước đợt kiểm toán.
+
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Tests: 34 Passed](https://img.shields.io/badge/pytest-34%20passed-brightgreen.svg)]()
 [![Zero Disk Mutation](https://img.shields.io/badge/Hetionet%20v1.0-Zero%20Disk%20Mutation-orange.svg)]()
