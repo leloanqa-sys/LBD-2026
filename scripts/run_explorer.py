@@ -4,6 +4,7 @@ import csv
 import hashlib
 import math
 import json
+import os
 import re
 import sys
 import uuid
@@ -203,6 +204,7 @@ def run(drug, limit=20, source=None, progress=print):
         literature.add_edge(a,b,key=edge["edge_id"],record=edge)
     ranking=[]
     session_edges_count = 0
+    literature_boost_applied = False
     if drug_id:
         manifest=read(assets/"data_manifest.json")
         for file,expected in manifest["hashes"].items():
@@ -210,16 +212,28 @@ def run(drug, limit=20, source=None, progress=print):
         ranker=M2RepurposingRanker()
         if not ranker._graph_loaded:raise ValueError("Không tải được KG cho M2")
 
-        # In-Memory Session Graph Augmentation (Zero Disk Mutation)
+        # In-Memory Session Graph Augmentation (Zero Disk Mutation, Fail-Closed: ADMITTED_KG only)
         session_ranker = ranker.clone_for_session()
-        session_edges = []
-        for e in graph.get("edges", []):
-            session_edges.append(dict(e, quotes=[dict(pmid=evidence[i]["pmid"], text=evidence[i]["evidence"]) for i in e.get("evidence_ids", []) if i in evidence]))
-        review_file = filtered / "relations_review.jsonl"
-        if review_file.exists():
-            for r in lines(review_file):
-                session_edges.append(dict(r, quotes=[{"pmid": r.get("pmid", ""), "text": r.get("evidence", "")}]))
-        session_edges_count = session_ranker.augment_session_edges(session_edges)
+        admitted_kg_edges = [
+            e for e in graph.get("edges", [])
+            if e.get("partition") == "ADMITTED_KG" and e.get("assertion_status") == "asserted"
+        ]
+        session_edges = [
+            dict(
+                e,
+                quotes=[
+                    dict(pmid=evidence[i]["pmid"], text=evidence[i]["evidence"])
+                    for i in e.get("evidence_ids", [])
+                    if i in evidence
+                ],
+            )
+            for e in admitted_kg_edges
+        ]
+        if session_edges:
+            session_edges_count = session_ranker.augment_session_edges(session_edges)
+        else:
+            session_edges_count = 0
+        literature_boost_applied = bool(session_edges_count > 0)
 
         result = session_ranker.rank_drug_with_session(drug_id, top_n_novel=25, dfs_top_k=3)
         known_indications_list = []
@@ -251,6 +265,7 @@ def run(drug, limit=20, source=None, progress=print):
                 if a in selected and b in selected:
                     seen_edges.add((a, b, edge.get("relation_type")))
                     edges.append(dict(edge, quotes=[dict(pmid=evidence[i]["pmid"], text=evidence[i]["evidence"]) for i in edge["evidence_ids"] if i in evidence]))
+            review_file = filtered / "relations_review.jsonl"
             if review_file.exists():
                 dis_name = c["disease_name"].casefold()
                 for r in lines(review_file):
@@ -317,7 +332,9 @@ def run(drug, limit=20, source=None, progress=print):
             "drug_id": drug_id,
             "papers_analyzed": len(papers),
             "session_edges_added": session_edges_count,
+            "admitted_kg_edges": len(graph["edges"]),
             "admitted_nlp_edges": len(graph["edges"]),
+            "literature_boost_applied": literature_boost_applied,
             "status": "ephemeral_session_only_discarded_after_run",
             "edges": [
                 {
@@ -336,7 +353,8 @@ def run(drug, limit=20, source=None, progress=print):
         del session_ranker
 
     output=dict(run_id=folder.name,drug=term,drug_id=drug_id,papers=len(papers),filter_counts=audit["relation_decisions"],
-        admitted_edges=len(graph["edges"]),session_edges_count=session_edges_count,
+        admitted_edges=len(graph["edges"]),admitted_kg_edges=len(graph["edges"]),
+        session_edges_count=session_edges_count,literature_boost_applied=literature_boost_applied,
         known_indications=known_indications_list if drug_id else [],
         candidates=ranking,
         rank_status="ranked" if drug_id else "outside_model",

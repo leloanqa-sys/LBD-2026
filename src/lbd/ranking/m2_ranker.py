@@ -63,16 +63,14 @@ DRUG_ALIASES = {
     "spravato": "Compound::DB01221",
     "sildenafil": "Compound::DB00203",
     "metformin": "Compound::DB00331",
-    "duloxetine": "Compound::DB00471",
+    "duloxetine": "Compound::DB00476",
     "thalidomide": "Compound::DB01041",
     "celecoxib": "Compound::DB00482",
     "disulfiram": "Compound::DB00822",
     "spironolactone": "Compound::DB00421",
     "losartan": "Compound::DB00678",
     "octreotide": "Compound::DB00104",
-    "liraglutide_proxy": "Compound::DB00104",
     "ruxolitinib": "Compound::DB08877",
-    "baricitinib_proxy": "Compound::DB08877",
 }
 
 
@@ -252,28 +250,34 @@ class M2RepurposingRanker:
 
         # Check for direct literature edges (Compound -> Disease)
         if hasattr(self, "lit_edges"):
-            for dm in ("CtD", "CpD"):
+            for dm in ("CtD", "CpD", "CcSE", "CaD"):
                 e_dir = (drug_id, dm, disease_id)
                 if e_dir in self.lit_edges:
                     info = self.lit_edges[e_dir]
-                    pmids = [q["pmid"] for q in info.get("quotes", []) if q.get("pmid")]
-                    rel_up = str(info.get("relation_type", dm)).upper()
-                    if dm == "CtD" or any(w in rel_up for w in ("TREAT", "ALLEVIAT", "PREVENT")):
+                    pmids = list(dict.fromkeys(q["pmid"] for q in info.get("quotes", []) if q.get("pmid")))
+                    if dm == "CtD":
                         lit_sign, lit_tag, lit_mech = -1, " [🟢 Trị liệu]", "therapeutic"
-                    elif dm == "CcSE" or any(w in rel_up for w in ("CAUSE", "TOXIC", "ADVERSE", "SIDE_EFFECT")):
+                        lit_beta, lit_contrib = 1.5, 1.5
+                    elif dm == "CpD":
+                        lit_sign, lit_tag, lit_mech = -1, " [🟢 Giảm triệu chứng]", "palliative"
+                        lit_beta, lit_contrib = 0.5, 0.5
+                    elif dm == "CcSE":
                         lit_sign, lit_tag, lit_mech = 1, " [🔴 Cảnh báo độc tính]", "pathogenic"
+                        lit_beta, lit_contrib = -1.5, -1.5
                     else:
-                        lit_sign, lit_tag, lit_mech = 0, " [⚪ Trung tính]", "neutral"
+                        lit_sign, lit_tag, lit_mech = 0, " [⚪ Tương quan trung tính]", "neutral"
+                        lit_beta, lit_contrib = 0.0, 0.0
 
                     paths.append({
                         "metapath": f"literature:{dm}",
                         "nodes": [drug_id, disease_id],
                         "dwpc_weight": 1.0,
-                        "beta": 1.5,
-                        "contrib": 1.5,
+                        "beta": lit_beta,
+                        "contrib": lit_contrib,
                         "net_sign": int(lit_sign),
                         "mechanism_type": lit_mech,
                         "is_literature_augmented": True,
+                        "lit_edge_keys": [e_dir],
                         "supporting_pmids": pmids,
                         "quotes": info.get("quotes", []),
                         "path_str": f"{drug_name} --[Y văn: {info.get('relation_type', dm)}]--> {dis_name}{lit_tag} [⚡ Y văn trực tiếp]",
@@ -294,24 +298,26 @@ class M2RepurposingRanker:
                         contrib = norm_beta * weight
 
                         lit_info = []
+                        lit_keys = []
                         if hasattr(self, "lit_edges"):
                             for edge_cand in ((drug_id, cm, g1), (disease_id, dm, g1), (g1, dm, disease_id)):
                                 if edge_cand in self.lit_edges:
                                     lit_info.append(self.lit_edges[edge_cand])
+                                    lit_keys.append(edge_cand)
                         is_lit = len(lit_info) > 0
                         pmids = [q["pmid"] for item in lit_info for q in item.get("quotes", []) if q.get("pmid")]
                         tag = " [⚡ Y văn mới]" if is_lit else ""
 
-                        # Biological sign tracking (DuG: +1, DdG: -1, DaG: 0 associative)
+                        # 2-tier Signed KG tracking: CdG/CuG + DuG/DdG are transcriptional only
                         cm_s = -1 if cm == "CdG" else (1 if cm == "CuG" else 0)
                         dm_s = 1 if dm == "DuG" else (-1 if dm == "DdG" else 0)
                         p_sign = 0 if (cm == "CbG" or dm == "DaG") else (cm_s * dm_s)
                         if p_sign == -1:
-                            sign_tag = " [🟢 Trị liệu]"
-                            mech_type = "therapeutic"
+                            sign_tag = " [🟢 Đảo chiều phiên mã]"
+                            mech_type = "transcriptional_reversal"
                         elif p_sign == 1:
-                            sign_tag = " [🔴 Cảnh báo độc tính]"
-                            mech_type = "pathogenic"
+                            sign_tag = " [🔴 Đồng chiều phiên mã]"
+                            mech_type = "transcriptional_congruence"
                         elif dm == "DaG":
                             sign_tag = " [⚪ Tương quan]"
                             mech_type = "suggestive_association"
@@ -329,6 +335,7 @@ class M2RepurposingRanker:
                             "net_sign": int(p_sign),
                             "mechanism_type": mech_type,
                             "is_literature_augmented": is_lit,
+                            "lit_edge_keys": lit_keys,
                             "supporting_pmids": list(dict.fromkeys(pmids)),
                             "quotes": [q for item in lit_info for q in item.get("quotes", [])],
                             "path_str": f"{drug_name} --[{cm}]--> {g1_name} <--[{dm}]-- {dis_name}{sign_tag}{tag}",
@@ -354,24 +361,26 @@ class M2RepurposingRanker:
                                 g2_name = self.names.get(g2, g2)
 
                                 lit_info = []
+                                lit_keys = []
                                 if hasattr(self, "lit_edges"):
                                     for edge_cand in ((drug_id, cm, g1), (g1, bm, b), (g2, bm, b), (disease_id, dm, g2)):
                                         if edge_cand in self.lit_edges:
                                             lit_info.append(self.lit_edges[edge_cand])
+                                            lit_keys.append(edge_cand)
                                 is_lit = len(lit_info) > 0
                                 pmids = [q["pmid"] for item in lit_info for q in item.get("quotes", []) if q.get("pmid")]
                                 tag = " [⚡ Y văn mới]" if is_lit else ""
 
-                                # Biological sign tracking (DuG: +1, DdG: -1, DaG: 0 associative)
+                                # 2-tier Signed KG tracking: CdG/CuG + DuG/DdG are transcriptional only
                                 cm_s = -1 if cm == "CdG" else (1 if cm == "CuG" else 0)
                                 dm_s = 1 if dm == "DuG" else (-1 if dm == "DdG" else 0)
                                 p_sign = 0 if (cm == "CbG" or dm == "DaG") else (cm_s * dm_s)
                                 if p_sign == -1:
-                                    sign_tag = " [🟢 Trị liệu]"
-                                    mech_type = "therapeutic"
+                                    sign_tag = " [🟢 Đảo chiều phiên mã]"
+                                    mech_type = "transcriptional_reversal"
                                 elif p_sign == 1:
-                                    sign_tag = " [🔴 Cảnh báo độc tính]"
-                                    mech_type = "pathogenic"
+                                    sign_tag = " [🔴 Đồng chiều phiên mã]"
+                                    mech_type = "transcriptional_congruence"
                                 elif dm == "DaG":
                                     sign_tag = " [⚪ Tương quan]"
                                     mech_type = "suggestive_association"
@@ -389,6 +398,7 @@ class M2RepurposingRanker:
                                     "net_sign": int(p_sign),
                                     "mechanism_type": mech_type,
                                     "is_literature_augmented": is_lit,
+                                    "lit_edge_keys": lit_keys,
                                     "supporting_pmids": list(dict.fromkeys(pmids)),
                                     "quotes": [q for item in lit_info for q in item.get("quotes", [])],
                                     "path_str": (
@@ -623,7 +633,8 @@ class M2RepurposingRanker:
             # Map relation and metaedge to canonical Hetionet schema
             metaedge = edge.get("metaedge")
             rel = (edge.get("relation_type") or edge.get("canonical_relation") or "").upper()
-            
+            edge_u, edge_v = u, v
+
             # Map Compound -> Gene
             if s_type == "Compound" and t_type == "Gene":
                 if metaedge in ("CiG", "CdG") or any(w in rel for w in ("INHIBIT", "DOWN", "DECREAS")):
@@ -632,58 +643,84 @@ class M2RepurposingRanker:
                     metaedge = "CuG"
                 else:
                     metaedge = "CbG"
-            # Map Gene -> Disease
+            # Map Gene -> Disease (normalize to Hetionet convention: Disease -> Gene)
             elif s_type == "Gene" and t_type == "Disease":
-                if any(w in rel for w in ("UP", "OVEREXPRESS")):
+                if metaedge == "DuG" or any(w in rel for w in ("UP", "OVEREXPRESS")):
                     metaedge = "DuG"
-                elif any(w in rel for w in ("DOWN", "UNDEREXPRESS")):
+                elif metaedge == "DdG" or any(w in rel for w in ("DOWN", "UNDEREXPRESS")):
                     metaedge = "DdG"
                 else:
                     metaedge = "DaG"
-            # Map Compound -> Disease
+                edge_u, edge_v = v, u
+            # Map Disease -> Gene (already Hetionet convention: Disease -> Gene)
+            elif s_type == "Disease" and t_type == "Gene":
+                if metaedge == "DuG" or any(w in rel for w in ("UP", "OVEREXPRESS")):
+                    metaedge = "DuG"
+                elif metaedge == "DdG" or any(w in rel for w in ("DOWN", "UNDEREXPRESS")):
+                    metaedge = "DdG"
+                else:
+                    metaedge = "DaG"
+            # Map Compound -> Disease (no default CpD coercion; neutral/unclear -> CaD)
             elif s_type == "Compound" and t_type == "Disease":
-                if metaedge == "CcSE" or any(w in rel for w in ("CAUSE", "INDUC", "TOXIC", "ADVERSE", "SIDE_EFFECT")):
+                if metaedge == "CcSE" or any(w in rel for w in ("CAUSE", "INDUC", "TOXIC", "ADVERSE", "SIDE_EFFECT", "CONTRAINDICAT")):
                     metaedge = "CcSE"
                 elif any(w in rel for w in ("PALLIAT", "SYMPTOM", "RELIEV")):
                     metaedge = "CpD"
-                elif any(w in rel for w in ("TREAT", "ALLEVIAT", "PREVENT", "IMPROV")):
+                elif metaedge == "CtD" or any(w in rel for w in ("TREAT", "ALLEVIAT", "PREVENT", "IMPROV")):
                     metaedge = "CtD"
                 else:
-                    metaedge = "CpD"
+                    metaedge = "CaD"
             elif s_type == "Gene" and t_type == "Gene":
                 metaedge = "GiG"
             else:
                 metaedge = metaedge or "CbG"
 
             # Check if edge already exists in this session
-            existing = self.adj.get((u, metaedge), [])
-            is_new = v not in existing
+            existing = self.adj.get((edge_u, metaedge), [])
+            is_new = edge_v not in existing
             if is_new:
-                self.adj[(u, metaedge)].append(v)
-                self.out_deg[(u, metaedge)] += 1
-                self.in_deg[(v, metaedge)] += 1
+                self.adj[(edge_u, metaedge)].append(edge_v)
+                self.out_deg[(edge_u, metaedge)] += 1
+                self.in_deg[(edge_v, metaedge)] += 1
                 if metaedge in ("GiG", "GcG", "GpBP", "GpPW", "GpMF", "GpCC", "DaG", "DuG", "DdG"):
-                    self.adj[(v, metaedge + "_rev")].append(u)
+                    self.adj[(edge_v, metaedge + "_rev")].append(edge_u)
                 added += 1
 
-            edge_key = (u, metaedge, v)
-            quotes = edge.get("quotes") or []
-            if not quotes and edge.get("evidence"):
-                quotes = [{"pmid": edge.get("pmid", ""), "text": edge.get("evidence", "")}]
+            edge_key = (edge_u, metaedge, edge_v)
+            raw_quotes = edge.get("quotes") or []
+            if not raw_quotes and edge.get("evidence"):
+                raw_quotes = [{"pmid": edge.get("pmid", ""), "text": edge.get("evidence", "")}]
 
             if edge_key not in self.lit_edges:
+                dedup_quotes = []
+                seen_keys = set()
+                for q in raw_quotes:
+                    pmid_k = str(q.get("pmid") or "").strip()
+                    dedup_k = ("pmid", pmid_k) if pmid_k else ("text", str(q.get("text") or "").strip())
+                    if dedup_k not in seen_keys:
+                        seen_keys.add(dedup_k)
+                        dedup_quotes.append(q)
                 self.lit_edges[edge_key] = {
-                    "source": u,
-                    "target": v,
+                    "source": edge_u,
+                    "target": edge_v,
                     "metaedge": metaedge,
                     "relation_type": edge.get("relation_type", metaedge),
                     "confidence": float(edge.get("confidence_score") or 0.8),
                     "sign": int(edge.get("sign") or 0),
-                    "quotes": list(quotes),
+                    "quotes": dedup_quotes,
+                    "_seen_quote_keys": seen_keys,
                     "is_novel_edge": is_new,
                 }
             else:
-                self.lit_edges[edge_key]["quotes"].extend(quotes)
+                entry = self.lit_edges[edge_key]
+                seen_keys = entry.setdefault("_seen_quote_keys", set())
+                for q in raw_quotes:
+                    pmid_k = str(q.get("pmid") or "").strip()
+                    dedup_k = ("pmid", pmid_k) if pmid_k else ("text", str(q.get("text") or "").strip())
+                    if dedup_k not in seen_keys:
+                        seen_keys.add(dedup_k)
+                        entry["quotes"].append(q)
+                entry["confidence"] = max(entry["confidence"], float(edge.get("confidence_score") or 0.8))
 
         self.session_augmented_count += added
         return added
@@ -698,12 +735,15 @@ class M2RepurposingRanker:
         debiasing_beta: float = 0.6,
         use_signed_graph: bool = True,
         ntr_weight: float = 0.35,
+        max_lit_logit: float = 1.5,
+        lit_tau: float = 2.0,
     ) -> Dict[str, Any]:
         """
         Executes M2 ranking with dynamic session-scoped literature augmentation:
         1. Computes baseline M2 + Signed Graph NTR score from Hetionet topology & signatures.
-        2. Evaluates newly ingested literature bridge paths and direct assertions.
-        3. Computes statistical session delta score: Score_session = Score_base + Delta_lit.
+        2. Evaluates newly ingested literature bridge paths and direct assertions, deduplicated by
+           unique literature edges (UniqueLitEdgesUsed) and (edge_key, pmid).
+        3. Applies bounded logit-space tanh shift and enforces |session_score - base_score| <= max_lit_delta.
         4. Dynamically re-ranks candidates based on augmented session scores.
         """
         base_result = self.rank_drug(
@@ -717,6 +757,7 @@ class M2RepurposingRanker:
         drug_id = base_result["drug_id"]
         novel_candidates = base_result["top_novel_candidates"]
 
+        lit_edges_map = getattr(self, "lit_edges", {})
         augmented_candidates = []
         for cand in novel_candidates:
             dis_id = cand["disease_id"]
@@ -728,41 +769,70 @@ class M2RepurposingRanker:
                     drug_id, dis_id, top_k=dfs_top_k, return_all_lit=True
                 )
 
-            direct_lit = [
-                e for (u, m, v), e in getattr(self, "lit_edges", {}).items()
-                if (u == drug_id and v == dis_id) or (u == dis_id and v == drug_id)
-            ]
-
+            # 1. Direct Compound <-> Disease literature edges (deduplicated by edge_key & PMID)
             evidence_weight = 0.0
             adverse_count = 0
-            for dl in direct_lit:
-                m_edge = dl.get("metaedge")
-                rel_type = (dl.get("relation_type") or "").upper()
-                conf = dl.get("confidence", 0.8)
-                if m_edge == "CtD" or rel_type in ("TREATS", "ALLEVIATES", "PREVENTS"):
+            unique_direct_keys = set()
+            unique_direct_scored_keys = set()
+            for edge_key, dl in lit_edges_map.items():
+                u_k, m_edge, v_k = edge_key
+                if not ((u_k == drug_id and v_k == dis_id) or (u_k == dis_id and v_k == drug_id)):
+                    continue
+                unique_direct_keys.add(edge_key)
+                conf = float(dl.get("confidence", 0.8))
+                # Neutral/unclear association (CaD) carries zero logit shift
+                if m_edge == "CaD":
+                    continue
+                elif m_edge == "CtD":
+                    unique_direct_scored_keys.add(edge_key)
                     evidence_weight += 2.0 * conf
-                elif m_edge == "CpD" or rel_type in ("PALLIATES", "ASSOCIATED_WITH"):
+                elif m_edge == "CpD":
+                    unique_direct_scored_keys.add(edge_key)
                     evidence_weight += 0.5 * conf
-                elif m_edge == "CcSE" or rel_type in ("CAUSES", "SIDE_EFFECT", "TOXICITY"):
+                elif m_edge == "CcSE":
+                    unique_direct_scored_keys.add(edge_key)
                     adverse_count += 1
                     evidence_weight -= 1.5 * conf
 
+            # 2. Indirect path-level literature edges aggregated by UniqueLitEdgesUsed (max dwpc per edge)
+            unique_lit_edge_max_dwpc: Dict[Tuple[str, str, str], float] = {}
             for lp in all_lit_paths:
-                evidence_weight += 1.2 * max(lp.get("dwpc_weight", 0.1), 0.05)
+                if str(lp.get("metapath", "")).startswith("literature:"):
+                    continue
+                lp_w = max(float(lp.get("dwpc_weight", 0.0)), 0.0)
+                for ek in lp.get("lit_edge_keys", []):
+                    if ek[1] == "CaD":
+                        continue
+                    prev = unique_lit_edge_max_dwpc.get(ek, 0.0)
+                    if lp_w > prev:
+                        unique_lit_edge_max_dwpc[ek] = lp_w
 
-            # Logit-space shift (preserves distribution & avoids probability ties at 0.9999)
+            for ek, max_w in unique_lit_edge_max_dwpc.items():
+                evidence_weight += 1.2 * max(max_w, 0.05)
+
+            # 3. Bounded logit-space shift via tanh + strict max_lit_delta clamp (0% saturation at 1.0000)
             clamped_base = min(max(base_score, 0.001), 0.999)
             base_logit = math.log(clamped_base / (1.0 - clamped_base))
-            delta_logit = 0.35 * evidence_weight
-            session_prob = 1.0 / (1.0 + math.exp(-(base_logit + delta_logit)))
-            session_score = round(session_prob, 4)
+            tau_safe = max(float(lit_tau), 1e-6)
+            delta_logit = float(max_lit_logit) * math.tanh(evidence_weight / tau_safe)
+            raw_session_prob = 1.0 / (1.0 + math.exp(-(base_logit + delta_logit)))
+
+            if max_lit_delta is not None and max_lit_delta > 0:
+                lo = max(0.0, base_score - max_lit_delta)
+                hi = min(0.9999, base_score + max_lit_delta)
+                session_prob = min(max(raw_session_prob, lo), hi)
+            else:
+                session_prob = min(max(raw_session_prob, 0.0001), 0.9999)
+
+            session_score = min(round(session_prob, 4), 0.9999)
             delta = round(session_score - base_score, 4)
             cand_entry = dict(cand)
             cand_entry["base_score"] = base_score
-            cand_entry["literature_delta"] = round(delta, 4)
+            cand_entry["literature_delta"] = delta
             cand_entry["score"] = session_score
-            cand_entry["session_evidence_count"] = len(direct_lit) + len(all_lit_paths)
-            cand_entry["session_status"] = "augmented" if delta > 0 else "baseline"
+            cand_entry["unique_lit_edges_used"] = len(unique_lit_edge_max_dwpc) + len(unique_direct_scored_keys)
+            cand_entry["session_evidence_count"] = len(unique_lit_edge_max_dwpc) + len(unique_direct_keys)
+            cand_entry["session_status"] = "augmented" if delta > 0 else ("penalized" if delta < 0 else "baseline")
             cand_entry["total_dfs_paths"] = n_paths
             cand_entry["top_paths"] = top_paths
             augmented_candidates.append(cand_entry)
