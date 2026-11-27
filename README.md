@@ -3,7 +3,6 @@
 > **🎓 ĐỒ ÁN MÔN HỌC: GIẢI PHÁP TRÍ TUỆ NHÂN TẠO (AI SOLUTIONS)**  
 > **🏛️ ĐƠN VỊ ĐÀO TẠO:** Khoa Hệ thống Thông tin / Công nghệ Thông tin Kinh doanh — **Trường Đại học Kinh tế - Luật (UEL), Đại học Quốc gia TP.HCM (VNU-HCM)**  
 > **🏷️ DỰ ÁN:** Nghiên cứu và Thiết kế Hệ thống Suy luận Nhân quả Hỗ trợ Tái định vị Thuốc (Computational Drug Repurposing via Dynamic Knowledge Graphs & Causal Inference)  
-> **📌 TRIẾT LÝ HỌC THUẬT:** "Học trong sự nghèo nàn tri thức" (Hetionet mốc 2017), White-Box Dual-Head Causal Ranker, 0% rò rỉ dữ liệu hậu-2017.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![UEL VNU-HCM](https://img.shields.io/badge/institution-UEL%20VNU--HCM-003366.svg)]()
