@@ -1,0 +1,26 @@
+{
+  "schema_version": "agent_bus.audit.v1",
+  "audit_id": "AUDIT-RFD-03-model-physchem",
+  "request_id": "RFD-03-model-physchem",
+  "response_id": "RESP-RFD-03-model-physchem",
+  "audited_utc": "2026-11-27T14:07:08Z",
+  "temporal_cutoff": "2017-12-31",
+  "post2017_leakage_count": 0,
+  "sha256_verified": true,
+  "utf8_bom_cleaned": true,
+  "forbidden_fields_present": 0,
+  "p0_offline_verdict": "PASS",
+  "verdict": "PASS",
+  "online_enrichment_status": "ready_for_online_crawl",
+  "artifacts_verified": [
+    {
+      "path": "data/raw/hetionet-v1.0-nodes.tsv",
+      "sha256": "3ad9eb86c031df8bc7d5efefa6edc93562182eb9a6a71e5129d3f18b9d42c50e",
+      "compound_count": 1552
+    },
+    {
+      "path": "artifacts/agent_bus/responses/RESP-RFD-03-model-physchem.json",
+      "sha256": "0929e6dbd0dc824c500f294768bbdfe2fe822a4f559eeec9d479d9093ad32ebc"
+    }
+  ]
+}

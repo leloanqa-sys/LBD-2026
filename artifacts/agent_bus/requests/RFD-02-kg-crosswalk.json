@@ -1,0 +1,44 @@
+{
+  "schema_version": "agent_bus.rfd.v1",
+  "request_id": "RFD-02-kg-crosswalk",
+  "created_utc": "2026-11-27T14:05:00Z",
+  "requester_dept": "Phòng KG (Knowledge Graph & Ontology Alignment)",
+  "target_dept": "Phòng Crawler & Agent Bus",
+  "priority": "P0_OFFLINE_FALLBACK_THEN_P1_ONLINE_CROSSWALK",
+  "temporal_cutoff": "2017-12-31",
+  "leakage_policy": "STATIC_ONTOLOGY_ID_CROSSWALK_ONLY",
+  "summary": "Yêu cầu bảng ánh xạ định danh chuẩn hóa mondo.sssom.tsv và drugbank_vocabulary.csv cho hợp nhất KG; sử dụng doid.obo và hetionet-v1.0-nodes.tsv cục bộ làm phương án fallback P0 Offline.",
+  "p0_offline_fallback": [
+    {
+      "artifact_path": "dapagliflozin-lbd/benchmarks/repodb/raw/doid.obo",
+      "description": "Disease Ontology cục bộ dùng cho ánh xạ DOID <-> MeSH/UMLS/ICD xref khi chưa tải mondo.sssom.tsv."
+    },
+    {
+      "artifact_path": "dapagliflozin-lbd/data/raw/hetionet-v1.0-nodes.tsv",
+      "description": "Danh mục nút chuẩn Hetionet v1.0 (Compound DrugBank IDs và Disease DOIDs) để đối chiếu cục bộ."
+    }
+  ],
+  "p1_online_deliverables": [
+    {
+      "artifact_name": "mondo.sssom.tsv",
+      "source_url": "https://purl.obolibrary.org/obo/mondo/mappings/mondo.sssom.tsv",
+      "purpose": "Ánh xạ chuẩn xác DOID <-> MeSH <-> UMLS <-> MONDO cho Disease nodes."
+    },
+    {
+      "artifact_name": "drugbank_vocabulary.csv",
+      "source_url": "https://go.drugbank.com/releases/latest#open-data",
+      "purpose": "Ánh xạ DrugBank ID <-> Common Name <-> Synonyms <-> CAS/UNII cho Compound nodes."
+    }
+  ],
+  "forbidden_fields": [
+    "post_2017_clinical_indications",
+    "post_2017_fda_approvals",
+    "clinical_trial_outcomes"
+  ],
+  "acceptance_criteria": {
+    "post2017_leakage_count": 0,
+    "sha256_verified": true,
+    "utf8_bom_cleaned": true,
+    "offline_fallback_verified": true
+  }
+}

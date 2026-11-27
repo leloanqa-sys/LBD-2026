@@ -1,0 +1,46 @@
+{
+  "schema_version": "agent_bus.rfd.v1",
+  "request_id": "RFD-03-model-physchem",
+  "created_utc": "2026-11-27T14:05:00Z",
+  "requester_dept": "Phòng Core Modeling (Causal Inference & Ranking)",
+  "target_dept": "Phòng Crawler & Agent Bus",
+  "priority": "P0_OFFLINE_REGISTRY_THEN_P1_ONLINE_PHYSCHEM",
+  "temporal_cutoff": "2017-12-31",
+  "leakage_policy": "TIME_INVARIANT_MOLECULAR_PROPERTIES_ONLY",
+  "summary": "Yêu cầu bảng đặc trưng lý hóa bất biến theo thời gian (MW, XLogP, TPSA, HBD) cho đúng 1,552 thuốc (Compound) trong Hetionet v1.0. CẤM TUYỆT ĐỐI mọi trường lâm sàng hậu-2017.",
+  "p0_offline_registry": {
+    "artifact_path": "dapagliflozin-lbd/data/raw/hetionet-v1.0-nodes.tsv",
+    "target_kind": "Compound",
+    "expected_compound_count": 1552
+  },
+  "p1_online_deliverables": [
+    {
+      "source_api": "PubChem PUG-REST API",
+      "endpoint_template": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{compound_name}/property/MolecularWeight,XLogP,TPSA,HBondDonorCount/JSON",
+      "allowed_fields": [
+        "hetionet_compound_id",
+        "drugbank_id",
+        "compound_name",
+        "MW",
+        "XLogP",
+        "TPSA",
+        "HBD"
+      ]
+    }
+  ],
+  "forbidden_fields": [
+    "indication",
+    "fda_approval_date",
+    "clinical_phase",
+    "atc_post_2017",
+    "repurposing_status",
+    "post_2017_clinical_trials",
+    "outcome_labels"
+  ],
+  "acceptance_criteria": {
+    "post2017_leakage_count": 0,
+    "sha256_verified": true,
+    "utf8_bom_cleaned": true,
+    "forbidden_fields_present": 0
+  }
+}

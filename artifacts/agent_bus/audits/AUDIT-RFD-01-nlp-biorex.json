@@ -1,0 +1,30 @@
+{
+  "schema_version": "agent_bus.audit.v1",
+  "audit_id": "AUDIT-RFD-01-nlp-biorex",
+  "request_id": "RFD-01-nlp-biorex",
+  "response_id": "RESP-RFD-01-nlp-biorex",
+  "audited_utc": "2026-11-27T14:07:08Z",
+  "temporal_cutoff": "2017-12-31",
+  "post2017_leakage_count": 0,
+  "sha256_verified": true,
+  "utf8_bom_cleaned": true,
+  "deduplicated_by_pmid": true,
+  "p0_offline_verdict": "PASS",
+  "verdict": "PASS",
+  "online_enrichment_status": "ready_for_online_crawl",
+  "artifacts_verified": [
+    {
+      "path": "data/processed/papers_clean_pre2018.csv",
+      "sha256": "c60745357dc98f3c7220643c7f36d82468a2a65b045e1d2b39217152d3c15ca2",
+      "rows": 549
+    },
+    {
+      "path": "data/processed/papers_clean_pre2018_manifest.json",
+      "sha256": "3baa4654765b3ebe7bdd9eb16e6104d53f52939d9ddfe0421de281b4cd81da39"
+    },
+    {
+      "path": "artifacts/agent_bus/responses/RESP-RFD-01-nlp-biorex.json",
+      "sha256": "e460289ca07f80f1eaed6fd30a75704849c97d719f14ef41c70d80e3737da1c0"
+    }
+  ]
+}

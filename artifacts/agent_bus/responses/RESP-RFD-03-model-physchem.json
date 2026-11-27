@@ -1,0 +1,28 @@
+{
+  "schema_version": "agent_bus.response.v1",
+  "response_id": "RESP-RFD-03-model-physchem",
+  "request_id": "RFD-03-model-physchem",
+  "generated_utc": "2026-11-27T14:07:08Z",
+  "provider_dept": "Phòng Crawler & Agent Bus",
+  "p0_offline_status": "offline_fallback",
+  "p1_online_status": "ready_for_online_crawl",
+  "p1_online_note": "Verified Hetionet v1.0 target registry (1552 Compound nodes) and enforced zero forbidden post-2017 clinical fields in schema contract. PubChem PUG-REST crawl for time-invariant descriptors (MW, XLogP, TPSA, HBD) is ready for online execution.",
+  "deliverables": {
+    "target_compound_registry": {
+      "artifact_path": "data/raw/hetionet-v1.0-nodes.tsv",
+      "sha256": "3ad9eb86c031df8bc7d5efefa6edc93562182eb9a6a71e5129d3f18b9d42c50e",
+      "compound_count": 1552,
+      "expected_compound_count": 1552
+    },
+    "allowed_time_invariant_fields": [
+      "HBD",
+      "MW",
+      "TPSA",
+      "XLogP",
+      "compound_name",
+      "drugbank_id",
+      "hetionet_compound_id"
+    ],
+    "forbidden_fields_overlap": []
+  }
+}

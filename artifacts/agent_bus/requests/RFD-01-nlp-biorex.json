@@ -1,0 +1,41 @@
+{
+  "schema_version": "agent_bus.rfd.v1",
+  "request_id": "RFD-01-nlp-biorex",
+  "created_utc": "2026-11-27T14:05:00Z",
+  "requester_dept": "Phòng NLP (NLP & BioREx Extraction)",
+  "target_dept": "Phòng Crawler & Agent Bus",
+  "priority": "P0_OFFLINE_HYGIENE_THEN_P1_ONLINE_ENRICHMENT",
+  "temporal_cutoff": "2017-12-31",
+  "leakage_policy": "STRICT_PRE_2018_ZERO_LEAKAGE",
+  "summary": "Yêu cầu làm sạch kho abstract cục bộ về <= 2017-12-31 (P0 Offline) và thu thập PubTator 3.0 BioC JSON đầy đủ entities + relations cho toàn bộ PMID sạch <= 2017 (P1 Online).",
+  "p0_offline_deliverables": [
+    {
+      "artifact_path": "dapagliflozin-lbd/data/processed/papers_clean_pre2018.csv",
+      "description": "Corpus abstract cục bộ đã loại bỏ UTF-8 BOM, lọc cứng print_year <= 2017, và khử trùng theo pmid.",
+      "source_files": [
+        "dapagliflozin-lbd/data/raw/dapagliflozin-abstracts-2018.csv",
+        "dapagliflozin-lbd/data/raw/landmark_curated_abstracts.csv",
+        "dapagliflozin-lbd/data/raw/multidrug_pilot_01/abstracts.csv"
+      ]
+    },
+    {
+      "artifact_path": "dapagliflozin-lbd/data/processed/papers_clean_pre2018_manifest.json",
+      "description": "Manifest nguồn gốc, thống kê lọc năm 2018, phân bố năm, và SHA-256 xác minh toàn vẹn."
+    }
+  ],
+  "p1_online_deliverables": [
+    {
+      "source_api": "PubTator 3.0 BioC JSON API",
+      "endpoint_template": "https://www.ncbi.nlm.nih.gov/research/pubtator3-api/publications/export/biocjson?pmids={pmid_batch}",
+      "required_fields": ["pmid", "passages", "annotations (entities)", "relations"],
+      "scope": "Toàn bộ PMID hợp lệ trong papers_clean_pre2018.csv (print_year <= 2017)"
+    }
+  ],
+  "acceptance_criteria": {
+    "post2017_leakage_count": 0,
+    "utf8_bom_cleaned": true,
+    "sha256_verified": true,
+    "deduplicated_by_pmid": true,
+    "raw_files_unmodified": true
+  }
+}

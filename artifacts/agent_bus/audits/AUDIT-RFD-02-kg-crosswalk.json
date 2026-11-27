@@ -1,0 +1,32 @@
+{
+  "schema_version": "agent_bus.audit.v1",
+  "audit_id": "AUDIT-RFD-02-kg-crosswalk",
+  "request_id": "RFD-02-kg-crosswalk",
+  "response_id": "RESP-RFD-02-kg-crosswalk",
+  "audited_utc": "2026-11-27T14:07:08Z",
+  "temporal_cutoff": "2017-12-31",
+  "post2017_leakage_count": 0,
+  "sha256_verified": true,
+  "utf8_bom_cleaned": true,
+  "p0_offline_verdict": "PASS",
+  "verdict": "PASS",
+  "online_enrichment_status": "offline_fallback",
+  "artifacts_verified": [
+    {
+      "path": "benchmarks/repodb/raw/doid.obo",
+      "sha256": "b208a1bc910ba681f32c1c602e2a2d8c7ae6029d2f311fc9669f3fae30f09bc6",
+      "doid_term_count": 14939,
+      "xref_count": 39662
+    },
+    {
+      "path": "data/raw/hetionet-v1.0-nodes.tsv",
+      "sha256": "3ad9eb86c031df8bc7d5efefa6edc93562182eb9a6a71e5129d3f18b9d42c50e",
+      "disease_count": 137,
+      "compound_count": 1552
+    },
+    {
+      "path": "artifacts/agent_bus/responses/RESP-RFD-02-kg-crosswalk.json",
+      "sha256": "75fc7ad353427f46eb694144a38d94bd00bce59448ec9039f8bbfe80bee3f2e8"
+    }
+  ]
+}

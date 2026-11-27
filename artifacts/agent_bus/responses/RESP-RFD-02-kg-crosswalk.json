@@ -1,0 +1,30 @@
+{
+  "schema_version": "agent_bus.response.v1",
+  "response_id": "RESP-RFD-02-kg-crosswalk",
+  "request_id": "RFD-02-kg-crosswalk",
+  "generated_utc": "2026-11-27T14:07:08Z",
+  "provider_dept": "Phòng Crawler & Agent Bus",
+  "p0_offline_status": "offline_fallback",
+  "p1_online_status": "ready_for_online_crawl",
+  "p1_online_note": "Local Disease Ontology (doid.obo) and Hetionet v1.0 node registry verified as P0 offline fallback. Online download of mondo.sssom.tsv and drugbank_vocabulary.csv is ready when network access is enabled.",
+  "deliverables": {
+    "offline_fallback_doid_obo": {
+      "artifact_path": "benchmarks/repodb/raw/doid.obo",
+      "sha256": "b208a1bc910ba681f32c1c602e2a2d8c7ae6029d2f311fc9669f3fae30f09bc6",
+      "size_bytes": 7313592,
+      "utf8_bom_cleaned": true,
+      "doid_term_count": 14939,
+      "xref_count": 39662
+    },
+    "offline_fallback_hetionet_nodes": {
+      "artifact_path": "data/raw/hetionet-v1.0-nodes.tsv",
+      "sha256": "3ad9eb86c031df8bc7d5efefa6edc93562182eb9a6a71e5129d3f18b9d42c50e",
+      "disease_count": 137,
+      "compound_count": 1552
+    },
+    "pending_online_crosswalks": [
+      "mondo.sssom.tsv",
+      "drugbank_vocabulary.csv"
+    ]
+  }
+}

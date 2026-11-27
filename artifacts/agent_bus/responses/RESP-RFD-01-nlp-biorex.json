@@ -1,0 +1,48 @@
+{
+  "schema_version": "agent_bus.response.v1",
+  "response_id": "RESP-RFD-01-nlp-biorex",
+  "request_id": "RFD-01-nlp-biorex",
+  "generated_utc": "2026-11-27T14:07:08Z",
+  "provider_dept": "Phòng Crawler & Agent Bus",
+  "p0_offline_status": "COMPLETED",
+  "p1_online_status": "ready_for_online_crawl",
+  "p1_online_note": "P0 offline local hygiene completed with zero post-2017 leakage. PubTator 3.0 BioC JSON batch crawl for all 549 clean pre-2018 PMIDs is queued for online execution (offline sandbox mode active).",
+  "deliverables": {
+    "clean_corpus_csv": "data/processed/papers_clean_pre2018.csv",
+    "clean_corpus_sha256": "c60745357dc98f3c7220643c7f36d82468a2a65b045e1d2b39217152d3c15ca2",
+    "manifest_json": "data/processed/papers_clean_pre2018_manifest.json",
+    "manifest_sha256": "3baa4654765b3ebe7bdd9eb16e6104d53f52939d9ddfe0421de281b4cd81da39",
+    "existing_local_pubtator_cache": {
+      "cache_dir": "data/cache/pubtator3_bioc_v2",
+      "cached_json_count": 3,
+      "cached_pmids": [
+        "28692586",
+        "29752759",
+        "29790415"
+      ]
+    }
+  },
+  "metrics": {
+    "total_raw_rows": 763,
+    "total_dropped_post2017_rows": 207,
+    "total_kept_pre2018_before_dedup": 556,
+    "duplicates_removed_pre2018": 7,
+    "final_unique_pre2018_rows": 549,
+    "year_distribution_clean": {
+      "2003": 1,
+      "2004": 1,
+      "2005": 1,
+      "2006": 1,
+      "2008": 3,
+      "2009": 12,
+      "2010": 13,
+      "2011": 17,
+      "2012": 25,
+      "2013": 49,
+      "2014": 83,
+      "2015": 84,
+      "2016": 118,
+      "2017": 141
+    }
+  }
+}
