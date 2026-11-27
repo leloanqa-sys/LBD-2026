@@ -604,17 +604,68 @@ class M2RepurposingRanker:
         session.session_augmented_count = 0
         return session
 
-    def augment_session_edges(self, edges: List[Dict[str, Any]]) -> int:
+    @staticmethod
+    def _resolve_tier_weight(admission_tier: Any) -> Optional[float]:
+        """
+        Maps an edge admission tier to its evidence multiplier:
+        - Tier 1 / ADMITTED_KG -> 1.0
+        - Tier 2 / HYPOTHESIS_EDGE -> 0.5
+        - Tier 3 / QUARANTINE (or unknown) -> None (fail-closed skip)
+        """
+        if admission_tier is None:
+            return 1.0
+        t = str(admission_tier).strip().upper()
+        if not t or t in ("TIER 1", "TIER_1", "TIER1", "1", "ADMITTED_KG", "ADMITTED"):
+            return 1.0
+        if t in ("TIER 2", "TIER_2", "TIER2", "2", "HYPOTHESIS_EDGE", "HYPOTHESIS"):
+            return 0.5
+        if t in ("TIER 3", "TIER_3", "TIER3", "3", "QUARANTINE", "REJECTED", "REVIEW_ONLY"):
+            return None
+        return None
+
+    def _get_ontology_resolver(self, ontology_resolver: Optional[Any] = None) -> Any:
+        """Returns the provided DirectedDOIDResolver or lazily initializes a cached instance."""
+        if ontology_resolver is not None:
+            return ontology_resolver
+        if getattr(self, "_ontology_resolver", None) is None:
+            from lbd.ontology.doid_dag import DirectedDOIDResolver
+
+            self._ontology_resolver = DirectedDOIDResolver(
+                hetionet_diseases=self.diseases,
+            )
+        return self._ontology_resolver
+
+    def augment_session_edges(
+        self,
+        edges: List[Dict[str, Any]],
+        resolve_ontology: bool = False,
+        ontology_resolver: Optional[Any] = None,
+        max_ontology_dist: int = 4,
+        decay_base: float = 0.90,
+    ) -> int:
         """
         Temporarily injects literature-derived edges into this session's in-memory graph.
         Does NOT touch any disk files.
+
+        Supports backward-compatible tier weighting (`admission_tier`), LCA ontology decay
+        (`lca_decay` or automatic `DirectedDOIDResolver` when `resolve_ontology=True`),
+        effective evidence weight `w_ev = clip(conf * w_tier * lca_decay, 0, 1)`,
+        and deduplication by `(edge_key, pmid)` taking `max(w_ev)`.
         """
         if not hasattr(self, "lit_edges"):
             self.lit_edges = {}
             self.session_augmented_count = 0
 
+        resolver = self._get_ontology_resolver(ontology_resolver) if resolve_ontology else None
+
         added = 0
         for edge in edges:
+            # 1. Admission tier gate (Tier 3 / QUARANTINE skipped fail-closed)
+            tier_raw = edge.get("admission_tier") if "admission_tier" in edge else edge.get("tier")
+            w_tier = self._resolve_tier_weight(tier_raw)
+            if w_tier is None:
+                continue
+
             s_type = edge.get("source_type") or "Compound"
             t_type = edge.get("target_type") or "Gene"
             s_raw = str(edge.get("source_standard_id") or edge.get("source") or edge.get("source_entity") or "")
@@ -622,105 +673,182 @@ class M2RepurposingRanker:
             if not s_raw or not t_raw:
                 continue
 
-            u = s_raw if "::" in s_raw else f"{s_type}::{s_raw}"
-            v = t_raw if "::" in t_raw else f"{t_type}::{t_raw}"
+            u_base = s_raw if "::" in s_raw else f"{s_type}::{s_raw}"
+            v_base = t_raw if "::" in t_raw else f"{t_type}::{t_raw}"
 
-            if edge.get("source_entity") and u not in self.names:
-                self.names[u] = edge["source_entity"]
-            if edge.get("target_entity") and v not in self.names:
-                self.names[v] = edge["target_entity"]
+            raw_lca_decay = edge.get("lca_decay")
+            base_lca_decay = float(raw_lca_decay) if raw_lca_decay is not None else 1.0
+            base_lca_decay = min(max(base_lca_decay, 0.0), 1.0)
+
+            # 2. Optional DOID DAG ontology resolution for Disease endpoints
+            resolved_pairs: List[Tuple[str, str, float, Optional[Dict[str, Any]]]] = []
+            if resolve_ontology and resolver is not None and (s_type == "Disease" or t_type == "Disease"):
+                if t_type == "Disease" and s_type != "Disease":
+                    hits = resolver.resolve(t_raw, max_dist=max_ontology_dist, decay_base=decay_base)
+                    for hetio_doid, res_decay, tree_dist, lca_id, match_type in hits:
+                        eff_decay = min(max(base_lca_decay * float(res_decay), 0.0), 1.0)
+                        resolved_pairs.append((
+                            u_base,
+                            f"Disease::{hetio_doid}",
+                            eff_decay,
+                            {
+                                "original_disease_id": v_base,
+                                "lca_id": lca_id,
+                                "tree_dist": tree_dist,
+                                "match_type": match_type,
+                            },
+                        ))
+                elif s_type == "Disease" and t_type != "Disease":
+                    hits = resolver.resolve(s_raw, max_dist=max_ontology_dist, decay_base=decay_base)
+                    for hetio_doid, res_decay, tree_dist, lca_id, match_type in hits:
+                        eff_decay = min(max(base_lca_decay * float(res_decay), 0.0), 1.0)
+                        resolved_pairs.append((
+                            f"Disease::{hetio_doid}",
+                            v_base,
+                            eff_decay,
+                            {
+                                "original_disease_id": u_base,
+                                "lca_id": lca_id,
+                                "tree_dist": tree_dist,
+                                "match_type": match_type,
+                            },
+                        ))
+                else:
+                    resolved_pairs.append((u_base, v_base, base_lca_decay, None))
+                if not resolved_pairs:
+                    continue
+            else:
+                resolved_pairs.append((u_base, v_base, base_lca_decay, None))
 
             # Map relation and metaedge to canonical Hetionet schema
-            metaedge = edge.get("metaedge")
+            metaedge_raw = edge.get("metaedge")
             rel = (edge.get("relation_type") or edge.get("canonical_relation") or "").upper()
-            edge_u, edge_v = u, v
+            conf = float(edge.get("confidence_score") if edge.get("confidence_score") is not None else 0.8)
 
-            # Map Compound -> Gene
-            if s_type == "Compound" and t_type == "Gene":
-                if metaedge in ("CiG", "CdG") or any(w in rel for w in ("INHIBIT", "DOWN", "DECREAS")):
-                    metaedge = "CdG"
-                elif metaedge in ("CaG", "CuG") or any(w in rel for w in ("ACTIVAT", "UP", "INCREAS", "STIMULAT")):
-                    metaedge = "CuG"
-                else:
-                    metaedge = "CbG"
-            # Map Gene -> Disease (normalize to Hetionet convention: Disease -> Gene)
-            elif s_type == "Gene" and t_type == "Disease":
-                if metaedge == "DuG" or any(w in rel for w in ("UP", "OVEREXPRESS")):
-                    metaedge = "DuG"
-                elif metaedge == "DdG" or any(w in rel for w in ("DOWN", "UNDEREXPRESS")):
-                    metaedge = "DdG"
-                else:
-                    metaedge = "DaG"
-                edge_u, edge_v = v, u
-            # Map Disease -> Gene (already Hetionet convention: Disease -> Gene)
-            elif s_type == "Disease" and t_type == "Gene":
-                if metaedge == "DuG" or any(w in rel for w in ("UP", "OVEREXPRESS")):
-                    metaedge = "DuG"
-                elif metaedge == "DdG" or any(w in rel for w in ("DOWN", "UNDEREXPRESS")):
-                    metaedge = "DdG"
-                else:
-                    metaedge = "DaG"
-            # Map Compound -> Disease (no default CpD coercion; neutral/unclear -> CaD)
-            elif s_type == "Compound" and t_type == "Disease":
-                if metaedge == "CcSE" or any(w in rel for w in ("CAUSE", "INDUC", "TOXIC", "ADVERSE", "SIDE_EFFECT", "CONTRAINDICAT")):
-                    metaedge = "CcSE"
-                elif any(w in rel for w in ("PALLIAT", "SYMPTOM", "RELIEV")):
-                    metaedge = "CpD"
-                elif metaedge == "CtD" or any(w in rel for w in ("TREAT", "ALLEVIAT", "PREVENT", "IMPROV")):
-                    metaedge = "CtD"
-                else:
-                    metaedge = "CaD"
-            elif s_type == "Gene" and t_type == "Gene":
-                metaedge = "GiG"
-            else:
-                metaedge = metaedge or "CbG"
-
-            # Check if edge already exists in this session
-            existing = self.adj.get((edge_u, metaedge), [])
-            is_new = edge_v not in existing
-            if is_new:
-                self.adj[(edge_u, metaedge)].append(edge_v)
-                self.out_deg[(edge_u, metaedge)] += 1
-                self.in_deg[(edge_v, metaedge)] += 1
-                if metaedge in ("GiG", "GcG", "GpBP", "GpPW", "GpMF", "GpCC", "DaG", "DuG", "DdG"):
-                    self.adj[(edge_v, metaedge + "_rev")].append(edge_u)
-                added += 1
-
-            edge_key = (edge_u, metaedge, edge_v)
             raw_quotes = edge.get("quotes") or []
             if not raw_quotes and edge.get("evidence"):
                 raw_quotes = [{"pmid": edge.get("pmid", ""), "text": edge.get("evidence", "")}]
+            elif not raw_quotes and edge.get("pmid"):
+                raw_quotes = [{"pmid": edge.get("pmid", ""), "text": ""}]
 
-            if edge_key not in self.lit_edges:
-                dedup_quotes = []
-                seen_keys = set()
+            for u, v, lca_decay, onto_meta in resolved_pairs:
+                if edge.get("source_entity") and u not in self.names:
+                    self.names[u] = edge["source_entity"]
+                if edge.get("target_entity") and v not in self.names:
+                    self.names[v] = edge["target_entity"]
+
+                metaedge = metaedge_raw
+                edge_u, edge_v = u, v
+
+                # Map Compound -> Gene
+                if s_type == "Compound" and t_type == "Gene":
+                    if metaedge in ("CiG", "CdG") or any(w in rel for w in ("INHIBIT", "DOWN", "DECREAS")):
+                        metaedge = "CdG"
+                    elif metaedge in ("CaG", "CuG") or any(w in rel for w in ("ACTIVAT", "UP", "INCREAS", "STIMULAT")):
+                        metaedge = "CuG"
+                    else:
+                        metaedge = "CbG"
+                # Map Gene -> Disease (normalize to Hetionet convention: Disease -> Gene)
+                elif s_type == "Gene" and t_type == "Disease":
+                    if metaedge == "DuG" or any(w in rel for w in ("UP", "OVEREXPRESS")):
+                        metaedge = "DuG"
+                    elif metaedge == "DdG" or any(w in rel for w in ("DOWN", "UNDEREXPRESS")):
+                        metaedge = "DdG"
+                    else:
+                        metaedge = "DaG"
+                    edge_u, edge_v = v, u
+                # Map Disease -> Gene (already Hetionet convention: Disease -> Gene)
+                elif s_type == "Disease" and t_type == "Gene":
+                    if metaedge == "DuG" or any(w in rel for w in ("UP", "OVEREXPRESS")):
+                        metaedge = "DuG"
+                    elif metaedge == "DdG" or any(w in rel for w in ("DOWN", "UNDEREXPRESS")):
+                        metaedge = "DdG"
+                    else:
+                        metaedge = "DaG"
+                # Map Compound -> Disease (no default CpD coercion; neutral/unclear -> CaD)
+                elif s_type == "Compound" and t_type == "Disease":
+                    if metaedge == "CcSE" or any(w in rel for w in ("CAUSE", "INDUC", "TOXIC", "ADVERSE", "SIDE_EFFECT", "CONTRAINDICAT")):
+                        metaedge = "CcSE"
+                    elif any(w in rel for w in ("PALLIAT", "SYMPTOM", "RELIEV")):
+                        metaedge = "CpD"
+                    elif metaedge == "CtD" or any(w in rel for w in ("TREAT", "ALLEVIAT", "PREVENT", "IMPROV")):
+                        metaedge = "CtD"
+                    else:
+                        metaedge = "CaD"
+                elif s_type == "Gene" and t_type == "Gene":
+                    metaedge = "GiG"
+                else:
+                    metaedge = metaedge or "CbG"
+
+                w_ev = min(max(conf * w_tier * lca_decay, 0.0), 1.0)
+
+                # Check if edge already exists in this session
+                existing = self.adj.get((edge_u, metaedge), [])
+                is_new = edge_v not in existing
+                if is_new:
+                    self.adj[(edge_u, metaedge)].append(edge_v)
+                    self.out_deg[(edge_u, metaedge)] += 1
+                    self.in_deg[(edge_v, metaedge)] += 1
+                    if metaedge in ("GiG", "GcG", "GpBP", "GpPW", "GpMF", "GpCC", "DaG", "DuG", "DdG"):
+                        self.adj[(edge_v, metaedge + "_rev")].append(edge_u)
+                    added += 1
+
+                edge_key = (edge_u, metaedge, edge_v)
+                quote_keys: List[Tuple[str, str]] = []
                 for q in raw_quotes:
                     pmid_k = str(q.get("pmid") or "").strip()
-                    dedup_k = ("pmid", pmid_k) if pmid_k else ("text", str(q.get("text") or "").strip())
-                    if dedup_k not in seen_keys:
-                        seen_keys.add(dedup_k)
-                        dedup_quotes.append(q)
-                self.lit_edges[edge_key] = {
-                    "source": edge_u,
-                    "target": edge_v,
-                    "metaedge": metaedge,
-                    "relation_type": edge.get("relation_type", metaedge),
-                    "confidence": float(edge.get("confidence_score") or 0.8),
-                    "sign": int(edge.get("sign") or 0),
-                    "quotes": dedup_quotes,
-                    "_seen_quote_keys": seen_keys,
-                    "is_novel_edge": is_new,
-                }
-            else:
-                entry = self.lit_edges[edge_key]
-                seen_keys = entry.setdefault("_seen_quote_keys", set())
-                for q in raw_quotes:
-                    pmid_k = str(q.get("pmid") or "").strip()
-                    dedup_k = ("pmid", pmid_k) if pmid_k else ("text", str(q.get("text") or "").strip())
-                    if dedup_k not in seen_keys:
-                        seen_keys.add(dedup_k)
-                        entry["quotes"].append(q)
-                entry["confidence"] = max(entry["confidence"], float(edge.get("confidence_score") or 0.8))
+                    quote_keys.append(("pmid", pmid_k) if pmid_k else ("text", str(q.get("text") or "").strip()))
+                if not quote_keys:
+                    quote_keys = [("anon", "")]
+
+                if edge_key not in self.lit_edges:
+                    dedup_quotes = []
+                    seen_keys: set[Tuple[str, str]] = set()
+                    pmid_weights: Dict[Tuple[str, str], float] = {}
+                    for q, dedup_k in zip(raw_quotes, quote_keys):
+                        if dedup_k not in seen_keys:
+                            seen_keys.add(dedup_k)
+                            dedup_quotes.append(q)
+                        pmid_weights[dedup_k] = max(pmid_weights.get(dedup_k, 0.0), w_ev)
+                    if not raw_quotes:
+                        pmid_weights[("anon", "")] = w_ev
+
+                    eff_w_ev = max(pmid_weights.values()) if pmid_weights else w_ev
+                    entry_dict: Dict[str, Any] = {
+                        "source": edge_u,
+                        "target": edge_v,
+                        "metaedge": metaedge,
+                        "relation_type": edge.get("relation_type", metaedge),
+                        "confidence": conf,
+                        "w_tier": w_tier,
+                        "lca_decay": lca_decay,
+                        "w_ev": eff_w_ev,
+                        "admission_tier": tier_raw if tier_raw is not None else "Tier 1",
+                        "sign": int(edge.get("sign") or 0),
+                        "quotes": dedup_quotes,
+                        "_seen_quote_keys": seen_keys,
+                        "_pmid_weights": pmid_weights,
+                        "is_novel_edge": is_new,
+                    }
+                    if onto_meta is not None:
+                        entry_dict["ontology_resolution"] = onto_meta
+                    self.lit_edges[edge_key] = entry_dict
+                else:
+                    entry = self.lit_edges[edge_key]
+                    seen_keys = entry.setdefault("_seen_quote_keys", set())
+                    pmid_weights = entry.setdefault("_pmid_weights", {})
+                    for q, dedup_k in zip(raw_quotes, quote_keys):
+                        if dedup_k not in seen_keys:
+                            seen_keys.add(dedup_k)
+                            entry["quotes"].append(q)
+                        pmid_weights[dedup_k] = max(pmid_weights.get(dedup_k, 0.0), w_ev)
+                    if not raw_quotes:
+                        pmid_weights[("anon", "")] = max(pmid_weights.get(("anon", ""), 0.0), w_ev)
+
+                    entry["confidence"] = max(entry["confidence"], conf)
+                    entry["w_tier"] = max(float(entry.get("w_tier", 1.0)), w_tier)
+                    entry["lca_decay"] = max(float(entry.get("lca_decay", 1.0)), lca_decay)
+                    entry["w_ev"] = max(pmid_weights.values()) if pmid_weights else max(float(entry.get("w_ev", 0.0)), w_ev)
 
         self.session_augmented_count += added
         return added
@@ -779,20 +907,20 @@ class M2RepurposingRanker:
                 if not ((u_k == drug_id and v_k == dis_id) or (u_k == dis_id and v_k == drug_id)):
                     continue
                 unique_direct_keys.add(edge_key)
-                conf = float(dl.get("confidence", 0.8))
+                w_ev = float(dl.get("w_ev", dl.get("confidence", 0.8)))
                 # Neutral/unclear association (CaD) carries zero logit shift
                 if m_edge == "CaD":
                     continue
                 elif m_edge == "CtD":
                     unique_direct_scored_keys.add(edge_key)
-                    evidence_weight += 2.0 * conf
+                    evidence_weight += 2.0 * w_ev
                 elif m_edge == "CpD":
                     unique_direct_scored_keys.add(edge_key)
-                    evidence_weight += 0.5 * conf
+                    evidence_weight += 0.5 * w_ev
                 elif m_edge == "CcSE":
                     unique_direct_scored_keys.add(edge_key)
                     adverse_count += 1
-                    evidence_weight -= 1.5 * conf
+                    evidence_weight -= 1.5 * w_ev
 
             # 2. Indirect path-level literature edges aggregated by UniqueLitEdgesUsed (max dwpc per edge)
             unique_lit_edge_max_dwpc: Dict[Tuple[str, str, str], float] = {}
@@ -808,7 +936,9 @@ class M2RepurposingRanker:
                         unique_lit_edge_max_dwpc[ek] = lp_w
 
             for ek, max_w in unique_lit_edge_max_dwpc.items():
-                evidence_weight += 1.2 * max(max_w, 0.05)
+                dl_ind = lit_edges_map.get(ek, {})
+                w_ev_ind = float(dl_ind.get("w_ev", dl_ind.get("confidence", 1.0)))
+                evidence_weight += 1.2 * max(max_w, 0.05) * w_ev_ind
 
             # 3. Bounded logit-space shift via tanh + strict max_lit_delta clamp (0% saturation at 1.0000)
             clamped_base = min(max(base_score, 0.001), 0.999)
